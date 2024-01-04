@@ -2,4 +2,7 @@
 /E-commerce Project/appsettings.json
 /E-commerce Project/appsettings.Development.json
 /E-commerce Project/bin/Debug/net8.0
-/E-commerce Project/obj
+/E-commerce Project/obj/
+/E-commerce.Logic/obj/
+/E-commerce.Logic/bin/
+
