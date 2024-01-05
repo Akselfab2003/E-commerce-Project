@@ -11,6 +11,13 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "GUID", "GUID\GUID.esproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-commerce.Logic", "E-commerce.Logic\E-commerce.Logic.csproj", "{07CBF470-1FA0-4BF7-90D5-78E8BA86061D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{BEEF0EE6-5B12-447E-AD95-89843CAE0788}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F63FC9EC-D5DE-45C0-80CA-5116FAF5D0F0}"
+	ProjectSection(SolutionItems) = preProject
+		Merge_Models_Into_Database_logic.yaml = Merge_Models_Into_Database_logic.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +44,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{95E73B89-5779-4FB6-8A16-5BC1A15368FF} = {E7AB09AE-2E2C-42A1-81E3-ABBB3F869080}
+		{F63FC9EC-D5DE-45C0-80CA-5116FAF5D0F0} = {BEEF0EE6-5B12-447E-AD95-89843CAE0788}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE55CF53-D45D-474F-A128-F1921B8C4395}
