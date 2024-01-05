@@ -8,6 +8,7 @@ namespace E_commerce.Logic.Models
 {
     public class Products
     {
+        //Test
         public int Id { get; set; }
         public string ProductName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
