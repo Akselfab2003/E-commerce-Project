@@ -9,9 +9,9 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface ITags
     {
-        public Task<Tags> Create(Tags entity);
-        public Task<Tags> Update(Tags entity);
-        public Task<bool> Delete(Tags entity);
+        public Task<Tags> CreateTags(Tags entity);
+        public Task<Tags> UpdateTags(Tags entity);
+        public Task<bool> DeleteTags(Tags entity);
         public Task<Tags> Get(Tags entity);
         public Task<Tags> GetById(int id);
         public Task<Tags> GetByName(string name);

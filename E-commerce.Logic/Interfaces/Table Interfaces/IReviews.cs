@@ -9,9 +9,9 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface IReviews
     {
-        public Task<Reviews> Create(Reviews entity);
-        public Task<Reviews> Update(Reviews entity);
-        public Task<bool> Delete(Reviews entity);
+        public Task<Reviews> CreateReview(Reviews entity);
+        public Task<Reviews> UpdateReview(Reviews entity);
+        public Task<bool> DeleteReview(Reviews entity);
         public Task<Reviews> Get(Reviews entity);
         public Task<Reviews> GetById(int id);
         public Task<Reviews> GetByName(string name);

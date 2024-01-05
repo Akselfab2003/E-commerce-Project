@@ -9,9 +9,9 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface IUsers
     {
-        public Task<Users> Create(Users entity);
-        public Task<Users> Update(Users entity);
-        public Task<bool> Delete(Users entity);
+        public Task<Users> CreateUser(Users entity);
+        public Task<Users> UpdateUser(Users entity);
+        public Task<bool> DeleteUser(Users entity);
         public Task<Users> Get(Users entity);
         public Task<Users> GetById(int id);
         public Task<Users> GetByName(string name);
