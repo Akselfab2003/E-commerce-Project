@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-commerce Project", "E-commerce Project\E-commerce Project.csproj", "{B25C968A-3A9D-44D2-9AAB-52CE08CA5E22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-commerce Project", "E-commerce Project\E-commerce Project.csproj", "{B25C968A-3A9D-44D2-9AAB-52CE08CA5E22}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Front-End", "Front-End", "{E7AB09AE-2E2C-42A1-81E3-ABBB3F869080}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "GUID", "GUID\GUID.esproj", "{95E73B89-5779-4FB6-8A16-5BC1A15368FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-commerce.Logic", "E-commerce.Logic\E-commerce.Logic.csproj", "{07CBF470-1FA0-4BF7-90D5-78E8BA86061D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-commerce.Logic", "E-commerce.Logic\E-commerce.Logic.csproj", "{07CBF470-1FA0-4BF7-90D5-78E8BA86061D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
