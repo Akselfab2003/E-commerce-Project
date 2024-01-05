@@ -13,7 +13,7 @@ namespace E_commerce.Logic
         public DBcontext(DbContextOptions<DBcontext> options) : base(options)
         {
                 
-        }
+        }//Testr
 
         public DbSet<Products> Products { get; set; }
 
