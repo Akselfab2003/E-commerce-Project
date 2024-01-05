@@ -16,6 +16,13 @@ namespace E_commerce.Logic
         }
 
         public DbSet<Products> Products { get; set; }
+        public DbSet<ProductVariants> ProductVariants { get; set; }
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<Reviews> Reviews { get; set; }
+        public DbSet<SupportTickets> SuportTickets { get; set; }
+        public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<DiscountCodes> DiscountCodes { get; set; }
 
 
     }
