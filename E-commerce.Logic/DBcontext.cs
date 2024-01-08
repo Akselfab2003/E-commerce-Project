@@ -30,6 +30,8 @@ namespace E_commerce.Logic
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<Basket> Basket {  get; set; } 
+        public DbSet<BasketDetails> BasketDetails { get; set; }
 
     }
 }
