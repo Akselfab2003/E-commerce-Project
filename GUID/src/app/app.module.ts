@@ -7,6 +7,8 @@ import { LoginComponent } from './login-page/login-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ProductPageComponent } from './product-page/product-page.component';
+import { ProductPageListComponent } from './product-page-list/product-page-list.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppComponent,
     LoginComponent,
 
-    NavbarComponent
+    NavbarComponent,
+      ProductPageComponent,
+      ProductPageListComponent
   ],
   imports: [
     BrowserModule,
