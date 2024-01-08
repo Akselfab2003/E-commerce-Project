@@ -21,7 +21,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Company> GetByName(string name)
         {
-            return await context.Company.FirstOrDefaultAsync(company => company.companyName == name);
+            return await context.Company.FirstOrDefaultAsync(company => company.Name == name);
         }
 
         public async Task<Company> UpdateCompany(Company Company)
