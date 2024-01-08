@@ -11,13 +11,22 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
     public class ordersRepo :IOrders
     {
-        DBcontext context;
+        private readonly DBcontext context;
         public ordersRepo(DBcontext c) { context = c; }
 
         public async Task<Orders> CreateOrder(Orders Order)
         {
-            context.Orders.Add(Order);
-            await context.SaveChangesAsync();
+            try
+            {
+                await context.Orders.AddAsync(Order);
+                await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+            
             return Order;
 
         }

@@ -17,11 +17,11 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpPost(Name = "CreateOrder")]
-        public HttpStatusCode CreateOrder(Orders order)
+        public async Task<HttpStatusCode> CreateOrder(Orders order)
         {
             try
             {
-                Context.CreateOrder(order);
+             await Context.CreateOrder(order);
             }
             catch 
             {
