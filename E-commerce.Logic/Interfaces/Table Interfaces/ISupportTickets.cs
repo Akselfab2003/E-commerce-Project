@@ -11,9 +11,7 @@ namespace E_commerce.Logic.Interfaces
     {
         public Task<SupportTickets> CreateSupportTicket(SupportTickets entity);
         public Task<SupportTickets> UpdateSupportTicket(SupportTickets entity);
-        public Task<bool> DeleteSupportTicket(SupportTickets entity);
-        public Task<SupportTickets> Get(SupportTickets entity);
+        public Task<bool> DeleteSupportTicket(int id);
         public Task<SupportTickets> GetById(int id);
-        public Task<SupportTickets> GetByName(string name);
     }
 }

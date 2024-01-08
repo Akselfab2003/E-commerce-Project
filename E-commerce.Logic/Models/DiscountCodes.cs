@@ -13,6 +13,12 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         public string SalesCode { get; set; } = string.Empty;
+
+        public DateTime StartTime { get; set; } = DateTime.Now;
+
+        public DateTime EndTime { get; set; }
+
+        public bool HasBeenUsed { get; set; }
         public string UsesLeft { get; set; } = string.Empty;
     }
 }

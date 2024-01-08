@@ -11,7 +11,6 @@ namespace E_commerce.Logic.Interfaces
     {
         public Task<DiscountCodes> GetById(int id);
 
-        public Task<DiscountCodes> GetByName(string name);
 
         public Task<DiscountCodes> UpdateDiscountCode(DiscountCodes DiscountCode);
 

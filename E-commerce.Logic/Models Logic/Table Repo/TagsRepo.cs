@@ -9,31 +9,31 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class ReviewsRepo : IReviews
+    public class TagsRepo : ITags
     {
         DBcontext Context;
-        public ReviewsRepo(DBcontext context)
+        public TagsRepo(DBcontext context)
         {
-
-            Context = context;
-
+           Context = context;
         }
-        public async Task<Reviews> CreateReview(Reviews entity)
+
+        public async Task<Tags> CreateTags(Tags entity)
         {
-            Context.Reviews.Add(entity);
+            Context.Tags.Add(entity);
 
             await Context.SaveChangesAsync();
 
             return entity;
+
         }
 
-        public async Task<bool> DeleteReview(int id)
+        public async Task<bool> DeleteTags(Tags entity)
         {
             try
             {
-                Reviews ReviewsEntity = await GetById(id);
+                Tags TagsEntity = await GetById(entity.Id);
 
-                Context.Reviews.Remove(ReviewsEntity);
+                Context.Tags.Remove(TagsEntity);
 
                 await Context.SaveChangesAsync();
             }
@@ -46,23 +46,21 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return true;
         }
 
-     
-
-        public async Task<Reviews> GetById(int id)
+       
+        public async Task<Tags> GetById(int id)
         {
-            return await Context.Reviews.FirstOrDefaultAsync(r => r.Id == id);
+            return await Context.Tags.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-    
-        public async Task<Reviews> UpdateReview(Reviews entity)
+     
+
+        public async Task<Tags> UpdateTags(Tags entity)
         {
-           
-            Context.Reviews.Update(entity);
+            Context.Tags.Update(entity);
+
             await Context.SaveChangesAsync();
 
             return entity;
-
-        
         }
     }
 }
