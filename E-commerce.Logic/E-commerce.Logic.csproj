@@ -22,8 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models Logic\Table Repo\" />
-  </ItemGroup>
-
 </Project>

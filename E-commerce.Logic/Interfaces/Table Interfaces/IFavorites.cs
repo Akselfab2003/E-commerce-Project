@@ -11,8 +11,6 @@ namespace E_commerce.Logic.Interfaces
     {
         public Task<Favorites> GetById(int id);
 
-        public Task<Favorites> GetByName(string name);
-
         public Task<Favorites> UpdateFavorites(Favorites Favorites);
 
         public Task<bool> DeleteFavorites(int id);
