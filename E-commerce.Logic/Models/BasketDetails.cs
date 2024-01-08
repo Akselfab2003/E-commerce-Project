@@ -12,7 +12,8 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public Users BasketId { get; set; }
+        public Basket Basket { get; set; }
         List<Products> Products { get; set; }
+
     }
 }

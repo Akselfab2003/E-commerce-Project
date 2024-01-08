@@ -10,7 +10,7 @@ namespace E_commerce.Logic.Models
     {
         public int Id { get; set; }
         public Users User { get; set; }
-        public Session Session { get; set; }
+        //public Session Session { get; set; }
 
     }
 }

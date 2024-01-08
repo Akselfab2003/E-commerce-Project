@@ -19,7 +19,7 @@ namespace E_commerce.Logic.Models
         public int quantity { get; set; }
 
         public double total { get; set; }
-
+        public Orders order {  get; set; }
 
     }
 }
