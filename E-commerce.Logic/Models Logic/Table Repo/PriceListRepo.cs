@@ -1,5 +1,6 @@
 ﻿using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +11,42 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
     public class PriceListRepo : IPriceList
     {
-        public Task<PriceList> CreateOrder(PriceList PriceList)
+        DBcontext context;
+        public PriceListRepo(DBcontext c) { context = c; } // Dependency Injection - DI
+
+        public async Task<PriceList> CreateOrder(PriceList PriceList)
         {
-            
+            context.PriceList.Add(PriceList);
+            await context.SaveChangesAsync();
+            return PriceList;
         }
 
-        public Task<bool> DeleteOrder(int id)
+        public async Task<bool> DeleteOrder(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                PriceList priceList = await GetById(id);
+                context.PriceList.Remove(priceList);
+                await context.SaveChangesAsync();
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        public Task<PriceList> GetById(int id)
+        public async Task<PriceList> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await context.PriceList.FirstOrDefaultAsync(priceList => priceList.Id == id);
         }
 
-        public Task<PriceList> UpdatePriceList(PriceList PriceList)
+        public async Task<PriceList> UpdatePriceList(PriceList PriceList)
         {
-            throw new NotImplementedException();
+            context.Update(PriceList);
+            await context.SaveChangesAsync();
+            return PriceList;
         }
     }
 }
