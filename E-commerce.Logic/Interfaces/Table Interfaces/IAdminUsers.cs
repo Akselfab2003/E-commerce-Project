@@ -11,8 +11,6 @@ namespace E_commerce.Logic.Interfaces
     {
         public Task<AdminUsers> GetById(int id);
 
-        public Task<AdminUsers> GetByName(string name);
-
         public Task<AdminUsers> UpdateAdminUser(AdminUsers User);
 
         public Task<bool> DeleteAdminUser(int id);
