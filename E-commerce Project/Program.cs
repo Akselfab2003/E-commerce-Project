@@ -1,5 +1,7 @@
 
 using E_commerce.Logic;
+using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Models_Logic.Table_Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
@@ -19,7 +21,7 @@ namespace E_commerce_Project
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
-
+            builder.Services.AddScoped<IOrders, ordersRepo>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

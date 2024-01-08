@@ -12,6 +12,10 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
 
-        
+        public string sessid { get; set; }
+
+        //public List<OrderDetails> OrderLines { get; set; }
+
+      
     }
 }

@@ -16,7 +16,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Orders> CreateOrder(Orders Order)
         {
-            context.Add(Order);
+            context.Orders.Add(Order);
             await context.SaveChangesAsync();
             return Order;
 
