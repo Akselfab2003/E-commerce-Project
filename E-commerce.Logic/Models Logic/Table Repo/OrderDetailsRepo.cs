@@ -19,19 +19,19 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.OrderDetails.FirstOrDefaultAsync(orderDetails => orderDetails.Id == id);
         }
 
-        public async Task<OrderDetails> UpdateOrderDetails(OrderDetails entity)
+        public async Task<OrderDetails> UpdateOrderDetails(OrderDetails orderDetails)
         {
-            context.Update(entity);
+            context.Update(orderDetails);
             await context.SaveChangesAsync();
-            return entity;
+            return orderDetails;
         }
 
 
-        public async Task<OrderDetails> CreateOrderDetails(OrderDetails entity)
+        public async Task<OrderDetails> CreateOrderDetails(OrderDetails orderDetails)
         {
-            context.OrderDetails.Add(entity);
+            context.OrderDetails.Add(orderDetails);
             await context.SaveChangesAsync();
-            return entity;
+            return orderDetails;
         }
 
         public async Task<bool> DeleteOrderDetails(int id)

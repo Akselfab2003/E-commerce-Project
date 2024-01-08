@@ -14,11 +14,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         DBcontext context;
         public UserDetailsRepo(DBcontext c) { context = c; } // Dependency Injection - DI
         
-        public async Task<UserDetails> CreateUserDetails(UserDetails entity)
+        public async Task<UserDetails> CreateUserDetails(UserDetails userDetails)
         {
-            context.UserDetails.Add(entity);
+            context.UserDetails.Add(userDetails);
             await context.SaveChangesAsync(); // SaveChangesAsync()
-            return entity;
+            return userDetails;
         }
 
         public async Task<bool> DeleteUserDetails(int id)
@@ -41,11 +41,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.UserDetails.FirstOrDefaultAsync(userDetails => userDetails.Id == id);
         }
 
-        public async Task<UserDetails> UpdateUserDetails(UserDetails entity)
+        public async Task<UserDetails> UpdateUserDetails(UserDetails userDetails)
         {
-            context.Update(entity);
+            context.Update(userDetails);
             await context.SaveChangesAsync();
-            return entity;
+            return userDetails;
         }
     }
 }

@@ -19,11 +19,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Users.FirstOrDefaultAsync(Users => Users.Id == id);
         }
 
-        public async Task<Users> UpdateUser(Users entity)
+        public async Task<Users> UpdateUser(Users users)
         {
-            context.Update(entity);
+            context.Update(users);
             await context.SaveChangesAsync();
-            return entity;
+            return users;
         }
 
         public async Task<bool> DeleteUser(int id)
@@ -42,11 +42,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return true;
         }
 
-        public async Task<Users> CreateUser(Users entity)
+        public async Task<Users> CreateUser(Users users)
         {
-            context.Users.Add(entity);
+            context.Users.Add(users);
             await context.SaveChangesAsync();
-            return entity;
+            return users;
         }
     }
 }
