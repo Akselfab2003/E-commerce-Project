@@ -36,6 +36,11 @@ namespace E_commerce.Test
 
         }
 
-        
+        public IDataCollection DataCollection
+        {
+            get { return dataCollection; }
+
+        }
+
     }
 }
