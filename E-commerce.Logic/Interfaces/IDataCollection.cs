@@ -9,6 +9,6 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface IDataCollection
     {
- 
+        
     }
 }
