@@ -19,12 +19,10 @@ namespace E_commerce_Project
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            //builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
-
-            //builder.Services.AddScoped<IOrders, ordersRepo>();
-
+            
             builder.Services.GetConfig(builder.Configuration).AddServices();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
