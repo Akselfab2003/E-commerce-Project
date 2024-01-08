@@ -29,6 +29,7 @@ namespace E_commerce.Logic
         public DbSet<Tags> Tags { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Users> Users { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
     }
 }
