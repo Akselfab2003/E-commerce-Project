@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    internal interface ICompany
+    public interface ICompany
     {
         public Task<Company> GetById(int id);
 
