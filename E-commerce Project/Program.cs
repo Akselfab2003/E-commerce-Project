@@ -20,9 +20,11 @@ namespace E_commerce_Project
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
+            //builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
 
-            builder.Services.AddScoped<IOrders, ordersRepo>();
+            //builder.Services.AddScoped<IOrders, ordersRepo>();
+
+            builder.Services.GetConfig(builder.Configuration).AddServices();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

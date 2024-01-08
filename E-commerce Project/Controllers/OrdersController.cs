@@ -11,9 +11,9 @@ namespace E_commerce_Project.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrders Context;
-        public OrdersController(IOrders _context)
+        public OrdersController(IDataCollection _context)
         {
-            Context = _context;
+            Context = _context.Orders;
         }
 
         [HttpPost(Name = "CreateOrder")]
