@@ -10,9 +10,9 @@ import { ProductSiteComponent } from './components/product-site/product-site.com
 const routes: Routes = [
   {path:"Login", component:LoginComponent},
   {path:"Register", component:RegisterComponent},
-  {path:"product-page", component:ProductPageComponent, children:[{path:"product-Site/:id", component:ProductSiteComponent}]},
+  {path:"product-page", component:ProductPageComponent},
   {path:"home-page", component:HomePageComponent},
-  // {path:"product-Site", component:ProductSiteComponent}
+  {path:"product-Site/:id", component:ProductSiteComponent}
 ];
 
 @NgModule({
