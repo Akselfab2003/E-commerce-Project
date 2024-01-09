@@ -10,6 +10,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { ProductPageListComponent } from './product-page-list/product-page-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpserviceService } from '../Services/httpservice.service';
 
 
 @NgModule({
@@ -20,15 +22,18 @@ import { HomePageComponent } from './home-page/home-page.component';
     NavbarComponent,
       ProductPageComponent,
       ProductPageListComponent,
-      HomePageComponent
+      HomePageComponent,
+      
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
+    
   ],
-  providers: [],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
