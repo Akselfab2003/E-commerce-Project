@@ -11,9 +11,10 @@ namespace E_commerce.Logic.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public double Price { get; set; }
+        public List<Images> Images { get; set; }
         public virtual List<ProductVariants> ProductVariants { get; set; }
     }
 }

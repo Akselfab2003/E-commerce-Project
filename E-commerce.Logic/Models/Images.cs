@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models
 {
-    public class Tags
+    public class Images
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-
-        [Required]
-        public Products ParentProductId { get; set; }
+        public string ImagePath { get; set; }
     }
 }
