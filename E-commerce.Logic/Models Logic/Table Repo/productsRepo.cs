@@ -43,7 +43,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Products> GetByName(string name)
         {
-            return await context.Products.FirstOrDefaultAsync(product => product.Name == name);
+            return await context.Products.FirstOrDefaultAsync(product => product.Title == name);
         }
 
         public async Task<Products> UpdateProduct(Products entity)
