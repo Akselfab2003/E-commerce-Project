@@ -23,7 +23,6 @@
         <input type="radio" id="female" value="female" formControlName="gender">
         <label for="female">Female</label>
         <br><br>
-    
         <button [disabled]="registerForm.invalid" type="submit" value="Submit" id="btn" (click)="showSuccess()">Register</button>
 
         <p>Allready have an account? <a routerLink="/Login" routerLinkActive="active">Login</a></p> 
