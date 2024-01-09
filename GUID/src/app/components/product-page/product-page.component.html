@@ -2,13 +2,13 @@
 
 <div class="container">
     <div class="product-grid">
-      <div class="product-card">
+      <div class="product-card" [routerLink]="['/product-Site', 1]">
             <img src="product1.jpg" alt="Product 1">
             <div class="product-info">
                 <h2>Product 1</h2>
                 <p>Kort product info here ...</p>
                 <p><strong>Price:</strong> $19.99</p>
-                <a href="#" class="buy-btn">Buy Now</a>
+                <a aria-current="page" routerLink="['/product-Site', 1]" class="buy-btn">Add to basket</a>
             </div>
       </div>
 
@@ -18,7 +18,7 @@
                 <h2>Product 2</h2>
                 <p>Kort product info here ...</p>
                 <p><strong>Price:</strong> $29.99</p>
-                <a href="#" class="buy-btn">Buy Now</a>
+                <a href="#" class="buy-btn">Add to basket</a>
             </div>
         </div>
         
@@ -27,8 +27,8 @@
             <div class="product-info">
               <h2>Product 3</h2>
               <p>Kort product info here ...</p>
-              <p><strong>Price:</strong> $29.99</p>
-              <a href="#" class="buy-btn">Buy Now</a>
+              <p><strong>Price:</strong> $39.99</p>
+              <a href="#" class="buy-btn">Add to basket</a>
             </div>
       </div>
 
@@ -37,8 +37,8 @@
         <div class="product-info">
           <h2>Product 4</h2>
           <p>Kort product info here ...</p>
-          <p><strong>Price:</strong> $29.99</p>
-          <a href="#" class="buy-btn">Buy Now</a>
+          <p><strong>Price:</strong> $49.99</p>
+          <a href="#" class="buy-btn">Add to basket</a>
         </div>
       </div>
   </div>
