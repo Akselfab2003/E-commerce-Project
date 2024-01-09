@@ -13,6 +13,6 @@ namespace E_commerce.Logic.Models
         public int Id { get; set; }
         public string Name { get; set; }
         [Required]
-        public Products ParentProductId { get; set; }
+        public Products? ParentProduct { get; set; }
     }
 }
