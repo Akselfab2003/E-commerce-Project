@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {  OnInit, NgModule} from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, ReactiveFormsModule} from '@angular/forms';
-import { User } from '../models/User';
+import { User } from '../../models/User';
 import { matchpassword } from './matchpassword-validator';
 import { HttpClient } from '@angular/common/http';
 
