@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {  OnInit, NgModule} from '@angular/core';
+import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, ReactiveFormsModule} from '@angular/forms';
+
 
 @Component({
   selector: 'app-register',
