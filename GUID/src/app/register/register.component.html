@@ -2,7 +2,7 @@
 <header class="header-nav">
     <div class="form">
       <h2 id="registration">Registration Form</h2>
-      <form>
+      <form [formGroup]="registerForm" (submit)="register()">
         <label for="fname">Username</label>
         <input type="text" id="fname" placeholder="Username..." formControlName="firstname">
     
@@ -14,7 +14,7 @@
     
         <label for="ConfirmPassword">Confirm Password</label>
         <input type="password" id="ConfirmPassword" placeholder="Confirm your password" formControlName="confirmPassword">
-        <!--<span *ngIf="reactiveFrom.errors?.['passwordmatcherror']">Password does not match</span>-->
+        <span *ngIf="registerForm.errors?.['passwordmatcherror']">Password does not match</span>
         <br>
     
         <label>Gender:</label>
@@ -22,22 +22,11 @@
         <label for="male">Male</label>
         <input type="radio" id="female" value="female" formControlName="gender">
         <label for="female">Female</label>
-        <input type="radio" id="other" formControlName="gender">
-        <label for="other">Other</label>
         <br><br>
     
-        <label>Hobbies <i>(Optional)</i></label>
-        <div class="form-inline">
-          <label><input type="checkbox" value="Movies" formControlName="hobbies">Movies</label>
-          <label><input type="checkbox" value="Games" formControlName="hobbies">Games</label>
-          <label><input type="checkbox" value="Books" formControlName="hobbies">Books</label>
-          <label><input type="checkbox" value="Comics" formControlName="hobbies">Comics</label>
-        </div>
-        <br>
-    
-        <button [disabled] type="submit" value="Submit" id="btn">Register</button>
+        <button [disabled]="registerForm.invalid" type="submit" value="Submit" id="btn" (click)="showSuccess()">Register</button>
 
-        <p>Allready have an account? <a routerLink="/Login">Login</a></p> 
+        <p>Allready have an account? <a routerLink="/Login" routerLinkActive="active">Login</a></p> 
       </form>
     </div>
     </header>
