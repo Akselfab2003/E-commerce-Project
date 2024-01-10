@@ -16,14 +16,14 @@ namespace E_commerce_Project.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Products>> GetProductById(int id)
         {
-            var hero = await context.GetById(id);
+            var product = await context.GetById(id);
 
-            if (hero == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return hero;
+            return product;
         }
 
         [HttpPut("{id}")]
