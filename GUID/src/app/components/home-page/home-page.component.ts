@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpserviceService } from '../../Services/httpservice.service';
-import { HttpModule } from '../Functions modules/HttpModule';
-import { RequestType } from '../Functions modules/request-type';
+import { HttpserviceService } from '../../../Services/httpservice.service';
+import { HttpModule } from '../../Functions modules/HttpModule';
+import { RequestType } from '../../Functions modules/request-type';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',

@@ -12,6 +12,7 @@ import { ProductPageComponent } from './components/product-page/product-page.com
 import { ProductPageListComponent } from './components/product-page-list/product-page-list.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProductSiteComponent } from './components/product-site/product-site.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
