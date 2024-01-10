@@ -8,6 +8,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProductSiteComponent } from './components/product-site/product-site.component';
 
 const routes: Routes = [
+  {path:"",component:HomePageComponent},
   {path:"Login", component:LoginComponent},
   {path:"Register", component:RegisterComponent},
   {path:"product-page", component:ProductPageComponent},

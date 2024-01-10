@@ -30,8 +30,10 @@ import { ProductSiteComponent } from './components/product-site/product-site.com
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
+    
   ],
-  providers: [],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
