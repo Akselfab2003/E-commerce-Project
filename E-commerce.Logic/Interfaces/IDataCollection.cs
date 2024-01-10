@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using E_commerce.Logic.Interfaces.Table_Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace E_commerce.Logic.Interfaces
     public interface IDataCollection
     {
         public IOrders Orders { get;}
+        public IUsers Users { get;}
+        public Isession Session { get;}
     }
 }

@@ -17,6 +17,5 @@ namespace E_commerce.Logic.Models
         public string Email {  get; set; } = string.Empty;
         [Column(TypeName = "Binary")]
         public bool Gender { get; set; }
-        public Session Session { get; set; }
     }
 }

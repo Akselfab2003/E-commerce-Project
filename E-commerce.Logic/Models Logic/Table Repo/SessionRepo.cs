@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class SessionRepo : ISession
+    public class SessionRepo : Isession
     {
         DBcontext context;
         public SessionRepo(DBcontext c) { context = c; }

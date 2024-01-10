@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    internal interface ISession
+    public interface Isession
     {
         public Task<Session> GetById(string SessID);
 
