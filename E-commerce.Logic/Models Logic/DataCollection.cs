@@ -11,15 +11,22 @@ namespace E_commerce.Logic.Models_Logic
     public class DataCollection : IDataCollection
     {
         private readonly IOrders orders;
+        private readonly IUsers users;
+
         public DataCollection(DBcontext Context) 
         {
             orders = new ordersRepo(Context);
+            users = new UsersRepo(Context);
         }
 
 
         public IOrders Orders
         {
             get { return orders; }
+        }
+        public IUsers Users
+        {
+            get { return users; }
         }
 
     }
