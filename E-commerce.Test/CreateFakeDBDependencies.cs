@@ -17,15 +17,11 @@ namespace E_commerce.Test
         private readonly IDataCollection dataCollection; 
         public CreateFakeDBDependencies() 
         {
-
             var _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
 
-
             DbContextOptions<DBcontext> contextOptions =
                 new DbContextOptionsBuilder<DBcontext>().UseSqlite(_connection).Options;
-
-
 
             FakeContext = new DBcontext(contextOptions);
 
@@ -33,13 +29,10 @@ namespace E_commerce.Test
             {
                 dataCollection = new DataCollection(FakeContext);
             }
-
         }
-
         public IDataCollection DataCollection
         {
             get { return dataCollection; }
-
         }
 
     }
