@@ -64,7 +64,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
 
 
-            return tags.DistinctBy(t => t.Name).ToList();
+            return tags.DistinctBy(t => t.Name).ToList()    ;
 
 
         }

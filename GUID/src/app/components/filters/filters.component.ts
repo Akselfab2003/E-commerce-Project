@@ -10,17 +10,29 @@ import { Tags } from '../../models/Tags';
 })
 export class FiltersComponent <T> {
 
-  public  TagsList:Tags[] = Array()
+  private TagsList:Tags[] = new Array<Tags>();
   constructor(private service:HttpserviceService<T>){
-    this.GetAllTags();
+    
   } 
 
   GetAllTags<T>(){
-    this.service.GetRequest<Tags[]>("Tags").subscribe(ele => {
-      this.TagsList = ele
-    })
-    console.log(this.TagsList)
+    this.service.GetRequest<Tags[]>("Tags").subscribe( ele => {
+    this.TagsList = ele
+   });
+
+    // this.service.GetRequest<Tags[]>("Tags").subscribe(ele=>{
+    //   console.log(ele)
+    //   //console.log(typeof(ele))
+    //   this.TagsList = ele
+    // });
   }
 
+  ngOnInit(){
+   this.GetAllTags<Tags[]>()
+  }
+
+  test(){
+    console.log( this.TagsList)
+  }
 
 }
