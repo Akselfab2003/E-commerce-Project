@@ -52,8 +52,22 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await Context.Tags.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-     
+        public async Task<List<Tags>> GetTagsForListOfIds(List<int> id)
+        {
 
+            return await Context.Tags.Where(Tag => id.Contains(Tag.Id)).ToListAsync();
+
+        }
+        public async Task<List<Tags>> GetAllUniqueTags()
+        {
+            List<Tags> tags = await Context.Tags.ToListAsync();
+
+
+
+            return tags.DistinctBy(t => t.Name).ToList();
+
+
+        }
         public async Task<Tags> UpdateTags(Tags entity)
         {
             Context.Tags.Update(entity);

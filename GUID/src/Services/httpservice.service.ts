@@ -15,28 +15,28 @@ export class HttpserviceService<T> {
   }
 
  
-  GetRequest(ENDPOINT:string) : Observable<T>
+  GetRequest<T>(ENDPOINT:string) : Observable<T>
   {   
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.get<T>(Full_URL);
   }
 
 
-  PostRequest(ENDPOINT:string,DATAOBJECT:T) :Observable<any>
+  PostRequest<T>(ENDPOINT:string,DATAOBJECT:T) :Observable<any>
   {
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.post<T>(Full_URL,DATAOBJECT).pipe();
   }
 
 
-  PutRequest(ENDPOINT:string,DATAOBJECT:T) :Observable<T>
+  PutRequest<T>(ENDPOINT:string,DATAOBJECT:T) :Observable<T>
   {
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.put<T>(ENDPOINT,DATAOBJECT).pipe();  
   }
 
 
-  DeleteRequest(ENDPOINT:string) :Observable<T>
+  DeleteRequest<T>(ENDPOINT:string) :Observable<T>
   {
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.delete<T>(ENDPOINT).pipe();  

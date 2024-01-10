@@ -12,5 +12,8 @@ namespace E_commerce.Logic.Interfaces
         public IOrders Orders { get;}
 
         public IUsers Users { get;}
+
+        public ITags Tags { get; }
+
     }
 }

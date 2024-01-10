@@ -12,11 +12,14 @@ namespace E_commerce.Logic.Models_Logic
     {
         private readonly IOrders orders;
         private readonly IUsers users;
+        private readonly ITags tags;
+
 
         public DataCollection(DBcontext Context) 
         {
             orders = new ordersRepo(Context);
             users = new UsersRepo(Context);
+            tags = new TagsRepo(Context);
         }
 
 
@@ -27,6 +30,11 @@ namespace E_commerce.Logic.Models_Logic
         public IUsers Users
         {
             get { return users; }
+        }
+
+        public ITags Tags
+        {
+            get { return tags; }
         }
 
     }
