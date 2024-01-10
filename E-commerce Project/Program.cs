@@ -24,7 +24,7 @@ namespace E_commerce_Project
 
 
             builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
-          
+            builder.Services.AddScoped<IProducts, E_commerce.Logic.Models_Logic.Table_Repo.productsRepo>();
 
             var app = builder.Build();
 
