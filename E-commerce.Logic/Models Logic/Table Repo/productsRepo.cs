@@ -21,11 +21,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return entity;
         }
 
-        public async Task<bool> DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(Products entity)
         {
             try
             {
-                Products product = await GetById(id);
+                Products product = await GetById(entity.Id);
                 context.Products.Remove(product);
                 await context.SaveChangesAsync();
             }
