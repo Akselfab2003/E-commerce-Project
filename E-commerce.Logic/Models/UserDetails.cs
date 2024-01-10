@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models
 {
-    public class ProductVariants
+    public class UserDetails
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public Products ParentProductId { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public int Price { get; set; }
+        public Users UserId { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public int ZipCode { get; set; }
     }
 }

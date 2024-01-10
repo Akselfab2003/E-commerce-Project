@@ -4,6 +4,7 @@ using E_commerce.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240109140458_Added image model and made a few tweaks to the Products and Tags models")]
+    partial class AddedimagemodelandmadeafewtweakstotheProductsandTagsmodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,12 +374,12 @@ namespace E_commerce.Logic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ParentProductId")
+                    b.Property<int>("ParentProductIdId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentProductId");
+                    b.HasIndex("ParentProductIdId");
 
                     b.ToTable("Tags");
                 });
@@ -567,13 +570,13 @@ namespace E_commerce.Logic.Migrations
 
             modelBuilder.Entity("E_commerce.Logic.Models.Tags", b =>
                 {
-                    b.HasOne("E_commerce.Logic.Models.Products", "ParentProduct")
+                    b.HasOne("E_commerce.Logic.Models.Products", "ParentProductId")
                         .WithMany()
-                        .HasForeignKey("ParentProductId")
+                        .HasForeignKey("ParentProductIdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ParentProduct");
+                    b.Navigation("ParentProductId");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.UserDetails", b =>
