@@ -19,7 +19,7 @@ namespace E_commerce_Project
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
-
+          
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -33,6 +33,13 @@ namespace E_commerce_Project
 
             app.UseAuthorization();
 
+            app.UseCors(options =>
+            {
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+                options.AllowAnyOrigin();
+
+            });
 
             app.MapControllers();
 
