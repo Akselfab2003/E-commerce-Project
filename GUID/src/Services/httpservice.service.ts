@@ -1,24 +1,48 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RequestType } from '../app/Functions modules/request-type';
-import { HttpModule } from '../app/Functions modules/HttpModule';
-import { HttpserviceService  as HttpserviceModule} from '../app/Functions modules/HttpserviceModule';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment.development';
 @Injectable({
   providedIn: 'root'
 
 })
-export class HttpserviceService {
-  private http:HttpClient;
-  // private HttpRequest:HttpModule;
-  constructor(Http:HttpClient){
-      this.http = Http
-      // this.HttpRequest=HttpRequest
+export class HttpserviceService<T> {
+  
+  private API_URL:string = ""
+  constructor(private Http:HttpClient){
+    this.API_URL = `${environment.API_URL}`
+  
   }
 
-  CreateHttpRequest(HttpRequest:HttpModule) : Observable<any>{
-     var test = new HttpserviceModule(this.http,HttpRequest)
-     return test.SendHttpRequest()
+ 
+  GetRequest(ENDPOINT:string) : Observable<T>
+  {   
+      var Full_URL = this.API_URL + ENDPOINT 
+      return this.Http.get<T>(Full_URL);
   }
+
+
+  PostRequest(ENDPOINT:string,DATAOBJECT:T) :Observable<any>
+  {
+      var Full_URL = this.API_URL + ENDPOINT 
+      return this.Http.post<T>(Full_URL,DATAOBJECT).pipe();
+  }
+
+
+  PutRequest(ENDPOINT:string,DATAOBJECT:T) :Observable<T>
+  {
+      var Full_URL = this.API_URL + ENDPOINT 
+      return this.Http.put<T>(ENDPOINT,DATAOBJECT).pipe();  
+  }
+
+
+  DeleteRequest(ENDPOINT:string) :Observable<T>
+  {
+      var Full_URL = this.API_URL + ENDPOINT 
+      return this.Http.delete<T>(ENDPOINT).pipe();  
+  }
+
+
+  
   
 }
