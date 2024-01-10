@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { RequestType } from '../app/Functions modules/request-type';
 import { HttpModule } from '../app/Functions modules/HttpModule';
 import { HttpserviceService  as HttpserviceModule} from '../app/Functions modules/HttpserviceModule';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 
@@ -15,9 +16,9 @@ export class HttpserviceService {
       // this.HttpRequest=HttpRequest
   }
 
-  CreateHttpRequest(HttpRequest:HttpModule){
+  CreateHttpRequest(HttpRequest:HttpModule) : Observable<any>{
      var test = new HttpserviceModule(this.http,HttpRequest)
-     test.SendHttpRequest()
+     return test.SendHttpRequest()
   }
   
 }

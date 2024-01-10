@@ -5,7 +5,7 @@ namespace E_commerce_Project.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [DisableCors]
+   
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

@@ -10,15 +10,43 @@ import { RequestType } from '../Functions modules/request-type';
 })
 export class HomePageComponent {
   private httpService:HttpserviceService;
-  constructor(http:HttpserviceService){
+  ArrayOfWeatherData:Array<any> = Array();
+  constructor(http:HttpserviceService,){
     this.httpService = http;
-    this.sendrequest();
+
   }
+
+  ngOnInit(){
+    this.sendrequest();
+
+  }
+
 
   sendrequest(){
+    var int:number = 0;
     var Test = new  HttpModule("https://localhost:7094/WeatherForecast",RequestType.Get,{})
-    var result = this.httpService.CreateHttpRequest(Test)
-
-    console.log(result)
+    this.httpService.CreateHttpRequest(Test).subscribe(
+      ele => {
+        console.log(ele)
+        
+      }
+    );
   }
+
+
+
+
+}
+class TestTest {
+  constructor() {
+    
+  }
+  date:object =  {
+  }
+  //date:string = ""
+  temperatureC:number = 0
+  temperatureF:number = 0
+  summary:string = ""
+
+
 }

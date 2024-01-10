@@ -44,30 +44,26 @@ export class HttpserviceService{
     }
 
 
-   private async GetRequest(){
-        var headersDict = {
-            'Access-Control-Allow-Origin':'*'
-        };
+   private GetRequest() : Observable<any>{
+      
+        var terst =  this.http.get(this.HttpRequest.url );
 
-        const requestOptions  = { headers :new HttpHeaders(headersDict)};
-
-        var terst = await this.http.get(this.HttpRequest.url,requestOptions ).toPromise();
-        console.log(terst)
+        return terst;
     }
-    private PostRequest() :Observable<object>
+    private PostRequest() :Observable<any>
     {
-        return this.http.post<Object>(this.HttpRequest.url,this.HttpRequest.dataObject).pipe( 
+        return this.http.post<any>(this.HttpRequest.url,this.HttpRequest.dataObject).pipe( 
         );
     }
 
-    private  PutRequest() :Observable<object>
+    private  PutRequest() :Observable<any>
     {
-        return this.http.put<Object>(this.HttpRequest.url,this.HttpRequest.dataObject).pipe( 
+        return this.http.put<any>(this.HttpRequest.url,this.HttpRequest.dataObject).pipe( 
         );  
     }
-    private  DeleteRequest() :Observable<object>
+    private  DeleteRequest() :Observable<any>
     {
-        return this.http.delete<Object>(this.HttpRequest.url).pipe( 
+        return this.http.delete<any>(this.HttpRequest.url).pipe( 
         );  
     }
 }
