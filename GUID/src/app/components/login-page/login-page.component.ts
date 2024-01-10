@@ -1,5 +1,6 @@
 import { Component, OnInit, NgModule} from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, ReactiveFormsModule} from '@angular/forms';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent {
   //Gemmer brugerens input i variabler
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.required),
   });
 
   /*constructor(){
@@ -24,6 +25,6 @@ export class LoginComponent {
   login(){
     if(this.loginForm.invalid) return;
 
-    alert('calling backend to login');
+    console.log('calling backend to login');
   }
 }

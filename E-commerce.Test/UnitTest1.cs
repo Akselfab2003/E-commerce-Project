@@ -50,18 +50,11 @@ namespace E_commerce.Test
             await dataCollection.Orders.DeleteOrder(1);
             Orders order = await dataCollection.Orders.GetById(1);
             output.WriteLine(JsonSerializer.Serialize(order));
-               
-          
-               
 
             Assert.Null(order);
 
 
         }
 
-
-
-
-    
     }
 }
