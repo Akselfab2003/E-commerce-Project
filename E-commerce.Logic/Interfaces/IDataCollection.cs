@@ -10,5 +10,6 @@ namespace E_commerce.Logic.Interfaces
     public interface IDataCollection
     {
         public IOrders Orders { get;}
+        public IProducts Products { get;}
     }
 }

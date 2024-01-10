@@ -11,7 +11,7 @@ namespace E_commerce_Project.Controllers
     public class ProductsController : Controller
     {
         IProducts context;
-        public ProductsController(IProducts c) { context = c; } // Dependency Injection - DI
+        public ProductsController(IDataCollection c) { context = c.Products; } // Dependency Injection - DI
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Products>> GetProductById(int id)
