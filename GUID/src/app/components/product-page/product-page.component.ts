@@ -6,6 +6,12 @@ import { Component } from '@angular/core';
   styleUrl: './product-page.component.css'
 })
 export class ProductPageComponent {
+
   
+
+  ButtonEvent(event:Event){
+    event.stopPropagation()
+    console.log("test")
+  }
 
 }
