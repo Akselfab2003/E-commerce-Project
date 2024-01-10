@@ -32,8 +32,8 @@ namespace E_commerce_Project.Controllers
 
             return Ok(user);
         }
-        [HttpPost(Name = "CreateUser")]
-        public async Task<HttpStatusCode> Create(Users users)
+        [HttpPost("CreateUser",Name = "CreateUser")]
+        public async Task<HttpStatusCode> PostUser(Users users)
         {
             try
             {
@@ -77,12 +77,15 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
-        [HttpPost(Name = "Test")]
-        public async Task<HttpStatusCode> CreateSession(Session session)
+        [HttpPost(Name ="CreateSession")]
+        public async Task<HttpStatusCode> PostSession(int id,Session session)
         {
             try
-            {
-                await _session.CreateSession(session);
+            {   Session session1 = new Session();
+                session1.user = await _users.GetById(id);
+                session1.SessId = session.SessId;
+                session1.Created = session.Created;
+                await _session.CreateSession(session1);
             }
             catch
             {
@@ -91,23 +94,23 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.Created;
         }
-        //[HttpPut("id")]
-        //public async Task<IActionResult> PutSession(Session session)
-        //{
-        //    var availability = session.Created.AddHours(2);
-        //    if (availability < DateTime.Now)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut("id")]
+        public async Task<IActionResult> PutSession(Session session)
+        {
+            var availability = session.Created.AddHours(2);
+            if (availability < DateTime.Now)
+            {
+                return BadRequest();
+            }
 
-        //    try
-        //    {
-        //        await _session.UpdateSession(session);
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //    }
-        //    return NoContent();
-        //}
+            try
+            {
+                await _session.UpdateSession(session);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return NoContent();
+        }
     }
 }
