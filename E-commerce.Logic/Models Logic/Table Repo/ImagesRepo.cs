@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class ImagesRepository : IImages
+    public class ImagesRepo : IImages
     {
         DBcontext context;
-        public ImagesRepository(DBcontext c) { context = c; } // Dependency Injection - DI
+        public ImagesRepo(DBcontext c) { context = c; } // Dependency Injection - DI
 
         public async Task<Images> CreateImage(Images image)
         {
@@ -22,11 +22,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return image;
         }
 
-        public async Task<bool> DeleteImage(int id)
+        public async Task<bool> DeleteImage(Images entity)
         {
             try
             {
-                Images image = await GetById(id);
+                Images image = await GetById(entity.Id);
                 context.Images.Remove(image);
                 await context.SaveChangesAsync();
             }

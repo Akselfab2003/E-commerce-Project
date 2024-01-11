@@ -20,11 +20,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return entity;
         }
 
-        public async Task<bool> DeleteProductVariants(int id)
+        public async Task<bool> DeleteProductVariants(ProductVariants entity)
         {
             try
             {
-                ProductVariants productVariant = await GetById(id);
+                ProductVariants productVariant = await GetById(entity.Id);
                 context.ProductVariants.Remove(productVariant);
                 await context.SaveChangesAsync();
             }
@@ -38,11 +38,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<ProductVariants> GetById(int id)
         {
             return await context.ProductVariants.FirstOrDefaultAsync(productVariant => productVariant.Id == id);
-        }
-
-        public async Task<ProductVariants> GetByName(string name)
-        {
-            return await context.ProductVariants.FirstOrDefaultAsync(productVariant => productVariant.Name == name);
         }
 
         public async Task<ProductVariants> UpdateProductVariants(ProductVariants entity)

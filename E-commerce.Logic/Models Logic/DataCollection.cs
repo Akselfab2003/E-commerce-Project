@@ -1,4 +1,6 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
+using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic.Table_Repo;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,14 @@ namespace E_commerce.Logic.Models_Logic
     {
         private readonly IOrders orders;
         private readonly IProducts products;
+        private readonly IImages images;
+        private readonly IProductVariants productVariants;
         public DataCollection(DBcontext Context) 
         {
             orders = new ordersRepo(Context);
             products = new productsRepo(Context);
+            images = new ImagesRepo(Context);
+            productVariants = new productVariantsRepo(Context);
         }
 
 
@@ -27,6 +33,13 @@ namespace E_commerce.Logic.Models_Logic
         {
             get { return products; }
         }
-
+        public IImages Images
+        {
+            get { return images; }
+        }
+        public IProductVariants ProductVariants
+        {
+            get { return productVariants; }
+        }
     }
 }

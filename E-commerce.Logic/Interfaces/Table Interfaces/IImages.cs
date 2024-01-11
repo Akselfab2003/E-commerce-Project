@@ -13,7 +13,7 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
 
         public Task<Images> UpdateImage(Images image);
 
-        public Task<bool> DeleteImage(int id);
+        public Task<bool> DeleteImage(Images image);
 
         public Task<Images> CreateImage(Images image);
     }
