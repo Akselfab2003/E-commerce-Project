@@ -2,17 +2,7 @@
 
 <div class="container">
     <div class="product-grid">
-      <div class="product-card" [routerLink]="['/product-Site', 1]">
-        <a (click)="ProductImage()"></a>
-            <img src="product1.jpg" alt="Product 1">
-            <div class="product-info">
-                <h2>Product 1</h2>
-                <p>Kort product info here ...</p>
-                <p><strong>Price:</strong> $19.99</p>
-                <a (click)="ButtonEvent($event)" aria-current="page" class="buy-btn">Add to basket</a>
-            </div>
-      </div>
       
-      <app-product-card [Test]="Product"></app-product-card>
+      <app-product-card *ngFor="let pro of Product" [Test]="pro"></app-product-card>
   </div>
 </div>

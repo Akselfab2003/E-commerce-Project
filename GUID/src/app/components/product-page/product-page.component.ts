@@ -9,13 +9,13 @@ import { Products } from '../../models/Products';
 })
 export class ProductPageComponent<T> {
 
-  Product:Products = new Products();
+  Product:Products[] = new Array<Products>();
 
   constructor(private service:HttpserviceService<T>) { };
 
   ProductImage<T>():void{
     this.service.GetRequest<Products>("Products/1").subscribe((data)=>{
-      this.Product = data;
+      this.Product = new Array<Products>(data, data, data, data);
     });
   };
   
