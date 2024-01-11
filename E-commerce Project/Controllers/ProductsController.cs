@@ -26,6 +26,12 @@ namespace E_commerce_Project.Controllers
             return product;
         }
 
+        [HttpGet("GetLimitedAmountOfProducts")]
+        public async Task<List<Products>> GetLimitedAmountOfProducts()
+        {
+            return await context.GetProducts(20);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Products products)
         {

@@ -13,5 +13,6 @@ namespace E_commerce.Logic.Interfaces
         public Task<Products> UpdateProduct(Products entity);
         public Task<bool> DeleteProduct(Products entity);
         public Task<Products> GetById(int id);
+        public Task<List<Products>> GetProducts(int count);
     }
 }

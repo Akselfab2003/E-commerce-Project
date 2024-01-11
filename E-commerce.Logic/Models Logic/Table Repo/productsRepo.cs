@@ -41,6 +41,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Products.Include(product => product.Images).FirstOrDefaultAsync(product => product.Id == id);
         }
 
+        public async Task<List<Products>> GetProducts(int count)
+        {
+            return await context.Products.Take(count).ToListAsync();
+        }
+
         public async Task<Products> UpdateProduct(Products entity)
         {
             context.Update(entity);
