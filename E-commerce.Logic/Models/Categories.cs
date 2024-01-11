@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models
 {
-    public class Tags
+    public class Categories
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-       
+
+
+        
     }
 }

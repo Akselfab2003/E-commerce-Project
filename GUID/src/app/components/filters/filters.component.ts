@@ -15,7 +15,6 @@ export class FiltersComponent <T> {
   TagsList:Tags[] = new Array<Tags>();
 
   constructor(private service:HttpserviceService<T>){
-    
   } 
 
   GetAllTags<T>(){
@@ -23,23 +22,22 @@ export class FiltersComponent <T> {
       this.setpost(ele)
    });
 
+   var tatg = new Tags()
+   tatg.name="test"
+   tatg.id= 1;
 
    
-
-
   }
 
   ngOnInit(){
    this.GetAllTags<Tags[]>()
-  
   }
 
   setpost(ArrayOfTags:Tags[]){
     this.TagsList = ArrayOfTags
     console.log(this.TagsList)
+    this.TagsChangedEvent.emit(this.TagsList)
   }
-  test(){
-    console.log( this.TagsList)
-  }
+
 
 }

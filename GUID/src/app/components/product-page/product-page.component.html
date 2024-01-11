@@ -1,6 +1,6 @@
 <h1>Products</h1>
 <div class="d-flex h-100 productPageCompontent">
-  <app-filters></app-filters>
+  <app-filters (TagsChangedEvent)="TagsChangeEventHandler($event)" ></app-filters>
   <div class="container">
       <div class="product-grid">
         <div class="product-card" [routerLink]="['/product-Site', 1]">
