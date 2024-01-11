@@ -7,6 +7,7 @@ import { ProductPageComponent } from './components/product-page/product-page.com
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProductSiteComponent } from './components/product-site/product-site.component';
 import { FiltersComponent } from './components/filters/filters.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -15,7 +16,7 @@ const routes: Routes = [
   {path:"product-page", component:ProductPageComponent},
   {path:"home-page", component:HomePageComponent},
   {path:"product-Site/:id", component:ProductSiteComponent},
-  {path:"filter",component:FiltersComponent}
+  {path:"filter",component:FiltersComponent},
   {path:"product-Site/:id", component:ProductSiteComponent},
   {path: "product-card", component:ProductCardComponent}
 ];

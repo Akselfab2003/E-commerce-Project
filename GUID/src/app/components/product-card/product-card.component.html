@@ -1,7 +1,7 @@
 <div class="product-card" [routerLink]="['/product-Site', 1]">
         <img [src]="product.images[0].imagePath" alt="Product 1">
         <div class="product-info">
-            <h2>{{product.title}}</h2>
+            <span style="font-weight: bold;" class="filterTitle">{{product.title}}</span>
             <p>{{product.description}}</p>
             <p><strong>${{product.price}}</strong></p>
             <a (click)="ButtonEvent($event)" aria-current="page" class="buy-btn">Add to basket</a>

@@ -24,7 +24,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     ProductPageComponent,
     HomePageComponent,
     ProductSiteComponent,
-    ProductCardComponent
+    ProductCardComponent,
     ProductSiteComponent,
     FiltersComponent
   ],
