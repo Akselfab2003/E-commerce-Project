@@ -14,9 +14,9 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         DBcontext context;
         public UsersRepo(DBcontext c) { context = c; } // Dependency Injection - DI
 
-        public async Task<Users> GetById(int id)
+        public async Task<Users> GetByName(string name)
         {
-            return await context.Users.FirstOrDefaultAsync(Users => Users.Id == id);
+            return await context.Users.FirstOrDefaultAsync(Users => Users.Username == name);
         }
 
         public async Task<Users> UpdateUser(Users users)
@@ -26,11 +26,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return users;
         }
 
-        public async Task<bool> DeleteUser(int id)
+        public async Task<bool> DeleteUser(string name)
         {
             try
             {
-                Users users = await GetById(id);
+                Users users = await GetByName(name);
                 context.Users.Remove(users);
                 await context.SaveChangesAsync();
             }
@@ -41,6 +41,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
             return true;
         }
+
 
         public async Task<Users> CreateUser(Users users)
         {

@@ -31,23 +31,26 @@ export class RegisterComponent<T> {
     );
   }
   constructor(private service:HttpserviceService<T>){
-    this.service.GetRequest<User>("User").subscribe()
     };
 
 
   register<T>() {
-    // let user:User= new User();
-    // user.username=this.registerForm.get('firstname')?.value?.toString() as string;
-    // user.password=this.registerForm.get('password')?.value?.toString() as string;
-    // user.email=this.registerForm.get('email')?.value?.toString() as string;
-    // user.gender=this.registerForm.get('gender')?.value as unknown as boolean;
-
-    // this.service.PostRequest<User>("User",user).subscribe((data)=>
-    // console.log(data)
-    // )
+    let user:User= this.InputData();
+    this.service.PostRequest<User>("User",user).subscribe((data)=>
+    console.log(data)
+    )
 
   }
-  showSuccess(): void {
-    console.log("You have succesfully made an account!")
+  InputData():User{
+    let user:User=new User();
+    user.username=this.registerForm.get('username')?.value?.toString() as string;
+    user.password=this.registerForm.get('password')?.value?.toString() as string;
+    user.email=this.registerForm.get('email')?.value?.toString() as string;
+    if (this.registerForm.get('gender')?.value=="male"){
+      user.gender=true;
+    }else{
+      user.gender=false;
+    }
+    return user;
   }
 }

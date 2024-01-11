@@ -21,9 +21,9 @@ namespace E_commerce_Project.Controllers
             _session = _context.Session;
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(string name)
         {
-            var user = await _users.GetById(id);
+            var user = await _users.GetByName(name);
 
             if (user == null)
             {
@@ -32,12 +32,12 @@ namespace E_commerce_Project.Controllers
 
             return Ok(user);
         }
-        [HttpPost("CreateUser",Name = "CreateUser")]
+        [HttpPost]
         public async Task<HttpStatusCode> PostUser(Users users)
         {
             try
             {
-                await _users.CreateUser(users);
+                    await _users.CreateUser(users);
             }
             catch
             {
@@ -65,24 +65,24 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string name)
         {
-            var user = await _users.GetById(id);
+            var user = await _users.GetByName(name);
             if (user == null)
             {
                 return NotFound();
             }
 
-            await _users.DeleteUser(user.Id);
+            await _users.DeleteUser(user.Username);
 
             return NoContent();
         }
-        [HttpPost(Name ="CreateSession")]
-        public async Task<HttpStatusCode> PostSession(int id,Session session)
+        [HttpPost("Session")]
+        public async Task<HttpStatusCode> PostSession(string name,Session session)
         {
             try
             {   Session session1 = new Session();
-                session1.user = await _users.GetById(id);
+                session1.user = await _users.GetByName(name);
                 session1.SessId = session.SessId;
                 session1.Created = session.Created;
                 await _session.CreateSession(session1);
