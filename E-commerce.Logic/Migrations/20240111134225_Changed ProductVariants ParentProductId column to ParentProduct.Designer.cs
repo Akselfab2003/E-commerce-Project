@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20240111101744_Changed ProductVariants ParentProductId column to ParentProduct due to the EF automatically inserting and id after the name")]
-    partial class ChangedProductVariantsParentProductIdcolumntoParentProductduetotheEFautomaticallyinsertingandidafterthename
+    [Migration("20240111134225_Changed ProductVariants ParentProductId column to ParentProduct")]
+    partial class ChangedProductVariantsParentProductIdcolumntoParentProduct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
