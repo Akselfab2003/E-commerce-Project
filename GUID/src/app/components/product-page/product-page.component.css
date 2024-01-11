@@ -6,7 +6,7 @@ body {
   }
 
   .container {
-    max-width: 80%;
+    max-width:80%;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -61,4 +61,13 @@ body {
 
   .buy-btn:hover {
     background-color: #2980b9;
+  }
+
+
+  .productPageCompontent{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    margin-left: 3%;
+    margin-left: 3%;
   }

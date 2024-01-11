@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpserviceService } from '../../../Services/httpservice.service';
-import { environment } from '../../../environments/environment.development';
 import { Tags } from '../../models/Tags';
+
 
 @Component({
   selector: 'app-filters',
@@ -10,27 +10,34 @@ import { Tags } from '../../models/Tags';
 })
 export class FiltersComponent <T> {
 
-  private TagsList:Tags[] = new Array<Tags>();
+  @Output() TagsChangedEvent = new EventEmitter<Tags[]>()
+  
+  TagsList:Tags[] = new Array<Tags>();
+
   constructor(private service:HttpserviceService<T>){
     
   } 
 
   GetAllTags<T>(){
     this.service.GetRequest<Tags[]>("Tags").subscribe( ele => {
-    this.TagsList = ele
+      this.setpost(ele)
    });
 
-    // this.service.GetRequest<Tags[]>("Tags").subscribe(ele=>{
-    //   console.log(ele)
-    //   //console.log(typeof(ele))
-    //   this.TagsList = ele
-    // });
+
+   
+
+
   }
 
   ngOnInit(){
    this.GetAllTags<Tags[]>()
+  
   }
 
+  setpost(ArrayOfTags:Tags[]){
+    this.TagsList = ArrayOfTags
+    console.log(this.TagsList)
+  }
   test(){
     console.log( this.TagsList)
   }
