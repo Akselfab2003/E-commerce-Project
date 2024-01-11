@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Products } from '../../models/Products';
 
 @Component({
   selector: 'app-product-card',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrl: './product-card.component.css'
 })
 export class ProductCardComponent {
+
+  @Input() Test: Products = new Products();
+
+  ButtonEvent(event: Event) {
+    event.stopPropagation()
+    console.log("test")
+    console.log(this.Test)
+  }
 
 }

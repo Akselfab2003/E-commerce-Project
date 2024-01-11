@@ -1,1 +1,9 @@
-<p>product-card works!</p>
+<div class="product-card" [routerLink]="['/product-Site', 1]">
+        <img [src]="Test.images[0].imagePath" alt="Product 1">
+        <div class="product-info">
+            <h2>{{Test.title}}</h2>
+            <p>Kort product info here ...</p>
+            <p><strong>Price:</strong> $19.99</p>
+            <a (click)="ButtonEvent($event)" aria-current="page" class="buy-btn">Add to basket</a>
+        </div>
+  </div>
