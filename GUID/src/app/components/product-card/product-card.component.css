@@ -50,6 +50,9 @@ body {
 
   p {
     color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .buy-btn {

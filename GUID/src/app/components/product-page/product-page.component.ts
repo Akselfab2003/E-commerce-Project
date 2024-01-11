@@ -13,21 +13,21 @@ export class ProductPageComponent<T> {
 
   constructor(private service:HttpserviceService<T>) { };
 
-  ProductImage<T>():void{
-    this.service.GetRequest<Products>("Products/1").subscribe((data)=>{
-      this.Product = new Array<Products>(data, data, data, data);
+  GetProducts<T>():void{
+    this.service.GetRequest<Products[]>("Products/GetLimitedAmountOfProducts").subscribe((data)=>{
+      this.Product = data;
     });
   };
   
   ngOnInit(): void {
-    this.ProductImage();
+    this.GetProducts();
   };
 
 
   ButtonEvent(event:Event){
     event.stopPropagation()
     console.log("test")
-    this.ProductImage();
+    this.GetProducts();
   }
 
 }

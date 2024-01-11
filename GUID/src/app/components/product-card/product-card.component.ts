@@ -8,12 +8,12 @@ import { Products } from '../../models/Products';
 })
 export class ProductCardComponent {
 
-  @Input() Test: Products = new Products();
+  @Input() product: Products = new Products();
 
   ButtonEvent(event: Event) {
     event.stopPropagation()
-    console.log("test")
-    console.log(this.Test)
+    console.log("product")
+    console.log(this.product)
   }
 
 }
