@@ -13,5 +13,6 @@ namespace E_commerce.Logic.Interfaces
         public Task<Users> UpdateUser(Users entity);
         public Task<bool> DeleteUser(string name);
         public Task<Users> GetByName(string name);
+        public Task<Users> Login(string password,string username);
     }
 }

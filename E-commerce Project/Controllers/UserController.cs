@@ -20,10 +20,22 @@ namespace E_commerce_Project.Controllers
             _users = _context.Users;
             _session = _context.Session;
         }
-        [HttpGet("{id}")]
+        [HttpGet("{name}")]
         public async Task<IActionResult> GetUser(string name)
         {
             var user = await _users.GetByName(name);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+        [HttpGet("{password},{username}")]
+        public async Task<IActionResult> Login(string password, string username)
+        {
+            var user = await _users.Login(username,password);
 
             if (user == null)
             {

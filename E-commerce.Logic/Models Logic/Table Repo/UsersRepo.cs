@@ -18,6 +18,10 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             return await context.Users.FirstOrDefaultAsync(Users => Users.Username == name);
         }
+        public async Task<Users>Login(string password, string username)
+        {
+            return await context.Users.FirstOrDefaultAsync(users=>users.Username==username && users.Password==password);
+        }
 
         public async Task<Users> UpdateUser(Users users)
         {

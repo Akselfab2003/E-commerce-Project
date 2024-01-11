@@ -17,12 +17,17 @@ export class LoginComponent<T> {
     password: new FormControl('', Validators.required),
   });
 
-  
+  constructor(private service:HttpserviceService<T>){
+  };
 
 
   //starter forfra hvis login ikke passer
   login(){
+    let username:string = this.loginForm.get("username")?.value?.toString() as string;
+    let password:string = this.loginForm.get("password")?.value?.toString() as string;
+    this.service.GetRequest<User>("User/"+password+username).subscribe((data)=>
+    console.log(data)
+    )
     if(this.loginForm.invalid) return;
-    console.log('calling backend to login');
   }
 }
