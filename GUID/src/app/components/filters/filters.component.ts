@@ -18,7 +18,7 @@ export class FiltersComponent <T> {
   } 
 
   GetAllTags<T>(){
-    this.service.GetRequest<Tags[]>("Tags").subscribe( ele => {
+    this.service.GetRequest<Tags[]>("Tags/Categories").subscribe( ele => {
       this.setpost(ele)
    });
 
