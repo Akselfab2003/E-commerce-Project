@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, Valid
 import { User } from '../../models/User';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { environment } from '../../../environments/environment.development';
+import { LoginObject } from '../../models/LoginObject';
 
 @Component({
   selector: 'app-login',
@@ -23,11 +24,17 @@ export class LoginComponent<T> {
 
   //starter forfra hvis login ikke passer
   login(){
+  
     let username:string = this.loginForm.get("username")?.value?.toString() as string;
     let password:string = this.loginForm.get("password")?.value?.toString() as string;
-    this.service.GetRequest<User>("User/").subscribe((data)=>
+    var LoginTry:LoginObject = new LoginObject();
+    LoginTry.username = username;
+    LoginTry.password =password;
+     
+    this.service.PostRequest<LoginObject>("User/Test",LoginTry).subscribe((data)=>
     console.log(data)
     )
     if(this.loginForm.invalid) return;
   }
 }
+
