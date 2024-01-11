@@ -22,10 +22,6 @@ export class FiltersComponent <T> {
       this.setpost(ele)
    });
 
-   var tatg = new Tags()
-   tatg.name="test"
-   tatg.id= 1;
-
    
   }
 

@@ -62,8 +62,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             List<Tags> tags = await Context.Tags.ToListAsync();
 
-
-
             return tags.DistinctBy(t => t.Name).ToList()    ;
 
 

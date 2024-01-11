@@ -1,4 +1,5 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,12 @@ namespace E_commerce_Project.Controllers
     public class TagsController : ControllerBase
     {
         private readonly ITags DataCollection;
+        private readonly ICategories DataCollection_Categories;
+
         public TagsController(IDataCollection collection)
         {
             DataCollection = collection.Tags;
+            DataCollection_Categories = collection.Categories;
         }
 
         [HttpPost(Name = "GetAllTags")]
@@ -47,6 +51,23 @@ namespace E_commerce_Project.Controllers
             }
 
             return Tags;
+        }
+
+
+        [HttpGet("Categories")]
+        public async Task<List<Categories>> GetAllCategories()
+        {
+            List<Categories> Categories = new List<Categories>();
+            try
+            {
+                Categories = await DataCollection_Categories.GetAllUniqueCategories();
+            }
+            catch
+            {
+                return Categories;
+            }
+
+            return Categories;
         }
 
     }

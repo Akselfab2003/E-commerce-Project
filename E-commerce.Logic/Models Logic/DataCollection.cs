@@ -1,4 +1,6 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
+using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic.Table_Repo;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,8 @@ namespace E_commerce.Logic.Models_Logic
         private readonly IOrders orders;
         private readonly IUsers users;
         private readonly ITags tags;
+        private readonly ICategories categories;
+
 
 
         public DataCollection(DBcontext Context) 
@@ -20,6 +24,7 @@ namespace E_commerce.Logic.Models_Logic
             orders = new ordersRepo(Context);
             users = new UsersRepo(Context);
             tags = new TagsRepo(Context);
+            categories = new CategoriesRepo(Context);
         }
 
 
@@ -35,6 +40,11 @@ namespace E_commerce.Logic.Models_Logic
         public ITags Tags
         {
             get { return tags; }
+        }
+
+        public ICategories Categories
+        {
+            get { return categories; }
         }
 
     }
