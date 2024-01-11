@@ -22,7 +22,7 @@ export class HttpserviceService<T> {
   }
 
 
-  PostRequest<T>(ENDPOINT:string,DATAOBJECT:T) :Observable<any>
+  PostRequest<T>(ENDPOINT:string,DATAOBJECT:T) :Observable<T>
   {
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.post<T>(Full_URL,DATAOBJECT).pipe();

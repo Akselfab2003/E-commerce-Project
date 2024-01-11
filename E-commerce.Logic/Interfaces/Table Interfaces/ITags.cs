@@ -13,5 +13,9 @@ namespace E_commerce.Logic.Interfaces
         public Task<Tags> UpdateTags(Tags entity);
         public Task<bool> DeleteTags(Tags entity);
         public Task<Tags> GetById(int id);
+        public Task<List<Tags>> GetTagsForListOfIds(List<int> id);
+
+        public Task<List<Tags>> GetAllUniqueTags();
+
     }
 }

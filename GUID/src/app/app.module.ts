@@ -11,6 +11,7 @@ import { ProductPageComponent } from './components/product-page/product-page.com
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProductSiteComponent } from './components/product-site/product-site.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FiltersComponent } from './components/filters/filters.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 
 
@@ -24,6 +25,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     HomePageComponent,
     ProductSiteComponent,
     ProductCardComponent
+    ProductSiteComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,

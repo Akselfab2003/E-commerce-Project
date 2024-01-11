@@ -7,19 +7,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models
 {
-    public class Session
+    public class Categories
     {
         [Key]
-
         public int Id { get; set; }
-        [Required]
-        public string SessId { get; set; }
-
-
-        [Required]
-        public DateTime Created { get; set; } = DateTime.Now;
-        //[Required]
-        //public Users user { get; set; }
-
+        public string Name { get; set; }        
     }
 }

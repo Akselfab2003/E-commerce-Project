@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Tags } from '../../models/Tags';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Products } from '../../models/Products';
 
@@ -30,4 +31,8 @@ export class ProductPageComponent<T> {
     this.GetProducts();
   }
 
+  TagsChangeEventHandler($event:Tags[]){
+    var test = $event[0]
+    console.log(test)
+  }
 }
