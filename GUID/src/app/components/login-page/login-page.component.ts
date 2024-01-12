@@ -4,6 +4,8 @@ import { User } from '../../models/User';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { environment } from '../../../environments/environment.development';
 import { LoginObject } from '../../models/LoginObject';
+import { Session } from '../../models/Session';
+import { sessionController } from '../../logic/sessionLogic';
 
 @Component({
   selector: 'app-login',
@@ -24,16 +26,16 @@ export class LoginComponent<T> {
 
   //starter forfra hvis login ikke passer
   login(){
-  
+    let tmp:any;
     let username:string = this.loginForm.get("username")?.value?.toString() as string;
     let password:string = this.loginForm.get("password")?.value?.toString() as string;
     var LoginTry:LoginObject = new LoginObject();
     LoginTry.username = username;
     LoginTry.password =password;
      
-    this.service.PostRequest<LoginObject>("User/Test",LoginTry).subscribe((data)=>
-    console.log(data)
-    )
+    this.service.PostRequest<LoginObject>("User/Login",LoginTry).subscribe((data)=>
+    tmp=data),
+    sessionController.SetCookie(tmp)
     if(this.loginForm.invalid) return;
   }
 }

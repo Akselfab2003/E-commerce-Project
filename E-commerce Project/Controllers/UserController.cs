@@ -35,14 +35,14 @@ namespace E_commerce_Project.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginObject loginObject)
         {
-            var user = await _users.Login(loginObject.username,loginObject.password);
+            var session = await _session.Login(loginObject);
 
-            if (user == null)
+            if (session == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(session);
         }
         [HttpPost]
         public async Task<HttpStatusCode> PostUser(Users users)

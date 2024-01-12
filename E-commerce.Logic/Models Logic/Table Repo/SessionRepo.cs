@@ -20,6 +20,16 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             await context.SaveChangesAsync();
             return session;
         }
+        public async Task<Session> Login(LoginObject loginObject)
+        {
+            Users user = await context.Users.FirstOrDefaultAsync(users => users.Username == loginObject.username && users.Password == loginObject.password);
+            Session session = new Session();
+            session.user = user;
+            session.SessId = Guid.NewGuid().ToString();
+            session.Created = DateTime.Now;
+            await CreateSession(session);
+            return session;
+        }
 
         public async Task<bool> DeleteSession(string id)
         {

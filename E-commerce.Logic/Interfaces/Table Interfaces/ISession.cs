@@ -16,5 +16,6 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
         public Task<bool> DeleteSession(string id);
 
         public Task<Session> CreateSession(Session session);
+        public Task<Session>Login(LoginObject loginObject);
     }
 }
