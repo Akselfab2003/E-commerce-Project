@@ -26,16 +26,14 @@ export class LoginComponent<T> {
 
   //starter forfra hvis login ikke passer
   login(){
-    let tmp:any;
     let username:string = this.loginForm.get("username")?.value?.toString() as string;
     let password:string = this.loginForm.get("password")?.value?.toString() as string;
     var LoginTry:LoginObject = new LoginObject();
     LoginTry.username = username;
     LoginTry.password =password;
      
-    this.service.PostRequest<LoginObject>("User/Login",LoginTry).subscribe((data)=>
-    tmp=data),
-    sessionController.SetCookie(tmp)
+    this.service.PostRequest<Session>("User/Login",LoginTry).subscribe((data)=>
+    sessionController.SetCookie(data));
     if(this.loginForm.invalid) return;
   }
 }

@@ -20,7 +20,7 @@ export class HttpserviceService<T> {
       return this.Http.get<T>(Full_URL);
   }
 
-  PostRequest<T>(ENDPOINT:string,DATAOBJECT:T) :Observable<T>
+  PostRequest<T>(ENDPOINT:string,DATAOBJECT:any) :Observable<T>
   {
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.post<T>(Full_URL,DATAOBJECT);
