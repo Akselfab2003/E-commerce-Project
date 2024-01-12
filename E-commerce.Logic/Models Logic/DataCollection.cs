@@ -16,7 +16,6 @@ namespace E_commerce.Logic.Models_Logic
         private readonly IOrders orders;
         private readonly IUsers users;
         private readonly Isession session;
-        private readonly IUsers users;
         private readonly ITags tags;
         private readonly ICategories categories;
 
@@ -28,7 +27,6 @@ namespace E_commerce.Logic.Models_Logic
         public DataCollection(DBcontext Context) 
         {
             orders = new ordersRepo(Context);
-            users = new UsersRepo(Context);
             session = new SessionRepo(Context);
             users = new UsersRepo(Context);
             tags = new TagsRepo(Context);
@@ -50,10 +48,6 @@ namespace E_commerce.Logic.Models_Logic
         public Isession Session
         {
             get { return session; }
-        }
-        public IUsers Users
-        {
-            get { return users; }
         }
 
         public ITags Tags

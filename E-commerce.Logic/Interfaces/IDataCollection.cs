@@ -17,7 +17,6 @@ namespace E_commerce.Logic.Interfaces
         public IImages Images { get;}
         public IProductVariants ProductVariants { get;}
 
-        public IUsers Users { get;}
 
         public ITags Tags { get; }
         public ICategories Categories { get; }
