@@ -40,7 +40,7 @@ export class RegisterComponent<T> {
     this.service.PostRequest<User>("User",user).subscribe((data)=>
     console.log(data)
     )
-    this.service.PostRequest<User>("User/Session",user).subscribe((data)=>
+    this.service.PostRequest<User>("Session",user).subscribe((data)=>
     console.log(data));
   }
   InputData():User{

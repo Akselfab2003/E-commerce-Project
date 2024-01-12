@@ -97,8 +97,8 @@ namespace E_commerce_Project.Controllers
         {
             Session session1 = new Session();
             try
-            {   
-                session1.user = await _users.GetByName(users.Username);
+            {
+                session1.user = users;
                 session1.SessId = Guid.NewGuid().ToString();
                 session1.Created = DateTime.Now;
                 await _session.CreateSession(session1);
