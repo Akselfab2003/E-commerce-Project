@@ -32,10 +32,7 @@ namespace E_commerce_Project.Controllers
 
             return Ok(user);
         }
-
-
-
-        [HttpPost("Test")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginObject loginObject)
         {
             var user = await _users.Login(loginObject.username,loginObject.password);
