@@ -1,1 +1,19 @@
-<p>profile works!</p>
+<div class="profile-container">
+    <div class="user-info">
+      <h2>User Information</h2>
+      <p><strong>Name:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <!-- Add more user data as needed -->
+    </div>
+
+    <div class="order-history">
+      <h2>Order History</h2>
+      <ul>
+        <li *ngFor="let order in order">
+          <p><strong>Order ID:</strong> {{ order.id }}</p>
+          <p><strong>Date:</strong> {{ order.date | date }}</p>
+          <!-- Add more order details as needed -->
+        </li>
+      </ul>
+    </div>
+  </div>
