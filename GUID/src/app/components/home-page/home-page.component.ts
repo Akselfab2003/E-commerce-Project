@@ -22,10 +22,6 @@ export class HomePageComponent <T> {
 
 
   sendrequest(){
-   // var Test = new  HttpModule("https://localhost:7094/WeatherForecast",RequestType.Get,{})
-    this.service.GetRequest("WeatherForecast").subscribe((DATA) => {
-      console.log(DATA)
-    })
   }
 
 

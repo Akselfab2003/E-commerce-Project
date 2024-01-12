@@ -29,7 +29,7 @@ namespace E_commerce_Project.Controllers
         [HttpGet("GetLimitedAmountOfProducts")]
         public async Task<List<Products>> GetLimitedAmountOfProducts()
         {
-            return await context.GetProducts(20);
+            return await context.GetProducts(40);
         }
 
         [HttpPut("{id}")]

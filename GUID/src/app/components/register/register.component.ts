@@ -5,6 +5,7 @@ import { matchpassword } from './matchpassword-validator';
 import { HttpClient } from '@angular/common/http';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { User } from '../../models/User';
+import { Session} from '../../models/Session'
 
 
 @Component({
@@ -39,7 +40,8 @@ export class RegisterComponent<T> {
     this.service.PostRequest<User>("User",user).subscribe((data)=>
     console.log(data)
     )
-
+    this.service.PostRequest<User>("Session",user).subscribe((data)=>
+    console.log(data));
   }
   InputData():User{
     let user:User=new User();
