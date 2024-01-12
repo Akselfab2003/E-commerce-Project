@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20240111130034_Added Categories")]
-    partial class AddedCategories
+    [Migration("20240112093541_.")]
+    partial class _
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,7 +281,7 @@ namespace E_commerce.Logic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ParentProductIdId")
+                    b.Property<int>("ParentProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Price")
@@ -289,7 +289,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentProductIdId");
+                    b.HasIndex("ParentProductId");
 
                     b.ToTable("ProductVariants");
                 });
@@ -355,7 +355,12 @@ namespace E_commerce.Logic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("Sessions");
                 });
@@ -444,16 +449,14 @@ namespace E_commerce.Logic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SessionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SessionId");
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -552,13 +555,13 @@ namespace E_commerce.Logic.Migrations
 
             modelBuilder.Entity("E_commerce.Logic.Models.ProductVariants", b =>
                 {
-                    b.HasOne("E_commerce.Logic.Models.Products", "ParentProductId")
+                    b.HasOne("E_commerce.Logic.Models.Products", "ParentProduct")
                         .WithMany("ProductVariants")
-                        .HasForeignKey("ParentProductIdId")
+                        .HasForeignKey("ParentProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ParentProductId");
+                    b.Navigation("ParentProduct");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Reviews", b =>
@@ -570,6 +573,17 @@ namespace E_commerce.Logic.Migrations
                         .IsRequired();
 
                     b.Navigation("UserId");
+                });
+
+            modelBuilder.Entity("E_commerce.Logic.Models.Session", b =>
+                {
+                    b.HasOne("E_commerce.Logic.Models.Users", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.SupportTickets", b =>
@@ -592,17 +606,6 @@ namespace E_commerce.Logic.Migrations
                         .IsRequired();
 
                     b.Navigation("UserId");
-                });
-
-            modelBuilder.Entity("E_commerce.Logic.Models.Users", b =>
-                {
-                    b.HasOne("E_commerce.Logic.Models.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Products", b =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace E_commerce.Logic.Migrations
 {
     /// <inheritdoc />
-    public partial class Addedpriamrykeytousername : Migration
+    public partial class _ : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,19 @@ namespace E_commerce.Logic.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AdminUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,6 +65,19 @@ namespace E_commerce.Logic.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -64,7 +90,7 @@ namespace E_commerce.Logic.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => new { x.Id, x.Username });
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,7 +186,7 @@ namespace E_commerce.Logic.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParentProductIdId = table.Column<int>(type: "int", nullable: false),
+                    ParentProductId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false)
@@ -169,27 +195,7 @@ namespace E_commerce.Logic.Migrations
                 {
                     table.PrimaryKey("PK_ProductVariants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductVariants_Products_ParentProductIdId",
-                        column: x => x.ParentProductIdId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tags",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentProductId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tags_Products_ParentProductId",
+                        name: "FK_ProductVariants_Products_ParentProductId",
                         column: x => x.ParentProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -202,17 +208,16 @@ namespace E_commerce.Logic.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Basket", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Basket_Users_UserId_Username",
-                        columns: x => new { x.UserId, x.Username },
+                        name: "FK_Basket_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumns: new[] { "Id", "Username" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -225,17 +230,16 @@ namespace E_commerce.Logic.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cvr = table.Column<int>(type: "int", nullable: false),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Company", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Company_Users_UserId_Username",
-                        columns: x => new { x.UserId, x.Username },
+                        name: "FK_Company_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumns: new[] { "Id", "Username" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -246,17 +250,16 @@ namespace E_commerce.Logic.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserIdId = table.Column<int>(type: "int", nullable: false),
-                    UserIdUsername = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReviewContent = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reviews_Users_UserIdId_UserIdUsername",
-                        columns: x => new { x.UserIdId, x.UserIdUsername },
+                        name: "FK_Reviews_Users_UserIdId",
+                        column: x => x.UserIdId,
                         principalTable: "Users",
-                        principalColumns: new[] { "Id", "Username" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -268,17 +271,16 @@ namespace E_commerce.Logic.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SessId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    userId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sessions_Users_userId_Username",
-                        columns: x => new { x.userId, x.Username },
+                        name: "FK_Sessions_Users_userId",
+                        column: x => x.userId,
                         principalTable: "Users",
-                        principalColumns: new[] { "Id", "Username" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -289,17 +291,16 @@ namespace E_commerce.Logic.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserIdId = table.Column<int>(type: "int", nullable: false),
-                    UserIdUsername = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SupportContent = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SuportTickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SuportTickets_Users_UserIdId_UserIdUsername",
-                        columns: x => new { x.UserIdId, x.UserIdUsername },
+                        name: "FK_SuportTickets_Users_UserIdId",
+                        column: x => x.UserIdId,
                         principalTable: "Users",
-                        principalColumns: new[] { "Id", "Username" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -310,7 +311,6 @@ namespace E_commerce.Logic.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserIdId = table.Column<int>(type: "int", nullable: false),
-                    UserIdUsername = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ZipCode = table.Column<int>(type: "int", nullable: false)
                 },
@@ -318,10 +318,10 @@ namespace E_commerce.Logic.Migrations
                 {
                     table.PrimaryKey("PK_UserDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserDetails_Users_UserIdId_UserIdUsername",
-                        columns: x => new { x.UserIdId, x.UserIdUsername },
+                        name: "FK_UserDetails_Users_UserIdId",
+                        column: x => x.UserIdId,
                         principalTable: "Users",
-                        principalColumns: new[] { "Id", "Username" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -369,9 +369,9 @@ namespace E_commerce.Logic.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Basket_UserId_Username",
+                name: "IX_Basket_UserId",
                 table: "Basket",
-                columns: new[] { "UserId", "Username" });
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BasketDetails_BasketId",
@@ -379,9 +379,9 @@ namespace E_commerce.Logic.Migrations
                 column: "BasketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Company_UserId_Username",
+                name: "IX_Company_UserId",
                 table: "Company",
-                columns: new[] { "UserId", "Username" });
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DiscountCodes_BasketDetailsId",
@@ -414,34 +414,35 @@ namespace E_commerce.Logic.Migrations
                 column: "ParentProductIdId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductVariants_ParentProductIdId",
+                name: "IX_ProductVariants_ParentProductId",
                 table: "ProductVariants",
-                column: "ParentProductIdId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserIdId_UserIdUsername",
-                table: "Reviews",
-                columns: new[] { "UserIdId", "UserIdUsername" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sessions_userId_Username",
-                table: "Sessions",
-                columns: new[] { "userId", "Username" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SuportTickets_UserIdId_UserIdUsername",
-                table: "SuportTickets",
-                columns: new[] { "UserIdId", "UserIdUsername" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tags_ParentProductId",
-                table: "Tags",
                 column: "ParentProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserDetails_UserIdId_UserIdUsername",
+                name: "IX_Reviews_UserIdId",
+                table: "Reviews",
+                column: "UserIdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sessions_userId",
+                table: "Sessions",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SuportTickets_UserIdId",
+                table: "SuportTickets",
+                column: "UserIdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserDetails_UserIdId",
                 table: "UserDetails",
-                columns: new[] { "UserIdId", "UserIdUsername" });
+                column: "UserIdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -449,6 +450,9 @@ namespace E_commerce.Logic.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AdminUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Company");
