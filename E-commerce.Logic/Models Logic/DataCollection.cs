@@ -1,5 +1,6 @@
 ﻿using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Interfaces.Table_Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic.Table_Repo;
 using System;
@@ -14,6 +15,8 @@ namespace E_commerce.Logic.Models_Logic
     {
         private readonly IOrders orders;
         private readonly IUsers users;
+        private readonly Isession session;
+        private readonly IUsers users;
         private readonly ITags tags;
         private readonly ICategories categories;
 
@@ -26,6 +29,8 @@ namespace E_commerce.Logic.Models_Logic
         {
             orders = new ordersRepo(Context);
             users = new UsersRepo(Context);
+            session = new SessionRepo(Context);
+            users = new UsersRepo(Context);
             tags = new TagsRepo(Context);
             categories = new CategoriesRepo(Context);
             products = new productsRepo(Context);
@@ -37,6 +42,14 @@ namespace E_commerce.Logic.Models_Logic
         public IOrders Orders
         {
             get { return orders; }
+        }
+        public IUsers Users
+        {
+            get { return users; }
+        }
+        public Isession Session
+        {
+            get { return session; }
         }
         public IUsers Users
         {

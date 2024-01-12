@@ -14,12 +14,10 @@ namespace E_commerce.Logic.Models
         public int Id { get; set; }
         [Required]
         public string SessId { get; set; }
-
-
         [Required]
-        public DateTime Created { get; set; } = DateTime.Now;
-        //[Required]
-        //public Users user { get; set; }
+        public DateTime Created { get; set; }
+        [Required]
+        public Users user { get; set; }
 
     }
 }
