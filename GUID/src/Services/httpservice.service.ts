@@ -26,7 +26,7 @@ export class HttpserviceService<T> {
       return this.Http.post<T>(Full_URL,DATAOBJECT);
   }
 
-  PutRequest<T>(ENDPOINT:string,DATAOBJECT:T) :Observable<T>
+  PutRequest<T>(ENDPOINT:string,DATAOBJECT:any) :Observable<T>
   {
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.put<T>(ENDPOINT,DATAOBJECT).pipe();  
