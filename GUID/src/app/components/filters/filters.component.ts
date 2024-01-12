@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Tags } from '../../models/Tags';
+import { Categories } from '../../models/Categories';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class FiltersComponent <T> {
   } 
 
   GetAllTags<T>(){
-    this.service.GetRequest<Tags[]>("Tags/Categories").subscribe( ele => {
+    this.service.GetRequest<Categories[]>("Tags/Categories").subscribe( ele => {
       this.setpost(ele)
    });
 

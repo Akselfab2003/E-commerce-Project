@@ -68,3 +68,9 @@ body {
   .buy-btn:hover {
     background-color: #2980b9;
   }
+
+
+  .filterTitle{
+    font-size: 1em;
+    font-weight: bold;
+}
