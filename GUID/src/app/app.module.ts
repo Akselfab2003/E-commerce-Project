@@ -9,11 +9,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductPageComponent } from './components/product-page/product-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { ProductSiteComponent } from './components/product-site/product-site.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ProductDetailsPageComponent } from './components/product-details-page/product-details-page.component';
 
 
 @NgModule({
@@ -24,11 +24,11 @@ import { ProfileComponent } from './components/profile/profile.component';
     NavbarComponent,
     ProductPageComponent,
     HomePageComponent,
-    ProductSiteComponent,
     ProductCardComponent,
-    ProductSiteComponent,
+    ProductDetailsPageComponent,
     FiltersComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProductDetailsPageComponent
   ],
   imports: [
     BrowserModule,

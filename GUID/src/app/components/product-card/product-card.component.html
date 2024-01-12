@@ -1,18 +1,6 @@
-<!-- <div class="product-card" [routerLink]="['/product-Site', 1]">
-        <img [src]="product.images[0].imagePath" alt="Product 1">
-        <div class="product-info">
-            <span style="font-weight: bold;" class="filterTitle">{{product.title}}</span>
-            <p>{{product.description}}</p>
-            <p><strong>${{product.price}}</strong></p>
-            <a (click)="ButtonEvent($event)" aria-current="page" class="buy-btn">Add to basket</a>
-        </div>
-  </div> -->
-
-
-<div class="product-card" [routerLink]="['/product-Site', product.title]">
+<div class="product-card" [routerLink]="['/product-details', product.id]">
     <div class="d-flex flex-column w-100 h-100 product-card-Container">
             <img  [src]="product.images[0].imagePath" alt="Product 1">
-
         
         <div class="product-info">
             <span  class="filterTitle">{{product.title}}</span>
@@ -22,6 +10,5 @@
             </p>
             <a (click)="ButtonEvent($event)" aria-current="page" class="buy-btn">Add to basket</a>
         </div>
-
     </div>
 </div>

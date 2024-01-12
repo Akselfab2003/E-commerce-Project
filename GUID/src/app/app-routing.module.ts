@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { ProductPageComponent } from './components/product-page/product-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { ProductSiteComponent } from './components/product-site/product-site.component';
+import { ProductDetailsPageComponent } from './components/product-details-page/product-details-page.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { authenticatorGuard } from '../app/logic/authenticator.guard'
@@ -17,11 +17,10 @@ const routes: Routes = [
   {path:"Register", component:RegisterComponent},
   {path:"product-page", component:ProductPageComponent},
   {path:"home-page", component:HomePageComponent},
-  {path:"product-Site/:id", component:ProductSiteComponent},
+  {path: "product-details/:id", component:ProductDetailsPageComponent},
   {path:"filter",component:FiltersComponent},
-  {path:"product-Site/:id", component:ProductSiteComponent},
   {path:"product-card", component:ProductCardComponent},
-  {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]}
+  {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
 ];
 
 @NgModule({
