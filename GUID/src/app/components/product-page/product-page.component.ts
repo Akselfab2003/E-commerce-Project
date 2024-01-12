@@ -35,4 +35,5 @@ export class ProductPageComponent<T> {
     var test = $event[0]
     console.log(test)
   }
+  
 }

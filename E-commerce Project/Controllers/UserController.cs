@@ -32,10 +32,7 @@ namespace E_commerce_Project.Controllers
 
             return Ok(user);
         }
-
-
-
-        [HttpPost("Test")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginObject loginObject)
         {
             var user = await _users.Login(loginObject.username,loginObject.password);
@@ -97,8 +94,8 @@ namespace E_commerce_Project.Controllers
         {
             Session session1 = new Session();
             try
-            {   
-                session1.user = await _users.GetByName(users.Username);
+            {
+                session1.user = users;
                 session1.SessId = Guid.NewGuid().ToString();
                 session1.Created = DateTime.Now;
                 await _session.CreateSession(session1);
