@@ -13,6 +13,7 @@ import { ProductSiteComponent } from './components/product-site/product-site.com
 import { HttpClientModule } from '@angular/common/http';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     ProductSiteComponent,
     ProductCardComponent,
     ProductSiteComponent,
-    FiltersComponent
+    FiltersComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
