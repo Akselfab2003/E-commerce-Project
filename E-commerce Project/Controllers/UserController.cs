@@ -93,27 +93,32 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
         [HttpPost("Session")]
-        public async Task<HttpStatusCode> PostSession(string name,Session session)
+        public async Task<IActionResult> PostSession(Users users)
         {
+            Session session1 = new Session();
             try
-            {   Session session1 = new Session();
-                session1.user = await _users.GetByName(name);
-                session1.SessId = session.SessId;
-                session1.Created = session.Created;
+            {   
+                session1.user = await _users.GetByName(users.Username);
+                session1.SessId = Guid.NewGuid().ToString();
+                session1.Created = DateTime.Now;
                 await _session.CreateSession(session1);
             }
             catch
             {
-                return HttpStatusCode.BadRequest;
+                return BadRequest();
             }
 
-            return HttpStatusCode.Created;
+            return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
         [HttpPut("id")]
-        public async Task<IActionResult> PutSession(Session session)
+        public async Task<IActionResult> PutSession(string name,Session session)
         {
             var availability = session.Created.AddHours(2);
             if (availability < DateTime.Now)
+            {
+                session.user = await _users.GetByName(name);
+            }
+            else
             {
                 return BadRequest();
             }
