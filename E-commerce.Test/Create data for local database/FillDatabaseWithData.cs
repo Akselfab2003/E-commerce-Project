@@ -41,6 +41,8 @@ namespace E_commerce.Test.Create_data_for_local_database
                 .RuleFor(user => user.Gender, data => data.Random.Bool());
 
 
+
+
             List<Users> data = faker.GenerateBetween(10, 20);
 
             output.WriteLine(JsonSerializer.Serialize(data));
@@ -51,5 +53,27 @@ namespace E_commerce.Test.Create_data_for_local_database
             Assert.True(data.Any());
             
         }
+
+
+
+        [Fact]
+        public async void InsertProducts()
+        {
+            Faker<Products> faker = new Faker<Products>()
+                .RuleFor(Product => Product.Title, data => data.Commerce.ProductName())
+                .RuleFor(Product => Product.Description, data => data.Commerce.ProductDescription())
+                .RuleFor(Product => Product.Price, data => Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")))
+                .RuleFor(Product => Product.Images, data => (new List<Images> { (new Images() { ImagePath = data.Image.PicsumUrl(1000, 1500, false, false) })})) ;
+            List<Products> data = faker.GenerateBetween(10, 20);
+
+           
+            foreach (Products product in data)
+            {
+                await DataCollection.Products.CreateProduct(product);
+            }
+            Assert.True(data.Any());
+
+        }
+
     }
 }
