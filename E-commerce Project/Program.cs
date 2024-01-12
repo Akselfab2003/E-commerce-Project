@@ -23,7 +23,6 @@ namespace E_commerce_Project
             builder.Services.GetConfig(builder.Configuration).AddServices();
 
 
-            builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
 
             var app = builder.Build();
 
