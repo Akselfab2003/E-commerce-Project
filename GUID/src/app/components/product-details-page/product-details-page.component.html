@@ -1,0 +1,17 @@
+<main class="container">
+ 
+    <div class="left-column">
+        <img  [src]="product.images[0].imagePath" alt="Product 1">
+    </div>
+    <div class="right-column">
+      <div class="product-description">
+        <span>Replace With Category</span>
+        <h1>{{product.title}}</h1>
+        <p>{{product.description}}</p>
+      </div>
+      <div class="product-price">
+        <span>${{product.price}}</span>
+        <a href="#" class="buy-btn">Add to cart</a>
+      </div>
+    </div>
+  </main>
