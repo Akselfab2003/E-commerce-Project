@@ -12,9 +12,9 @@ import { Categories } from '../../models/Categories';
 export class FiltersComponent <T> {
 
 
-  @Output() TagsChangedEvent = new EventEmitter<Categories[]>()
+  @Output() TagsChangedEvent = new EventEmitter<Categories>()
   
-  TagsList:Categories[] = new Array<Categories>();
+  Categories:Categories[] = new Array<Categories>();
   CurrentSelectedValue:string = "";
   constructor(private service:HttpserviceService<T>){
   }  
@@ -31,15 +31,22 @@ export class FiltersComponent <T> {
    this.GetAllTags<Categories[]>()
   }
 
-  setpost(ArrayOfTags:Categories[]){
-    this.TagsList = ArrayOfTags
-    console.log(this.TagsList)
-    this.TagsChangedEvent.emit(this.TagsList)
+  setpost(ArrayOfCategories:Categories[]){
+    this.Categories = ArrayOfCategories
+    console.log(this.Categories)
+
   }
 
   selectChanged()
   {
-    
+ 
+    this.Categories.forEach(ele => {
+      
+      if(ele.name == this.CurrentSelectedValue){
+        this.TagsChangedEvent.emit(ele)
+        ele.Active = true;
+      }
+    })
   }
 
 

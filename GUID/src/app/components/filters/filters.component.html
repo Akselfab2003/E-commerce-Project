@@ -2,8 +2,8 @@
     <span class="filterTitle">Filters</span>
     <div class="input-group">
         <label class="input-group-text" for="Categories">Categories</label>
-        <select [value]="CurrentSelectedValue" (selectionchange)="selectChanged()" class="form-select" id="Categories">
-            <option *ngFor="let val of TagsList" [value]="val.name">{{val.name}}</option>
+        <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories">
+            <option *ngFor="let val of Categories" [value]="val.name">{{val.name}}</option>
         </select>
     </div>
 </div>

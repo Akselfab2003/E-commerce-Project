@@ -16,7 +16,7 @@ const routes: Routes = [
   {path:"",component:HomePageComponent,canActivate:[sessionGuard]},
   {path:"Login", component:LoginComponent},
   {path:"Register", component:RegisterComponent,canActivate:[sessionGuard]},
-  {path:"product-page", component:ProductPageComponent,canActivate:[sessionGuard]},
+  {path:"product-page", component:ProductPageComponent,canActivate:[]},
   {path:"home-page", component:HomePageComponent,canActivate:[sessionGuard]},
   {path: "product-details/:id", component:ProductDetailsPageComponent,canActivate:[sessionGuard]},
   {path:"filter",component:FiltersComponent,canActivate:[sessionGuard]},

@@ -14,6 +14,7 @@ export const authenticatorGuard: CanActivateFn = (
 export const sessionGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
+    console.log("Guard")
     console.log(sessionController.GetCookie())
     if (sessionController.GetCookie()==undefined){
       sessionController.WaitMethodEmptySession()
