@@ -37,10 +37,10 @@ export class RegisterComponent<T> {
 
   register() {
     let user:User= this.InputData();
-    this.service.PostRequest<User>("User",user).subscribe((data)=>
+    this.service.PostRequest<User>("User/createUser",user).subscribe((data)=>
     console.log(data)
     )
-    this.service.PostRequest<User>("Session",user).subscribe((data)=>
+    this.service.PostRequest<User>("Session/createSession",user).subscribe((data)=>
     console.log(data));
   }
   InputData():User{
