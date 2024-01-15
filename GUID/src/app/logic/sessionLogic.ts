@@ -27,7 +27,7 @@ export class sessionController{
         let sessid:string=sessionController.GetCookie();
         console.log(sessid)
         console.log()
-        HttpserviceService.GetRequest<boolean>("User/ValidateSession/"+sessid).subscribe((data) => {
+        HttpserviceService.GetRequest<boolean>("User/ValidateSession"+sessid).subscribe((data) => {
             console.log(data)
             sessionController.validated = data;
      })
