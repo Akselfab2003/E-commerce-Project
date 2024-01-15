@@ -13,7 +13,7 @@ import { Session } from '../../models/Session';
 export class ProfileComponent<T> {
 
   user:User = new User();
-  order:Order[] = new Array<Order>();
+  orders:Order[] = new Array<Order>();
   session:Session = new Session();
 
   constructor(private service:HttpserviceService<T>) { };
@@ -34,9 +34,11 @@ export class ProfileComponent<T> {
   }
 
   GetOrders(){
-    this.service.GetRequest<Order>("Orders/1").subscribe((data)=>{
-      this.order = data;
-      console.log(this.order)
+    let sessid:string=sessionController.GetCookie();
+
+    this.service.GetRequest<Order[]>("Orders/"+sessid).subscribe((data)=>{
+      this.orders = data;
+      console.log(this.orders)
     });
   }
 }

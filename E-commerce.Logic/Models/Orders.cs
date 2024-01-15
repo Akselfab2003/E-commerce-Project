@@ -11,7 +11,7 @@ namespace E_commerce.Logic.Models
     public class Orders
     {
         [Key]
-        [JsonIgnore]
+        
         public int Id { get; set; }
 
         public Users Users { get; set; }

@@ -11,10 +11,14 @@ namespace E_commerce_Project.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrders Context;
-        public OrdersController(IDataCollection c) { Context = c.Orders; }
+        private readonly IUsers IUserContext;
+
+        public OrdersController(IDataCollection c) { Context = c.Orders;
+            IUserContext = c.Users;
+        }
 
         [HttpGet("{sessid}")]
-        public async Task<ActionResult<Orders>> GetOrderstBysessID(string sessid)
+        public async Task<ActionResult<List<Orders>>> GetOrderstBysessID(string sessid)
         {
             var order = await Context.GetBysessId(sessid);
 
@@ -26,7 +30,7 @@ namespace E_commerce_Project.Controllers
             return order;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ActionResult<Orders>> GetOrderstById(int id)
         {
             var order = await Context.GetById(id);
@@ -40,11 +44,13 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpPost(Name = "CreateOrder")]
-        public async Task<HttpStatusCode> CreateOrder(Orders order)
+        public async Task<HttpStatusCode> CreateOrder(int userid,Orders order)
         {
             try
             {
-             await Context.CreateOrder(order);
+                var test = order;
+                test.Users = await IUserContext.GetById(userid);
+             await Context.CreateOrder(test);
             }
             catch 
             {

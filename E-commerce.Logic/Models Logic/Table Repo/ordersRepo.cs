@@ -1,4 +1,5 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +13,8 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
     public class ordersRepo :IOrders
     {
         private readonly DBcontext context;
-        public ordersRepo(DBcontext c) { context = c; }
+        private readonly Isession dataCollection;
+        public ordersRepo(DBcontext c) { context = c; dataCollection = new SessionRepo(context); }
 
         public async Task<Orders> CreateOrder(Orders Order)
         {
@@ -62,8 +64,9 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<List<Orders>> GetBysessId(string sessid)
         {
-            Users usr = new Users();
-            List<Orders>userOrders = await context.Orders.Where(order => order.Users == usr).ToListAsync();
+            Session session = await dataCollection.GetById(sessid);
+            Users usr = session.user;
+            List < Orders>userOrders = await context.Orders.Where(order => order.Users == usr).ToListAsync();
             return userOrders;
         }
 
@@ -74,9 +77,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return Order;
         }
 
-        Task<Orders> IOrders.GetBysessId(string sessid)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
