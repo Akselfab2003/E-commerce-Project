@@ -15,7 +15,9 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProductDetailsPageComponent } from './components/product-details-page/product-details-page.component';
 import { BasketComponent } from './components/basket/basket.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
     FiltersComponent,
     ProfileComponent,
     ProductDetailsPageComponent,
-    BasketComponent
+    BasketComponent,
+    CheckoutPageComponent
   ],
   imports: [
     BrowserModule,

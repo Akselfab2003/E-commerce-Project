@@ -11,6 +11,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { authenticatorGuard, sessionGuard } from '../app/logic/authenticator.guard'
 import { ProfileComponent } from './components/profile/profile.component';
 import { BasketComponent } from './components/basket/basket.component';
+import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent,canActivate:[sessionGuard]},
@@ -22,6 +23,8 @@ const routes: Routes = [
   {path:"filter",component:FiltersComponent,canActivate:[sessionGuard]},
   {path:"product-card", component:ProductCardComponent,canActivate:[sessionGuard]},
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
+  {path:"basket",component:BasketComponent},
+  {path:"checkout-page",component:CheckoutPageComponent}
   {path:"basket",component:BasketComponent,canActivate:[sessionGuard]}
 ];
 
