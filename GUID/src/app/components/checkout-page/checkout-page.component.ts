@@ -38,11 +38,11 @@ export class CheckoutPageComponent <T> {
   }
 
   /* calculateTotal(): number {
-    return this.cartItems.reduce((total, item) => total + item.price, 0);
-  }
+    return this.GetProduct().reduce((total, item) => total + item.price, 0);
+  } */
 
   placeOrder(): void {
     // Handle the order placement logic, e.g., send data to the server
-    console.log('Placing order:', this.billingDetails, 'Items:', this.cartItems);
-  } */
+    console.log('Placing order:', this.billingDetails, 'Items:', this.GetProduct());
+  }
 }

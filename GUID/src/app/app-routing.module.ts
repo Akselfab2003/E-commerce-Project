@@ -24,7 +24,7 @@ const routes: Routes = [
   {path:"product-card", component:ProductCardComponent,canActivate:[sessionGuard]},
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
   {path:"basket",component:BasketComponent},
-  {path:"checkout-page",component:CheckoutPageComponent}
+  {path:"checkout-page",component:CheckoutPageComponent},
   {path:"basket",component:BasketComponent,canActivate:[sessionGuard]}
 ];
 
