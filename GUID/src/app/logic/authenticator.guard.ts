@@ -18,7 +18,7 @@ export const sessionGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
     if (sessionController.GetCookie()==undefined){
-      HttpserviceService.PostRequest<Session>("User/empty").subscribe((data) => {
+      HttpserviceService.GetRequest<Session>("User/empty").subscribe((data) => {
         sessionController.SetCookie(data);
       });
     }
