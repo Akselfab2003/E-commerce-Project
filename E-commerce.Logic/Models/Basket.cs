@@ -12,7 +12,7 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         public Users User { get; set; }
-        //public Session Session { get; set; }
-
+        public Session Session { get; set; }
+        public List<BasketDetails> BasketDetails { get; set; }
     }
 }
