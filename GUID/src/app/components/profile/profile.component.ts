@@ -20,7 +20,7 @@ export class ProfileComponent<T> {
 
 
   ngOnInit(): void {
-    sessionController.ValidateSession()
+    sessionController.WaitMethod()
     this.GetUser();
     this.GetOrders();
   };

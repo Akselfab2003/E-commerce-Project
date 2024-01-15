@@ -8,10 +8,14 @@ import { environment } from '../environments/environment.development';
 })
 export class HttpserviceService<T> {
   
-  private API_URL:string = ""
+  private  API_URL:string = ""
+  private static API_URL:string = ""
+  static HttpTest:HttpClient;
+
   constructor(private Http:HttpClient){
     this.API_URL = `${environment.API_URL}`
-  
+    HttpserviceService.HttpTest = Http
+    HttpserviceService.API_URL =`${environment.API_URL}`
   }
  
   GetRequest<T>(ENDPOINT:string) : Observable<T>
@@ -37,4 +41,10 @@ export class HttpserviceService<T> {
       var Full_URL = this.API_URL + ENDPOINT 
       return this.Http.delete<T>(ENDPOINT).pipe();  
   }
+  static GetRequest<T>(ENDPOINT:string) : Observable<T>
+  {   
+      var Full_URL = HttpserviceService.API_URL + ENDPOINT 
+      return this.HttpTest.get<T>(Full_URL);
+  }
+
 }

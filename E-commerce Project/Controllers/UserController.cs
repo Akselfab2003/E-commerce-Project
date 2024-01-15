@@ -154,7 +154,7 @@ namespace E_commerce_Project.Controllers
             }
             return NoContent();
         }
-        [HttpGet("ValidateSession{sessionId}")]
+        [HttpGet("ValidateSession/{sessionId}")]
         public async Task<Boolean> ValidateSession(string sessionId)
         {
             try
