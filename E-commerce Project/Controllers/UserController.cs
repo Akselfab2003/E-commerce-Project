@@ -20,8 +20,8 @@ namespace E_commerce_Project.Controllers
             _users = _context.Users;
             _session = _context.Session;
         }
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetUser(string name)
+        [HttpGet("UserName{name}")]
+        public async Task<IActionResult> GetUserGetByName(string name)
         {
             var user = await _users.GetByName(name);
 
@@ -32,7 +32,19 @@ namespace E_commerce_Project.Controllers
 
             return Ok(user);
         }
-        [HttpPost("Login")]
+        [HttpGet("UserId{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var user = await _users.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginObject loginObject)
         {
             var session = await _session.Login(loginObject);
@@ -44,7 +56,7 @@ namespace E_commerce_Project.Controllers
 
             return Ok(session);
         }
-        [HttpPost]
+        [HttpPost("createUser")]
         public async Task<HttpStatusCode> PostUser(Users users)
         {
             try
@@ -58,7 +70,7 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.Created;
         }
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutUser(int id,Users user)
         {
             if (id != user.Id)
@@ -76,7 +88,7 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteUser(string name)
         {
             var user = await _users.GetByName(name);
@@ -89,7 +101,7 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
-        [HttpPost("Session")]
+        [HttpPost("createSession")]
         public async Task<IActionResult> PostSession(Users users)
         {
             Session session1 = new Session();
@@ -107,7 +119,7 @@ namespace E_commerce_Project.Controllers
 
             return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
-        [HttpPut("id")]
+        [HttpPut("{name}")]
         public async Task<IActionResult> PutSession(string name,Session session)
         {
             var availability = session.Created.AddHours(2);
@@ -128,6 +140,39 @@ namespace E_commerce_Project.Controllers
             {
             }
             return NoContent();
+        }
+        [HttpGet("SessionId{sessionId}")]
+        public async Task<IActionResult> GetSession(string sessionId)
+        {
+            try
+            {
+                var session =await _session.GetById(sessionId);
+                return Ok(session);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return NoContent();
+        }
+        [HttpGet("ValidateSession{sessionId}")]
+        public async Task<Boolean> ValidateSession(string sessionId)
+        {
+            try
+            {
+                Session session = await _session.GetById(sessionId);
+                if (session == null || session.user==null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

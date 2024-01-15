@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { User } from '../../models/User';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Order } from '../../models/Order';
+import { sessionController } from '../../logic/sessionLogic';
+import { Session } from '../../models/Session';
 
 @Component({
   selector: 'app-profile',
@@ -12,18 +14,22 @@ export class ProfileComponent<T> {
 
   user:User = new User();
   order:Order = new Order();
+  session:Session = new Session();
 
   constructor(private service:HttpserviceService<T>) { };
 
 
   ngOnInit(): void {
+    sessionController.
     this.GetUser();
     this.GetOrders();
   };
 
   GetUser(){
-    this.service.GetRequest<User>("User/test").subscribe((data)=>{
-      this.user = data;
+    let sessid=sessionController.GetCookie();
+    this.service.GetRequest<Session>("User/SessionId"+sessid).subscribe((data)=>{
+      this.session = data;
+      this.user=this.session.user || new User();
       console.log(this.user)
     });
   }
