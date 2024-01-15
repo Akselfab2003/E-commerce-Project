@@ -25,7 +25,7 @@ namespace E_commerce.Test
         
                 Orders orders = new Orders();
                 orders.Id = 1;
-                 orders.sessid = "Test";
+                // orders.sessid = "Test";
                 Orders orderReturned = await dataCollection.Orders.CreateOrder(orders);
                 output.WriteLine(JsonSerializer.Serialize(orderReturned));
                 Assert.Equal(orders, orderReturned);

@@ -119,6 +119,24 @@ namespace E_commerce_Project.Controllers
 
             return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
+        [HttpPost("createEmptySession")]
+        public async Task<IActionResult> PostEmptySession()
+        {
+            Session session1 = new Session();
+            try
+            {
+                session1.user = null;
+                session1.SessId = Guid.NewGuid().ToString();
+                session1.Created = DateTime.Now;
+                await _session.CreateSession(session1);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
+        }
         [HttpPut("{name}")]
         public async Task<IActionResult> PutSession(string name,Session session)
         {
@@ -154,7 +172,7 @@ namespace E_commerce_Project.Controllers
             }
             return NoContent();
         }
-        [HttpGet("ValidateSession{sessionId}")]
+        [HttpGet("ValidateSession/{sessionId}")]
         public async Task<Boolean> ValidateSession(string sessionId)
         {
             try

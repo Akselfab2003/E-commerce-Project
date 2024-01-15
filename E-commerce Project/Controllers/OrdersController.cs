@@ -11,17 +11,46 @@ namespace E_commerce_Project.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrders Context;
-        public OrdersController(IDataCollection _context)
+        private readonly IUsers IUserContext;
+
+        public OrdersController(IDataCollection c) { Context = c.Orders;
+            IUserContext = c.Users;
+        }
+
+        [HttpGet("{sessid}")]
+        public async Task<ActionResult<List<Orders>>> GetOrderstBysessID(string sessid)
         {
-            Context = _context.Orders;
+            var order = await Context.GetBysessId(sessid);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
+        }
+
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<Orders>> GetOrderstById(int id)
+        {
+            var order = await Context.GetById(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
         }
 
         [HttpPost(Name = "CreateOrder")]
-        public async Task<HttpStatusCode> CreateOrder(Orders order)
+        public async Task<HttpStatusCode> CreateOrder(int userid,Orders order)
         {
             try
             {
-             await Context.CreateOrder(order);
+                var test = order;
+                test.Users = await IUserContext.GetById(userid);
+             await Context.CreateOrder(test);
             }
             catch 
             {
