@@ -5,4 +5,5 @@ export class ProductVariants{
     name:String="";
     description:String="";
     price:number=0;
+    variantValue:string = "";
 }

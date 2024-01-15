@@ -40,9 +40,6 @@ namespace E_commerce.Test.Create_data_for_local_database
                 .RuleFor(user => user.Email, data => data.Person.Email)
                 .RuleFor(user => user.Gender, data => data.Random.Bool());
 
-
-
-
             List<Users> data = faker.GenerateBetween(10, 20);
 
             output.WriteLine(JsonSerializer.Serialize(data));
@@ -51,19 +48,42 @@ namespace E_commerce.Test.Create_data_for_local_database
                 await DataCollection.Users.CreateUser(user);
             }
             Assert.True(data.Any());
-            
+
         }
+        [Fact]
+        public async void InsertCategories()
+        {
+            string[] categories = new string[50];
+            Faker<Categories> faker = new Faker<Categories>()
+                .RuleFor(categories => categories.Name, data => data.Commerce.Categories(1)[0]) ;
+
+
+            
+             
+            List<Categories> data = faker.GenerateBetween(50,50);
+
+
+            foreach (Categories category in data.DistinctBy(t => t.Name).ToList())
+            {
+                await DataCollection.Categories.CreateCategories(category);
+            }
+            Assert.True(data.Any());
+
+        }
+
 
 
 
         [Fact]
         public async void InsertProducts()
         {
+            List<Categories> categories = await DataCollection.Categories.GetAllUniqueCategories();
             Faker<Products> faker = new Faker<Products>()
                 .RuleFor(Product => Product.Title, data => data.Commerce.ProductName())
                 .RuleFor(Product => Product.Description, data => data.Commerce.ProductDescription())
                 .RuleFor(Product => Product.Price, data => Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")))
-                .RuleFor(Product => Product.Images, data => (new List<Images> { (new Images() { ImagePath = data.Image.PicsumUrl(1000, 1500, false, false) })})) ;
+                .RuleFor(Product => Product.Images, data => (new List<Images> { (new Images() { ImagePath = data.Image.PicsumUrl(1000, 1500, false, false) })}))
+                .RuleFor(Product => Product.ProductCategories,data => data.PickRandom(categories));
             List<Products> data = faker.GenerateBetween(10, 20);
 
            

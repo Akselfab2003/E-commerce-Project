@@ -1,8 +1,9 @@
 
-.NavBar{
-    height: 15%;
-  width: 100%;
-    color: white;
+.navbar{
+    /* height: 15%;
+  width: 100%; */
+    /* color: white !important;
+    background-color: var(--background) !important; */
 }
 
 .logo {
