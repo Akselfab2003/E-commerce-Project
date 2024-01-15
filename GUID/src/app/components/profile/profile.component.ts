@@ -34,8 +34,8 @@ export class ProfileComponent<T> {
   }
 
   GetOrders(){
-    this.service.GetRequest<Order[]>("api/Orders").subscribe((data)=>{
-      this.order = Array<Order>();
+    this.service.GetRequest<Order>("Orders/1").subscribe((data)=>{
+      this.order = data;
       console.log(this.order)
     });
   }
