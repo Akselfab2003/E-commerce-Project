@@ -3,7 +3,9 @@ import { HttpserviceService } from "../../Services/httpservice.service";
 import { Session } from "../models/Session"
 
 export class sessionController<T>{
-    constructor(private service:HttpserviceService<T>){
+    public static service:HttpserviceService<any>;
+    constructor(private Service:HttpserviceService<T>){
+       sessionController.service = Service
     }
     public static GetCookie():string{
         var cookieArray=document.cookie.split(";");
@@ -17,11 +19,14 @@ export class sessionController<T>{
         var COOKIE=`${COOKIE_NAME}=${testValue};path=${PATH};`;
         document.cookie=COOKIE;
     }
-    public ValidateSession():void{
-        let sessid=sessionController.GetCookie();
-        this.service.GetRequest<boolean>("User/ValidateSession"+sessid).subscribe((data)=>{
-            console.log(data);
-            return data;
-          });
+    public static ValidateSession():void{
+        let sessid:string=sessionController.GetCookie();
+        this.service.GetRequest<boolean>("User/ValidateSession/"+sessid).subscribe((data) => {
+            console.log(data)
+        })
+        // service.GetRequest<boolean>("User/ValidateSession"+sessid).subscribe((data)=>{
+        //     console.log(data);
+        //     return data;
+        //   });
     }
 }
