@@ -33,17 +33,18 @@ export class HttpserviceService<T> {
   PutRequest<T>(ENDPOINT:string,DATAOBJECT:any) :Observable<T>
   {
       var Full_URL = this.API_URL + ENDPOINT 
-      return this.Http.put<T>(ENDPOINT,DATAOBJECT).pipe();  
+      return this.Http.put<T>(Full_URL,DATAOBJECT).pipe();  
   }
 
   DeleteRequest<T>(ENDPOINT:string) :Observable<T>
   {
       var Full_URL = this.API_URL + ENDPOINT 
-      return this.Http.delete<T>(ENDPOINT).pipe();  
+      return this.Http.delete<T>(Full_URL).pipe();  
   }
   static GetRequest<T>(ENDPOINT:string) : Observable<T>
   {   
-      var Full_URL = HttpserviceService.API_URL + ENDPOINT 
+      var Full_URL =  `${environment.API_URL}` + ENDPOINT 
+      
       return this.HttpTest.get<T>(Full_URL);
   }
   static PostRequest<T>(ENDPOINT:string,DATAOBJECT:any) :Observable<T>

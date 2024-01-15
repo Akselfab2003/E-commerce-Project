@@ -17,5 +17,7 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
 
         public Task<List<Categories>> GetAllUniqueCategories();
 
+        public Task<List<Products>> GetProductsFromCategory(Categories category);
+
     }
 }

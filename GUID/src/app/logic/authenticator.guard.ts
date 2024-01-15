@@ -1,9 +1,6 @@
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
 import { sessionController } from './sessionLogic';
-import { HttpserviceService } from '../../Services/httpservice.service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { Session } from '../models/Session';
+
 export const authenticatorGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
@@ -17,10 +14,10 @@ export const authenticatorGuard: CanActivateFn = (
 export const sessionGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
+    console.log("Guard")
+    console.log(sessionController.GetCookie())
     if (sessionController.GetCookie()==undefined){
-      HttpserviceService.GetRequest<Session>("User/empty").subscribe((data) => {
-        sessionController.SetCookie(data);
-      });
+      sessionController.WaitMethodEmptySession()
     }
     return true;
 };
