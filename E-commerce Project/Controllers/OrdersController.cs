@@ -16,7 +16,7 @@ namespace E_commerce_Project.Controllers
         [HttpGet("{sessid}")]
         public async Task<ActionResult<Orders>> GetOrderstBysessID(string sessid)
         {
-            var order = await Context.GetById(sessid);
+            var order = await Context.GetBysessId(sessid);
 
             if (order == null)
             {
