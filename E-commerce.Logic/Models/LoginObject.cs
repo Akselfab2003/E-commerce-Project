@@ -10,5 +10,6 @@ namespace E_commerce.Logic.Models
     {
         public string username { get; set; }
         public string password { get; set; }
+        public string sessionId { get; set; }
     }
 }

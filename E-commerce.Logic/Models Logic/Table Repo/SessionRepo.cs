@@ -25,9 +25,9 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             Users user = await context.Users.FirstOrDefaultAsync(users => users.Username == loginObject.username && users.Password == loginObject.password);
             Session session = new Session();
             session.user = user;
-            session.SessId = Guid.NewGuid().ToString();
+            session.SessId = loginObject.sessionId;
             session.Created = DateTime.Now;
-            await CreateSession(session);
+            await UpdateSession(session);
             return session;
         }
 

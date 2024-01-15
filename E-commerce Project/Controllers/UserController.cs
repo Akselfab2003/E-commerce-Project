@@ -102,25 +102,7 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
         [HttpPost("createSession")]
-        public async Task<IActionResult> PostSession(Users users)
-        {
-            Session session1 = new Session();
-            try
-            {
-                session1.user = users;
-                session1.SessId = Guid.NewGuid().ToString();
-                session1.Created = DateTime.Now;
-                await _session.CreateSession(session1);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-            return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
-        }
-        [HttpPost("createEmptySession")]
-        public async Task<IActionResult> PostEmptySession()
+        public async Task<IActionResult> PostSession()
         {
             Session session1 = new Session();
             try
@@ -138,26 +120,26 @@ namespace E_commerce_Project.Controllers
             return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
         [HttpPut("{name}")]
-        public async Task<IActionResult> PutSession(string name,Session session)
+        public async Task<IActionResult> PutSession(string name,LoginObject loginObject)
         {
+            Session session = await _session.GetById(name);
             var availability = session.Created.AddHours(2);
-            if (availability < DateTime.Now)
-            {
-                session.user = await _users.GetByName(name);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
             try
             {
-                await _session.UpdateSession(session);
+                if (availability > DateTime.Now)
+                {
+                    await _session.DeleteSession(name);
+                    session = await _session.Login(loginObject);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
             }
-            return NoContent();
+            return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
         }
         [HttpGet("SessionId{sessionId}")]
         public async Task<IActionResult> GetSession(string sessionId)
