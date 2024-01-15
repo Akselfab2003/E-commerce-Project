@@ -40,7 +40,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Basket> GetById(int id)
         {
-            return await context.Basket.FirstOrDefaultAsync(Basket => Basket.Id == id);
+            return await context.Basket.Include(basket => basket.BasketDetails).FirstOrDefaultAsync(Basket => Basket.Id == id);
         }
 
         public async Task<Basket> UpdateBasket(Basket basket)

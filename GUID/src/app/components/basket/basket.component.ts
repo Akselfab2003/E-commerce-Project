@@ -36,6 +36,7 @@ export class BasketComponent<T> {
 
   @Input() product: Products = new Products();
 
+  /*
   GetProduct<T>(id:Number){
     this.service.GetRequest<BasketDetails>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
@@ -51,7 +52,7 @@ export class BasketComponent<T> {
       console.log("ProductDetails Object:");
     })
   }
-
+*/
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool
     this.BasketState = this.BasketStateBool ? "Open" : "Closed"
