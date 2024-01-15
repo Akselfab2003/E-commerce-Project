@@ -8,7 +8,7 @@ import { BasketComponent } from '../basket/basket.component';
 })
 export class NavbarComponent {
   @ViewChild(BasketComponent)
-  private Basket!: BasketComponent; 
+  private Basket!: BasketComponent<any>; 
   
   ngOnInit(){
   }

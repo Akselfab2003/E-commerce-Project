@@ -22,11 +22,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return basket;
         }
 
-        public async Task<bool> DeleteBasket(int id)
+        public async Task<bool> DeleteBasket(Basket entity)
         {
             try
             {
-                Basket basket = await GetById(id);
+                Basket basket = await GetById(entity.Id);
                 context.Basket.Remove(basket);
                 await context.SaveChangesAsync();
             }
