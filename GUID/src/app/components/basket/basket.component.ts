@@ -16,26 +16,19 @@ import { Component, EventEmitter, Input } from '@angular/core';
          transition("Open => Closed",
          animate("0.800s ease-in")
          ),
-         
          transition("Closed => Open",
          animate("0.800s ease-out")
          )
-
       ]
-        
     )
   ]
 })
 export class BasketComponent {
-  
-  
   public BasketState:string = "Closed"
   public BasketStateBool:boolean = false
-  
+
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool
     this.BasketState = this.BasketStateBool ? "Open" : "Closed"
   }
-
-
 }
