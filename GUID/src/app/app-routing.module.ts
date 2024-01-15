@@ -10,6 +10,7 @@ import { FiltersComponent } from './components/filters/filters.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { authenticatorGuard } from '../app/logic/authenticator.guard'
 import { ProfileComponent } from './components/profile/profile.component';
+import { BasketComponent } from './components/basket/basket.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path:"filter",component:FiltersComponent},
   {path:"product-card", component:ProductCardComponent},
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
+  {path:"basket",component:BasketComponent}
 ];
 
 @NgModule({

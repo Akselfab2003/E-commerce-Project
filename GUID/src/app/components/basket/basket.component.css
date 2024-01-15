@@ -1,0 +1,20 @@
+.Basket{
+    position: absolute;
+    height: 90%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    
+    width: 35%;
+    background-color: black;
+    float: right;
+    margin-right: -60%;
+    right: 0px;
+}
+
+.BasketContent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

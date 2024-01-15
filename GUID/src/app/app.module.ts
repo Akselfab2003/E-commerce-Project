@@ -14,7 +14,8 @@ import { FiltersComponent } from './components/filters/filters.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProductDetailsPageComponent } from './components/product-details-page/product-details-page.component';
-
+import { BasketComponent } from './components/basket/basket.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
 
 @NgModule({
   declarations: [
@@ -28,15 +29,16 @@ import { ProductDetailsPageComponent } from './components/product-details-page/p
     ProductDetailsPageComponent,
     FiltersComponent,
     ProfileComponent,
-    ProductDetailsPageComponent
+    ProductDetailsPageComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
-    
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
 
   bootstrap: [AppComponent]
