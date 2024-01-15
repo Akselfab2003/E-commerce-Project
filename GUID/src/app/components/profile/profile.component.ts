@@ -13,14 +13,13 @@ import { Session } from '../../models/Session';
 export class ProfileComponent<T> {
 
   user:User = new User();
-  order:Order = new Order();
+  order:Order[] = new Array<Order>();
   session:Session = new Session();
 
   constructor(private service:HttpserviceService<T>) { };
 
 
   ngOnInit(): void {
-    sessionController.WaitMethod()
     this.GetUser();
     this.GetOrders();
   };
@@ -35,8 +34,8 @@ export class ProfileComponent<T> {
   }
 
   GetOrders(){
-    this.service.GetRequest<Order>("api/Orders").subscribe((data)=>{
-      this.order = data;
+    this.service.GetRequest<Order[]>("api/Orders").subscribe((data)=>{
+      this.order = Array<Order>();
       console.log(this.order)
     });
   }

@@ -6,5 +6,9 @@ import { inject } from '@angular/core';
 export const authenticatorGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
-  return sessionController.WaitMethod();
+    console.log(`Before ${Date.now()}`)
+    var test:boolean = sessionController.WaitMethod()
+    console.log(`After ${Date.now()}`)
+
+  return test;
 };
