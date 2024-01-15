@@ -40,9 +40,6 @@ namespace E_commerce.Test.Create_data_for_local_database
                 .RuleFor(user => user.Email, data => data.Person.Email)
                 .RuleFor(user => user.Gender, data => data.Random.Bool());
 
-
-
-
             List<Users> data = faker.GenerateBetween(10, 20);
 
             output.WriteLine(JsonSerializer.Serialize(data));
@@ -51,10 +48,8 @@ namespace E_commerce.Test.Create_data_for_local_database
                 await DataCollection.Users.CreateUser(user);
             }
             Assert.True(data.Any());
-            
+
         }
-
-
 
         [Fact]
         public async void InsertProducts()
