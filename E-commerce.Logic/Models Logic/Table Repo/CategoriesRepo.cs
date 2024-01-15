@@ -65,6 +65,16 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
 
         }
+
+        public async Task<List<Products>> GetProductsFromCategory(Categories category)
+        {
+            List<Products> Products = await Context.Products.Include(Cat => Cat.ProductCategories).Include(ele => ele.Images).Where(ele => ele.ProductCategories == category).ToListAsync();
+
+            return Products;
+
+
+        }
+
         public async Task<Categories> UpdateCategories(Categories entity)
         {
             Context.Categories.Update(entity);

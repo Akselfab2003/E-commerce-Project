@@ -10,16 +10,16 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface IDataCollection
     {
-        public IOrders Orders { get;}
-        public IUsers Users { get;}
-        public Isession Session { get;}
-        public IProducts Products { get;}
-        public IImages Images { get;}
-        public IProductVariants ProductVariants { get;}
-
-
+        public IOrders Orders { get; }
+        public IUsers Users { get; }
+        public Isession Session { get; }
+        public IProducts Products { get; }
+        public IImages Images { get; }
+        public IProductVariants ProductVariants { get; }
         public ITags Tags { get; }
         public ICategories Categories { get; }
+        public IBasketDetails BasketDetails { get; }
+        public IBasket Basket {  get; }
 
     }
 }

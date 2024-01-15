@@ -11,7 +11,8 @@ namespace E_commerce_Project.Controllers
     public class ProductsController : Controller
     {
         IProducts context;
-        public ProductsController(IDataCollection c) { context = c.Products; } // Dependency Injection - DI
+        private IDataCollection dataCollection;
+        public ProductsController(IDataCollection c) { context = c.Products; dataCollection = c; } // Dependency Injection - DI
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Products>> GetProductById(int id)
@@ -31,6 +32,14 @@ namespace E_commerce_Project.Controllers
         {
             return await context.GetProducts(40);
         }
+
+        [HttpGet("GetProductsThatArePartOfCategory")]
+        public async Task<List<Products>> GetProductsPartOfCategory(int id)
+        {   
+            Categories category = await dataCollection.Categories.GetById(id);
+            return await dataCollection.Categories.GetProductsFromCategory(category);
+        }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Products products)
