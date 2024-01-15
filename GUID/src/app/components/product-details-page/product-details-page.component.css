@@ -27,6 +27,11 @@ html, body {
     margin-left: 20px;
 }
 
+.product-category{
+    color: #2980b9;
+    text-transform: uppercase;
+}
+
 .product-description {
     border-bottom: 1px solid #E1E8EE;
     margin-bottom: 20px;
