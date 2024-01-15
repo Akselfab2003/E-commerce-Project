@@ -119,8 +119,8 @@ namespace E_commerce_Project.Controllers
 
             return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
-        [HttpPost("createEmptySession")]
-        public async Task<IActionResult> PostEmptySession()
+        [HttpGet("createEmptySession")]
+        public async Task<Session?> PostEmptySession()
         {
             Session session1 = new Session();
             try
@@ -132,10 +132,10 @@ namespace E_commerce_Project.Controllers
             }
             catch
             {
-                return BadRequest();
+                return null;//BadRequest();
             }
 
-            return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
+            return session1; //new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
         [HttpPut("{name}")]
         public async Task<IActionResult> PutSession(string name,Session session)

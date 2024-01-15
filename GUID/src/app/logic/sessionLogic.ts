@@ -27,9 +27,24 @@ export class sessionController{
         let sessid:string=sessionController.GetCookie();
         console.log(sessid)
         console.log()
+        
         HttpserviceService.GetRequest<boolean>("User/ValidateSession"+sessid).subscribe((data) => {
             console.log(data)
             sessionController.validated = data;
      })
+    }
+
+    public static WaitMethodEmptySession():boolean{
+        this.CreateEmptySession()
+        this.ValidateSession()
+        return sessionController.validated
+
+    }
+
+    public static  CreateEmptySession(){
+        HttpserviceService.GetRequest<Session>("User/createEmptySession").subscribe((data) => {
+            console.log(data)
+           sessionController.SetCookie(data);
+         });
     }
 }

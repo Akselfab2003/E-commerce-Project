@@ -14,7 +14,7 @@ import { BasketComponent } from './components/basket/basket.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent,canActivate:[sessionGuard]},
-  {path:"Login", component:LoginComponent,canActivate:[sessionGuard]},
+  {path:"Login", component:LoginComponent},
   {path:"Register", component:RegisterComponent,canActivate:[sessionGuard]},
   {path:"product-page", component:ProductPageComponent,canActivate:[sessionGuard]},
   {path:"home-page", component:HomePageComponent,canActivate:[sessionGuard]},

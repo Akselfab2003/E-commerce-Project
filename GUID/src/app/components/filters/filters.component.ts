@@ -11,12 +11,13 @@ import { Categories } from '../../models/Categories';
 })
 export class FiltersComponent <T> {
 
-  @Output() TagsChangedEvent = new EventEmitter<Tags[]>()
-  
-  TagsList:Tags[] = new Array<Tags>();
 
+  @Output() TagsChangedEvent = new EventEmitter<Categories[]>()
+  
+  TagsList:Categories[] = new Array<Categories>();
+  CurrentSelectedValue:string = "";
   constructor(private service:HttpserviceService<T>){
-  } 
+  }  
 
   GetAllTags<T>(){
     this.service.GetRequest<Categories[]>("Tags/Categories").subscribe( ele => {
@@ -27,13 +28,18 @@ export class FiltersComponent <T> {
   }
 
   ngOnInit(){
-   this.GetAllTags<Tags[]>()
+   this.GetAllTags<Categories[]>()
   }
 
-  setpost(ArrayOfTags:Tags[]){
+  setpost(ArrayOfTags:Categories[]){
     this.TagsList = ArrayOfTags
     console.log(this.TagsList)
     this.TagsChangedEvent.emit(this.TagsList)
+  }
+
+  selectChanged()
+  {
+    
   }
 
 
