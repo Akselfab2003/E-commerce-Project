@@ -31,7 +31,7 @@ namespace E_commerce.Test.Create_data_for_local_database
         }
 
         [Fact]
-        public async void InsertDataToDatabase()
+        public async void Insertusers()
         {
             Faker<Users> faker = new Faker<Users>()
                 //.RuleFor(user => user.Id, data => data.IndexFaker)
@@ -51,22 +51,24 @@ namespace E_commerce.Test.Create_data_for_local_database
 
         }
         [Fact]
-        public async void InsertCategories()
+        public async void InsertData()
         {
             string[] categories = new string[50];
             Faker<Categories> faker = new Faker<Categories>()
                 .RuleFor(categories => categories.Name, data => data.Commerce.Categories(1)[0]) ;
-
-
-            
-             
+ 
             List<Categories> data = faker.GenerateBetween(50,50);
-
 
             foreach (Categories category in data.DistinctBy(t => t.Name).ToList())
             {
                 await DataCollection.Categories.CreateCategories(category);
             }
+
+
+            InsertProducts();
+
+
+
             Assert.True(data.Any());
 
         }
@@ -74,7 +76,6 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
 
-        [Fact]
         public async void InsertProducts()
         {
             List<Categories> categories = await DataCollection.Categories.GetAllUniqueCategories();

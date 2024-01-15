@@ -18,12 +18,11 @@ namespace E_commerce.Logic.Models_Logic
         private readonly Isession session;
         private readonly ITags tags;
         private readonly ICategories categories;
-
-
-
         private readonly IProducts products;
         private readonly IImages images;
         private readonly IProductVariants productVariants;
+        private readonly IBasketDetails basketDetails;
+        private readonly IBasket basket;
         public DataCollection(DBcontext Context) 
         {
             orders = new ordersRepo(Context);
@@ -34,6 +33,8 @@ namespace E_commerce.Logic.Models_Logic
             products = new productsRepo(Context);
             images = new ImagesRepo(Context);
             productVariants = new productVariantsRepo(Context);
+            basketDetails = new BasketDetailsRepo(Context);
+            basket = new BasketRepo(Context);
         }
 
 
@@ -71,6 +72,14 @@ namespace E_commerce.Logic.Models_Logic
         public IProductVariants ProductVariants
         {
             get { return productVariants; }
+        }
+        public IBasketDetails BasketDetails 
+        { 
+            get { return basketDetails; } 
+        }
+        public IBasket Basket
+        {
+            get { return basket; }
         }
     }
 }

@@ -18,6 +18,7 @@ export class sessionController{
         let testValue:string=session.sessId;
         var COOKIE=`${COOKIE_NAME}=${testValue};path=${PATH};`;
         document.cookie=COOKIE;
+        console.log(document.cookie)
     }
     public static WaitMethod():boolean{
         this.ValidateSession()
@@ -36,15 +37,14 @@ export class sessionController{
 
     public static WaitMethodEmptySession():boolean{
         this.CreateEmptySession()
-        this.ValidateSession()
         return sessionController.validated
 
     }
 
     public static  CreateEmptySession(){
-        HttpserviceService.GetRequest<Session>("User/createEmptySession").subscribe((data) => {
+        HttpserviceService.GetRequest<Session |undefined>("User/createEmptySession").subscribe((data) => {
             console.log(data)
-           sessionController.SetCookie(data);
+           //sessionController.SetCookie(data);
          });
     }
 }
