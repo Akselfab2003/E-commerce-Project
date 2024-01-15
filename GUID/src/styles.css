@@ -6,6 +6,7 @@ html{
 
 body {
     width: 100%;
+    /* background-color: var(--background); */
     height: 100%;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -13,4 +14,13 @@ body {
 
 body::-webkit-scrollbar{
     display: none;
+}
+
+
+:root{
+    --text: #f7ebe9;
+    --background: #070304;
+    --primary: #000000;
+    --secondary: #2b7073;
+    --accent: #5b60c2;
 }

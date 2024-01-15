@@ -9,5 +9,5 @@ export class Products{
     price:number=0;
     images:Images[] = new Array<Images>;
     productVariants:ProductVariants[] = new Array<ProductVariants>;
-    productCategories:Categories[] = new Array<Categories>
+    productCategories:Categories = new Categories;
 }
