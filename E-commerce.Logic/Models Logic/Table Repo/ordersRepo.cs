@@ -60,11 +60,23 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Orders.FirstOrDefaultAsync(order => order.Id == id);
         }
 
+        public async Task<List<Orders>> GetBysessId(string sessid)
+        {
+            Users usr = new Users();
+            List<Orders>userOrders = await context.Orders.Where(order => order.Users == usr).ToListAsync();
+            return userOrders;
+        }
+
         public async Task<Orders> UpdateOrders(Orders Order)
         {
             context.Update(Order);
             await context.SaveChangesAsync();
             return Order;
+        }
+
+        Task<Orders> IOrders.GetBysessId(string sessid)
+        {
+            throw new NotImplementedException();
         }
     }
 }

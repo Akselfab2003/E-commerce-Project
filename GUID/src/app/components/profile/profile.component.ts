@@ -22,14 +22,14 @@ export class ProfileComponent<T> {
   };
 
   GetUser(){
-    this.service.GetRequest<User>("User/test").subscribe((data)=>{
+    this.service.GetRequest<User>("User/ib").subscribe((data)=>{
       this.user = data;
       console.log(this.user)
     });
   }
 
   GetOrders(){
-    this.service.GetRequest<Order>("api/Orders").subscribe((data)=>{
+    this.service.GetRequest<Order>("Orders/1").subscribe((data)=>{
       this.order = data;
       console.log(this.order)
     });

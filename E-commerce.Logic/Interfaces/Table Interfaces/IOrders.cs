@@ -10,6 +10,7 @@ namespace E_commerce.Logic.Interfaces
     public interface IOrders
     {
         public Task<Orders> GetById(int id);
+        public Task<Orders> GetBysessId(string sessid);
 
         public Task<Orders> UpdateOrders(Orders Order);
 
