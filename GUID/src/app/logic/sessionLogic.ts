@@ -23,7 +23,7 @@ export class sessionController{
         this.ValidateSession()
         return sessionController.validated;
     }
-     public static ValidateSession(){
+    public static ValidateSession(){
         let sessid:string=sessionController.GetCookie();
         console.log(sessid)
         console.log()
@@ -31,6 +31,5 @@ export class sessionController{
             console.log(data)
             sessionController.validated = data;
      })
-       
     }
 }

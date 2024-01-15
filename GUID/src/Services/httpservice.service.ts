@@ -46,5 +46,10 @@ export class HttpserviceService<T> {
       var Full_URL = HttpserviceService.API_URL + ENDPOINT 
       return this.HttpTest.get<T>(Full_URL);
   }
+  static PostRequest<T>(ENDPOINT:string,DATAOBJECT:any) :Observable<T>
+  {
+      var Full_URL = this.API_URL + ENDPOINT 
+      return this.HttpTest.post<T>(Full_URL,DATAOBJECT);
+  }
 
 }
