@@ -22,11 +22,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return basket;
         }
 
-        public async Task<bool> DeleteBasket(int id)
+        public async Task<bool> DeleteBasket(Basket entity)
         {
             try
             {
-                Basket basket = await GetById(id);
+                Basket basket = await GetById(entity.Id);
                 context.Basket.Remove(basket);
                 await context.SaveChangesAsync();
             }
@@ -40,7 +40,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Basket> GetById(int id)
         {
-            return await context.Basket.FirstOrDefaultAsync(Basket => Basket.Id == id);
+            return await context.Basket.Include(basket => basket.BasketDetails).FirstOrDefaultAsync(Basket => Basket.Id == id);
         }
 
         public async Task<Basket> UpdateBasket(Basket basket)

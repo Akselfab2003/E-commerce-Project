@@ -13,7 +13,7 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
 
         public Task<Basket> UpdateBasket(Basket basket);
 
-        public Task<bool> DeleteBasket(int id);
+        public Task<bool> DeleteBasket(Basket basket);
 
         public Task<Basket> CreateBasket(Basket basket);
     }

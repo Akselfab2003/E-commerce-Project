@@ -14,18 +14,18 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         DBcontext context;
         public BasketDetailsRepo(DBcontext c) { context = c; } // Dependency Injection - DI
 
-        public async Task<BasketDetails> CreateBasket(BasketDetails basketDetails)
+        public async Task<BasketDetails> CreateBasketDetails(BasketDetails basketDetails)
         {
             context.BasketDetails.Add(basketDetails);
             await context.SaveChangesAsync();
             return basketDetails;
         }
 
-        public async Task<bool> DeleteBasket(int id)
+        public async Task<bool> DeleteBasketDetails(BasketDetails entity)
         {
             try
             {
-                BasketDetails basketDetails = await GetById(id);
+                BasketDetails basketDetails = await GetById(entity.Id);
                 context.BasketDetails.Remove(basketDetails);
                 await context.SaveChangesAsync();
             }
@@ -42,7 +42,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.BasketDetails.FirstOrDefaultAsync(basketDetails => basketDetails.Id == id);
         }
 
-        public async Task<BasketDetails> UpdateBasket(BasketDetails basketDetails)
+        public async Task<BasketDetails> UpdateBasketDetails(BasketDetails basketDetails)
         {
             context.Update(basketDetails);
             await context.SaveChangesAsync();
