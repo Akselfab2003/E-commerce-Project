@@ -65,7 +65,7 @@ namespace E_commerce.Test.Create_data_for_local_database
             }
 
 
-            InsertProducts();
+            await InsertProducts();
 
 
 
@@ -76,7 +76,7 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
 
-        public async void InsertProducts()
+        public async Task InsertProducts()
         {
             List<Categories> categories = await DataCollection.Categories.GetAllUniqueCategories();
             Faker<Products> faker = new Faker<Products>()
