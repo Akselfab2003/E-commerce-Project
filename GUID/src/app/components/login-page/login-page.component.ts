@@ -32,8 +32,10 @@ export class LoginComponent<T> {
     LoginTry.username = username;
     LoginTry.password =password;
     LoginTry.sessionId =sessionController.GetCookie();
+    console.log(LoginTry);
     this.service.PutRequest<Session>("User/Login",LoginTry).subscribe((data)=>
-    sessionController.SetCookie(data));
+      sessionController.SetCookie(data));
+
     if(this.loginForm.invalid) return;
   }
 }

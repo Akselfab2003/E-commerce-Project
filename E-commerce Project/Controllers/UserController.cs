@@ -89,24 +89,6 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
-        [HttpPost("createSession")]
-        public async Task<IActionResult> PostSession(Users users)
-        {
-            Session session1 = new Session();
-            try
-            {
-                session1.user = users;
-                session1.SessId = Guid.NewGuid().ToString();
-                session1.Created = DateTime.Now;
-                await _session.CreateSession(session1);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-            return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
-        }
         [HttpGet("createEmptySession")]
         public async Task<Session> PostEmptySession()
         {

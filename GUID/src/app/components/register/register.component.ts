@@ -6,7 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { User } from '../../models/User';
 import { Session} from '../../models/Session'
-
+import { LoginObject } from '../../models/LoginObject';
+import { sessionController } from '../../logic/sessionLogic';
 
 @Component({
   selector: 'app-register',
@@ -36,14 +37,16 @@ export class RegisterComponent<T> {
 
 
   register() {
-    let user:User= this.InputData();
+    let user:User= this.InputDataUser();
     this.service.PostRequest<User>("User/createUser",user).subscribe((data)=>
     console.log(data)
     )
-    this.service.PostRequest<User>("Session/createSession",user).subscribe((data)=>
+    let registerObject:LoginObject = this.InputDataObject(sessionController.GetCookie());
+
+    this.service.PutRequest<User>("User/Login",registerObject).subscribe((data)=>
     console.log(data));
   }
-  InputData():User{
+  InputDataUser():User{
     let user:User=new User();
     user.username=this.registerForm.get('username')?.value?.toString() as string;
     user.password=this.registerForm.get('password')?.value?.toString() as string;
@@ -54,5 +57,12 @@ export class RegisterComponent<T> {
       user.gender=false;
     }
     return user;
+  }
+  InputDataObject(sessid:string):LoginObject{
+    let registerObject:LoginObject = new LoginObject;
+    registerObject.username=this.registerForm.get('username')?.value?.toString() as string;
+    registerObject.password=this.registerForm.get('password')?.value?.toString() as string;
+    registerObject.sessionId=sessid;
+    return registerObject;
   }
 }

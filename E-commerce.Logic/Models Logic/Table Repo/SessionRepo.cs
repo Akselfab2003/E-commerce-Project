@@ -35,7 +35,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             try
             {
-                Session session = await GetById(id);
+                Session session = await context.Sessions.FirstOrDefaultAsync(sessions=>sessions.SessId==id);
                 context.Sessions.Remove(session);
                 await context.SaveChangesAsync();
             }
