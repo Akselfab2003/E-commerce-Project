@@ -1,17 +1,20 @@
-import { AbstractControl } from "@angular/forms";
+import { Observable, asyncScheduler, firstValueFrom, scheduled } from "rxjs";
 import { HttpserviceService } from "../../Services/httpservice.service";
 import { Session } from "../models/Session"
-import { inject } from "@angular/core";
 
-export class sessionController{
+export class sessionController <T> {
+
+
     constructor(){
     }
     private static validated:boolean = false;
+
     public static GetCookie():string{
         var cookieArray=document.cookie.split(";");
         var sessId=cookieArray[0].split("=")[1];
         return sessId;
     }
+
     public static SetCookie(session:Session):void{
         const COOKIE_NAME:string="sessionId";
         const PATH:string="/";
@@ -20,31 +23,26 @@ export class sessionController{
         document.cookie=COOKIE;
         console.log(document.cookie)
     }
-    public static WaitMethod():boolean{
-        this.ValidateSession()
+
+ 
+    public static   ValidateSession(httpservice:HttpserviceService<any>) : boolean{
+        let sessid:string=sessionController.GetCookie();
+    
+        httpservice.GetRequest<boolean>("User/ValidateSession/"+sessid).subscribe(
+            (data) => { sessionController.validated = data; }
+           
+            )
+
+        console.log(sessionController.validated)
         return sessionController.validated;
     }
-    public static ValidateSession(){
-        let sessid:string=sessionController.GetCookie();
-        console.log(sessid)
-        console.log()
-        
-        HttpserviceService.GetRequest<boolean>("User/ValidateSession"+sessid).subscribe((data) => {
+
+   
+
+    public static  CreateEmptySession(httpservice:HttpserviceService<any>){
+        httpservice.GetRequest<Session>("User/createEmptySession").subscribe((data) => {
             console.log(data)
-            sessionController.validated = data;
-     })
-    }
-
-    public static WaitMethodEmptySession():boolean{
-        this.CreateEmptySession()
-        return sessionController.validated
-
-    }
-
-    public static  CreateEmptySession(){
-        HttpserviceService.GetRequest<Session |undefined>("User/createEmptySession").subscribe((data) => {
-            console.log(data)
-           //sessionController.SetCookie(data);
+            sessionController.SetCookie(data);
          });
     }
 }

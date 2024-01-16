@@ -1,23 +1,13 @@
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
 import { sessionController } from './sessionLogic';
+import { inject } from '@angular/core';
+import { HttpserviceService } from '../../Services/httpservice.service';
 
 export const authenticatorGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
-    console.log(`Before ${Date.now()}`)
-    var test:boolean = sessionController.WaitMethod()
-    console.log(`After ${Date.now()}`)
+    const httpservice:HttpserviceService<any> = inject(HttpserviceService)
+    var test:boolean =  sessionController.ValidateSession(httpservice)
 
   return test;
-};
-
-export const sessionGuard: CanActivateFn = (
-  next:ActivatedRouteSnapshot,
-  state:RouterStateSnapshot) => {
-    console.log("Guard")
-    console.log(sessionController.GetCookie())
-    if (sessionController.GetCookie()==undefined){
-      sessionController.WaitMethodEmptySession()
-    }
-    return true;
 };

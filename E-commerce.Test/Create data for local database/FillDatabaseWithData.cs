@@ -51,7 +51,7 @@ namespace E_commerce.Test.Create_data_for_local_database
 
         }
         [Fact]
-        public async void InsertData()
+        public async void InsertDataForProducts()
         {
             string[] categories = new string[50];
             Faker<Categories> faker = new Faker<Categories>()
