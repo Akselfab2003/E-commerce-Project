@@ -15,8 +15,9 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProductDetailsPageComponent } from './components/product-details-page/product-details-page.component';
 import { BasketComponent } from './components/basket/basket.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
+import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {CheckoutPageComponent } from './components/checkout-page/checkout-page.c
     ProfileComponent,
     ProductDetailsPageComponent,
     BasketComponent,
-    CheckoutPageComponent
+    CheckoutPageComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
