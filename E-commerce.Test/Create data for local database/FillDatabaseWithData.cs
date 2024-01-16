@@ -30,8 +30,8 @@ namespace E_commerce.Test.Create_data_for_local_database
         
         }
 
-        [Fact]
-        public async void Insertusers()
+        [Fact] 
+        public async Task Insertusers()
         {
             Faker<Users> faker = new Faker<Users>()
                 //.RuleFor(user => user.Id, data => data.IndexFaker)
@@ -70,6 +70,46 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
             Assert.True(data.Any());
+
+        }
+
+
+        [Fact]
+        public async void GenerateFakeOrders()
+        {
+
+            await Insertusers();
+            
+
+            List<Products> productlists = await DataCollection.Products.GetProducts(40);
+            Assert.True(productlists.Count() > 0, "No products was found!");
+            Users users = await DataCollection.Users.GetById(1);
+            Assert.True(users != null,"No user was found!");
+
+            Faker<Orders> faker = new Faker<Orders>()
+                .RuleFor(orders => orders.OrderLines, data =>
+                    new List<OrderDetails>()
+                    {
+                        new OrderDetails
+                        {
+                                Product  = productlists[data.Random.Number(0,productlists.Count()-1)],
+                                price = Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")),
+                                quantity =1,
+                                total= Convert.ToDouble(data.Commerce.Price(0, 1000, 2, ""))
+                        }
+                    }
+                    )
+                .RuleFor(orders => orders.Users, data => users);
+
+            List<Orders> fakeorders = faker.GenerateBetween(25, 40);
+
+            foreach(Orders order in fakeorders)
+            {
+
+               await DataCollection.Orders.CreateOrder(order);
+
+            }
+
 
         }
 
