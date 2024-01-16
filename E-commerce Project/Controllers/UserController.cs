@@ -119,7 +119,7 @@ namespace E_commerce_Project.Controllers
 
             return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
-        [HttpPost("createEmptySession")]
+        [HttpGet("createEmptySession")]
         public async Task<Session> PostEmptySession()
         {
             Session session1 = new Session();
