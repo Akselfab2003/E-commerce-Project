@@ -29,7 +29,10 @@ export class sessionController <T> {
         let sessid:string=sessionController.GetCookie();
     
         httpservice.GetRequest<boolean>("User/ValidateSession/"+sessid).subscribe(
-            (data) => { sessionController.validated = data; }
+            (data) => {
+                 sessionController.validated = data;
+                 console.log(data);
+             }
            
             )
 
