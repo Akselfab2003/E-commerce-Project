@@ -11,6 +11,6 @@ namespace E_commerce.Logic.Models
     {
         [Key]
         public int Id { get; set; }
-        public Products Products { get; set; }
+        public virtual Products Products { get; set; }
     }
 }

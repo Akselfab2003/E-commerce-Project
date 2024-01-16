@@ -13,6 +13,6 @@ namespace E_commerce.Logic.Models
         public int Id { get; set; }
         [Required]
         //public Users UserId { get; set; }
-        public Products ProductId { get; set; }
+        public virtual Products ProductId { get; set; }
     }
 }

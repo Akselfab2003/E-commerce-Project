@@ -12,7 +12,7 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public Users UserId { get; set; }
+        public virtual Users UserId { get; set; }
         public string ReviewContent { get; set; } = string.Empty;
     }
 }

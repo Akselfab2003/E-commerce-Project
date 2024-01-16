@@ -12,7 +12,7 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public Products ParentProduct { get; set; }
+        public virtual Products ParentProduct { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int Price { get; set; }

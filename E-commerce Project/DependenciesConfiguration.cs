@@ -11,7 +11,7 @@ namespace E_commerce_Project
         public static IServiceCollection GetConfig(this IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddDbContext<DBcontext>(con => con.UseSqlServer(configuration.GetConnectionString("Connection")));
+            services.AddDbContext<DBcontext>(con => con.UseLazyLoadingProxies().UseSqlServer(configuration.GetConnectionString("Connection")));
 
             return services;
 

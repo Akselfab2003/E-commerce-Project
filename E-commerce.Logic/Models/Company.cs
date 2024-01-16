@@ -14,7 +14,7 @@ namespace E_commerce.Logic.Models
         public string Name { get; set; }
         public int cvr {  get; set; }
         public string email { get; set; }
-        public Users User { get; set; }
+        public virtual Users User { get; set; }
 
     }
 }

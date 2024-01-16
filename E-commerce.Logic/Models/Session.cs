@@ -18,7 +18,7 @@ namespace E_commerce.Logic.Models
         [Required]
         public DateTime Created { get; set; }
         [AllowNull]
-        public Users? user { get; set; } 
+        public virtual Users? user { get; set; } 
 
     }
 }

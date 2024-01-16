@@ -11,7 +11,7 @@ namespace E_commerce.Logic.Models
     {
         [Key]
         public int Id { get; set; }
-        public Session Session { get; set; }
-        public List<BasketDetails> BasketDetails { get; set; }
+        public virtual Session Session { get; set; }
+        public virtual List<BasketDetails> BasketDetails { get; set; }
     }
 }
