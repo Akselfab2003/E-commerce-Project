@@ -16,7 +16,7 @@ namespace E_commerce.Logic.Models
 
         public Users Users { get; set; }
 
-        //public List<OrderDetails> OrderLines { get; set; }
+        public List<OrderDetails> OrderLines { get; set; }
 
       
     }
