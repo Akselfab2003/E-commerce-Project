@@ -37,19 +37,15 @@ export class BasketComponent<T> {
   constructor(private route: ActivatedRoute, private service: HttpserviceService<T>) {}
 
   @Input() basket: Basket = new Basket();
+  public primaryBasket: Basket = new Basket();
 
 
   GetBasket(id:Number){
       this.service.GetRequest<Basket>(`Basket/1`).subscribe((data)=>{
-      this.basket = data;
+      this.primaryBasket = data;
       console.log(data)
     });
   };
-
-  InsertProductToBasketDetails(sessionId:number){
-    
-
-  }
 
   selectedId: number = 0;
   ngOnInit() {
