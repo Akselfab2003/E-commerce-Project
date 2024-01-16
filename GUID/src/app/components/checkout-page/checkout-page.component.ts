@@ -25,10 +25,10 @@ export class CheckoutPageComponent <T> {
   };
 
   ngOnInit(): void {
-    this.GetProduct();
+    this.GetOrders();
   };
 
-  GetProduct(){
+  GetOrders(){
     let sessid:string=sessionController.GetCookie();
 
     this.service.GetRequest<Order[]>("Orders/"+sessid).subscribe((data)=>{
@@ -43,6 +43,6 @@ export class CheckoutPageComponent <T> {
 
   placeOrder(): void {
     // Handle the order placement logic, e.g., send data to the server
-    console.log('Placing order:', this.billingDetails, 'Items:', this.GetProduct());
+    console.log('Placing order:', this.billingDetails, 'Items:', this.GetOrders());
   }
 }

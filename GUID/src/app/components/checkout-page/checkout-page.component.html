@@ -4,7 +4,7 @@
     <div class="order-summary">
       <h3>Order Summary</h3>
       <ul>
-        <li *ngFor="let item in GetProduct()">
+        <li *ngFor="let item in orders">
           {{ item.name }} - {{ item.price | currency }}
         </li>
       </ul>
