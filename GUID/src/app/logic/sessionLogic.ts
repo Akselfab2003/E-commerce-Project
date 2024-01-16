@@ -40,6 +40,7 @@ export class sessionController <T> {
    
 
     public static  CreateEmptySession(httpservice:HttpserviceService<any>){
+        console.log("TestifitHits")
         httpservice.GetRequest<Session>("User/createEmptySession").subscribe((data) => {
             console.log(data)
             sessionController.SetCookie(data);
