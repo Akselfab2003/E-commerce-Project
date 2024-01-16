@@ -35,7 +35,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             try
             {
-                Session session = await GetById(id);
+                Session session = await context.Sessions.FirstOrDefaultAsync(sessions=>sessions.SessId==id);
                 context.Sessions.Remove(session);
                 await context.SaveChangesAsync();
             }
@@ -51,6 +51,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Sessions.Include(sess=>sess.user).FirstOrDefaultAsync(c => c.SessId == SessID);
         }
 
+
+        public async Task<List<Session>> GetAllSessions()
+        {
+            return await context.Sessions.ToListAsync();
+        }
         public async Task<Session> UpdateSession(Session session)
         {
             context.Sessions.Update(session);

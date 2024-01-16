@@ -17,5 +17,7 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
 
         public Task<Session> CreateSession(Session session);
         public Task<Session>Login(LoginObject loginObject);
+
+        public Task<List<Session>> GetAllSessions();
     }
 }
