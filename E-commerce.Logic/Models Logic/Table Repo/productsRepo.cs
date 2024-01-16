@@ -38,7 +38,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Products> GetById(int id)
         {
-            return await context.Products.Include(product => product.Images).Include(product => product.ProductCategories).FirstOrDefaultAsync(product => product.Id == id);
+            return await context.Products.Include(product => product.Images).Include(product => product.ProductCategories).Include(product => product.ProductVariants).FirstOrDefaultAsync(product => product.Id == id);
         }
 
         public async Task<List<Products>> GetProducts(int count)
