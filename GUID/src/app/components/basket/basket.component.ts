@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { HttpserviceService } from '../../../Services/httpservice.service';
+import { BasketDetails } from '../../models/BasketDetails';
+import { Basket } from '../../models/Basket';
 
 @Component({
   selector: 'app-basket',
@@ -34,25 +36,30 @@ export class BasketComponent<T> {
 
   constructor(private route: ActivatedRoute, private service: HttpserviceService<T>) {}
 
-  @Input() product: Products = new Products();
+  @Input() basket: Basket = new Basket();
 
-  /*
-  GetProduct<T>(id:Number){
-    this.service.GetRequest<BasketDetails>(`Products/${id}`).subscribe((data)=>{
-      this.product = data;
+
+  GetBasket(id:Number){
+      this.service.GetRequest<Basket>(`Basket/1`).subscribe((data)=>{
+      this.basket = data;
       console.log(data)
     });
   };
+
+  InsertProductToBasketDetails(sessionId:number){
+    
+
+  }
 
   selectedId: number = 0;
   ngOnInit() {
       this.route.paramMap.subscribe((data)=>{
       this.selectedId = Number(data.get('id'));
-      this.GetProduct(this.selectedId)
-      console.log("ProductDetails Object:");
+      this.GetBasket(this.selectedId)
+      console.log("basket Object:");
     })
   }
-*/
+
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool
     this.BasketState = this.BasketStateBool ? "Open" : "Closed"
