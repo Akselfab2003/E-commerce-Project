@@ -4,6 +4,7 @@ using E_commerce.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240116093100_Changed name in basketDetails column")]
+    partial class ChangednameinbasketDetailscolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,10 +208,10 @@ namespace E_commerce.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("OrdersId")
+                    b.Property<int>("ProductIdId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("orderId")
                         .HasColumnType("int");
 
                     b.Property<double>("price")
@@ -222,9 +225,9 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrdersId");
+                    b.HasIndex("ProductIdId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("orderId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -458,8 +461,9 @@ namespace E_commerce.Logic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Gender")
-                        .HasColumnType("bit");
+                    b.Property<byte[]>("Gender")
+                        .IsRequired()
+                        .HasColumnType("Binary");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -545,17 +549,21 @@ namespace E_commerce.Logic.Migrations
 
             modelBuilder.Entity("E_commerce.Logic.Models.OrderDetails", b =>
                 {
-                    b.HasOne("E_commerce.Logic.Models.Orders", null)
-                        .WithMany("OrderLines")
-                        .HasForeignKey("OrdersId");
-
-                    b.HasOne("E_commerce.Logic.Models.Products", "Product")
+                    b.HasOne("E_commerce.Logic.Models.Products", "ProductId")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductIdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.HasOne("E_commerce.Logic.Models.Orders", "order")
+                        .WithMany()
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductId");
+
+                    b.Navigation("order");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>
@@ -656,11 +664,6 @@ namespace E_commerce.Logic.Migrations
             modelBuilder.Entity("E_commerce.Logic.Models.BasketDetails", b =>
                 {
                     b.Navigation("BasketProducts");
-                });
-
-            modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>
-                {
-                    b.Navigation("OrderLines");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Products", b =>

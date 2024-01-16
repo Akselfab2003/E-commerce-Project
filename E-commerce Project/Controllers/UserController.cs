@@ -44,18 +44,6 @@ namespace E_commerce_Project.Controllers
 
             return Ok(user);
         }
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginObject loginObject)
-        {
-            var session = await _session.Login(loginObject);
-
-            if (session == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(session);
-        }
         [HttpPost("createUser")]
         public async Task<HttpStatusCode> PostUser(Users users)
         {
@@ -137,16 +125,16 @@ namespace E_commerce_Project.Controllers
 
             return session1; //new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
-        [HttpPut("{name}")]
-        public async Task<IActionResult> PutSession(string name,LoginObject loginObject)
+        [HttpPut("Login")]
+        public async Task<IActionResult> PutSession(LoginObject loginObject)
         {
-            Session session = await _session.GetById(name);
+            Session session = await _session.GetById(loginObject.sessionId);
             var availability = session.Created.AddHours(2);
             try
             {
                 if (availability > DateTime.Now)
                 {
-                    await _session.DeleteSession(name);
+                    await _session.DeleteSession(loginObject.sessionId);
                     session = await _session.Login(loginObject);
                 }
                 else
