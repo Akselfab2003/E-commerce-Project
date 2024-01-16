@@ -119,8 +119,8 @@ namespace E_commerce_Project.Controllers
 
             return new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
-        [HttpGet("createEmptySession")]
-        public async Task<Session?> PostEmptySession()
+        [HttpPost("createEmptySession")]
+        public async Task<IActionResult> PostEmptySession()
         {
             Session session1 = new Session();
             try
@@ -138,26 +138,26 @@ namespace E_commerce_Project.Controllers
             return session1; //new ObjectResult(session1) { StatusCode = StatusCodes.Status201Created };
         }
         [HttpPut("{name}")]
-        public async Task<IActionResult> PutSession(string name,Session session)
+        public async Task<IActionResult> PutSession(string name,LoginObject loginObject)
         {
+            Session session = await _session.GetById(name);
             var availability = session.Created.AddHours(2);
-            if (availability < DateTime.Now)
-            {
-                session.user = await _users.GetByName(name);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
             try
             {
-                await _session.UpdateSession(session);
+                if (availability > DateTime.Now)
+                {
+                    await _session.DeleteSession(name);
+                    session = await _session.Login(loginObject);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
             }
-            return NoContent();
+            return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
         }
         [HttpGet("SessionId{sessionId}")]
         public async Task<IActionResult> GetSession(string sessionId)
