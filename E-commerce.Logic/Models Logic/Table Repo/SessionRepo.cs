@@ -51,6 +51,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Sessions.Include(sess=>sess.user).FirstOrDefaultAsync(c => c.SessId == SessID);
         }
 
+
+        public async Task<List<Session>> GetAllSessions()
+        {
+            return await context.Sessions.ToListAsync();
+        }
         public async Task<Session> UpdateSession(Session session)
         {
             context.Sessions.Update(session);
