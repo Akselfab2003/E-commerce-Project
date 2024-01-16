@@ -12,7 +12,7 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        List<Products> Products { get; set; }
+        public List<Products> Products { get; set; }
 
     }
 }
