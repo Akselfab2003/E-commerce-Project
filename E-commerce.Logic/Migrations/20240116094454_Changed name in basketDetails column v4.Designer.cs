@@ -4,6 +4,7 @@ using E_commerce.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240116094454_Changed name in basketDetails column v4")]
+    partial class ChangednameinbasketDetailscolumnv4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,14 +67,9 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("BasketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BasketId");
-
-                    b.HasIndex("ProductsId");
 
                     b.ToTable("BasketDetails");
                 });
@@ -309,6 +307,9 @@ namespace E_commerce.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("BasketDetailsId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -324,6 +325,8 @@ namespace E_commerce.Logic.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BasketDetailsId");
 
                     b.HasIndex("ProductCategoriesId");
 
@@ -488,14 +491,6 @@ namespace E_commerce.Logic.Migrations
                     b.HasOne("E_commerce.Logic.Models.Basket", null)
                         .WithMany("BasketDetails")
                         .HasForeignKey("BasketId");
-
-                    b.HasOne("E_commerce.Logic.Models.Products", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Company", b =>
@@ -588,6 +583,10 @@ namespace E_commerce.Logic.Migrations
 
             modelBuilder.Entity("E_commerce.Logic.Models.Products", b =>
                 {
+                    b.HasOne("E_commerce.Logic.Models.BasketDetails", null)
+                        .WithMany("BasketProducts")
+                        .HasForeignKey("BasketDetailsId");
+
                     b.HasOne("E_commerce.Logic.Models.Categories", "ProductCategories")
                         .WithMany()
                         .HasForeignKey("ProductCategoriesId")
@@ -642,6 +641,11 @@ namespace E_commerce.Logic.Migrations
             modelBuilder.Entity("E_commerce.Logic.Models.Basket", b =>
                 {
                     b.Navigation("BasketDetails");
+                });
+
+            modelBuilder.Entity("E_commerce.Logic.Models.BasketDetails", b =>
+                {
+                    b.Navigation("BasketProducts");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>
