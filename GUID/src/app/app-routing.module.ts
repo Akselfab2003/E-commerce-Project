@@ -12,6 +12,7 @@ import { authenticatorGuard } from '../app/logic/authenticator.guard'
 import { ProfileComponent } from './components/profile/profile.component';
 import { BasketComponent } from './components/basket/basket.component';
 import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -19,12 +20,13 @@ const routes: Routes = [
   {path:"Register", component:RegisterComponent},
   {path:"product-page", component:ProductPageComponent},
   {path:"home-page", component:HomePageComponent},
-  {path: "product-details/:id", component:ProductDetailsPageComponent},
+  {path:"product-details/:id", component:ProductDetailsPageComponent},
   {path:"filter",component:FiltersComponent},
   {path:"product-card", component:ProductCardComponent},
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
   {path:"basket",component:BasketComponent},
   {path:"checkout-page",component:CheckoutPageComponent},
+  {path:"admin-page",component:AdminPageComponent}
 ];
 
 @NgModule({
