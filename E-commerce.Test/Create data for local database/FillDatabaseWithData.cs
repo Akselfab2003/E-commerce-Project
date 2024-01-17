@@ -79,8 +79,9 @@ namespace E_commerce.Test.Create_data_for_local_database
         [Fact]
         public async void GenerateFakeOrders()
         {
-            await Insertusers();
-            
+           
+
+            Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
 
             List<Products> productlists = await DataCollection.Products.GetProducts(40);
             Assert.True(productlists.Count() > 0, "No products was found!");
@@ -119,17 +120,19 @@ namespace E_commerce.Test.Create_data_for_local_database
         [Fact]
         public async void GenerateFakeBaskets()
         {
-            await Insertusers();
-
-
+            
             List<Products> productlists = await DataCollection.Products.GetProducts(40);
-            Assert.True(productlists.Count() > 0, "No products was found!");
-            Users users = await DataCollection.Users.GetById(1071);
-            List<Session> sessions = await DataCollection.Session.GetAllSessions();
-            Session session = sessions.Where(ele => users.Id == 1071).First();
-           
-            Assert.True(users != null, "No user was found!");
 
+            Assert.True(productlists.Count() > 0, "No products was found!");
+            
+            Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
+
+            List<Session> sessions = await DataCollection.Session.GetAllSessions();
+
+            Assert.True(sessions.Count() > 0, "No Session was found!");
+    
+            Session session = sessions.Where(ele => ele.user != null).First();
+ 
             Faker<Basket> faker = new Faker<Basket>()
                 .RuleFor(basket => basket.BasketDetails, data =>
                     new List<BasketDetails>()
