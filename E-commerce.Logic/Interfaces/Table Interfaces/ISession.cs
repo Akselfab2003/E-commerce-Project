@@ -9,7 +9,7 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
     public interface Isession
     {
-        public Task<Session> GetById(string SessID);
+        public Task<Session> GetById(string SessId);
 
         public Task<Session> UpdateSession(Session session);
 
