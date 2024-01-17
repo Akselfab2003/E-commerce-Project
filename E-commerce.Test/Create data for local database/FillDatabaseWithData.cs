@@ -124,9 +124,9 @@ namespace E_commerce.Test.Create_data_for_local_database
 
             List<Products> productlists = await DataCollection.Products.GetProducts(40);
             Assert.True(productlists.Count() > 0, "No products was found!");
-            Users users = await DataCollection.Users.GetById(1);
+            Users users = await DataCollection.Users.GetById(1071);
             List<Session> sessions = await DataCollection.Session.GetAllSessions();
-            Session session = sessions.Where(ele => users.Id == 1 ).First();
+            Session session = sessions.Where(ele => users.Id == 1071).First();
            
             Assert.True(users != null, "No user was found!");
 

@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment.development';
 import { LoginObject } from '../../models/LoginObject';
 import { Session } from '../../models/Session';
 import { sessionController } from '../../logic/sessionLogic';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent<T> {
     password: new FormControl('', Validators.required),
   });
 
-  constructor(private service:HttpserviceService<T>){
+  constructor(private service:HttpserviceService<T>, private router:Router) {
   };
 
 
@@ -38,6 +39,7 @@ export class LoginComponent<T> {
       sessionController.SetCookie(data));
 
     if(this.loginForm.invalid) return;
+    this.router.navigate(['/profile']);
   }
 }
 

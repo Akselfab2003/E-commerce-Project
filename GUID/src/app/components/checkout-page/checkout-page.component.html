@@ -4,8 +4,8 @@
     <div class="order-summary">
       <h3>Order Summary</h3>
       <ul>
-        <li *ngFor="let item in orders">
-          {{ item.name }} - {{ item.price | currency }}
+        <li *ngFor="let details of basketItems.basketDetails">
+          {{ details.products.title }} - {{ products.price| currency }}
         </li>
       </ul>
       <p><strong>Total:</strong> </p>
@@ -13,15 +13,15 @@
   
     <div class="billing-details">
       <h3>Billing Details</h3>
-      <form>
+      <form ngModelOptions="{standalone: true}">
         <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" [(ngModel)]="billingDetails.fullName" required>
+        <input type="text" id="fullName" name="fullName" [(ngModel)]="billingDetails.fullName" required>
   
         <label for="email">Email:</label>
-        <input type="email" id="email" [(ngModel)]="billingDetails.email" required>
+        <input type="email" id="email" name="email" [(ngModel)]="billingDetails.email" required>
   
         <label for="address">Address:</label>
-        <textarea id="address" [(ngModel)]="billingDetails.address" required></textarea>
+        <textarea id="address" name="address" [(ngModel)]="billingDetails.address" required></textarea>
   
         <button type="button" (click)="placeOrder()">Place Order</button>
       </form>

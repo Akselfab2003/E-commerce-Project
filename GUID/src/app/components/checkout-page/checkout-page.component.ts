@@ -4,6 +4,7 @@ import { Products } from '../../models/Products';
 import { Order } from '../../models/Order';
 import { sessionController } from '../../logic/sessionLogic';
 import { Session } from '../../models/Session';
+import { Basket } from '../../models/Basket';
 
 @Component({
   selector: 'app-checkout-page',
@@ -12,6 +13,7 @@ import { Session } from '../../models/Session';
 })
 export class CheckoutPageComponent <T> {
 
+  basketItems:Basket = new Basket();
   public products: Products = new Products();
   orders:Order[] = new Array<Order>();
   session:Session = new Session();
@@ -25,24 +27,24 @@ export class CheckoutPageComponent <T> {
   };
 
   ngOnInit(): void {
-    this.GetOrders();
+    this.GetBakset();
   };
 
-  GetOrders(){
+  GetBakset(){
     let sessid:string=sessionController.GetCookie();
 
-    this.service.GetRequest<Order[]>("Orders/"+sessid).subscribe((data)=>{
-      this.orders = data;
-      console.log(this.orders)
+    this.service.GetRequest<Basket>("Basket/1").subscribe((data)=>{
+      this.basketItems = data;
+      console.log(this.basketItems)
     });
   }
 
   /* calculateTotal(): number {
-    return this.GetProduct().reduce((total, item) => total + item.price, 0);
+    return this.basketItems.reduce((total, item) => total + this.products.price, 0);
   } */
 
   placeOrder(): void {
     // Handle the order placement logic, e.g., send data to the server
-    console.log('Placing order:', this.billingDetails, 'Items:', this.GetOrders());
+    console.log('Placing order:', this.billingDetails, 'Items:', this.GetBakset());
   }
 }
