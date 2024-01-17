@@ -14,10 +14,8 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
         public Task<bool> DeleteCategories(Categories entity);
         public Task<Categories> GetById(int id);
         public Task<List<Categories>> GetCategoriesForListOfIds(List<int> id);
-
         public Task<List<Categories>> GetAllUniqueCategories();
-
-        public Task<List<Products>> GetProductsFromCategory(Categories category);
+        public Task<List<Products>> GetProductsFromCategory(Categories category, int[] ProductIds);
 
     }
 }
