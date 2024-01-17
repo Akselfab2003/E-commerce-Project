@@ -11,13 +11,16 @@ import { Categories } from '../../models/Categories';
 })
 export class ProductPageComponent<T> {
 
-  Product:Products[] = new Array<Products>();
+  CurrentProductsOnPage:Products[] = new Array<Products>();
+  
+  CurrentProductsDisplayedOnPage:Products[] = new Array<Products>();
 
   constructor(private service:HttpserviceService<T>) { };
 
   GetProducts<T>():void{
     this.service.GetRequest<Products[]>("Products/GetLimitedAmountOfProducts").subscribe((data)=>{
-      this.Product = data;
+      this.CurrentProductsOnPage = data;
+      this.CurrentProductsDisplayedOnPage = data;
     });
   };
   
@@ -34,10 +37,17 @@ export class ProductPageComponent<T> {
 
   TagsChangeEventHandler($event:Categories){
     console.log("Select statment")
+    if($event.id != 0){
+      // this.service.GetRequest<Products[]>("Products/GetProductsThatArePartOfCategory?id="+$event.id).subscribe((data)=>{
+      //   this.Product = data;
+      // });
+      var productsIds:Number[] = this.CurrentProductsOnPage.map(ele => ele.id)  
+      this.service.PostRequest<Products[]>("Products/GetProductsThatArePartOfCategory?CategoryId="+$event.id,productsIds).subscribe((data)=>{
+        this.CurrentProductsDisplayedOnPage = data;
+      });
+    }
 
-    this.service.GetRequest<Products[]>("Products/GetProductsThatArePartOfCategory?id="+$event.id).subscribe((data)=>{
-      this.Product = data;
-    });
+    this.CurrentProductsDisplayedOnPage = this.CurrentProductsOnPage
   
   }
   

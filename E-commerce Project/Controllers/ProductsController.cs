@@ -33,13 +33,13 @@ namespace E_commerce_Project.Controllers
             return await context.GetProducts(40);
         }
 
-        [HttpGet("GetProductsThatArePartOfCategory")]
-        public async Task<List<Products>> GetProductsPartOfCategory(int id)
-        {   
-            Categories category = await dataCollection.Categories.GetById(id);
-            return await dataCollection.Categories.GetProductsFromCategory(category);
-        }
+        [HttpPost("GetProductsThatArePartOfCategory")]
+        public async Task<List<Products>> GetProductsPartOfCategory(int CategoryId, int[] Productsids)
+        {
 
+            Categories category = await dataCollection.Categories.GetById(CategoryId);
+            return await dataCollection.Categories.GetProductsFromCategory(category,Productsids);
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Products products)
