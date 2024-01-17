@@ -14,5 +14,6 @@ namespace E_commerce.Logic.Interfaces
         public Task<bool> DeleteUser(string name);
         public Task<Users> GetByName(string name);
         public Task<Users> GetById(int id);
+        public Task<bool> CheckLogin(LoginObject loginObject);
     }
 }

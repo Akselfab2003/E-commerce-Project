@@ -15,10 +15,12 @@ namespace E_commerce_Project.Controllers
     {
         private readonly IUsers _users;
         private readonly Isession _session;
+        private readonly IDataCollection collection;
         public UserController(IDataCollection _context)
         {
             _users = _context.Users;
             _session = _context.Session;
+            collection = _context;
         }
         [HttpGet("UserName{name}")]
         public async Task<IActionResult> GetUserGetByName(string name)
@@ -49,6 +51,8 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
+                    users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+
                     await _users.CreateUser(users);
             }
             catch
@@ -96,8 +100,7 @@ namespace E_commerce_Project.Controllers
             try
             {
                 session1.user = null;
-                session1.SessId = Guid.NewGuid().ToString();
-                session1.Created = DateTime.Now;
+                
                 await _session.CreateSession(session1);
             }
             catch
@@ -111,13 +114,25 @@ namespace E_commerce_Project.Controllers
         public async Task<IActionResult> PutSession(LoginObject loginObject)
         {
             Session session = await _session.GetById(loginObject.sessionId);
-            var availability = session.Created.AddHours(2);
+     
             try
             {
-                if (availability > DateTime.Now)
+                if (session.Created > DateTime.Now)
                 {
-                    await _session.DeleteSession(loginObject.sessionId);
-                    session = await _session.Login(loginObject);
+                    
+
+                    loginObject.password = collection.Cryptography.CreateNewPasswordHash(loginObject.password);
+
+                    bool PasswordCorrect = await _users.CheckLogin(loginObject);
+
+                    if (PasswordCorrect)
+                    {
+                        session = await _session.Login(loginObject);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
                 else
                 {

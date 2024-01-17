@@ -13,6 +13,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
     public class SessionRepo : Isession
     {
         DBcontext context;
+  
         public SessionRepo(DBcontext c) { context = c; }
         public async Task<Session> CreateSession(Session session)
         {
@@ -22,13 +23,16 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         }
         public async Task<Session> Login(LoginObject loginObject)
         {
-            Users user = await context.Users.FirstOrDefaultAsync(users => users.Username == loginObject.username && users.Password == loginObject.password);
-            Session session = new Session();
-            session.user = user;
-            session.SessId = loginObject.sessionId;
-            session.Created = DateTime.Now;
-            await UpdateSession(session);
-            return session;
+                Users user = context.Users.Where(usr => usr.Username == loginObject.username).First();
+                Session session = await GetById(loginObject.sessionId);
+                if(session != null)
+                {
+                    session.user = user;
+                    await UpdateSession(session);
+                }
+                
+                return session;
+
         }
 
         public async Task<bool> DeleteSession(string id)

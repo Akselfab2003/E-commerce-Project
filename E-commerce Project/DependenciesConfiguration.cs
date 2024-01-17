@@ -1,6 +1,7 @@
 ﻿using E_commerce.Logic;
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models_Logic;
+using E_commerce.Logic.Models_Logic.Cryptography;
 using E_commerce.Logic.Models_Logic.Table_Repo;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,10 @@ namespace E_commerce_Project
         public static IServiceCollection GetConfig(this IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddDbContext<DBcontext>(con => con.UseLazyLoadingProxies().UseSqlServer(configuration.GetConnectionString("Connection")));
+            services.AddDbContext<DBcontext>(con => con
+                                                     .UseLazyLoadingProxies()
+                                                     .UseSqlServer(configuration.GetConnectionString("Connection"))
+                                            );
 
             return services;
 

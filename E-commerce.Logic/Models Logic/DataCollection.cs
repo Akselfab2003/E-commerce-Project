@@ -2,7 +2,9 @@
 using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
+using E_commerce.Logic.Models_Logic.Cryptography;
 using E_commerce.Logic.Models_Logic.Table_Repo;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,8 @@ namespace E_commerce.Logic.Models_Logic
         private readonly IProductVariants productVariants;
         private readonly IBasketDetails basketDetails;
         private readonly IBasket basket;
-        public DataCollection(DBcontext Context) 
+        private readonly IHashing cryptography;
+        public DataCollection(DBcontext Context,IConfiguration configuration) 
         {
             orders = new ordersRepo(Context);
             session = new SessionRepo(Context);
@@ -35,6 +38,7 @@ namespace E_commerce.Logic.Models_Logic
             productVariants = new productVariantsRepo(Context);
             basketDetails = new BasketDetailsRepo(Context);
             basket = new BasketRepo(Context);
+            cryptography = new Hashing(configuration);
         }
 
 
@@ -80,6 +84,10 @@ namespace E_commerce.Logic.Models_Logic
         public IBasket Basket
         {
             get { return basket; }
+        }
+        public IHashing Cryptography
+        {
+            get { return cryptography; }
         }
     }
 }

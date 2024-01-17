@@ -33,7 +33,6 @@ namespace E_commerce.Logic
         public DbSet<Basket> Basket {  get; set; } 
         public DbSet<BasketDetails> BasketDetails { get; set; }
         public DbSet<Images> Images { get; set; }
-        
         public DbSet<Categories> Categories { get; set; }
 
     }
