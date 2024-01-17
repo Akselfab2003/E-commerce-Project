@@ -1,19 +1,36 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Products } from '../../models/Products';
+import { Basket } from '../../models/Basket';
+import { BasketComponent } from '../basket/basket.component';
+import { basketLogic } from '../../logic/basketLogic';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.css'
+  styleUrl: './product-card.component.css',
 })
-export class ProductCardComponent {
+export class ProductCardComponent<T> {
+
+  constructor(private basketTest:basketLogic<T>)
+  {
+
+  }
 
   @Input() product: Products = new Products();
+  
+  @ViewChild(BasketComponent<any>) basketComponent!: BasketComponent<any>;
 
-  ButtonEvent(event: Event) {
+  basket:Basket = new Basket();
+  
+  GetBasketBtn(event: MouseEvent){
+    event.stopPropagation()
+    this.basketTest.AddToBasket(this.product)
+  }
+
+  /*ButtonEvent(event: Event) {
     event.stopPropagation()
     console.log("product")
     console.log(this.product)
-  }
+  }*/
 
 }

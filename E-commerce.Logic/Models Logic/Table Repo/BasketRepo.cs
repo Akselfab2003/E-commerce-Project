@@ -46,8 +46,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Basket> GetBySessId(Session sessId)
         {
-            Users usr = sessId.user;
-            Basket userBasket = await context.Basket.FirstOrDefaultAsync(basket => basket.Session.user == usr);
+            Basket userBasket = await context.Basket.FirstOrDefaultAsync(basket => basket.Session == sessId);
             return userBasket;
                 
         }
