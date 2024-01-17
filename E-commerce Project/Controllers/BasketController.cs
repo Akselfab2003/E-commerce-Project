@@ -11,13 +11,32 @@ namespace E_commerce_Project.Controllers
     [ApiController]
     public class BasketController : Controller
     {
-        IBasket context;
-        public BasketController(IDataCollection c) { context = c.Basket; } // Dependency Injection - DI
+        private readonly IBasket context;
+        private readonly IDataCollection dataCollectioncontext;
+        public BasketController(IDataCollection c) 
+        { 
+            context = c.Basket;
+            dataCollectioncontext = c;
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Basket>> GetBasketById(int id)
         {
             var basket = await context.GetById(id);
+
+            if (basket == null)
+            {
+                return NotFound();
+            }
+
+            return basket;
+        }
+
+        [HttpGet("GetBasket/{sessid}")]
+        public async Task<ActionResult<Basket>> GetBasketBySessId(string sessid)
+        {
+            Session session = await dataCollectioncontext.Session.GetById(sessid);
+            var basket = await context.GetBySessId(session);
 
             if (basket == null)
             {
