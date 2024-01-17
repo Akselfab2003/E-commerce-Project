@@ -102,6 +102,9 @@ namespace E_commerce_Project.Controllers
                 session1.user = null;
                 
                 await _session.CreateSession(session1);
+                Basket basket = new Basket();
+                basket.Session = session1;
+                await collection.Basket.CreateBasket(basket);
             }
             catch
             {
