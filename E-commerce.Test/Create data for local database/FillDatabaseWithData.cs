@@ -45,6 +45,8 @@ namespace E_commerce.Test.Create_data_for_local_database
             output.WriteLine(JsonSerializer.Serialize(data));
             foreach (Users user in data)
             {
+                user.Password = DataCollection.Cryptography.CreateNewPasswordHash(user.Password);
+
                 await DataCollection.Users.CreateUser(user);
             }
             Assert.True(data.Any());

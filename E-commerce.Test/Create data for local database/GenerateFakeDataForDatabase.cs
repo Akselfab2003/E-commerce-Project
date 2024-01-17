@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace E_commerce.Test
     {
         private readonly DBcontext Context;
         private readonly IDataCollection dataCollection;
+        private readonly IConfiguration configuration;
         public GenerateFakeDataForDatabase()
         {
             
@@ -26,9 +28,15 @@ namespace E_commerce.Test
             connection.Open();
             DbContextOptions<DBcontext> contextOptions =
             new DbContextOptionsBuilder<DBcontext>().UseSqlServer(connection).Options;
-            
+
+          
+
+            FileStream stream = new FileStream("..\\net8.0\\Create data for local database\\Secret.json",FileMode.Open,FileAccess.Read);
+            configuration = new ConfigurationBuilder().AddJsonStream(stream).Build();
+               
+
             Context = new DBcontext(contextOptions);
-            dataCollection = new DataCollection(Context);
+            dataCollection = new DataCollection(Context,configuration);
 
         }
         public IDataCollection DataCollection
@@ -39,6 +47,7 @@ namespace E_commerce.Test
         public class SecretClass
         {
             public string Connection { get; set; }
+            public string SALT { get; set; }
         }
     }
 }
