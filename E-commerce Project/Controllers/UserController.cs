@@ -21,7 +21,7 @@ namespace E_commerce_Project.Controllers
         {
             _users = _context.Users;
             _session = _context.Session;
-            _adminUsers = _context.AdminUsers;
+            //_adminUsers = _context.AdminUsers;
             collection = _context;
         }
 
