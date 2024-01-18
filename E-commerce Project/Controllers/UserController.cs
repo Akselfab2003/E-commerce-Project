@@ -81,6 +81,7 @@ namespace E_commerce_Project.Controllers
                 return false;
             }
         }
+        
         #endregion
 
         #region   POST Requests
@@ -118,7 +119,8 @@ namespace E_commerce_Project.Controllers
         }
         #endregion
 
-        #region PUT Requests
+        #region   PUT Requests
+
         [HttpPut("Login")]
         public async Task<IActionResult> PutSession(LoginObject loginObject)
         {

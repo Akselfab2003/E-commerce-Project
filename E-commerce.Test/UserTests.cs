@@ -1,4 +1,5 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using System;
 using System.Collections.Generic;
@@ -25,23 +26,35 @@ namespace E_commerce.Test
 
 
         [Fact]
-        public async Task Can_create_userAsync()
+        public async Task PostEmptySessionTest()
         {
-           // Users users = new Users();
-           // users.Gender = true;
-           // users.Id = 1;
-           // users.Email = "test";
-           //// users.Session = new Session() { Id = 1,SessId = "test"};
-           // users.Username = "test";
-           // users.Password = "test";
 
-           // await dataCollection.Users.CreateUser(users);
+            Session session1 = new Session();
+            try
+            {
+                session1.user = null;
 
-           //// Users userreturned = await dataCollection.Users.GetById(1);
+                await dataCollection.Session.CreateSession(session1);
+                Basket basket = new Basket();
+                basket.Session = session1;
+                await dataCollection.Basket.CreateBasket(basket);
+                Assert.NotNull(session1);
+                Assert.NotNull(basket);
+            }
+            catch(Exception ex) 
+            {
+              
+            }
+         
 
-           // output.WriteLine(JsonSerializer.Serialize(userreturned));
+            Assert.True(session1.SessId.Length > 0,"sessid does not exists");
 
-           // Assert.Equal(userreturned,users);
+            output.WriteLine(JsonSerializer.Serialize(session1));
+                
+
+
         }
+
+
     }
 }
