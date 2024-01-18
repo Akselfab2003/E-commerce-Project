@@ -34,7 +34,6 @@ export class AdminLoginComponent<T> {
     this.service.PutRequest<LoginObject>("User/Login/AdminUsers",LoginTry).subscribe((data)=>
       console.log(data));
 
-    if(this.loginForm.invalid) return;
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/admin-page']);
   }
 }

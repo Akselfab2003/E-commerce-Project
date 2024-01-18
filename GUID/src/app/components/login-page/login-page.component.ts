@@ -38,7 +38,6 @@ export class LoginComponent<T> {
       
       sessionController.SetCookie(data));
 
-    if(this.loginForm.invalid) return;
     this.router.navigate(['/profile']);
   }
 }
