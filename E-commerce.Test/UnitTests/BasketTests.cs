@@ -24,10 +24,12 @@ namespace E_commerce.Test.UnitTests
 
 
         [Fact]
-        public async void PostAndGetBasketByIdTest()
+        public async Task PostAndGetBasketByIdTest()
         {
             Basket basket = new Basket();
-            basket.Id = 1;
+            basket.Session = new Session();
+            basket.BasketDetails = new List<BasketDetails>();
+
             Basket basketReturned = await dataCollection.Basket.CreateBasket(basket);
             output.WriteLine(JsonSerializer.Serialize(basketReturned));
             Assert.Equal(basket, basketReturned);

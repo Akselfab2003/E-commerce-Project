@@ -76,6 +76,19 @@ namespace E_commerce_Project.Controllers
             return basket.BasketDetails;
         }
 
+
+        [HttpPost("CreateBasket")]
+        public async Task<Basket> CreateBasket()
+        {
+            Basket basket = new Basket();
+
+            basket.BasketDetails = new List<BasketDetails> { };
+            basket.Session = new Session();
+
+            await dataCollectioncontext.Basket.CreateBasket(basket);
+
+            return basket;
+        }
         // DELETE: api/Heroes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBasket(Basket entity)
