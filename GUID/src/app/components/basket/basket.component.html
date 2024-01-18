@@ -1,25 +1,33 @@
 <div [@BasketAnimation]="BasketState" class="Basket">
-    <div class="BasketContent">   
-        <section>
-            <div class="container">
-                <table class="table shop-table">
-                    <tr>
-                      <th class="b-0">Title</th>
-                      <th class="b-0">Price</th>
-                      <th class="b-0 text-right">Total Price</th>
-                    </tr>
-                    <tr *ngFor="let details of basket.basketDetails">
-                      <td>{{ details.products.title }}</td>
-                      <td>{{ details.products.price }}</td>
-                      <td class="text-right">
-                        <h5 class="font-medium m-b-30">{{ details.products.price }}</h5>
-                      </td>
-                    </tr>
-                    <tr>
-                      <!-- <td colspan="3" align="right">Subtotal : 100 {{ carts.subTotal }} </td> -->
-                    </tr>
-                </table>
-            </div>
-        </section>
+  <div class="BasketContent">
+    <h1>Shopping Cart</h1>
+    <div class="basket">
+      <div class="column-labels">
+        <label class="product-image">Image</label>
+        <label class="product-details">Product</label>
+        <label class="product-price">Price</label>
+        <label class="product-quantity">Quantity</label>
+        <label class="product-removal">Remove</label>
+        <label class="product-line-price">Total</label>
+      </div>
+      <div class="product" *ngFor="let details of basket.basketDetails">
+        <div class="product-image">
+          <img loading="lazy" [src]="details.products.images[0].imagePath" alt="ProductImage">
+        </div>
+        <div class="product-details">
+          <div class="product-title">{{details.products.title}}</div>
+          <p class="product-description">{{details.products.description}}</p>
+        </div>
+        <div class="product-price">{{details.products.price}}</div>
+        <div class="product-quantity">
+          <input type="number" min="1">
+        </div>
+        <div class="product-removal">
+          <button class="remove-product" (click)="RemoveProduct()">Remove</button>
+        </div>
+      </div>
+      <div class="total-price">{{calculateTotal()|currency}}</div>
+      <button class="checkout">Checkout</button>
+    </div>
     </div>
 </div>
