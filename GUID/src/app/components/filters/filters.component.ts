@@ -20,7 +20,7 @@ export class FiltersComponent <T> {
   }  
 
   GetAllTags<T>(){
-    this.service.GetRequest<Categories[]>("Tags/Categories").subscribe( ele => {
+    this.service.GetRequest<Categories[]>("Filter/Categories").subscribe( ele => {
       
       let AllCategory:Categories =  new Categories;
       
