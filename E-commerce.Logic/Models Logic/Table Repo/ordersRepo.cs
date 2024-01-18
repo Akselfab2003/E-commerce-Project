@@ -65,8 +65,9 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<List<Orders>> GetBysessId(string sessid)
         {
             Session session = await dataCollection.GetById(sessid);
-            Users usr = session.user;
-            List < Orders>userOrders = await context.Orders.Include(order => order.OrderLines).Where(order => order.Users == usr).ToListAsync();
+           
+            List < Orders>userOrders = await context.Orders.Include(order => order.OrderLines).Where(order => order.Session.SessId == sessid ).ToListAsync();
+
             return userOrders;
         }
 

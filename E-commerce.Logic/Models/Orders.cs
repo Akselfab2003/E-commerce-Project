@@ -15,8 +15,9 @@ namespace E_commerce.Logic.Models
         
         public int Id { get; set; }
 
-        public virtual Users Users { get; set; }
+        public virtual Users? Users { get; set; }
 
+        public virtual Session Session { get; set; }
         public virtual List<OrderDetails> OrderLines { get; set; }
 
       
