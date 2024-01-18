@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
-namespace E_commerce.Test
+namespace E_commerce.Test.UnitTests
 {
     [Collection("Services")]
     public class UserTests
@@ -41,16 +41,16 @@ namespace E_commerce.Test
                 Assert.NotNull(session1);
                 Assert.NotNull(basket);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-              
-            }
-         
 
-            Assert.True(session1.SessId.Length > 0,"sessid does not exists");
+            }
+
+
+            Assert.True(session1.SessId.Length > 0, "sessid does not exists");
 
             output.WriteLine(JsonSerializer.Serialize(session1));
-                
+
 
 
         }
