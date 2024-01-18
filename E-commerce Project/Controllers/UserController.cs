@@ -100,6 +100,22 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.Created;
         }
+        [HttpPost("createAdmin")]
+        public async Task<HttpStatusCode> PostAdmin(AdminUsers users)
+        {
+            try
+            {
+                users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+
+                await _adminUsers.CreateAdminUsers(users);
+            }
+            catch
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
+            return HttpStatusCode.Created;
+        }
         #endregion
 
         #region PUT Requests
@@ -117,6 +133,40 @@ namespace E_commerce_Project.Controllers
                     loginObject.password = collection.Cryptography.CreateNewPasswordHash(loginObject.password);
 
                     bool PasswordCorrect = await _users.CheckLogin(loginObject);
+
+                    if (PasswordCorrect)
+                    {
+                        session = await _session.Login(loginObject);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
+        }
+        [HttpPut("AdminLogin")]
+        public async Task<IActionResult> PutAdmin(LoginObject loginObject)
+        {
+            Session session = await _session.GetById(loginObject.sessionId);
+
+            try
+            {
+                if (session.Created > DateTime.Now)
+                {
+
+
+                    loginObject.password = collection.Cryptography.CreateNewPasswordHash(loginObject.password);
+
+                    bool PasswordCorrect = await _adminUsers.CheckLogin(loginObject);
 
                     if (PasswordCorrect)
                     {
