@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class AdminUsersRepo : IAdminUsers
+    public class AdminUsersRepo : GenericClass<AdminUsers> ,IAdminUsers
     {
         DBcontext context;
-        public AdminUsersRepo(DBcontext c) { context = c; }
+        DbSet<AdminUsers> adminUsers;
+
+        public AdminUsersRepo(DBcontext c) :base(c)
+        {   this.context = c;
+            //adminUsers = c.AdminUsers;
+        }
 
         public async Task<AdminUsers> GetByName(string name)
         {
