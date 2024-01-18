@@ -41,7 +41,8 @@ namespace E_commerce_Project
             {
                 options.AllowAnyHeader();
                 options.AllowAnyMethod();
-                options.AllowAnyOrigin();
+                options.SetIsOriginAllowed(Allowed => true ).AllowCredentials();
+          
 
             });
 
