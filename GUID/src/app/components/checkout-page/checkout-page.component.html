@@ -5,10 +5,10 @@
       <h3>Order Summary</h3>
       <ul>
         <li *ngFor="let details of basketItems.basketDetails">
-          {{ details.products.title }} - {{ products.price| currency }}
+          {{ details.products.title }} - {{ details.products.price| currency }}
         </li>
       </ul>
-      <p><strong>Total:</strong> </p>
+      <p><strong>Total: {{calculateTotal()| currency }}</strong> </p>
     </div>
   
     <div class="billing-details">
