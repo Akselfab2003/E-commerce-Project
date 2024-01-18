@@ -5,6 +5,7 @@ import { Order } from '../../models/Order';
 import { sessionController } from '../../logic/sessionLogic';
 import { Session } from '../../models/Session';
 import { Basket } from '../../models/Basket';
+import { basketLogic } from '../../logic/basketLogic';
 
 @Component({
   selector: 'app-checkout-page',
@@ -18,7 +19,7 @@ export class CheckoutPageComponent <T> {
   orders:Order[] = new Array<Order>();
   session:Session = new Session();
 
-  constructor(private service:HttpserviceService<T>) { };
+  constructor(private service:HttpserviceService<T>, private basketTest:basketLogic<T>) { };
 
   billingDetails = {
     fullName: '',
@@ -27,24 +28,19 @@ export class CheckoutPageComponent <T> {
   };
 
   ngOnInit(): void {
-    this.GetBakset();
+    this.GetBasket();
   };
 
-  GetBakset(){
-    let sessid:string=sessionController.GetCookie();
-
-    this.service.GetRequest<Basket>("Basket/").subscribe((data)=>{
-      this.basketItems = data;
-      console.log(this.basketItems)
-    });
+  GetBasket(){
+    this.basketTest.GetBasket().subscribe(res => this.basketItems = res)
   }
 
-  /* calculateTotal(): number {
-    return this.basketItems.reduce((total, item) => total + this.products.price, 0);
-  } */
+  calculateTotal(): number {
+    return this.basketItems.basketDetails.reduce((total, item) => total + item.products.price, 0);
+  } 
 
   placeOrder(): void {
     // Handle the order placement logic, e.g., send data to the server
-    console.log('Placing order:', this.billingDetails, 'Items:', this.GetBakset());
+    console.log('Placing order:', this.billingDetails, 'Items:', this.GetBasket());
   }
 }
