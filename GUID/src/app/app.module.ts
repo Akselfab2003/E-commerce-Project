@@ -18,6 +18,7 @@ import { BasketComponent } from './components/basket/basket.component';
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
     ProductDetailsPageComponent,
     BasketComponent,
     CheckoutPageComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

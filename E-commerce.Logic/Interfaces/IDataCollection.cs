@@ -11,6 +11,7 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface IDataCollection
     {
+        public IAdminUsers AdminUsers { get; }
         public IOrders Orders { get; }
         public IUsers Users { get; }
         public Isession Session { get; }
