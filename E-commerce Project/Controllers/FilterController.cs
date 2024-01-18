@@ -9,12 +9,12 @@ namespace E_commerce_Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TagsController : ControllerBase
+    public class FilterController : ControllerBase
     {
         private readonly ITags DataCollection;
         private readonly ICategories DataCollection_Categories;
 
-        public TagsController(IDataCollection collection)
+        public FilterController(IDataCollection collection)
         {
             DataCollection = collection.Tags;
             DataCollection_Categories = collection.Categories;
