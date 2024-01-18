@@ -36,14 +36,22 @@ export class BasketComponent<T> {
   public BasketStateBool:boolean = false
 
   basket: Basket = new Basket();
-  constructor(private basketTest:basketLogic<T>)
+  constructor(private basketItems:basketLogic<T>)
   {
 
   }
   
   GetBasket() {
-    this.basketTest.GetBasket().subscribe(res => this.basket = res)
+    this.basketItems.GetBasket().subscribe(res => this.basket = res)
   };
+
+  RemoveProduct(){
+    this.basketItems.RemoveFromCart(this.basket.id);
+  }
+
+  calculateTotal(): number {
+    return this.basketItems.basketDetails.reduce((total, item) => total + item.products.price, 0);
+  } 
 
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool
