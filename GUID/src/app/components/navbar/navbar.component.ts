@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { BasketComponent } from '../basket/basket.component';
+import { adminGuard } from '../../logic/admin.guard';
+import { adminController } from '../../logic/adminLogic';
 
 @Component({
   selector: 'app-navbar',
@@ -16,5 +18,8 @@ export class NavbarComponent {
   changeBasket(){
     this.Basket.ChangeState()
     console.log("Tse")
+  }
+  canShowLink():boolean{
+    return adminController.hasRequiredRole();
   }
 }

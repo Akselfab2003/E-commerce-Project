@@ -15,11 +15,13 @@ namespace E_commerce_Project.Controllers
     {
         private readonly IUsers _users;
         private readonly Isession _session;
+        private readonly IAdminUsers _adminUsers;
         private readonly IDataCollection collection;
         public UserController(IDataCollection _context)
         {
             _users = _context.Users;
             _session = _context.Session;
+            _adminUsers = _context.AdminUsers;
             collection = _context;
         }
         [HttpGet("UserName{name}")]
@@ -176,6 +178,40 @@ namespace E_commerce_Project.Controllers
             {
                 return false;
             }
+        }
+        [HttpPut("Login/AdminUsers")]
+        public async Task<IActionResult> GetAdminUser(LoginObject loginObject)
+        {
+            AdminUsers adminUsers = new AdminUsers();
+            loginObject.password = collection.Cryptography.CreateNewPasswordHash(loginObject.password);
+
+            bool PasswordCorrect = await _adminUsers.CheckLogin(loginObject);
+
+            if (PasswordCorrect)
+            {
+                adminUsers = await _adminUsers.GetByName(loginObject.username);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            return new ObjectResult(adminUsers) { StatusCode = StatusCodes.Status201Created };
+        }
+        [HttpPost("createAdmin")]
+        public async Task<HttpStatusCode> CreateAdmin(AdminUsers users)
+        {
+            try
+            {
+                users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+
+                await _adminUsers.CreateAdminUsers(users);
+            }
+            catch
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
+            return HttpStatusCode.Created;
         }
     }
 }

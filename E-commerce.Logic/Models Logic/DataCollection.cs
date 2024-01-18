@@ -15,6 +15,7 @@ namespace E_commerce.Logic.Models_Logic
 {
     public class DataCollection : IDataCollection
     {
+        private readonly IAdminUsers adminUsers;
         private readonly IOrders orders;
         private readonly IUsers users;
         private readonly Isession session;
@@ -26,6 +27,7 @@ namespace E_commerce.Logic.Models_Logic
         private readonly IBasketDetails basketDetails;
         private readonly IBasket basket;
         private readonly IHashing cryptography;
+
         public DataCollection(DBcontext Context,IConfiguration configuration) 
         {
             orders = new ordersRepo(Context);
@@ -39,9 +41,13 @@ namespace E_commerce.Logic.Models_Logic
             basketDetails = new BasketDetailsRepo(Context);
             basket = new BasketRepo(Context);
             cryptography = new Hashing(configuration);
+            adminUsers = new AdminUsersRepo(Context);
         }
 
-
+        public IAdminUsers AdminUsers
+        {
+            get { return adminUsers; }
+        }
         public IOrders Orders
         {
             get { return orders; }
