@@ -20,39 +20,7 @@ namespace E_commerce_Project.Controllers
             DataCollection_Categories = collection.Categories;
         }
 
-        [HttpPost(Name = "GetAllTags")]
-        public async Task<List<Tags>> GetAllTagsBasedOnIds(List<int> Ids)
-        {
-            List<Tags> Tags = new List<Tags>();
-            try
-            {
-              Tags =   await DataCollection.GetTagsForListOfIds(Ids);
-            }
-            catch
-            {
-                return Tags;
-            }
-
-            return Tags;
-        }
-
-
-        [HttpGet]
-        public async Task<List<Tags>> GetAllTags()
-        {
-            List<Tags> Tags = new List<Tags>();
-            try
-            {
-                Tags = await DataCollection.GetAllUniqueTags();
-            }
-            catch
-            {
-                return Tags;
-            }
-
-            return Tags;
-        }
-
+        #region GET Requests
 
         [HttpGet("Categories")]
         public async Task<List<Categories>> GetAllCategories()
@@ -69,6 +37,8 @@ namespace E_commerce_Project.Controllers
 
             return Categories;
         }
+
+        #endregion
 
     }
 }

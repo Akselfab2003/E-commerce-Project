@@ -33,14 +33,14 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpGet("GetBasket/{sessid}")]
-        public async Task<ActionResult<Basket>> GetBasketBySessId(string sessid)
+        public async Task<Basket> GetBasketBySessId(string sessid)
         {
             Session session = await dataCollectioncontext.Session.GetById(sessid);
             var basket = await context.GetBySessId(session);
 
             if (basket == null)
             {
-                return NotFound();
+                return null;
             }
 
             return basket;
@@ -66,11 +66,14 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Basket>> PostBasket(Basket basket)
+        [HttpPost("AddToBasket/{sessid}")]
+        public async Task<List<BasketDetails>> PostBasket(BasketDetails basketDetails, string sessid)
         {
-            await context.CreateBasket(basket);
-            return CreatedAtAction("GetBasket", new { id = basket.Id }, basket);
+            Basket basket = await GetBasketBySessId(sessid);
+            basket.BasketDetails.Add(basketDetails);
+            await dataCollectioncontext.Basket.UpdateBasket(basket);
+
+            return basket.BasketDetails;
         }
 
         // DELETE: api/Heroes/5

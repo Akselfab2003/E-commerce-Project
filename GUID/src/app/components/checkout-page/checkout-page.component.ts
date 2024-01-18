@@ -33,7 +33,7 @@ export class CheckoutPageComponent <T> {
   GetBakset(){
     let sessid:string=sessionController.GetCookie();
 
-    this.service.GetRequest<Basket>("Basket/1").subscribe((data)=>{
+    this.service.GetRequest<Basket>("Basket/").subscribe((data)=>{
       this.basketItems = data;
       console.log(this.basketItems)
     });
