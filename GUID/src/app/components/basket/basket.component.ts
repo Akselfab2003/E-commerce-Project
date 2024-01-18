@@ -1,12 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Products } from '../../models/Products';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { BasketDetails } from '../../models/BasketDetails';
 import { Basket } from '../../models/Basket';
+import { basketLogic } from '../../logic/basketLogic';
 
 @Component({
   selector: 'app-basket',
@@ -34,30 +35,21 @@ export class BasketComponent<T> {
   public BasketState:string = "Closed"
   public BasketStateBool:boolean = false
 
-  constructor(private route: ActivatedRoute, private service: HttpserviceService<T>) {}
+  basket: Basket = new Basket();
+  constructor(private basketTest:basketLogic<T>)
+  {
 
-  @Input() basket: Basket = new Basket();
-  public primaryBasket: Basket = new Basket();
-
-
-  GetBasket(id:Number){
-      this.service.GetRequest<Basket>(`Basket/1`).subscribe((data)=>{
-      this.primaryBasket = data;
-      console.log(data)
-    });
-  };
-
-  selectedId: number = 0;
-  ngOnInit() {
-      this.route.paramMap.subscribe((data)=>{
-      this.selectedId = Number(data.get('id'));
-      this.GetBasket(this.selectedId)
-      console.log("basket Object:");
-    })
   }
+  
+  GetBasket() {
+    this.basketTest.GetBasket().subscribe(res => this.basket = res)
+  };
 
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool
     this.BasketState = this.BasketStateBool ? "Open" : "Closed"
+    if(this.BasketState == "Open"){
+      this.GetBasket();
+    }
   }
-}
+};
