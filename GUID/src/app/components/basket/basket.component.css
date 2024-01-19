@@ -87,7 +87,7 @@ button:hover{
 
 .remove-item{
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 10px;
   width: 20px;
   height: 20px;
@@ -103,7 +103,13 @@ button:hover{
   color: #fff;
   font-size: 20px;
   user-select: none;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; 
+  width: 100%;
+  margin-bottom: 20%;
+  }
 
 .item-img{
   flex: 1;
@@ -187,7 +193,7 @@ button:hover{
 
 .cart-actions button{
   border: none;
-  background-color: #000;
+  background-color: #3498db;
   color: #fff;
   border-radius: 15px;
   padding: 10px;
@@ -198,7 +204,7 @@ button:hover{
 }
 
 .cart-actions button:nth-of-type(2){
-  background-color: #3498db;
+  background-color: #000;
 }
 
 

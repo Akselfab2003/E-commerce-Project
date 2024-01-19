@@ -9,19 +9,19 @@
     </div>
     <!--Cart Items-->
     <div class="cart-items">
-      <div class="cart-item" *ngFor="let details of basket.basketDetails">
+      <div class="cart-item" *ngFor="let product of getUniqueProducts()">
         <div class="remove-item">
           <span>&times;</span>
         </div>
         <div class="item-img">
-          <img  [src]="details.products.images[0].imagePath" alt="Product Image">
+          <img  [src]="product.images[0].imagePath" alt="Product Image">
         </div>
         <div class="item-details">
-          <p>{{details.products.title}}</p>
-          <strong>${{details.products.price}}</strong>
+          <p>{{product.title}}</p>
+          <strong>{{product.price * calculateProductCounts(product.id) | currency}}</strong>
           <div class="qty">
             <span>-</span>
-            <strong>1</strong>
+            <strong>{{calculateProductCounts(product.id)}}</strong>
             <span>+</span>
           </div>
         </div>
@@ -33,8 +33,8 @@
         <p>SUBTOTAL</p>
         <p><span id="subtotal-price">{{calculateTotal()| currency }}</span></p>
       </div>
-      <button>View Cart</button>
       <button routerLink="checkout-page">Checkout</button>
+      <button (click)="closeBasket()">close</button>
     </div>
   </div>
 </div>

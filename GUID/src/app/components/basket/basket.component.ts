@@ -53,6 +53,29 @@ export class BasketComponent<T> {
     return this.basketItems.basketDetails.reduce((total, item) => total + item.products.price, 0);
   } 
 
+
+  getUniqueProducts(): Products[] {
+    const uniqueProducts: Products[] = [];
+
+    const uniqueProductIds = new Set<number>();
+  
+    this.basketItems.basketDetails.forEach((item) => {
+      const productId = item.products.id;
+      if (!uniqueProductIds.has(productId)) {
+        uniqueProductIds.add(productId);
+        uniqueProducts.push(item.products);
+      }
+    });
+
+    return uniqueProducts;
+  }
+
+  calculateProductCounts(productId: number): number {
+    return this.basketItems.basketDetails.reduce((count, item) => {
+      return item.products.id === productId ? count + 1 : count;
+    }, 0);
+  }
+
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool
     this.BasketState = this.BasketStateBool ? "Open" : "Closed"
@@ -60,4 +83,10 @@ export class BasketComponent<T> {
       this.GetBasket();
     }
   }
-};
+
+  closeBasket(){
+    if(this.BasketState == "Open"){
+      this.ChangeState()
+    }
+  }
+}
