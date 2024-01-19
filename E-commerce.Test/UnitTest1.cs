@@ -54,5 +54,20 @@ namespace E_commerce.Test
 
         }
 
+
+        [Fact]
+        public async void Teststuff()
+        {
+            AdminUsers users = new AdminUsers();
+            users.Username = "username";
+            users.Password = "password";
+
+            await dataCollection.AdminUsers.Create(users);
+
+
+           AdminUsers user =  await dataCollection.AdminUsers.GetByName("username");
+            Assert.NotNull(user);
+        }
+
     }
 }

@@ -1,33 +1,40 @@
 <div [@BasketAnimation]="BasketState" class="Basket">
-  <div class="BasketContent">
-    <h1>Shopping Cart</h1>
-    <div class="basket">
-      <div class="column-labels">
-        <label class="product-image">Image</label>
-        <label class="product-details">Product</label>
-        <label class="product-price">Price</label>
-        <label class="product-quantity">Quantity</label>
-        <label class="product-removal">Remove</label>
-        <label class="product-line-price">Total</label>
+<div class="sidecart">
+  <div class="cart-content">
+    <!--Cart Header-->
+    <div class="cart-header">
+      <div class="header-title">
+      <h2>Your Cart</h2>
       </div>
-      <div class="product" *ngFor="let details of basket.basketDetails">
-        <div class="product-image">
-          <img loading="lazy" [src]="details.products.images[0].imagePath" alt="ProductImage">
+    </div>
+    <!--Cart Items-->
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let details of basket.basketDetails">
+        <div class="remove-item">
+          <span>&times;</span>
         </div>
-        <div class="product-details">
-          <div class="product-title">{{details.products.title}}</div>
-          <p class="product-description">{{details.products.description}}</p>
+        <div class="item-img">
+          <img  [src]="details.products.images[0].imagePath" alt="Product Image">
         </div>
-        <div class="product-price">{{details.products.price}}</div>
-        <div class="product-quantity">
-          <input type="number" min="1">
-        </div>
-        <div class="product-removal">
-          <button class="remove-product" (click)="RemoveProduct()">Remove</button>
+        <div class="item-details">
+          <p>{{details.products.title}}</p>
+          <strong>${{details.products.price}}</strong>
+          <div class="qty">
+            <span>-</span>
+            <strong>1</strong>
+            <span>+</span>
+          </div>
         </div>
       </div>
-      <div class="total-price">{{calculateTotal()|currency}}</div>
-      <button class="checkout">Checkout</button>
     </div>
+    <!--Cart Actions-->
+    <div class="cart-actions">
+      <div class="subtotal">
+        <p>SUBTOTAL</p>
+        <p>$<span id="subtotal-price">3896</span></p>
+      </div>
+      <button>View Cart</button>
+      <button>Checkout</button>
     </div>
+  </div>
 </div>
