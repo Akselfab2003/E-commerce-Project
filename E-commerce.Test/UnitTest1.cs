@@ -25,12 +25,10 @@ namespace E_commerce.Test
         
                 Orders orders = new Orders();
                 orders.Id = 1;
-                 orders.sessid = "Test";
+                // orders.sessid = "Test";
                 Orders orderReturned = await dataCollection.Orders.CreateOrder(orders);
                 output.WriteLine(JsonSerializer.Serialize(orderReturned));
                 Assert.Equal(orders, orderReturned);
-        
-
 
         }
         [Fact]
@@ -54,6 +52,21 @@ namespace E_commerce.Test
             Assert.Null(order);
 
 
+        }
+
+
+        [Fact]
+        public async void Teststuff()
+        {
+            AdminUsers users = new AdminUsers();
+            users.Username = "username";
+            users.Password = "password";
+
+            await dataCollection.AdminUsers.Create(users);
+
+
+           AdminUsers user =  await dataCollection.AdminUsers.GetByName("username");
+            Assert.NotNull(user);
         }
 
     }

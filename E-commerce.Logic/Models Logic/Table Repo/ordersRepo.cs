@@ -1,4 +1,5 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,10 +10,14 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class ordersRepo :IOrders
+    public class ordersRepo : GenericRepo<Orders> , IOrders
     {
         private readonly DBcontext context;
-        public ordersRepo(DBcontext c) { context = c; }
+        private readonly Isession dataCollection;
+        public ordersRepo(DBcontext c) : base(c) 
+        { 
+            context = c; dataCollection = new SessionRepo(context);
+        }
 
         public async Task<Orders> CreateOrder(Orders Order)
         {
@@ -60,11 +65,22 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Orders.FirstOrDefaultAsync(order => order.Id == id);
         }
 
+        public async Task<List<Orders>> GetBysessId(string sessid)
+        {
+            Session session = await dataCollection.GetById(sessid);
+           
+            List < Orders>userOrders = await context.Orders.Include(order => order.OrderLines).Where(order => order.Session.SessId == sessid ).ToListAsync();
+
+            return userOrders;
+        }
+
         public async Task<Orders> UpdateOrders(Orders Order)
         {
             context.Update(Order);
             await context.SaveChangesAsync();
             return Order;
         }
+
+       
     }
 }

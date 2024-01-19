@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class productVariantsRepo : IProductVariants
+    public class productVariantsRepo : GenericRepo<ProductVariants>, IProductVariants
     {
         DBcontext context;
-        public productVariantsRepo(DBcontext c) { context = c; }
+        public productVariantsRepo(DBcontext c) : base(c)
+        {
+            context = c;
+        }
         public async Task<ProductVariants> CreateProductVariants(ProductVariants entity)
         {
             context.ProductVariants.Add(entity);
@@ -20,11 +23,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return entity;
         }
 
-        public async Task<bool> DeleteProductVariants(int id)
+        public async Task<bool> DeleteProductVariants(ProductVariants entity)
         {
             try
             {
-                ProductVariants productVariant = await GetById(id);
+                ProductVariants productVariant = await GetById(entity.Id);
                 context.ProductVariants.Remove(productVariant);
                 await context.SaveChangesAsync();
             }
@@ -38,11 +41,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<ProductVariants> GetById(int id)
         {
             return await context.ProductVariants.FirstOrDefaultAsync(productVariant => productVariant.Id == id);
-        }
-
-        public async Task<ProductVariants> GetByName(string name)
-        {
-            return await context.ProductVariants.FirstOrDefaultAsync(productVariant => productVariant.Name == name);
         }
 
         public async Task<ProductVariants> UpdateProductVariants(ProductVariants entity)

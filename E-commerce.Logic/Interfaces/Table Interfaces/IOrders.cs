@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IOrders
+    public interface IOrders : IGeneric<Orders>
     {
         public Task<Orders> GetById(int id);
+        public Task<List<Orders>> GetBysessId(string sessid);
 
         public Task<Orders> UpdateOrders(Orders Order);
 

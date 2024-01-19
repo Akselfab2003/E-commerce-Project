@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class FavoritesRepo : IFavorites
+    public class FavoritesRepo : GenericRepo<Favorites>, IFavorites
     {
         DBcontext context;
-        public FavoritesRepo(DBcontext c) { context = c; }
+        public FavoritesRepo(DBcontext c) : base(c) 
+        {
+            context = c;
+        }
         public async Task<Favorites> GetById(int id)
         {
             return await context.Favorites.FirstOrDefaultAsync(favorites => favorites.Id == id);

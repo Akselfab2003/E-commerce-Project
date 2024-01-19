@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    public interface IBasketDetails
+    public interface IBasketDetails : IGeneric<BasketDetails>
     {
         public Task<BasketDetails> GetById(int id);
 
-        public Task<BasketDetails> UpdateBasket(BasketDetails basket);
+        public Task<BasketDetails> UpdateBasketDetails(BasketDetails basketDetails);
 
-        public Task<bool> DeleteBasket(int id);
+        public Task<bool> DeleteBasketDetails(BasketDetails basketDetails);
 
-        public Task<BasketDetails> CreateBasket(BasketDetails basket);
+        public Task<BasketDetails> CreateBasketDetails(BasketDetails basketDetails);
     }
 }

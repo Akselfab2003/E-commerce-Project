@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -11,12 +12,13 @@ namespace E_commerce.Logic.Models
     public class Orders
     {
         [Key]
-        [JsonIgnore]
+        
         public int Id { get; set; }
 
-        public string sessid { get; set; }
+        public virtual Users? Users { get; set; }
 
-        //public List<OrderDetails> OrderLines { get; set; }
+        public virtual Session Session { get; set; }
+        public virtual List<OrderDetails> OrderLines { get; set; }
 
       
     }

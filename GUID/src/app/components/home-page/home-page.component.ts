@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpserviceService } from '../../../Services/httpservice.service';
+import { sessionController } from '../../logic/sessionLogic';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -17,15 +18,11 @@ export class HomePageComponent <T> {
 
   ngOnInit(){
     this.sendrequest();
-
+    sessionController.GetCookie();
   }
 
 
   sendrequest(){
-   // var Test = new  HttpModule("https://localhost:7094/WeatherForecast",RequestType.Get,{})
-    this.service.GetRequest("WeatherForecast").subscribe((DATA) => {
-      console.log(DATA)
-    })
   }
 
 

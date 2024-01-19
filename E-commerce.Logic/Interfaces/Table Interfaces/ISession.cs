@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    internal interface ISession
+    public interface Isession : IGeneric<Session>
     {
-        public Task<Session> GetById(string SessID);
+        public Task<Session> GetById(string SessId);
 
         public Task<Session> UpdateSession(Session session);
 
         public Task<bool> DeleteSession(string id);
 
         public Task<Session> CreateSession(Session session);
+        public Task<Session>Login(LoginObject loginObject);
+
+        public Task<List<Session>> GetAllSessions();
     }
 }

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    public interface IImages
+    public interface IImages : IGeneric<Images>
     {
         public Task<Images> GetById(int id);
 
         public Task<Images> UpdateImage(Images image);
 
-        public Task<bool> DeleteImage(int id);
+        public Task<bool> DeleteImage(Images image);
 
         public Task<Images> CreateImage(Images image);
     }

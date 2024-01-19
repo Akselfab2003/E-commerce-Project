@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class SupportTicketsRepo : ISupportTickets
+    public class SupportTicketsRepo : GenericRepo<SupportTickets>, ISupportTickets
     {
         DBcontext Context;
-        public SupportTicketsRepo(DBcontext context)
+        public SupportTicketsRepo(DBcontext context) :  base(context) 
         {
 
             Context = context;

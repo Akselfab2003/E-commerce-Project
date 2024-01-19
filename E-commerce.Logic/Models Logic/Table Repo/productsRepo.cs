@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class productsRepo : IProducts
+    public class productsRepo : GenericRepo<Products>, IProducts
     {
         DBcontext context;
-        public productsRepo(DBcontext c) { context = c; }
+        public productsRepo(DBcontext c) : base(c) 
+        {
+            context = c;
+        }
 
         public async Task<Products> CreateProduct(Products entity)
         {
@@ -21,11 +24,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return entity;
         }
 
-        public async Task<bool> DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(Products entity)
         {
             try
             {
-                Products product = await GetById(id);
+                Products product = await GetById(entity.Id);
                 context.Products.Remove(product);
                 await context.SaveChangesAsync();
             }
@@ -38,12 +41,12 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Products> GetById(int id)
         {
-            return await context.Products.FirstOrDefaultAsync(product => product.Id == id);
+            return await context.Products.Include(product => product.Images).Include(product => product.ProductCategories).Include(product => product.ProductVariants).FirstOrDefaultAsync(product => product.Id == id);
         }
 
-        public async Task<Products> GetByName(string name)
+        public async Task<List<Products>> GetProducts(int count)
         {
-            return await context.Products.FirstOrDefaultAsync(product => product.Title == name);
+            return await context.Products.ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
         }
 
         public async Task<Products> UpdateProduct(Products entity)

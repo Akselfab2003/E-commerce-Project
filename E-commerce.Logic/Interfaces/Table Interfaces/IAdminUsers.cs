@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IAdminUsers
+    public interface IAdminUsers : IGeneric<AdminUsers>
     {
-        public Task<AdminUsers> GetById(int id);
+        public Task<AdminUsers> GetByName(string name);
 
         public Task<AdminUsers> UpdateAdminUser(AdminUsers User);
 
         public Task<bool> DeleteAdminUser(int id);
 
         public Task<AdminUsers> CreateAdminUsers(AdminUsers User);
+        public Task<bool> CheckLogin(LoginObject loginObject);
     }
 }

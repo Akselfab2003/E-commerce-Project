@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IUsers
+    public interface IUsers 
     {
         public Task<Users> CreateUser(Users entity);
         public Task<Users> UpdateUser(Users entity);
-        public Task<bool> DeleteUser(int id);
+        public Task<bool> DeleteUser(string name);
+        public Task<Users> GetByName(string name);
         public Task<Users> GetById(int id);
+        public Task<bool> CheckLogin(LoginObject loginObject);
     }
 }

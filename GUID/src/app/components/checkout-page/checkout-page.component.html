@@ -1,0 +1,34 @@
+
+<div class="Checkout-Content">
+
+
+<div class="checkout-container">
+    <h2>Checkout</h2>
+  
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <ul>
+        <li *ngFor="let details of basketItems.basketDetails">
+          {{ details.products.title }} - {{ details.products.price| currency }}
+        </li>
+      </ul>
+      <p><strong>Total: {{calculateTotal()| currency }}</strong> </p>
+    </div>
+  
+    <div class="billing-details">
+      <h3>Billing Details</h3>
+      <form ngModelOptions="{standalone: true}">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" [(ngModel)]="billingDetails.fullName" required>
+  
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="billingDetails.email" required>
+  
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" [(ngModel)]="billingDetails.address" required></textarea>
+  
+        <button type="button" (click)="placeOrder()">Place Order</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -10,22 +10,39 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class SessionRepo : ISession
+    public class SessionRepo : GenericRepo<Session>,Isession
     {
         DBcontext context;
-        public SessionRepo(DBcontext c) { context = c; }
+  
+        public SessionRepo(DBcontext c) : base(c) 
+        {
+            context = c; 
+        }
         public async Task<Session> CreateSession(Session session)
         {
             context.Sessions.Add(session);
             await context.SaveChangesAsync();
             return session;
         }
+        public async Task<Session> Login(LoginObject loginObject)
+        {
+                Users user = context.Users.Where(usr => usr.Username == loginObject.username).First();
+                Session session = await GetById(loginObject.sessionId);
+                if(session != null)
+                {
+                    session.user = user;
+                    await UpdateSession(session);
+                }
+                
+                return session;
+
+        }
 
         public async Task<bool> DeleteSession(string id)
         {
             try
             {
-                Session session = await GetById(id);
+                Session session = await context.Sessions.FirstOrDefaultAsync(sessions=>sessions.SessId==id);
                 context.Sessions.Remove(session);
                 await context.SaveChangesAsync();
             }
@@ -41,6 +58,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Sessions.FirstOrDefaultAsync(c => c.SessId == SessID);
         }
 
+
+        public async Task<List<Session>> GetAllSessions()
+        {
+            return await context.Sessions.ToListAsync();
+        }
         public async Task<Session> UpdateSession(Session session)
         {
             context.Sessions.Update(session);

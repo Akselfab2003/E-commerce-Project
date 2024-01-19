@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IPriceList
+    public interface IPriceList : IGeneric<PriceList>
     {
         public Task<PriceList> GetById(int id);
 

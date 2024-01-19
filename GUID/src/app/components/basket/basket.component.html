@@ -1,0 +1,40 @@
+<div [@BasketAnimation]="BasketState" class="Basket">
+<div class="sidecart">
+  <div class="cart-content">
+    <!--Cart Header-->
+    <div class="cart-header">
+      <div class="header-title">
+      <h2>Your Cart</h2>
+      </div>
+    </div>
+    <!--Cart Items-->
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let details of basket.basketDetails">
+        <div class="remove-item">
+          <span>&times;</span>
+        </div>
+        <div class="item-img">
+          <img  [src]="details.products.images[0].imagePath" alt="Product Image">
+        </div>
+        <div class="item-details">
+          <p>{{details.products.title}}</p>
+          <strong>${{details.products.price}}</strong>
+          <div class="qty">
+            <span>-</span>
+            <strong>1</strong>
+            <span>+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Cart Actions-->
+    <div class="cart-actions">
+      <div class="subtotal">
+        <p>SUBTOTAL</p>
+        <p><span id="subtotal-price">{{calculateTotal()| currency }}</span></p>
+      </div>
+      <button>View Cart</button>
+      <button routerLink="checkout-page">Checkout</button>
+    </div>
+  </div>
+</div>

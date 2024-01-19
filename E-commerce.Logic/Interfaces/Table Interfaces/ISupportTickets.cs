@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface ISupportTickets
+    public interface ISupportTickets : IGeneric<SupportTickets>
     {
         public Task<SupportTickets> CreateSupportTicket(SupportTickets entity);
         public Task<SupportTickets> UpdateSupportTicket(SupportTickets entity);

@@ -20,6 +20,6 @@ namespace E_commerce.Logic.Models
 
         public bool HasBeenUsed { get; set; }
         public string UsesLeft { get; set; } = string.Empty;
-        public BasketDetails BasketDetails { get; set; }
+        public virtual BasketDetails BasketDetails { get; set; }
     }
 }

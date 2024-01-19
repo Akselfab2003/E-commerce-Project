@@ -10,10 +10,14 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class BasketRepo : IBasket
+    public class BasketRepo : GenericRepo<Basket>, IBasket
     {
-        DBcontext context;
-        public BasketRepo(DBcontext c) { context = c; } // Dependency Injection - DI
+        private readonly DBcontext context;
+        private readonly Isession dataCollection;
+        public BasketRepo(DBcontext c) : base(c) 
+        { 
+            context = c;
+        }
 
         public async Task<Basket> CreateBasket(Basket basket)
         {
@@ -22,11 +26,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return basket;
         }
 
-        public async Task<bool> DeleteBasket(int id)
+        public async Task<bool> DeleteBasket(Basket entity)
         {
             try
             {
-                Basket basket = await GetById(id);
+                Basket basket = await GetById(entity.Id);
                 context.Basket.Remove(basket);
                 await context.SaveChangesAsync();
             }
@@ -41,6 +45,13 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<Basket> GetById(int id)
         {
             return await context.Basket.FirstOrDefaultAsync(Basket => Basket.Id == id);
+        }
+
+        public async Task<Basket> GetBySessId(Session sessId)
+        {
+            Basket userBasket = await context.Basket.FirstOrDefaultAsync(basket => basket.Session == sessId);
+            return userBasket;
+                
         }
 
         public async Task<Basket> UpdateBasket(Basket basket)
