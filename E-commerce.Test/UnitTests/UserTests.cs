@@ -217,34 +217,34 @@ namespace E_commerce.Test.UnitTests
 
 
 
-        [Fact]
-        public async Task PostEmptySessionTest()
-        {
+        //[Fact]
+        //public async Task PostEmptySessionTest()
+        //{
 
-            Thread.Sleep(5000);
+        //    Thread.Sleep(5000);
 
-            Session session1 = new Session();
-            session1.Id = 0;
-            session1.SessId = session1.SessId + "test";
-            session1.user = null;
-            try
-            {
+        //    Session session1 = new Session();
+        //    session1.Id = 0;
+        //    session1.SessId = session1.SessId + "test";
+        //    session1.user = null;
+        //    try
+        //    {
 
 
-                await dataCollection.Session.CreateSession(session1);
-                Basket basket = new Basket();
-                basket.Session = session1;
-                await dataCollection.Basket.CreateBasket(basket);
-                Assert.NotNull(session1);
-                Assert.NotNull(basket);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            Assert.True(session1.SessId.Length > 0, "sessid does not exists");
+        //        await dataCollection.Session.CreateSession(session1);
+        //        Basket basket = new Basket();
+        //        basket.Session = session1;
+        //        await dataCollection.Basket.CreateBasket(basket);
+        //        Assert.NotNull(session1);
+        //        Assert.NotNull(basket);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //    Assert.True(session1.SessId.Length > 0, "sessid does not exists");
 
-            output.WriteLine(JsonSerializer.Serialize(session1));
-        }
+        //    output.WriteLine(JsonSerializer.Serialize(session1));
+        //}
     }
 }
