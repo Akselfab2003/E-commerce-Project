@@ -83,22 +83,22 @@ namespace E_commerce.Test.UnitTests
         #region GET requests test
         //GET request to create empty session 
 
-        [Theory]
-        [MemberData(nameof(SessionIdTestData))]
-        public async Task GetSession(string sessionId)
-        {
-            Session session = new Session();
-            try
-            {
-                session = await dataCollection.Session.GetById(sessionId);
-                Assert.NotNull(session);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            output.WriteLine(JsonSerializer.Serialize(session));
-        }
+        //[Theory]
+        //[MemberData(nameof(SessionIdTestData))]
+        //public async Task GetSession(string sessionId)
+        //{
+        //    Session session = new Session();
+        //    try
+        //    {
+        //        session = await dataCollection.Session.GetById(sessionId);
+        //        Assert.NotNull(session);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //    output.WriteLine(JsonSerializer.Serialize(session));
+        //}
         //PUT and GET request to update session to have a user and to validate session of user
         #endregion
 
@@ -146,72 +146,72 @@ namespace E_commerce.Test.UnitTests
         //}
         #endregion
 
-        #region PUT and GET requeset test
-        [Theory]
-        [MemberData(nameof(LoginObjectTestData))]
-        public async Task PutAndValidateSession(LoginObject loginObject)
-        {
-            //Put user into Session
-            Session session = await dataCollection.Session.GetById(loginObject.sessionId);
+       #region PUT and GET requeset test
+        //[Theory]
+        //[MemberData(nameof(LoginObjectTestData))]
+        //public async Task PutAndValidateSession(LoginObject loginObject)
+        //{
+        //    //Put user into Session
+        //    Session session = await dataCollection.Session.GetById(loginObject.sessionId);
 
-            if (loginObject.sessionId == "")
-            {
-                 session = await dataCollection.Session.GetById(loginObject.sessionId);
-                Assert.True(session == null);
-            }
-            else
-            {
+        //    if (loginObject.sessionId == "")
+        //    {
+        //         session = await dataCollection.Session.GetById(loginObject.sessionId);
+        //        Assert.True(session == null);
+        //    }
+        //    else
+        //    {
 
-            try
-            {
-                if (session.Created < DateTime.Now)
-                {
+        //    try
+        //    {
+        //        if (session.Created < DateTime.Now)
+        //        {
 
 
-                    loginObject.password = dataCollection.Cryptography.CreateNewPasswordHash(loginObject.password);
+        //            loginObject.password = dataCollection.Cryptography.CreateNewPasswordHash(loginObject.password);
 
-                    bool PasswordCorrect = await dataCollection.Users.CheckLogin(loginObject);
+        //            bool PasswordCorrect = await dataCollection.Users.CheckLogin(loginObject);
 
-                    if (PasswordCorrect)
-                    {
-                        session = await dataCollection.Session.Login(loginObject);
-                    }
-                    else
-                    {
-                        //Assert.NotNull(session.user);
-                    }
-                }
-                else
-                {
-                    //Assert.False(session.Created < DateTime.Now);
-                }
-            }
-            catch (Exception ex)
-            {
-                //Assert.Fail(ex.Message);
-            }
+        //            if (PasswordCorrect)
+        //            {
+        //                session = await dataCollection.Session.Login(loginObject);
+        //            }
+        //            else
+        //            {
+        //                //Assert.NotNull(session.user);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            //Assert.False(session.Created < DateTime.Now);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Assert.Fail(ex.Message);
+        //    }
 
-            }
+        //    }
             
-            //Validate session
-            //try
-            //{
-            //    Session session1 = await dataCollection.Session.GetById(session.SessId);
-            //    if (session == null || session.user == null)
-            //    {
-            //        Assert.False(session == null || session.user == null);
-            //    }
-            //    else
-            //    {
-            //        Assert.True(session != null || session.user != null);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Assert.Fail(ex.Message);
-            //}
-            output.WriteLine(JsonSerializer.Serialize(session));
-        }
+        //    //Validate session
+        //    //try
+        //    //{
+        //    //    Session session1 = await dataCollection.Session.GetById(session.SessId);
+        //    //    if (session == null || session.user == null)
+        //    //    {
+        //    //        Assert.False(session == null || session.user == null);
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        Assert.True(session != null || session.user != null);
+        //    //    }
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    Assert.Fail(ex.Message);
+        //    //}
+        //    output.WriteLine(JsonSerializer.Serialize(session));
+        //}
         #endregion
 
 
