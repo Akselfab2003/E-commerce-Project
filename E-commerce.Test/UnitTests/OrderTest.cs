@@ -25,6 +25,14 @@ namespace E_commerce.Test.UnitTests
         }
 
         [Fact]
+        public async Task RunAll()
+        {
+            await TestInsertData();
+            await Test_GetOrderstById();
+            await Test_GetOrderstBysessID();
+            await Test_CreateOrder();
+        }
+
         public async Task Test_GetOrderstBysessID()
         {
             var validSessionId = "someValidSessionId";
@@ -35,29 +43,43 @@ namespace E_commerce.Test.UnitTests
             Session session = new Session();
             session.SessId = validSessionId;
 
-            Session session2 = await dataCollection.Session.CreateSession(session);
-            output.WriteLine(JsonSerializer.Serialize(session2));
-            Assert.Equal(validSessionId, session2.SessId);
+            List<Orders> orders = await dataCollection.Orders.GetBysessId(session.SessId);
+            output.WriteLine(JsonSerializer.Serialize(orders));
+            //Assert.Equal(validSessionId, session2.SessId);
+            Assert.True(orders.Count() > 0);
         }
+
+
         public async Task TestInsertData()
         {
             Orders orders = new Orders();
             orders.OrderLines = new List<OrderDetails>();
             orders.Users = new Users();
+            orders.Session = new Session();
             await dataCollection.Orders.CreateOrder(orders);
+
+
+            Orders ordersSession = new Orders();
+            ordersSession.OrderLines = new List<OrderDetails>();
+            ordersSession.Session = new Session();
+            ordersSession.Session.SessId = "someValidSessionId";
+            await dataCollection.Orders.CreateOrder(ordersSession);
         }
 
-        [Fact]
         public async Task Test_GetOrderstById()
         {
-            await TestInsertData();
             Orders orderID = await dataCollection.Orders.GetById(1);
             output.WriteLine(JsonSerializer.Serialize(orderID));
             //Assert.Equal(1, orderID.Id);
             Assert.NotNull(orderID);
         }
-
-        
+        public async Task Test_CreateOrder()
+        {
+            Orders orders = new Orders();
+            Orders created = await dataCollection.Orders.CreateOrder(orders);
+            output.WriteLine(JsonSerializer.Serialize(created));
+            Assert.NotNull(created);
+        }
 
     }
 }
