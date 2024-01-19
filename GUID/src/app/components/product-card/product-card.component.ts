@@ -22,7 +22,7 @@ export class ProductCardComponent<T> {
 
   basket:Basket = new Basket();
   
-  GetBasketBtn(event: MouseEvent){
+  AddToBasket(event: MouseEvent){
     event.stopPropagation()
     this.basketTest.AddToBasket(this.product)
   }

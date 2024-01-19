@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { HttpserviceService } from '../../../Services/httpservice.service';
+import { basketLogic } from '../../logic/basketLogic';
 
 @Component({
   selector: 'app-product-details-page',
@@ -11,7 +12,7 @@ import { HttpserviceService } from '../../../Services/httpservice.service';
   styleUrl: './product-details-page.component.css'
 })
 export class ProductDetailsPageComponent<T> {
-  constructor(private route: ActivatedRoute, private service: HttpserviceService<T>) {}
+  constructor(private route: ActivatedRoute, private service: HttpserviceService<T>, private basketTest:basketLogic<T>) {}
 
   @Input() product: Products = new Products();
 
@@ -21,6 +22,11 @@ export class ProductDetailsPageComponent<T> {
       console.log(data)
     });
   };
+
+  AddToBasket(event: MouseEvent){
+    event.stopPropagation()
+    this.basketTest.AddToBasket(this.product)
+  }
 
   selectedId: number = 0;
   ngOnInit() {

@@ -82,4 +82,5 @@ html, body {
 
 .buy-btn:hover {
     background-color: #2980b9;
+    cursor: pointer;
 }
