@@ -7,7 +7,7 @@
     position: fixed;
     z-index: 3;
     width: 100%;
-    background-color: var(--background-nav) !important;
+        /* background-color: var(--background-nav) !important; */
     color: var(--text) !important;
     border-bottom: 1px solid grey;
 
