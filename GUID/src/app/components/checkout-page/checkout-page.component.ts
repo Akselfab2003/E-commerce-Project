@@ -41,6 +41,6 @@ export class CheckoutPageComponent <T> {
 
   placeOrder(): void {
     // Handle the order placement logic, e.g., send data to the server
-    console.log('Placing order:', this.billingDetails, 'Items:', this.GetBasket());
+    console.log('Placing order:', this.billingDetails, 'Items:', this.basketItems, this.GetBasket());
   }
 }
