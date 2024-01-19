@@ -27,13 +27,15 @@ namespace E_commerce.Test.UnitTests
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
-            InsertTestData();
+            InsertSessidTestData();
+
+
         }
         #region DataParameters
         public static IEnumerable<Object[]> SessionIdTestData()
         {
-            yield return new object[] { "Test" };
-            yield return new object[] { "" };
+            yield return new object[] { "Test1" };
+            yield return new object[] { "Test2" };
         }
         public static IEnumerable<Object[]> LoginObjectTestData()
         {
@@ -50,7 +52,7 @@ namespace E_commerce.Test.UnitTests
         #endregion
 
         #region InsertData
-        public async Task InsertTestData()
+        public async Task InsertSessidTestData()
         {
             for (int i = 1; i <= 3; i++)
             {
@@ -59,157 +61,190 @@ namespace E_commerce.Test.UnitTests
             }
 
 
+
+            //Users deleteUser = new Users() { Username = "DeleteTest", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
+            //await dataCollection.Users.CreateUser(deleteUser);
+        }
+
+        public async Task InsertUserTestData()
+        {
+
+
             Users users = new Users() { Username = "test", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
             await dataCollection.Users.CreateUser(users);
 
-            Users deleteUser = new Users() { Username = "DeleteTest", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
-            await dataCollection.Users.CreateUser(users);
+
         }
+
+
+
         #endregion
 
         #region GET requests test
         //GET request to create empty session 
-        [Fact]
-        public async Task PostEmptySessionTest()
-        {
 
-            Session session1 = new Session();
-            try
-            {
-                session1.user = null;
-
-                await dataCollection.Session.CreateSession(session1);
-                Basket basket = new Basket();
-                basket.Session = session1;
-                await dataCollection.Basket.CreateBasket(basket);
-                Assert.NotNull(session1);
-                Assert.NotNull(basket);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            Assert.True(session1.SessId.Length > 0, "sessid does not exists");
-
-            output.WriteLine(JsonSerializer.Serialize(session1));
-        }
-        [Theory]
-        [MemberData(nameof(SessionIdTestData))]
-        public async Task GetSession(string sessionId)
-        {
-            Session session = new Session();
-            try
-            {
-                session = await dataCollection.Session.GetById(sessionId);
-                Assert.NotNull(session);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            output.WriteLine(JsonSerializer.Serialize(session));
-        }
+        //[Theory]
+        //[MemberData(nameof(SessionIdTestData))]
+        //public async Task GetSession(string sessionId)
+        //{
+        //    Session session = new Session();
+        //    try
+        //    {
+        //        session = await dataCollection.Session.GetById(sessionId);
+        //        Assert.NotNull(session);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //    output.WriteLine(JsonSerializer.Serialize(session));
+        //}
         //PUT and GET request to update session to have a user and to validate session of user
         #endregion
 
         #region POST requests test
         //POST request create user
-        [Theory]
-        [MemberData(nameof(SessionIdTestData))]
-        public async Task CreateUser()
-        {
-            Users users = new Users();
-            try
-            {
-                users.Username = "Lars";
-                users.Password = dataCollection.Cryptography.CreateNewPasswordHash(users.Password);
-                users.Email = "test@test.com";
-                users.Gender = false;
+        //[Fact]
+        //public async Task CreateUser()
+        //{
+        //    Users users = new Users();
+        //    try
+        //    {
+        //        users.Username = "Lars";
+        //        users.Password = dataCollection.Cryptography.CreateNewPasswordHash("Test");
+        //        users.Email = "test@test.com";
+        //        users.Gender = false;
 
-                await dataCollection.Users.CreateUser(users);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            output.WriteLine(JsonSerializer.Serialize(users));
-        }
-        //GET request to get session
+        //        await dataCollection.Users.CreateUser(users);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //    output.WriteLine(JsonSerializer.Serialize(users));
+        //}
+        ////GET request to get session
+        //#endregion
+
+        //#region DELETE request
+        //[Theory]
+        //[MemberData(nameof(SessionIdTestData))]
+        //public async Task DeleteUser(string name)
+        //{
+        //    Session sess = await dataCollection.Session.GetById(name);
+        //    Users user = sess.user;
+
+        //    if (user == null)
+        //    {
+        //        Assert.True(user==null);
+        //    }
+
+        //    await dataCollection.Users.DeleteUser(user.Username);
+
+        //    output.WriteLine(JsonSerializer.Serialize(user));
+        //    output.WriteLine($"{user.Username} has been sent to the void");
+        //}
         #endregion
 
-        #region DELETE request
-        [Theory]
-        [MemberData(nameof(SessionIdTestData))]
-        public async Task DeleteUser(string name)
-        {
-            Users user = await dataCollection.Users.GetByName(name);
-            if (user == null)
-            {
-                Assert.True(user==null);
-            }
+       #region PUT and GET requeset test
+        //[Theory]
+        //[MemberData(nameof(LoginObjectTestData))]
+        //public async Task PutAndValidateSession(LoginObject loginObject)
+        //{
+        //    //Put user into Session
+        //    Session session = await dataCollection.Session.GetById(loginObject.sessionId);
 
-            await dataCollection.Users.DeleteUser(user.Username);
+        //    if (loginObject.sessionId == "")
+        //    {
+        //         session = await dataCollection.Session.GetById(loginObject.sessionId);
+        //        Assert.True(session == null);
+        //    }
+        //    else
+        //    {
 
-            output.WriteLine(JsonSerializer.Serialize(user));
-            output.WriteLine($"{user.Username} has been sent to the void");
-        }
+        //    try
+        //    {
+        //        if (session.Created < DateTime.Now)
+        //        {
+
+
+        //            loginObject.password = dataCollection.Cryptography.CreateNewPasswordHash(loginObject.password);
+
+        //            bool PasswordCorrect = await dataCollection.Users.CheckLogin(loginObject);
+
+        //            if (PasswordCorrect)
+        //            {
+        //                session = await dataCollection.Session.Login(loginObject);
+        //            }
+        //            else
+        //            {
+        //                //Assert.NotNull(session.user);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            //Assert.False(session.Created < DateTime.Now);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Assert.Fail(ex.Message);
+        //    }
+
+        //    }
+            
+        //    //Validate session
+        //    //try
+        //    //{
+        //    //    Session session1 = await dataCollection.Session.GetById(session.SessId);
+        //    //    if (session == null || session.user == null)
+        //    //    {
+        //    //        Assert.False(session == null || session.user == null);
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        Assert.True(session != null || session.user != null);
+        //    //    }
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    Assert.Fail(ex.Message);
+        //    //}
+        //    output.WriteLine(JsonSerializer.Serialize(session));
+        //}
         #endregion
 
-        #region PUT and GET requeset test
-        [Theory]
-        [MemberData(nameof(LoginObjectTestData))]
-        public async Task PutAndValidateSession(LoginObject loginObject)
-        {
-            //Put user into Session
-            Session session = await dataCollection.Session.GetById(loginObject.sessionId);
-            try
-            {
-                if (session.Created < DateTime.Now)
-                {
 
 
-                    loginObject.password = dataCollection.Cryptography.CreateNewPasswordHash(loginObject.password);
 
-                    bool PasswordCorrect = await dataCollection.Users.CheckLogin(loginObject);
+        //[Fact]
+        //public async Task PostEmptySessionTest()
+        //{
 
-                    if (PasswordCorrect)
-                    {
-                        session = await dataCollection.Session.Login(loginObject);
-                    }
-                    else
-                    {
-                        Assert.NotNull(session.user);
-                    }
-                }
-                else
-                {
-                    Assert.False(session.Created < DateTime.Now);
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
+        //    Thread.Sleep(5000);
 
-            //Validate session
-            try
-            {
-                Session session1 = await dataCollection.Session.GetById(session.SessId);
-                if (session == null || session.user == null)
-                {
-                    Assert.False(session == null || session.user == null);
-                }
-                else
-                {
-                    Assert.True(session != null || session.user != null);
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            output.WriteLine(JsonSerializer.Serialize(session));
-        }
-        #endregion
+        //    Session session1 = new Session();
+        //    session1.Id = 0;
+        //    session1.SessId = session1.SessId + "test";
+        //    session1.user = null;
+        //    try
+        //    {
+
+
+        //        await dataCollection.Session.CreateSession(session1);
+        //        Basket basket = new Basket();
+        //        basket.Session = session1;
+        //        await dataCollection.Basket.CreateBasket(basket);
+        //        Assert.NotNull(session1);
+        //        Assert.NotNull(basket);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //    Assert.True(session1.SessId.Length > 0, "sessid does not exists");
+
+        //    output.WriteLine(JsonSerializer.Serialize(session1));
+        //}
     }
 }

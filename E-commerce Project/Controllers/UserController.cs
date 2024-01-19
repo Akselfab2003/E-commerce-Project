@@ -21,7 +21,7 @@ namespace E_commerce_Project.Controllers
         {
             _users = _context.Users;
             _session = _context.Session;
-            //_adminUsers = _context.AdminUsers;
+            _adminUsers = _context.AdminUsers;
             collection = _context;
         }
 
@@ -67,13 +67,16 @@ namespace E_commerce_Project.Controllers
             try
             {
                 Session session = await _session.GetById(sessionId);
-                if (session == null || session.user==null)
+                if (session != null && session.user!=null)
                 {
-                    return false;
+                    return true;
+                }else if (session != null && session.admin != null)
+                {
+                    return true;
                 }
                 else
                 {
-                    return true;
+                    return false;
                 }
             }
             catch (Exception ex)
@@ -102,13 +105,13 @@ namespace E_commerce_Project.Controllers
             return HttpStatusCode.Created;
         }
         [HttpPost("createAdmin")]
-        public async Task<HttpStatusCode> PostAdmin(AdminUsers users)
+        public async Task<HttpStatusCode> PostAdmin(AdminUsers adminUsers)
         {
             try
             {
-                users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+                adminUsers.Password = collection.Cryptography.CreateNewPasswordHash(adminUsers.Password);
 
-                await _adminUsers.CreateAdminUsers(users);
+                await _adminUsers.CreateAdminUsers(adminUsers);
             }
             catch
             {
@@ -138,7 +141,7 @@ namespace E_commerce_Project.Controllers
 
                     if (PasswordCorrect)
                     {
-                        session = await _session.Login(loginObject);
+                        session = await _session.UserLogin(loginObject);
                     }
                     else
                     {
@@ -172,7 +175,7 @@ namespace E_commerce_Project.Controllers
 
                     if (PasswordCorrect)
                     {
-                        session = await _session.Login(loginObject);
+                        session = await _session.AdminLogin(loginObject);
                     }
                     else
                     {

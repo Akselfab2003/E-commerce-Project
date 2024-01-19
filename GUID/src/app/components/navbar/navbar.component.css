@@ -7,6 +7,21 @@
     position: fixed;
     z-index: 3;
     width: 100%;
+    background-color: var(--background) !important;
+
+}
+html.navbar [data-theme="dark"]{
+    background-color: var(--background-50) !important; 
+
+}
+
+
+html[data-theme="dark"].Test{
+    background-color: var(--background-50) !important; 
+}
+
+.navbar[data-theme="dark"]{
+    background-color:var(--background-950)
 
 }
 

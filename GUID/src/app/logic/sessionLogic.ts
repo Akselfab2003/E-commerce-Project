@@ -1,6 +1,6 @@
 import { Observable, asyncScheduler, firstValueFrom, scheduled } from "rxjs";
 import { HttpserviceService } from "../../Services/httpservice.service";
-import { Session } from "../models/Session"
+import { Session } from "../models/Session";
 
 export class sessionController <T> {
 
