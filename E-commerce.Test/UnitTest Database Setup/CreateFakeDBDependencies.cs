@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +23,30 @@ namespace E_commerce.Test
         {
             var _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
+            Environment.SetEnvironmentVariable("JSONCONFIG", "{\"SALT\":\"Test\"}");
 
             DbContextOptions<DBcontext> contextOptions =
                 new DbContextOptionsBuilder<DBcontext>().UseSqlite(_connection).Options;
 
-         
-            FileStream stream = new FileStream("..\\net8.0\\Create data for local database\\Secret.json", FileMode.Open, FileAccess.Read);
-            configuration = new ConfigurationBuilder().AddJsonStream(stream).Build();
+
+            if (File.Exists("..\\net8.0\\Create data for local database\\Secret.json"))
+            {
+
+                FileStream Filestream = new FileStream("..\\net8.0\\Create data for local database\\Secret.json", FileMode.Open, FileAccess.Read);
+                configuration = new ConfigurationBuilder().AddJsonStream(Filestream).Build();
+
+
+            }
+            else
+            {
+
+
+
+                MemoryStream test = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JSONCONFIG")));
+
+                configuration = new ConfigurationBuilder().AddJsonStream(test).Build();
+
+            }
 
             FakeContext = new DBcontext(contextOptions);
 
