@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IUserDetails
+    public interface IUserDetails : IGeneric<UserDetails>
     {
         public Task<UserDetails> CreateUserDetails(UserDetails entity);
         public Task<UserDetails> UpdateUserDetails(UserDetails entity);

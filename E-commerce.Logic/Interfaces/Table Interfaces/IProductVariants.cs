@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IProductVariants
+    public interface IProductVariants : IGeneric<ProductVariants>
     {
         public Task<ProductVariants> CreateProductVariants(ProductVariants entity);
         public Task<ProductVariants> UpdateProductVariants(ProductVariants entity);

@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class BasketDetailsRepo : IBasketDetails
+    public class BasketDetailsRepo : GenericRepo<BasketDetails>, IBasketDetails
     {
         DBcontext context;
-        public BasketDetailsRepo(DBcontext c) { context = c; } // Dependency Injection - DI
+        public BasketDetailsRepo(DBcontext c) : base(c)
+        {
+            context = c;
+        }
 
         public async Task<BasketDetails> CreateBasketDetails(BasketDetails basketDetails)
         {

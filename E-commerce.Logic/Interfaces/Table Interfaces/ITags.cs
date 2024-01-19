@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface ITags
+    public interface ITags : IGeneric<Tags>
     {
         public Task<Tags> CreateTags(Tags entity);
         public Task<Tags> UpdateTags(Tags entity);

@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class productsRepo : IProducts
+    public class productsRepo : GenericRepo<Products>, IProducts
     {
         DBcontext context;
-        public productsRepo(DBcontext c) { context = c; }
+        public productsRepo(DBcontext c) : base(c) 
+        {
+            context = c;
+        }
 
         public async Task<Products> CreateProduct(Products entity)
         {

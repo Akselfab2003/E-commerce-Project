@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class PriceListRepo : IPriceList
+    public class PriceListRepo : GenericRepo<PriceList>, IPriceList
     {
         DBcontext context;
-        public PriceListRepo(DBcontext c) { context = c; } // Dependency Injection - DI
+        public PriceListRepo(DBcontext c) : base(c)
+        {
+            context = c;
+        } // Dependency Injection - DI
 
         public async Task<PriceList> CreateOrder(PriceList PriceList)
         {

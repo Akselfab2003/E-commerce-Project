@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    public interface IImages
+    public interface IImages : IGeneric<Images>
     {
         public Task<Images> GetById(int id);
 

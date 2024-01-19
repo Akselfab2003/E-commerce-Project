@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class ordersRepo :IOrders
+    public class ordersRepo : GenericRepo<Orders> , IOrders
     {
         private readonly DBcontext context;
         private readonly Isession dataCollection;
-        public ordersRepo(DBcontext c) { context = c; dataCollection = new SessionRepo(context); }
+        public ordersRepo(DBcontext c) : base(c) 
+        { 
+            context = c; dataCollection = new SessionRepo(context);
+        }
 
         public async Task<Orders> CreateOrder(Orders Order)
         {

@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class CompanyRepo : ICompany
+    public class CompanyRepo : GenericRepo<Company>, ICompany
     {
         DBcontext context;
-        public CompanyRepo(DBcontext c) { context = c; }
+        public CompanyRepo(DBcontext c) : base(c)
+        {
+            context = c;
+        }
         public async Task<Company> GetById(int id)
         {
             return await context.Company.FirstOrDefaultAsync(company => company.Id == id);

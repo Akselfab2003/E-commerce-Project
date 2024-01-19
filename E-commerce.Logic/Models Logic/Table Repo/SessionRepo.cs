@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class SessionRepo : Isession
+    public class SessionRepo : GenericRepo<Session>,Isession
     {
         DBcontext context;
   
-        public SessionRepo(DBcontext c) { context = c; }
+        public SessionRepo(DBcontext c) : base(c) 
+        {
+            context = c; 
+        }
         public async Task<Session> CreateSession(Session session)
         {
             context.Sessions.Add(session);

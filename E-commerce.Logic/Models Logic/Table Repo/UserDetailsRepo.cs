@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class UserDetailsRepo : IUserDetails
+    public class UserDetailsRepo : GenericRepo<UserDetails>, IUserDetails
     {
         DBcontext context;
-        public UserDetailsRepo(DBcontext c) { context = c; } // Dependency Injection - DI
+        public UserDetailsRepo(DBcontext c) : base(c) 
+        { 
+            context = c;
+        } 
         
         public async Task<UserDetails> CreateUserDetails(UserDetails userDetails)
         {

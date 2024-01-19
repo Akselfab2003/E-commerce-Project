@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    public interface ICategories
+    public interface ICategories : IGeneric<Categories>
     {
         public Task<Categories> CreateCategories(Categories entity);
         public Task<Categories> UpdateCategories(Categories entity);

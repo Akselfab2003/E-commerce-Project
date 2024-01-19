@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IReviews
+    public interface IReviews : IGeneric<Reviews>
     {
         public Task<Reviews> CreateReview(Reviews entity);
         public Task<Reviews> UpdateReview(Reviews entity);

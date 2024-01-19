@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class ImagesRepo : IImages
+    public class ImagesRepo : GenericRepo<Images>, IImages
     {
         DBcontext context;
-        public ImagesRepo(DBcontext c) { context = c; } // Dependency Injection - DI
+        public ImagesRepo(DBcontext c) : base(c) 
+        { 
+            context = c;
+        } 
 
         public async Task<Images> CreateImage(Images image)
         {
