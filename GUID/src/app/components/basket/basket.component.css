@@ -1,6 +1,6 @@
 .Basket {
   position: fixed;
-  height: 95%;
+  height: 90%;
   margin-top: 10px;
   margin-bottom: 5px;
   width: 23.3%;
@@ -9,6 +9,8 @@
   margin-right: -60%;
   right: 0px;
   overflow: auto;
+  z-index: 2;
+  margin-top: 2%;
 }
 
 button:hover{
@@ -17,7 +19,7 @@ button:hover{
 
 .sidecart{
   position: fixed;
-  height: 95%;
+  height: 90%;
   margin-bottom: 5px;
   width: 23.3%;
   background-color: #fff;
@@ -197,4 +199,10 @@ button:hover{
 
 .cart-actions button:nth-of-type(2){
   background-color: #3498db;
+}
+
+
+
+.cart-items::-webkit-scrollbar{
+  display: none;
 }
