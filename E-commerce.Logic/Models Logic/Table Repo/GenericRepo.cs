@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models
 {
-    public abstract class GenericClass<T> 
+    public abstract class GenericRepo<T> 
     {
         DBcontext context;
 
 
-        public  GenericClass (DBcontext c)
+        public  GenericRepo (DBcontext c)
         {
             context = c;
         }
