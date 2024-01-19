@@ -1,6 +1,6 @@
 .Basket {
   position: fixed;
-  height: 90%;
+  height: 94%;
   margin-top: 10px;
   margin-bottom: 5px;
   width: 23.3%;
@@ -10,7 +10,7 @@
   right: 0px;
   overflow: auto;
   z-index: 2;
-  margin-top: 2%;
+  margin-top: 1.5%;
 }
 
 button:hover{
@@ -19,7 +19,7 @@ button:hover{
 
 .sidecart{
   position: fixed;
-  height: 90%;
+  height: 94%;
   margin-bottom: 5px;
   width: 23.3%;
   background-color: #fff;
