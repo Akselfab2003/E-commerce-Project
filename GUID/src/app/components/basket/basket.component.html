@@ -31,7 +31,7 @@
     <div class="cart-actions">
       <div class="subtotal">
         <p>SUBTOTAL</p>
-        <p>$<span id="subtotal-price">3896</span></p>
+        <p>$<span id="subtotal-price">{{calculateTotal()| currency }}</span></p>
       </div>
       <button>View Cart</button>
       <button routerLink="checkout-page">Checkout</button>
