@@ -19,7 +19,4 @@ export class NavbarComponent {
     this.Basket.ChangeState()
     console.log("Tse")
   }
-  canShowLink():boolean{
-    return adminController.hasRequiredRole();
-  }
 }

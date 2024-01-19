@@ -24,17 +24,34 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             await context.SaveChangesAsync();
             return session;
         }
-        public async Task<Session> Login(LoginObject loginObject)
+        public async Task<Session> UserLogin(LoginObject loginObject)
         {
-                Users user = context.Users.Where(usr => usr.Username == loginObject.username).First();
-                Session session = await GetById(loginObject.sessionId);
-                if(session != null)
-                {
-                    session.user = user;
-                    await UpdateSession(session);
-                }
-                
-                return session;
+            Users user = context.Users.Where(usr => usr.Username == loginObject.username).First();
+            Session session = await GetById(loginObject.sessionId);
+            if (session != null)
+            {
+                session.user = user;
+                session.admin = null;
+                session.IsAdmin = false;
+                await UpdateSession(session);
+            }
+
+            return session;
+
+        }
+        public async Task<Session> AdminLogin(LoginObject loginObject)
+        {
+            AdminUsers user = context.AdminUsers.Where(usr => usr.Username == loginObject.username).First();
+            Session session = await GetById(loginObject.sessionId);
+            if (session != null)
+            {
+                session.user = null;
+                session.admin = user;
+                session.IsAdmin = true;
+                await UpdateSession(session);
+            }
+
+            return session;
 
         }
 
