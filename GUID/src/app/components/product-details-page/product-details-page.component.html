@@ -11,7 +11,7 @@
       </div>
       <div class="product-price">
         <span>${{product.price}}</span>
-        <a href="#" class="buy-btn">Add to cart</a>
+        <a (click)="AddToBasket($event)" aria-current="page" class="buy-btn">Add to basket</a>
       </div>
     </div>
   </main>
