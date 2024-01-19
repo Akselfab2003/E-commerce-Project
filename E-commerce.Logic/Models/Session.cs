@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,12 @@ namespace E_commerce.Logic.Models
         [Required]
         public DateTime Created { get; set; } = DateTime.Now.AddHours(2);
         [AllowNull]
-        public virtual Users? user { get; set; } 
+        [ForeignKey("Users")]
+        public virtual Users? user { get; set; }
+        [AllowNull]
+        [ForeignKey("AdminUsers")]
+        public virtual AdminUsers? admin { get; set; } = null;
+        public bool IsAdmin { get; set; } = false;
 
     }
 }
