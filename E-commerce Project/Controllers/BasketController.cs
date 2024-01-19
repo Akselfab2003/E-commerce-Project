@@ -85,7 +85,8 @@ namespace E_commerce_Project.Controllers
             basket.BasketDetails = new List<BasketDetails> { };
             basket.Session = new Session();
 
-            await dataCollectioncontext.Basket.CreateBasket(basket);
+           // await dataCollectioncontext.Basket.CreateBasket(basket);
+            await dataCollectioncontext.Basket.Create(basket);
 
             return basket;
         }

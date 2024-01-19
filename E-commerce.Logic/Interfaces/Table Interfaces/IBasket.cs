@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    public interface IBasket
+    public interface IBasket : IGeneric<Basket>
     {
         public Task<Basket> GetById(int id);
         public Task<Basket> GetBySessId(Session sessId);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IFavorites
+    public interface IFavorites : IGeneric<Favorites>
     {
         public Task<Favorites> GetById(int id);
 

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class DiscountCodesRepo : IDiscountCodes
+    public class DiscountCodesRepo : GenericRepo<DiscountCodes>, IDiscountCodes
     {
         DBcontext Context;
-        public DiscountCodesRepo(DBcontext context)
+        public DiscountCodesRepo(DBcontext context) : base(context)
         {
             Context = context;
         }

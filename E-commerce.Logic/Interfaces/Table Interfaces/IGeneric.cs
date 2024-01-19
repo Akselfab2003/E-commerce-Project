@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IGenericClass<T>
+    public interface IGeneric<T>
     {
-        public  Task<T> Create(T entity);
+        public Task<T> Create(T entity);
     }
 }

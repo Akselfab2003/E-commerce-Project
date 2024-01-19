@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces.Table_Interfaces
 {
-    public interface IBasketDetails
+    public interface IBasketDetails : IGeneric<BasketDetails>
     {
         public Task<BasketDetails> GetById(int id);
 

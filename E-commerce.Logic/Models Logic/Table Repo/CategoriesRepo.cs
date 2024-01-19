@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class CategoriesRepo : ICategories
+    public class CategoriesRepo : GenericRepo<Categories>, ICategories
     {
         DBcontext Context;
-        public CategoriesRepo(DBcontext context) 
+        public CategoriesRepo(DBcontext context) : base(context)
         {
             Context = context;   
         }

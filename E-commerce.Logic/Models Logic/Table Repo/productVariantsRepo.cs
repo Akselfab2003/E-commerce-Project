@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class productVariantsRepo : IProductVariants
+    public class productVariantsRepo : GenericRepo<ProductVariants>, IProductVariants
     {
         DBcontext context;
-        public productVariantsRepo(DBcontext c) { context = c; }
+        public productVariantsRepo(DBcontext c) : base(c)
+        {
+            context = c;
+        }
         public async Task<ProductVariants> CreateProductVariants(ProductVariants entity)
         {
             context.ProductVariants.Add(entity);

@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class BasketRepo : IBasket
+    public class BasketRepo : GenericRepo<Basket>, IBasket
     {
         private readonly DBcontext context;
         private readonly Isession dataCollection;
-        public BasketRepo(DBcontext c) { context = c; } // Dependency Injection - DI
+        public BasketRepo(DBcontext c) : base(c) 
+        { 
+            context = c;
+        }
 
         public async Task<Basket> CreateBasket(Basket basket)
         {

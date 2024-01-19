@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IAdminUsers : IGenericClass<AdminUsers>
+    public interface IAdminUsers : IGeneric<AdminUsers>
     {
         public Task<AdminUsers> GetByName(string name);
 
