@@ -28,6 +28,25 @@ namespace E_commerce.Logic.Models
         }
 
 
+        public async Task<T> Update(T entity)
+        {
 
+            context.Update(entity);
+            await context.SaveChangesAsync();
+
+            return entity;
+        }
+
+
+        public async Task<T> Delete(T entity)
+        {
+
+            context.Remove(entity);
+            await context.SaveChangesAsync();
+
+            return entity;
+        }
+
+        
     }
 }
