@@ -23,7 +23,6 @@ namespace E_commerce.Test
         {
             var _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
-            Environment.SetEnvironmentVariable("JSONCONFIG", "{\"SALT\":\"Test\"}");
 
             DbContextOptions<DBcontext> contextOptions =
                 new DbContextOptionsBuilder<DBcontext>().UseSqlite(_connection).Options;
