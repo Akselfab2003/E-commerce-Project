@@ -141,3 +141,6 @@ body::-webkit-scrollbar{
     --accent-950: #fbeaf6;
   
   }
+  .slick-prev:before, .slick-next:before {
+    color: black !important;
+}

@@ -15,6 +15,7 @@ import { CheckoutPageComponent } from './components/checkout-page/checkout-page.
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { adminGuard } from './logic/admin.guard';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path:"basket",component:BasketComponent},
   {path:"checkout-page",component:CheckoutPageComponent},
   {path:"admin-page",component:AdminPageComponent,canActivate:[adminGuard]},
-  {path:"admin-login",component:AdminLoginComponent}
+  {path:"admin-login",component:AdminLoginComponent},
+  {path:"carousel",component:CarouselComponent}
 ];
 
 @NgModule({

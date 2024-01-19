@@ -19,6 +19,8 @@ import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
     BasketComponent,
     CheckoutPageComponent,
     AdminPageComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SlickCarouselModule
   ],
 
   bootstrap: [AppComponent]
