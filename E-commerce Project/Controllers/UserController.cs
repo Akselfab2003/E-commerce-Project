@@ -34,10 +34,10 @@ namespace E_commerce_Project.Controllers
             {
                 session1.user = null;
                 
-                await _session.CreateSession(session1);
+                await _session.Create(session1);
                 Basket basket = new Basket();
                 basket.Session = session1;
-                await collection.Basket.CreateBasket(basket);
+                await collection.Basket.Create(basket);
             }
             catch
             {
@@ -95,7 +95,7 @@ namespace E_commerce_Project.Controllers
             {
                     users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
 
-                    await _users.CreateUser(users);
+                    await _users.Create(users);
             }
             catch
             {
@@ -111,7 +111,7 @@ namespace E_commerce_Project.Controllers
             {
                 adminUsers.Password = collection.Cryptography.CreateNewPasswordHash(adminUsers.Password);
 
-                await _adminUsers.CreateAdminUsers(adminUsers);
+                await _adminUsers.Create(adminUsers);
             }
             catch
             {
@@ -204,7 +204,7 @@ namespace E_commerce_Project.Controllers
                 return NotFound();
             }
 
-            await _users.DeleteUser(user.Username);
+            await _users.Delete(user);
 
             return NoContent();
         }

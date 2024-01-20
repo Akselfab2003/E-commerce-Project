@@ -12,7 +12,11 @@ namespace E_commerce_Project.Controllers
     {
         IProducts context;
         private IDataCollection dataCollection;
-        public ProductsController(IDataCollection c) { context = c.Products; dataCollection = c; } // Dependency Injection - DI
+        public ProductsController(IDataCollection c) 
+        {
+            context = c.Products;
+            dataCollection = c;
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Products>> GetProductById(int id)

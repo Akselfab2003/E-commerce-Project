@@ -56,7 +56,7 @@ namespace E_commerce_Project.Controllers
 
             try
             {
-                await context.UpdateBasket(basket);
+                await context.Update(basket);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,7 +71,7 @@ namespace E_commerce_Project.Controllers
         {
             Basket basket = await GetBasketBySessId(sessid);
             basket.BasketDetails.Add(basketDetails);
-            await dataCollectioncontext.Basket.UpdateBasket(basket);
+            await dataCollectioncontext.Basket.Update(basket);
 
             return basket.BasketDetails;
         }
@@ -100,7 +100,7 @@ namespace E_commerce_Project.Controllers
                 return NotFound();
             }
 
-            context.DeleteBasket(basket);
+            await context.Delete(basket);
 
             return NoContent();
         }
