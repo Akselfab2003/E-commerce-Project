@@ -15,41 +15,47 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public PriceListRepo(DBcontext c) : base(c)
         {
             context = c;
-        } // Dependency Injection - DI
+        } 
 
-        public async Task<PriceList> CreateOrder(PriceList PriceList)
-        {
-            context.PriceList.Add(PriceList);
-            await context.SaveChangesAsync();
-            return PriceList;
-        }
-
-        public async Task<bool> DeleteOrder(int id)
-        {
-            try
-            {
-                PriceList priceList = await GetById(id);
-                context.PriceList.Remove(priceList);
-                await context.SaveChangesAsync();
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
-        }
+      
 
         public async Task<PriceList> GetById(int id)
         {
             return await context.PriceList.FirstOrDefaultAsync(priceList => priceList.Id == id);
         }
 
-        public async Task<PriceList> UpdatePriceList(PriceList PriceList)
+        
+        public async Task<List<Products>> UpdateListOfProductsWithPricesFromPriceList(List<Products> products,Users? user)
         {
-            context.Update(PriceList);
-            await context.SaveChangesAsync();
-            return PriceList;
+
+            if (user != null)
+            {
+                
+                
+
+                PriceList priceList = await context.PriceList.Where(priceList => priceList.Users.Contains(user) || priceList.Companies.Contains(user.Company == null ? new Company() : user.Company)).FirstAsync();
+
+                List<Products> ProductsWithNewPrices = new List<Products>();
+                if (priceList != null)
+                {
+                    foreach (Products Product in products)
+                    {
+                        if (priceList.PriceListProducts.Any(ProductFromPriceList => ProductFromPriceList.Product.Id == Product.Id))
+                        {
+                            ProductsWithNewPrices.Add(priceList.PriceListProducts.Where(ProductFromPriceList => ProductFromPriceList.Product.Id == Product.Id).First().Product);
+                        }
+                        else
+                        {
+                            ProductsWithNewPrices.Add(Product);
+                        }
+                    }
+                }
+
+                return ProductsWithNewPrices;
+            }
+
+            return products;
         }
+
     }
 }

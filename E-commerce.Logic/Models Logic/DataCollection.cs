@@ -25,7 +25,9 @@ namespace E_commerce.Logic.Models_Logic
         private readonly IImages images;
         private readonly IProductVariants productVariants;
         private readonly IBasketDetails basketDetails;
+        private readonly IPriceList priceList;
         private readonly IBasket basket;
+        private readonly ICompany company;
         private readonly IHashing cryptography;
 
         public DataCollection(DBcontext Context,IConfiguration configuration) 
@@ -42,6 +44,8 @@ namespace E_commerce.Logic.Models_Logic
             basket = new BasketRepo(Context);
             cryptography = new Hashing(configuration);
             adminUsers = new AdminUsersRepo(Context);
+            priceList = new PriceListRepo(Context);
+            company = new CompanyRepo(Context);
         }
 
         public IAdminUsers AdminUsers
@@ -94,6 +98,15 @@ namespace E_commerce.Logic.Models_Logic
         public IHashing Cryptography
         {
             get { return cryptography; }
+        }
+        public IPriceList PriceList
+        {
+            get { return priceList; }
+        }
+
+        public ICompany Company
+        {
+            get { return company; }
         }
     }
 }

@@ -3,6 +3,7 @@ import { Tags } from '../../models/Tags';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Products } from '../../models/Products';
 import { Categories } from '../../models/Categories';
+import { sessionController } from '../../logic/sessionLogic';
 
 @Component({
   selector: 'app-product-page',
@@ -18,7 +19,7 @@ export class ProductPageComponent<T> {
   constructor(private service:HttpserviceService<T>) { };
 
   GetProducts<T>():void{
-    this.service.GetRequest<Products[]>("Products/GetLimitedAmountOfProducts").subscribe((data)=>{
+    this.service.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data)=>{
       this.CurrentProductsOnPage = data;
       this.CurrentProductsDisplayedOnPage = data;
     });

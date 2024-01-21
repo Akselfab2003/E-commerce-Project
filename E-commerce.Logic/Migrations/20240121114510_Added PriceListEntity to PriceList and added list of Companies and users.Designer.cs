@@ -4,6 +4,7 @@ using E_commerce.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240121114510_Added PriceListEntity to PriceList and added list of Companies and users")]
+    partial class AddedPriceListEntitytoPriceListandaddedlistofCompaniesandusers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,9 +122,11 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("PriceListId")
                         .HasColumnType("int");
 
-                    b.Property<string>("cvr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cvr")
+                        .HasColumnType("int");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -130,6 +135,8 @@ namespace E_commerce.Logic.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PriceListId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Company");
                 });
@@ -466,9 +473,6 @@ namespace E_commerce.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -488,8 +492,6 @@ namespace E_commerce.Logic.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasIndex("PriceListId");
 
@@ -513,7 +515,7 @@ namespace E_commerce.Logic.Migrations
                     b.Property<double>("PriceListPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -556,6 +558,14 @@ namespace E_commerce.Logic.Migrations
                     b.HasOne("E_commerce.Logic.Models.PriceList", null)
                         .WithMany("Companies")
                         .HasForeignKey("PriceListId");
+
+                    b.HasOne("E_commerce.Logic.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.DiscountCodes", b =>
@@ -691,15 +701,9 @@ namespace E_commerce.Logic.Migrations
 
             modelBuilder.Entity("E_commerce.Logic.Models.Users", b =>
                 {
-                    b.HasOne("E_commerce.Logic.Models.Company", "Company")
-                        .WithMany("Users")
-                        .HasForeignKey("CompanyId");
-
                     b.HasOne("E_commerce.Logic.Models.PriceList", null)
                         .WithMany("Users")
                         .HasForeignKey("PriceListId");
-
-                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.PriceListEntity", b =>
@@ -710,9 +714,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasOne("E_commerce.Logic.Models.Products", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
                 });
@@ -720,11 +722,6 @@ namespace E_commerce.Logic.Migrations
             modelBuilder.Entity("E_commerce.Logic.Models.Basket", b =>
                 {
                     b.Navigation("BasketDetails");
-                });
-
-            modelBuilder.Entity("E_commerce.Logic.Models.Company", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>

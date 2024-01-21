@@ -12,9 +12,9 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int cvr {  get; set; }
+        public string cvr {  get; set; }
         public string email { get; set; }
-        public virtual Users User { get; set; }
+        public virtual List<Users>? Users { get; set; }
 
     }
 }

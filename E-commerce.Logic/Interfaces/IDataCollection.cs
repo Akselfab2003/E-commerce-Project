@@ -22,6 +22,8 @@ namespace E_commerce.Logic.Interfaces
         public ICategories Categories { get; }
         public IBasketDetails BasketDetails { get; }
         public IBasket Basket {  get; }
+        public IPriceList PriceList { get; }
+        public ICompany Company { get; }
         public IHashing Cryptography {  get; }
 
     }
