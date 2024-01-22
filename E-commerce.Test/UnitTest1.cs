@@ -5,8 +5,8 @@ using Xunit.Abstractions;
 
 namespace E_commerce.Test
 {
-   // [TestCaseOrderer("E_commerce.Test.OrderedTest", "E_commerce.Test")]
-
+    // [TestCaseOrderer("E_commerce.Test.OrderedTest", "E_commerce.Test")]
+    [TestCaseOrderer("E_commerce.Test.OrderedTest", "E-commerce.Test")]
     [Collection("Services")]
     public class UnitTest1
     {
@@ -19,55 +19,71 @@ namespace E_commerce.Test
             output = outputHelper;
         }
 
-        [Fact]
-        public async void TestA()
+        [Fact, AttributePriority(2)]
+        public async void Teststuffa()
         {
-        
-                Orders orders = new Orders();
-                orders.Id = 1;
-                // orders.sessid = "Test";
-                Orders orderReturned = await dataCollection.Orders.CreateOrder(orders);
-                output.WriteLine(JsonSerializer.Serialize(orderReturned));
-                Assert.Equal(orders, orderReturned);
+            var startTime = DateTime.Now;
+            Orders orders = new Orders();
+            orders.Id = 1;
+            // orders.sessid = "Test";
+            Orders orderReturned = dataCollection.Orders.CreateOrder(orders).Result;
+            output.WriteLine(JsonSerializer.Serialize(orderReturned));
+            Assert.Equal(orders, orderReturned);
+            output.WriteLine($"DateTime: {startTime.ToString()} NanoSeconds: {startTime.Nanosecond}");
 
         }
-        [Fact]
-        public async void TestD()
+        [Fact, AttributePriority(-11)]
+        public void Teststuffb()
         {
-            Orders order = await dataCollection.Orders.GetById(1);
+            var startTime = DateTime.Now;
+
+            Orders order = dataCollection.Orders.GetById(1).Result;
 
             output.WriteLine(JsonSerializer.Serialize(order));
 
             Assert.Null(order);
+            output.WriteLine($"DateTime: {startTime.ToString()} NanoSeconds: {startTime.Nanosecond}");
+
         }
 
-        [Fact]
-        public async void TestB()
+        [Fact, AttributePriority(-10)]
+        public void Teststuffc()
         {
-        
-            await dataCollection.Orders.DeleteOrder(1);
-            Orders order = await dataCollection.Orders.GetById(1);
+            DateTime startTime = DateTime.Now;
+
+            dataCollection.Orders.DeleteOrder(1).Wait();
+            Orders order = dataCollection.Orders.GetById(1).Result;
             output.WriteLine(JsonSerializer.Serialize(order));
 
             Assert.Null(order);
+            output.WriteLine($"DateTime: {startTime.ToString()} NanoSeconds: {startTime.Nanosecond}");
 
 
         }
 
 
-        [Fact]
-        public async void Teststuff()
-        {
-            AdminUsers users = new AdminUsers();
-            users.Username = "username";
-            users.Password = "password";
-
-            await dataCollection.AdminUsers.Create(users);
 
 
-           AdminUsers user =  await dataCollection.AdminUsers.GetByName("username");
-            Assert.NotNull(user);
-        }
+        //[Fact]
+        //public async void Teststuff()
+        //{
+        //    var startTime = DateTime.Now;
+
+
+        //    AdminUsers users = new AdminUsers();
+        //    users.Username = "username";
+        //    users.Password = "password";
+
+        //    await dataCollection.AdminUsers.Create(users);
+
+
+        //    AdminUsers user = await dataCollection.AdminUsers.GetByName("username");
+        //    Assert.NotNull(user);
+        //    var startTime = DateTime.Now;
+
+        //    output.WriteLine(startTime.ToString());
+        //}
+
 
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Interfaces
 {
-    public interface IUsers 
+    public interface IUsers : IGeneric<Users>
     {
         public Task<Users> CreateUser(Users entity);
         public Task<Users> UpdateUser(Users entity);

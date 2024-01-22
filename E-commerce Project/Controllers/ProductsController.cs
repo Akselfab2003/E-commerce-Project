@@ -12,7 +12,11 @@ namespace E_commerce_Project.Controllers
     {
         IProducts context;
         private IDataCollection dataCollection;
-        public ProductsController(IDataCollection c) { context = c.Products; dataCollection = c; } // Dependency Injection - DI
+        public ProductsController(IDataCollection c) 
+        {
+            context = c.Products;
+            dataCollection = c;
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Products>> GetProductById(int id)
@@ -27,10 +31,22 @@ namespace E_commerce_Project.Controllers
             return product;
         }
 
-        [HttpGet("GetLimitedAmountOfProducts")]
-        public async Task<List<Products>> GetLimitedAmountOfProducts()
+        [HttpGet("GetLimitedAmountOfProducts/{sessid}")]
+        public async Task<List<Products>> GetLimitedAmountOfProducts(string sessid = "")
         {
-            return await context.GetProducts(40);
+           // var cookies = Request.Cookies;
+            Users? users = null;
+            //if (cookies != null && cookies.Count()>0 | sessid != "")
+            //{
+                 
+              //   cookies.TryGetValue("sessionId", out sessid);
+                 users = (await dataCollection.Session.GetById(sessid)).user;
+
+           // }
+            
+            List<Products> products = await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await context.GetProducts(40), users);
+
+            return products;
         }
 
         [HttpPost("GetProductsThatArePartOfCategory")]

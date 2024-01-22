@@ -11,10 +11,6 @@ namespace E_commerce.Logic.Interfaces
     {
         public Task<PriceList> GetById(int id);
 
-        public Task<PriceList> UpdatePriceList(PriceList PriceList);
-
-        public Task<bool> DeleteOrder(int id);
-
-        public Task<PriceList> CreateOrder(PriceList PriceList);
+        public Task<List<Products>> UpdateListOfProductsWithPricesFromPriceList(List<Products> products, Users? user);
     }
 }

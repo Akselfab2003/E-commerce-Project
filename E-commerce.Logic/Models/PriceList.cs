@@ -12,8 +12,12 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public virtual Products ParentProductId {  get; set; } 
-        public int Price {  get; set; }
+        public virtual List<PriceListEntity> PriceListProducts {  get; set; } 
+
+        public virtual List<Company> Companies { get; set; }
+
+        public virtual List<Users> Users { get; set; }
+
 
     }
 }

@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class UsersRepo:  IUsers
+    public class UsersRepo: GenericRepo<Users>, IUsers
     {
         DBcontext context;
-        public UsersRepo(DBcontext c)
+        public UsersRepo(DBcontext c) : base(c)
         { 
             context = c;
         } // Dependency Injection - DI

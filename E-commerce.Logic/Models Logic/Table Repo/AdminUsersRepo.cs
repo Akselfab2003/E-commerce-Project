@@ -12,11 +12,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
     public class AdminUsersRepo : GenericRepo<AdminUsers> ,IAdminUsers
     {
         DBcontext context;
-        DbSet<AdminUsers> adminUsers;
+ 
 
         public AdminUsersRepo(DBcontext c) :base(c)
         {   this.context = c;
-            //adminUsers = c.AdminUsers;
+           
         }
 
         public async Task<AdminUsers> GetByName(string name)

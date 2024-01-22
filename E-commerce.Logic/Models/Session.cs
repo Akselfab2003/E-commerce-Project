@@ -23,7 +23,7 @@ namespace E_commerce.Logic.Models
         public virtual Users? user { get; set; }
         [AllowNull]
         [ForeignKey("AdminUsers")]
-        public virtual AdminUsers? admin { get; set; } = null;
+        public virtual AdminUsers? admin { get; set; }
         public bool IsAdmin { get; set; } = false;
 
     }
