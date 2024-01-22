@@ -53,7 +53,15 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Session> GetById(string SessID)
         {
+            try
+            {
+
             return await context.Sessions.FirstOrDefaultAsync(c => c.SessId == SessID);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
 

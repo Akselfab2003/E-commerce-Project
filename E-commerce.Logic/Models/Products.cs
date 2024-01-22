@@ -16,6 +16,7 @@ namespace E_commerce.Logic.Models
         public double Price { get; set; }
         public virtual List<Images> Images { get; set; }
         public virtual List<ProductVariants>? ProductVariants { get; set; }
+
         public virtual Categories ProductCategories { get; set; }
     }
 }

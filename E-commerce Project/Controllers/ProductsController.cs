@@ -34,16 +34,25 @@ namespace E_commerce_Project.Controllers
         [HttpGet("GetLimitedAmountOfProducts/{sessid}")]
         public async Task<List<Products>> GetLimitedAmountOfProducts(string sessid = "")
         {
-           // var cookies = Request.Cookies;
+            // var cookies = Request.Cookies;
             Users? users = null;
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                users = (await dataCollection.Session.GetById(sessid)).user;
+
+            }
+
             //if (cookies != null && cookies.Count()>0 | sessid != "")
             //{
-                 
-              //   cookies.TryGetValue("sessionId", out sessid);
-                 users = (await dataCollection.Session.GetById(sessid)).user;
 
-           // }
-            
+            //   cookies.TryGetValue("sessionId", out sessid);
+
+            // }
+
             List<Products> products = await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await context.GetProducts(40), users);
 
             return products;
@@ -68,6 +77,7 @@ namespace E_commerce_Project.Controllers
 
             try
             {
+                
                 await context.UpdateProduct(products);
             }
             catch (DbUpdateConcurrencyException)

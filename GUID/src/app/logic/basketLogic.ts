@@ -3,7 +3,7 @@ import { BasketDetails } from "../models/BasketDetails";
 import { Basket } from "../models/Basket";
 import { HttpserviceService } from "../../Services/httpservice.service";
 import { sessionController } from "./sessionLogic";
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 import { Products } from "../models/Products";
 import { Observable } from "rxjs";
 
@@ -13,31 +13,49 @@ import { Observable } from "rxjs";
 })
 export class basketLogic<T> {
     
-    constructor(private route: ActivatedRoute, private service: HttpserviceService<T>) {}
+    constructor(private route: ActivatedRoute, private service: HttpserviceService<T>) {
+    
+    }
 
+    @Output() AddToBasketEvent:EventEmitter<T>= new EventEmitter();
     public primaryBasket: Basket = new Basket();
     public basketDetails: BasketDetails[] = this.primaryBasket.basketDetails;
   
-    GetBasket():Observable<Basket>{
+    GetBasket(): Observable<Basket>{
         var sessionId:string = sessionController.GetCookie();
-        this.service.GetRequest<Basket>(`Basket/GetBasket/${sessionId}`).subscribe(basket =>{this.primaryBasket = basket
-          console.log(this.primaryBasket);
+        this.service.GetRequest<Basket>(`Basket/GetBasket/${sessionId}`).subscribe(basket =>{
+          this.primaryBasket = basket
+          console.log(basket);
         })
-        return this.service.GetRequest<Basket>(`Basket/GetBasket/${sessionId}`)
+
+        return   this.service.GetRequest<Basket>(`Basket/GetBasket/${sessionId}`)
+
+       
     };
-  
+    
+   
+
+
     public AddToBasket(product:Products){
         var sessionId:string = sessionController.GetCookie();
         var newBasketDetails:BasketDetails = new BasketDetails();
         newBasketDetails.products = product;
-        if(this.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
-          var basketDetailObject = this.basketDetails.find(detail => detail.products.id == product.id)
+        console.log(this.primaryBasket.basketDetails.find(detail => detail.products.id == product.id))
+        if(this.primaryBasket.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
+          var basketDetailObject = this.primaryBasket.basketDetails.find(detail => detail.products.id == product.id)
           basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-          this.UpdateBasket();
+          this.UpdateBasket(this.primaryBasket);
+       
+
+          this.AddToBasketEvent.emit()
+
         }
         else{
           this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, newBasketDetails).subscribe((data)=>{
+            
+            this.AddToBasketEvent.emit()
           });
+
         }
 
     };
@@ -47,12 +65,14 @@ export class basketLogic<T> {
       this.service.PostRequest<BasketDetails[]>(`Basket/RemoveFromBasket/${sessionId}`, basketDetails).subscribe((data)=>{
         this.basketDetails = data;
         console.log(data);
+        
+
       });
     }
   
-    UpdateBasket(){
-      this.service.PutRequest<any>(`Basket/${this.primaryBasket.id}`, this.primaryBasket).subscribe((data)=>{
-        
+    UpdateBasket(basket:Basket){
+      this.service.PutRequest<any>(`Basket/${basket.id}`,basket).subscribe((data)=>{
+       
       });
     }
 

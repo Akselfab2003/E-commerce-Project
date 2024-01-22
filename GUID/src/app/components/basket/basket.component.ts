@@ -38,11 +38,15 @@ export class BasketComponent<T> {
   basket: Basket = new Basket();
   constructor(private basketItems:basketLogic<T>)
   {
-
+     basketItems.AddToBasketEvent.subscribe(ele => {this.GetBasket()})
   }
 
   GetBasket() {
-    this.basketItems.GetBasket().subscribe(res => this.basket = res);
+    this.basketItems.GetBasket().subscribe(res => {
+      this.basket = res;
+      console.log(res)
+    });
+    //this.basket = this.basketItems.primaryBasket
   };
 
 
@@ -85,12 +89,13 @@ export class BasketComponent<T> {
 
   AddProductUsingQtyClick(product: Products){
     var basketDetailId = this.FindBasketDetailId(product);
-    var basketDetailObject = this.basketItems.basketDetails.find(detail => detail.id == basketDetailId)
+    var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
     basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
+    this.basketItems.UpdateBasket(this.basket )
   }
 
   FindBasketDetailId(product:Products){
-    return this.basketItems.basketDetails.find(detail => detail.products.id == product.id)?.id
+    return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id
   }
 
   RemoveProductUsingQtyClick(basketDetails:BasketDetails){
