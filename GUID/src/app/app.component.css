@@ -1,5 +1,6 @@
 .App-Root-Container{
     width: 100%;
+
     /* background-color: var(--background) !important; */
 }
 
@@ -7,6 +8,7 @@
 .navbar-container{
     width: 100%;
     height: 50%;
+    
 /*     background-color: var(--background-nav);
  */     /*color: var(--text) !important;
     border-bottom: 1px rgba(255, 255, 255, 0.1) solid; */
