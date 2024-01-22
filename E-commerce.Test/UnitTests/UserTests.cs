@@ -58,14 +58,14 @@ namespace E_commerce.Test.UnitTests
             for (int i = 1; i <= 3; i++)
             {
                 Session session = new Session() { Created = DateTime.Now, SessId = $"Test{i}", user = null };
-                dataCollection.Session.CreateSession(session).Wait();
+                dataCollection.Session.Create(session).Wait();
             }
 
             Users users = new Users() { Username = "Test", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
-             dataCollection.Users.CreateUser(users).Wait();
+             dataCollection.Users.Create(users).Wait();
 
             Users deleteUser = new Users() { Username = "DeleteTest", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
-             dataCollection.Users.CreateUser(deleteUser).Wait();
+             dataCollection.Users.Create(deleteUser).Wait();
         }
         #endregion
 
@@ -127,7 +127,7 @@ namespace E_commerce.Test.UnitTests
                 users.Email = "test@test.com";
                 users.Gender = false;
 
-                await dataCollection.Users.CreateUser(users);
+                await dataCollection.Users.Create(users);
             }
             catch (Exception ex)
             {
@@ -149,7 +149,7 @@ namespace E_commerce.Test.UnitTests
                 Assert.True(user == null);
             }
 
-            await dataCollection.Users.DeleteUser(user.Username);
+            await dataCollection.Users.Delete(user);
 
             output.WriteLine(JsonSerializer.Serialize(user));
             output.WriteLine($"{user.Username} has been sent to the void");

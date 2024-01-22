@@ -50,7 +50,7 @@ namespace E_commerce.Test.Create_data_for_local_database
             {
                 user.Password = DataCollection.Cryptography.CreateNewPasswordHash(user.Password);
 
-                await DataCollection.Users.CreateUser(user);
+                await DataCollection.Users.Create(user);
             }
             Assert.True(data.Any());
 
