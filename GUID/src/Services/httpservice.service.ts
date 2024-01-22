@@ -35,5 +35,5 @@ export class HttpserviceService<T> {
     var Full_URL = this.API_URL + ENDPOINT
     return this.Http.delete<T>(Full_URL, { withCredentials: true });
   }
-
+  
 }
