@@ -20,9 +20,16 @@ namespace E_commerce.Logic.Models
 
         public async Task<T> Create(T entity) 
         {
+            try
+            {
 
             await context.AddAsync(entity);
             await context.SaveChangesAsync();
+            }
+            catch(Exception ex) 
+            {
+            
+            }
 
             return entity;
         }
