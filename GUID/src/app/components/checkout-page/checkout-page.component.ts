@@ -19,7 +19,12 @@ export class CheckoutPageComponent <T> {
   orders:Order[] = new Array<Order>();
   session:Session = new Session();
 
-  constructor(private service:HttpserviceService<T>, private basketTest:basketLogic<T>) { };
+  constructor(private service:HttpserviceService<T>, private basketTest:basketLogic<T>) 
+  {
+
+    basketTest.AddToBasketEvent.subscribe(ele => {this.GetBasket()})
+
+   };
 
   billingDetails = {
     fullName: '',
@@ -32,6 +37,7 @@ export class CheckoutPageComponent <T> {
   };
 
   GetBasket(){
+    
     this.basketTest.GetBasket().subscribe(res => this.basketItems = res)
   }
 
