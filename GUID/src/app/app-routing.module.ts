@@ -17,6 +17,7 @@ import { adminGuard } from './logic/admin.guard';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { AdminControlPanelComponent } from './components/admin-control-panel/admin-control-panel.component';
+import { UserControlComponent } from './components/AdminControlsModelComponents/user-control/user-control.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path:"admin-login",component:AdminLoginComponent},
   {path:"carousel",component:CarouselComponent},
   {path:"AdminControl",component:AdminControlPanelComponent},
+  {path:"UserControl",component:UserControlComponent}
   
 ];
 
