@@ -23,6 +23,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { AdminControlPanelComponent } from './components/admin-control-panel/admin-control-panel.component';
 import { UserControlComponent } from './components/AdminControlsModelComponents/user-control/user-control.component';
+import { AdminControlComponent } from './components/AdminControlsModelComponents/admin-control/admin-control.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { UserControlComponent } from './components/AdminControlsModelComponents/
     AdminLoginComponent,
     CarouselComponent,
     AdminControlPanelComponent,
-    UserControlComponent
+    UserControlComponent,
+    AdminControlComponent,
   ],
   imports: [
     BrowserModule,

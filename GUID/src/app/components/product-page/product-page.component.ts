@@ -43,7 +43,7 @@ export class ProductPageComponent<T> {
       //   this.Product = data;
       // });
       var productsIds: Number[] = this.CurrentProductsOnPage.map(ele => ele.id)
-      this.service.PostRequest<Products[]>("Products/GetProductsThatArePartOfCategory?CategoryId=" + $event.id, productsIds).subscribe((data) => {
+      this.service.PostRequest<Products[]>("Products/GetProductsThatArePartOfCategory?CategoryId=" + $event.id +"&sessid="+sessionController.GetCookie(), productsIds).subscribe((data) => {
         this.CurrentProductsDisplayedOnPage = data;
       });
     }
