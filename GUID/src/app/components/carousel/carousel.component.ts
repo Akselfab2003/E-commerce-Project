@@ -1,33 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { sessionController } from '../../logic/sessionLogic';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
+import { HttpClient } from '@angular/common/http';
+import { Products } from '../../models/Products';
+import { basketLogic } from '../../logic/basketLogic';
+
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.css'
 })
-export class CarouselComponent {
+export class CarouselComponent<T> implements OnInit {
+
+  CurrentProductsDisplayedOnPage: Products[] = new Array<Products>();
+
+  constructor(private http: HttpClient, private httpService: HttpserviceService<T>, private basketTest:basketLogic<T>) {}
   
-  slides = [
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""},
-    {img: ""}
-  ];
+  ngOnInit(): void {
+    this.fetchDataFromApi();
+  }
+
+  fetchDataFromApi() {
+    this.httpService.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data) => {
+      this.CurrentProductsDisplayedOnPage = data;
+      console.log(data);
+    });
+  };
+
+  AddToBasket(product: Products){
+    this.basketTest.AddToBasket(product)
+  }
+  
 
   slideConfig = {
     "slidesToShow": 4, 
@@ -59,3 +64,4 @@ export class CarouselComponent {
     ]
   };
 }
+

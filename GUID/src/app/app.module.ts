@@ -44,7 +44,7 @@ import { UserControlComponent } from './components/AdminControlsModelComponents/
     AdminLoginComponent,
     CarouselComponent,
     AdminControlPanelComponent,
-    UserControlComponent,
+    UserControlComponent
   ],
   imports: [
     BrowserModule,
