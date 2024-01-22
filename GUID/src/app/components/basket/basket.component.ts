@@ -40,30 +40,31 @@ export class BasketComponent<T> {
   {
 
   }
-  
+
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => this.basket = res);
   };
 
 
   calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => total + item.products.price, 0);
+    return this.basketItems.basketDetails.reduce((total, item) => total + (item.quantity * item.products.price), 0);
   } 
 
-  getUniqueProducts(): Products[] {
-    const uniqueProducts: Products[] = [];
+  ngOnInit(){
+    this.GetBasket();
+  }
 
-    const uniqueProductIds = new Set<number>();
-  
-    this.basketItems.basketDetails.forEach((item) => {
+  getUniqueProducts(): BasketDetails[] {
+    /* this.basketItems.basketDetails.forEach((item) => {
       const productId = item.products.id;
       if (!uniqueProductIds.has(productId)) {
         uniqueProductIds.add(productId);
         uniqueProducts.push(item.products);
       }
-    });
+    }); */
 
-    return uniqueProducts;
+    console.log(this.basketItems.basketDetails)
+    return this.basketItems.basketDetails;
   }
 
   getUniqueBasketDetails():BasketDetails[]{
@@ -82,16 +83,26 @@ export class BasketComponent<T> {
     return uniqueBasketDetails;
   }
 
-  calculateProductCounts(productId: number): number {
-    return this.basketItems.basketDetails.reduce((count, item) => {
-      return item.products.id === productId ? count + 1 : count;
-    }, 0);
+  AddProductUsingQtyClick(product: Products){
+    var basketDetailId = this.FindBasketDetailId(product);
+    var basketDetailObject = this.basketItems.basketDetails.find(detail => detail.id == basketDetailId)
+    basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
   }
 
-  AddProductUsingQtyClick(product: Products){
-    this.basketItems.AddToBasket(product);
-    this.calculateProductCounts(product.id);
+  FindBasketDetailId(product:Products){
+    return this.basketItems.basketDetails.find(detail => detail.products.id == product.id)?.id
   }
+
+  RemoveProductUsingQtyClick(basketDetails:BasketDetails){
+    this.basketItems.RemoveFromBasket(basketDetails);
+  }
+
+  /*
+  RemoveProductUsingQtyClick(basketDetails:BasketDetails){
+    this.basketItems.RemoveFromBasket(basketDetails);
+    this.calculateProductCounts(basketDetails.products.id);
+  }
+  */
 
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool;
