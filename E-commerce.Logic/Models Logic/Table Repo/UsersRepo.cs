@@ -27,13 +27,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Users.FirstOrDefaultAsync(Users => Users.Id == id);
         }
 
-        public async Task<Users> UpdateUser(Users users)
-        {
-            context.Update(users);
-            await context.SaveChangesAsync();
-            return users;
-        }
-
 
         public async Task<bool> CheckLogin(LoginObject loginObject)
         {
@@ -81,30 +74,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 }
             }
             return true;
-        }
-
-        public async Task<bool> DeleteUser(string name)
-        {
-            try
-            {
-                Users users = await GetByName(name);
-                context.Users.Remove(users);
-                await context.SaveChangesAsync();
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-
-        public async Task<Users> CreateUser(Users users)
-        {
-            context.Users.Add(users);
-            await context.SaveChangesAsync();
-            return users;
         }
     }
 }

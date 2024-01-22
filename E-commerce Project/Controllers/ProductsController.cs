@@ -50,11 +50,12 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpPost("GetProductsThatArePartOfCategory")]
-        public async Task<List<Products>> GetProductsPartOfCategory(int CategoryId, int[] Productsids)
+        public async Task<List<Products>> GetProductsPartOfCategory(int CategoryId, int[] Productsids,string sessid)
         {
 
             Categories category = await dataCollection.Categories.GetById(CategoryId);
-            return await dataCollection.Categories.GetProductsFromCategory(category,Productsids);
+            Users? users = (await dataCollection.Session.GetById(sessid)).user;
+            return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Categories.GetProductsFromCategory(category, Productsids), users);
         }
 
         [HttpPut("{id}")]

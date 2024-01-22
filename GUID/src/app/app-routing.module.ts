@@ -12,11 +12,11 @@ import { authenticatorGuard } from '../app/logic/authenticator.guard'
 import { ProfileComponent } from './components/profile/profile.component';
 import { BasketComponent } from './components/basket/basket.component';
 import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
-import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { adminGuard } from './logic/admin.guard';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { AdminControlPanelComponent } from './components/admin-control-panel/admin-control-panel.component';
+import { UserControlComponent } from './components/AdminControlsModelComponents/user-control/user-control.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -30,10 +30,11 @@ const routes: Routes = [
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
   {path:"basket",component:BasketComponent},
   {path:"checkout-page",component:CheckoutPageComponent},
-  {path:"admin-page",component:AdminPageComponent,canActivate:[adminGuard]},
+  {path:"admin-page",component:AdminControlPanelComponent,canActivate:[adminGuard]},
   {path:"admin-login",component:AdminLoginComponent},
   {path:"carousel",component:CarouselComponent},
   {path:"AdminControl",component:AdminControlPanelComponent},
+  {path:"UserControl",component:UserControlComponent}
   
 ];
 
