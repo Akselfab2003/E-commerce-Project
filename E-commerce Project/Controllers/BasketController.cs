@@ -4,6 +4,7 @@ using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ContentModel;
 
 namespace E_commerce_Project.Controllers
 {
@@ -73,6 +74,15 @@ namespace E_commerce_Project.Controllers
             basket.BasketDetails.Add(basketDetails);
             await dataCollectioncontext.Basket.Update(basket);
 
+            return basket.BasketDetails;
+        }
+
+        [HttpPost("RemoveFromBasket/{sessId}")]
+        public async Task<List<BasketDetails>> DeleteBasketDetail(BasketDetails basketDetails, string sessId)
+        {
+            Basket basket = await GetBasketBySessId(sessId);
+            basket.BasketDetails.Remove(basketDetails);
+            await dataCollectioncontext.Basket.Update(basket);
             return basket.BasketDetails;
         }
 
