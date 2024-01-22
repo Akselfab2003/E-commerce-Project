@@ -17,6 +17,6 @@ namespace E_commerce.Logic.Models
         public virtual List<Images> Images { get; set; }
         public virtual List<ProductVariants>? ProductVariants { get; set; }
 
-        public virtual Categories ProductCategories { get; set; }
+        public virtual Categories? ProductCategories { get; set; }
     }
 }
