@@ -33,12 +33,7 @@ export class basketLogic<T> {
       });
     };
   
-    RemoveFromCart(Id:number){
-      this.service.DeleteRequest<BasketDetails[]>(`BasketDetails/${Id}`).subscribe((data)=>{
-        this.basketDetails = data
-      });
-    };
-  
+
     GetTotalPrice(){
       this.service.GetRequest<Basket>(`BasketDetails`)
     };

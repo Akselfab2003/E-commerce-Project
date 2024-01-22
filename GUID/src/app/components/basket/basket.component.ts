@@ -32,8 +32,8 @@ import { basketLogic } from '../../logic/basketLogic';
   ]
 })
 export class BasketComponent<T> {
-  public BasketState:string = "Closed"
-  public BasketStateBool:boolean = false
+  public BasketState:string = "Closed";
+  public BasketStateBool:boolean = false;
 
   basket: Basket = new Basket();
   constructor(private basketItems:basketLogic<T>)
@@ -42,17 +42,13 @@ export class BasketComponent<T> {
   }
   
   GetBasket() {
-    this.basketItems.GetBasket().subscribe(res => this.basket = res)
+    this.basketItems.GetBasket().subscribe(res => this.basket = res);
   };
 
-  RemoveProduct(){
-    this.basketItems.RemoveFromCart(this.basket.id);
-  }
 
   calculateTotal(): number {
     return this.basketItems.basketDetails.reduce((total, item) => total + item.products.price, 0);
   } 
-
 
   getUniqueProducts(): Products[] {
     const uniqueProducts: Products[] = [];
@@ -70,15 +66,36 @@ export class BasketComponent<T> {
     return uniqueProducts;
   }
 
+  getUniqueBasketDetails():BasketDetails[]{
+    const uniqueBasketDetails: BasketDetails[] = [];
+
+    const uniqueBasketDetailIds = new Set<number>();
+  
+    this.basket.basketDetails.forEach ((item) => {
+      const basketId = item.id;
+      if (!uniqueBasketDetailIds.has(basketId)) {
+        uniqueBasketDetailIds.add(basketId);
+        uniqueBasketDetails.push(item);
+      }
+    });
+
+    return uniqueBasketDetails;
+  }
+
   calculateProductCounts(productId: number): number {
     return this.basketItems.basketDetails.reduce((count, item) => {
       return item.products.id === productId ? count + 1 : count;
     }, 0);
   }
 
+  AddProductUsingQtyClick(product: Products){
+    this.basketItems.AddToBasket(product);
+    this.calculateProductCounts(product.id);
+  }
+
   ChangeState() {
-    this.BasketStateBool = !this.BasketStateBool
-    this.BasketState = this.BasketStateBool ? "Open" : "Closed"
+    this.BasketStateBool = !this.BasketStateBool;
+    this.BasketState = this.BasketStateBool ? "Open" : "Closed";
     if(this.BasketState == "Open"){
       this.GetBasket();
     }
@@ -86,7 +103,7 @@ export class BasketComponent<T> {
 
   closeBasket(){
     if(this.BasketState == "Open"){
-      this.ChangeState()
+      this.ChangeState();
     }
   }
 }

@@ -22,7 +22,7 @@
           <div class="qty">
             <span>-</span>
             <strong>{{calculateProductCounts(product.id)}}</strong>
-            <span>+</span>
+            <span (click)="AddProductUsingQtyClick(product)">+</span>
           </div>
         </div>
       </div>
