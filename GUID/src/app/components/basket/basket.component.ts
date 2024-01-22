@@ -91,7 +91,7 @@ export class BasketComponent<T> {
     var basketDetailId = this.FindBasketDetailId(product);
     var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
     basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-    this.basketItems.UpdateBasket(this.basket)
+    this.basketItems.UpdateBasket(this.basket )
   }
 
   FindBasketDetailId(product:Products){

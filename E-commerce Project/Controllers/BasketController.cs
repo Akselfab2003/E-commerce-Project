@@ -59,7 +59,7 @@ namespace E_commerce_Project.Controllers
             {
                 await context.Update(basket);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
 
             }
