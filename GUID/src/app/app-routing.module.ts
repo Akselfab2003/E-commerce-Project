@@ -12,7 +12,6 @@ import { authenticatorGuard } from '../app/logic/authenticator.guard'
 import { ProfileComponent } from './components/profile/profile.component';
 import { BasketComponent } from './components/basket/basket.component';
 import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
-import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { adminGuard } from './logic/admin.guard';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
@@ -30,7 +29,7 @@ const routes: Routes = [
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
   {path:"basket",component:BasketComponent},
   {path:"checkout-page",component:CheckoutPageComponent},
-  {path:"admin-page",component:AdminPageComponent,canActivate:[adminGuard]},
+  {path:"admin-page",component:AdminControlPanelComponent,canActivate:[adminGuard]},
   {path:"admin-login",component:AdminLoginComponent},
   {path:"carousel",component:CarouselComponent},
   {path:"AdminControl",component:AdminControlPanelComponent},

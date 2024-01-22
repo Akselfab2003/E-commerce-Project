@@ -195,7 +195,7 @@ namespace E_commerce_Project.Controllers
         #endregion
 
         #region DELETE Requests
-        [HttpDelete]
+        [HttpDelete("deleteUser")]
         public async Task<IActionResult> DeleteUser(string name)
         {
             var user = await _users.GetByName(name);
@@ -205,6 +205,19 @@ namespace E_commerce_Project.Controllers
             }
 
             await _users.Delete(user);
+
+            return NoContent();
+        }
+        [HttpDelete("deleteAdmin")]
+        public async Task<IActionResult> DeleteAdmin(string name)
+        {
+            var user = await _adminUsers.GetByName(name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _adminUsers.Delete(user);
 
             return NoContent();
         }

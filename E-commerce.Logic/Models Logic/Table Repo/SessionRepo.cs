@@ -18,12 +18,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             context = c; 
         }
-        public async Task<Session> CreateSession(Session session)
-        {
-            context.Sessions.Add(session);
-            await context.SaveChangesAsync();
-            return session;
-        }
         public async Task<Session> UserLogin(LoginObject loginObject)
         {
             Users user = context.Users.Where(usr => usr.Username == loginObject.username).First();
@@ -33,7 +27,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 session.user = user;
                 session.admin = null;
                 session.IsAdmin = false;
-                await UpdateSession(session);
+                await Update(session);
             }
 
             return session;
@@ -48,27 +42,14 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 session.user = null;
                 session.admin = user;
                 session.IsAdmin = true;
-                await UpdateSession(session);
+                await Update(session);
             }
 
             return session;
 
         }
 
-        public async Task<bool> DeleteSession(string id)
-        {
-            try
-            {
-                Session session = await context.Sessions.FirstOrDefaultAsync(sessions=>sessions.SessId==id);
-                context.Sessions.Remove(session);
-                await context.SaveChangesAsync();
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
+
 
         public async Task<Session> GetById(string SessID)
         {
@@ -80,11 +61,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             return await context.Sessions.ToListAsync();
         }
-        public async Task<Session> UpdateSession(Session session)
-        {
-            context.Sessions.Update(session);
-            await context.SaveChangesAsync();
-            return session;
-        }
+
     }
 }

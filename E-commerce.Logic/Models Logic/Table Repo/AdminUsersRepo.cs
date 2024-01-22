@@ -24,34 +24,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.AdminUsers.FirstOrDefaultAsync(adminUsers => adminUsers.Username == name);
         }
 
-        public async Task<AdminUsers> UpdateAdminUser(AdminUsers User)
-        {
-            context.Update(User);
-            await context.SaveChangesAsync();
-            return User;
-        }
-
-        public async Task<bool> DeleteAdminUser(int id)
-        {
-            try
-            {
-                AdminUsers adminusers = await context.AdminUsers.FirstOrDefaultAsync(adminUsers => adminUsers.Id == id);
-                context.AdminUsers.Remove(adminusers);
-                await context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public async Task<AdminUsers> CreateAdminUsers(AdminUsers User)
-        {
-            await context.AdminUsers.AddAsync(User);
-            await context.SaveChangesAsync(); // SAveChangesAsync()
-            return User;
-        }
         public async Task<bool> CheckLogin(LoginObject loginObject)
         {
             AdminUsers UserFromDatabase = await GetByName(loginObject.username);
