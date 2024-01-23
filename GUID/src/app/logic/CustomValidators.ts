@@ -5,7 +5,6 @@ import { User } from "../models/User";
 export const  validateUserSelected:ValidatorFn = 
      (control: AbstractControl) : ValidationErrors | null => {
     var usr = control.get("User");
-    console.log(usr?.value  )
     
     
     if(usr?.value == ""){
@@ -18,7 +17,6 @@ export const  validateUserSelected:ValidatorFn =
         }
 
     }else{
-        console.log("returned")
         return null
     }
     
