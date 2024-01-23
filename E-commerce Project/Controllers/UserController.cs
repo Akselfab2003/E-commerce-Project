@@ -26,6 +26,23 @@ namespace E_commerce_Project.Controllers
         }
 
         #region GET Requests
+        [HttpGet("GetListOfUsers")]
+        public async Task<List<Users?>> GetListOfUsers()
+        {
+            try
+            {
+                return await _users.GetListOfUsers();
+         
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+
+
         [HttpGet("createEmptySession")]
         public async Task<Session> PostEmptySession()
         {
@@ -93,12 +110,13 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
-                    users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+                        users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
 
                     await _users.Create(users);
             }
-            catch
+            catch(Exception ex)
             {
+             
                 return HttpStatusCode.BadRequest;
             }
 
@@ -123,6 +141,23 @@ namespace E_commerce_Project.Controllers
         #endregion
 
         #region   PUT Requests
+        [HttpPut("UpdateUser")]
+        public async Task<Users?> UpdateUser(Users user)
+        {
+            try
+            {
+                user.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
+
+                return await collection.Users.Update(user);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        } 
+
 
         [HttpPut("Login")]
         public async Task<IActionResult> PutSession(LoginObject loginObject)

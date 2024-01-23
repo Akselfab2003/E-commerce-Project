@@ -75,5 +75,18 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             }
             return true;
         }
+
+        public async Task<List<Users?>> GetListOfUsers()
+        {
+            try
+            {
+                return await context.Users.ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                
+            }
+            return null;
+        }
     }
 }
