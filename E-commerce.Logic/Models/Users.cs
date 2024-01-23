@@ -20,6 +20,6 @@ namespace E_commerce.Logic.Models
         public bool Gender { get; set; }
         
         public virtual Company? Company { get; set; }
-     
+     //
     }
 }
