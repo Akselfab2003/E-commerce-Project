@@ -77,7 +77,7 @@ export class ProductVariantsControlComponent<T> {
   }
 
   GetAllProducts<T>(){
-    this.service.GetRequest<Products[]>("ProductVariants").subscribe( ele => {
+    this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe( ele => {
       let Allproduct:Products =  new Products;
       
       Allproduct.id = 0;

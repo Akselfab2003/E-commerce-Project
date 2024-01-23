@@ -39,6 +39,12 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return true;
         }
 
+        public async Task<List<Products>?> GetAllProducts()
+        {
+            return await context.Products.ToListAsync();
+
+        }
+
         public async Task<Products> GetById(int id)
         {
             return await context.Products
