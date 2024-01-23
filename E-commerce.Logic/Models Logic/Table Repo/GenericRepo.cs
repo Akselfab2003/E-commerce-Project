@@ -37,7 +37,6 @@ namespace E_commerce.Logic.Models
 
         public async Task<T> Update(T entity)
         {
-
             context.Update(entity);
             await context.SaveChangesAsync();
 
@@ -50,7 +49,7 @@ namespace E_commerce.Logic.Models
 
             context.Remove(entity);
             await context.SaveChangesAsync();
-
+            
             return entity;
         }
 

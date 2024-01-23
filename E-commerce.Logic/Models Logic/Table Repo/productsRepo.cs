@@ -41,12 +41,16 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Products> GetById(int id)
         {
-            return await context.Products.Include(product => product.Images).Include(product => product.ProductCategories).Include(product => product.ProductVariants).FirstOrDefaultAsync(product => product.Id == id);
+            return await context.Products
+                .Include(product => product.Images)
+                .Include(product => product.ProductCategories)
+                .Include(product => product.ProductVariants)
+                .FirstOrDefaultAsync(product => product.Id == id);
         }
 
         public async Task<List<Products>> GetProducts(int count)
         {   
-            return await context.Products.ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
+            return await context.Products.Include(ele => ele.ProductVariants).Include(ele => ele.Images).Include(ele => ele.ProductCategories).ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
         }
 
         public async Task<Products> UpdateProduct(Products entity)
