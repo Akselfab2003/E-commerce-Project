@@ -10,4 +10,5 @@ export class Products{
     images:Images[] = new Array<Images>;
     productVariants:ProductVariants[] = new Array<ProductVariants>;
     productCategories:Categories = new Categories;
+    Active:boolean = false;
 }

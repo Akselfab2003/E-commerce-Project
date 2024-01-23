@@ -1,0 +1,168 @@
+<div class="AdminControl">
+    <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="Admin-Created-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Created"
+          type="button"
+          role="tab"
+          aria-controls="Created"
+          aria-selected="true"
+        >Created
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="Updated-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Updated"
+          type="button"
+          role="tab"
+          aria-controls="Updated"
+          aria-selected="false"
+        >
+          Updated
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link"
+          id="pills-contact-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-contact"
+          type="button"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >
+          Deleted
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-disabled-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-disabled"
+          type="button"
+          role="tab"
+          aria-controls="pills-disabled"
+          aria-selected="false"
+        >
+          Select
+        </button>
+      </li>
+    </ul>
+  
+  
+    
+    
+    <div class="tab-content" id="pills-tabContent">
+      <div
+      class="tab-pane fade show active"
+      id="Created"
+      role="tabpanel"
+      aria-labelledby="Created-tab"
+      tabindex="0"
+      >
+      <form [formGroup]="createForm" (submit)="register()" autocomplete="new-password">
+        <h1>Create Product</h1>
+        
+        <div class="d-flex align-items-center  flex-column filterContainer">
+          <span class="filterTitle">Select a product</span>
+          <div class="input-group">
+              <label class="input-group-text" for="Categories">Products</label>
+              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories">
+                  <option *ngFor="let val of allProducts" [value]="val.title">{{val.title}}</option>
+              </select>
+          </div>
+      </div>
+      <br>
+        
+        <div >
+          <label for="productName">Product name</label>
+          <input id="productNameCreate" type="text" formControlName="productNameCreate">
+        </div>
+      
+        <div >
+          <label for="productDescription">Product description</label>
+          <input id="productDescriptionCreate" autocomplete="new-password" type="text" formControlName="productDescriptionCreate">
+        </div>
+
+        <div >
+            <label for="productPricen">Product price</label>
+            <input id="productPricenCreate" autocomplete="new-password" type="number" formControlName="productPricenCreate">
+          </div>
+
+        <div >
+            <label for="variantValue">Variant value</label>
+            <input id="variantValueCreate" autocomplete="new-password" type="text" formControlName="variantValueCreate">
+          </div>
+      
+        <button type="submit" class="btn"id="Create">Create &#8594;</button>
+      </form>
+    </div>
+      <div
+        class="tab-pane fade"
+        id="Updated"
+        role="tabpanel"
+        aria-labelledby="Updated-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
+        <h1>Update product</h1>
+        <div >
+            <label for="productName">Product name</label>
+            <input id="productNameUpdate" type="text" formControlName="productNameUpdate">
+          </div>
+        
+          <div >
+            <label for="productDescription">Product description</label>
+            <input id="productDescriptionUpdate" autocomplete="new-password" type="text"formControlName="productDescriptionUpdate">
+          </div>
+  
+          <div >
+              <label for="productPricen">Product price</label>
+              <input id="productPricenUpdate" autocomplete="new-password" type="number" formControlName="productPricenUpdate">
+            </div>
+  
+          <div >
+              <label for="variantValue">Variant value</label>
+              <input id="variantValueUpdate" autocomplete="new-password" type="text" formControlName="variantValueUpdate">
+            </div>
+      
+        <button type="submit" class="btn"id="Update">Update &#8594;</button>
+      </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-contact"
+        role="tabpanel"
+        aria-labelledby="pills-contact-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
+        <h1>Delete product</h1>
+          <div >
+            <label for="productname">Username</label>
+            <input id="productnameDelete" type="text" formControlName="productnameDelete">
+          </div>
+          <br>
+          <button type="submit" class="btn" id="Delete">Delete &#8594;</button>
+        </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-disabled"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+      >
+        ...
+      </div>
+    </div>
+  </div>
+  
