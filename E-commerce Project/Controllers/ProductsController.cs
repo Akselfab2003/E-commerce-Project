@@ -58,6 +58,26 @@ namespace E_commerce_Project.Controllers
             return products;
         }
 
+        [HttpGet("GetAllProducts")]
+        public async Task<List<Products>?> GetAllProducts()
+        {
+            // var cookies = Request.Cookies;
+            Users? users = null;
+            try
+            {
+            List<Products> products =await context.GetAllProducts();
+
+            return products;
+            }
+            catch (Exception ex)
+            {
+                return null;
+
+            }
+
+        }
+
+
         [HttpPost("GetProductsThatArePartOfCategory")]
         public async Task<List<Products>> GetProductsPartOfCategory(int CategoryId, int[] Productsids,string sessid)
         {

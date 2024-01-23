@@ -27,6 +27,19 @@ namespace E_commerce_Project.Controllers
             return productVariants;
         }
 
+        [HttpGet("")]
+        public async Task<List<ProductVariants>?> GetProductVariants()
+        {
+            var productVariants = await context.GetList();
+
+            if (productVariants == null)
+            {
+                return null;
+            }
+
+            return productVariants;
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProductVariants(int id, ProductVariants productVariantss)
         {
