@@ -10,3 +10,40 @@
 .menu{
     width: 90%;
 }
+
+.TabContent{
+    width: 75%;
+    height: 75%;
+    margin-top: 5%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+ 
+    margin: 20px auto;
+    padding: 40px;
+}
+.tab-container{
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+
+/* width: 80%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+
+.Create{
+    height: 50%;
+    gap: 10% ;
+}
+
+input.ng-invalid.ng-touched{
+    border: red 2px solid;
+}
+
