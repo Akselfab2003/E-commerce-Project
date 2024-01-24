@@ -1,22 +1,15 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { HttpserviceService } from '../../../../Services/httpservice.service';
 import { Router } from '@angular/router';
-import { LoginObject } from '../../../models/LoginObject';
-import { sessionController } from '../../../logic/sessionLogic';
-import { Session } from '../../../models/Session';
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { Products } from '../../../models/Products';
 import { Categories } from '../../../models/Categories';
-import { ThisReceiver } from '@angular/compiler';
-
 @Component({
   selector: 'app-product-control',
   templateUrl: './product-control.component.html',
   styleUrl: './product-control.component.css'
 })
 export class ProductControlComponent<T> {
-  public tags:Categories[] = [];
-  //Gemmer brugerens input i variabler
   createForm = new FormGroup({
     titleCreate: new FormControl<string>('',Validators.required),
     descriptionCreate: new FormControl<string>('',Validators.required),
@@ -24,7 +17,7 @@ export class ProductControlComponent<T> {
     categoriesCreate: new FormControl<string>("",Validators.required),
     variantsCreate: new FormControl<string>("",Validators.required)
   });
-  updateForm = new FormGroup({
+    updateForm = new FormGroup({
     idUpdate:new FormControl(1,Validators.required),
     titleUpdate: new FormControl<string>('',Validators.required),
     descriptionUpdate: new FormControl<string>('',Validators.required),
@@ -35,6 +28,8 @@ export class ProductControlComponent<T> {
   deleteForm = new FormGroup({
     idDelete: new FormControl<number>(1,Validators.required),
   })
+  public tags:Categories[] = [];
+
   constructor(private service:HttpserviceService<T>, private router:Router) {
   };
   ngOnInit(){
@@ -43,6 +38,7 @@ export class ProductControlComponent<T> {
         this.tags.push(item);
       }
     });
+
   }
 
   create() {
