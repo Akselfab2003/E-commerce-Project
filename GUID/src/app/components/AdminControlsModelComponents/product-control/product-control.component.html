@@ -89,13 +89,16 @@
         <div>
             <label for="productCategories">Categories</label>
             <select id="categoriesCreate" formControlName="categoriesCreate" aria-label="Select categoires to add" aria-placeholder="Select categoires to add">
-                <option value="" selected >Choose a Categories</option>
+                <option value="" selected >Choose a Categorie</option>
                 <option *ngFor="let tag of tags" [value]="tag.name" >{{tag.name}}</option>
             </select>
         </div>
         <div>
             <label for="productVariants">Variants </label>
-            <select id="variantsCreate" formControlName="variantsCreate"></select>
+            <select id="variantsCreate" formControlName="variantsCreate">
+              <option selected value="" >Choose Variants</option>
+              <option *ngFor="let variant of varaints" [value]="variant.name" >{{variant.name}}</option>
+            </select>
         </div>
         <br>
       
@@ -112,8 +115,11 @@
       <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
         <h1>Update Product</h1>
         <div>
-            <label for="id">Id</label>
-            <input id="idUpdate" type="number" formControlName="idUpdate">
+            <label for="product">Product</label>
+            <select id="productList" formControlName="productList" aria-label="Select product" aria-placeholder="Select product">
+              <option selected value="" >Choose a Product</option>
+              <option *ngFor="let product of products" [value]="product.id" >{{product.title}}</option>
+            </select>
           </div>
         <div>
           <label for="title">Title</label>
@@ -131,13 +137,16 @@
         <div>
             <label for="productCategories">Categories</label>
             <select id="categoriesUpdate" formControlName="categoriesUpdate" aria-label="Select categoires to add" aria-placeholder="Select categoires to add">
-                <option selected value="" >Choose a Categories</option>
+                <option selected value="" >Choose a Categorie</option>
                 <option *ngFor="let tag of tags" [value]="tag.name" >{{tag.name}}</option>
             </select>
         </div>
         <div>
             <label for="productVariants">Variants </label>
-            <select id="variantsUpdate" type="text" formControlName="variantsUpdate"></select>
+            <select id="variantsUpdate" type="text" formControlName="variantsUpdate">
+              <option selected value="" >Choose Variants</option>
+              <option *ngFor="let variant of varaints" [value]="variant.name" >{{variant.name}}</option>
+            </select>
         </div>
         <br>
       
