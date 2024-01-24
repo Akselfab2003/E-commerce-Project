@@ -27,12 +27,14 @@ export class ProductVariantsControlComponent<T> {
     productDescriptionCreate: new FormControl<string>('', Validators.required),
     productPricenCreate: new FormControl<number>(1, Validators.required),
     variantValueCreate: new FormControl<string>('', Validators.required),
+    productIDCreate: new FormControl<number>(1, Validators.required),
   });
   updateForm = new FormGroup({
     productNameUpdate: new FormControl<string>('', Validators.required),
     productDescriptionUpdate: new FormControl<string>('', Validators.required),
     productPricenUpdate: new FormControl<number>(1, Validators.required),
     variantValueUpdate: new FormControl<string>('', Validators.required),
+    productIDUpdate: new FormControl<number>(1, Validators.required),
   })
   deleteForm = new FormGroup({
     productnameDelete: new FormControl(''),
@@ -61,14 +63,17 @@ export class ProductVariantsControlComponent<T> {
   }
   InputDataCreate():ProductVariants{
     let productVariant:ProductVariants=new ProductVariants();
+    productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as unknown as number];
     productVariant.name=this.createForm.get('productNameCreate')?.value as unknown as string;
     productVariant.description=this.createForm.get('productDescriptionCreate')?.value as unknown as string;
     productVariant.price=this.createForm.get('productPriceCreate')?.value as unknown as number;
     productVariant.variantValue=this.createForm.get('variantValueCreate')?.value as unknown as string;
+    console.log(productVariant)
     return productVariant;
   }
   InputDataUpdate():ProductVariants{
     let productVariant:ProductVariants=new ProductVariants();
+    productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as unknown as number];
     productVariant.name=this.createForm.get('productNameCreate')?.value as unknown as string;
     productVariant.description=this.createForm.get('productDescriptionCreate')?.value as unknown as string;
     productVariant.price=this.createForm.get('productPriceCreate')?.value as unknown as number;

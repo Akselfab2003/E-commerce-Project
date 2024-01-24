@@ -69,14 +69,14 @@
       tabindex="0"
       >
       <form [formGroup]="createForm" (submit)="register()" autocomplete="new-password">
-        <h1>Create Product</h1>
+        <h1>Create product variant</h1>
         
         <div class="d-flex align-items-center  flex-column filterContainer">
           <span class="filterTitle">Select a product</span>
           <div class="input-group">
               <label class="input-group-text" for="Categories">Products</label>
-              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories">
-                  <option *ngFor="let val of allProducts" [value]="val.title">{{val.title}}</option>
+              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDCreate">
+                  <option *ngFor="let val of allProducts" [value]="val.id">{{val.title}}</option>
               </select>
           </div>
       </div>
