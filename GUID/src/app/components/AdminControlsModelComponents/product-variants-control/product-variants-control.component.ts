@@ -51,18 +51,30 @@ export class ProductVariantsControlComponent<T> {
     console.log(data)
     )
   }
+
   update(){
-    let productVariant:ProductVariants= this.InputDataUpdate();
-    this.service.PutRequest<ProductVariants>("ProductVariants/" + (this.updateForm.get('productIDUpdate')?.value as unknown as number),productVariant).subscribe((data)=>
+    /* let productVariant:ProductVariants= this.InputDataUpdate();
+    this.service.PutRequest<ProductVariants>("ProductVariants/",productVariant).subscribe((data)=>
     console.log(data)
-    );
+    ); */
+
+    let variant:ProductVariants= this.InputDataUpdate();
+    console.log((this.updateForm.get('productIDUpdate')?.value as unknown as number));
+    console.log(variant);
+    this.service.PutRequest<ProductVariants>("ProductVariants/" + (this.updateForm.get('productIDUpdate')?.value as unknown as number),variant).subscribe((data)=>{
+      if(data != null){
+        this.updateForm.reset();
+      }
+    });
   }
+
   delete(){
     console.log((this.deleteForm.get('productnameDelete')?.value as unknown as number));
     this.service.DeleteRequest<any>("ProductVariants/" + (this.deleteForm.get('productnameDelete')?.value as unknown as number)).subscribe((data)=>
     console.log(data)
     );
   }
+
   InputDataCreate():ProductVariants{
     let productVariant:ProductVariants=new ProductVariants();
     productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as number];
@@ -73,14 +85,16 @@ export class ProductVariantsControlComponent<T> {
     console.log(productVariant)
     return productVariant;
   }
+
   InputDataUpdate():ProductVariants{
     //let productVariant:ProductVariants=new ProductVariants();
-    var productVariant:ProductVariants = this.productVariantList.find(ele => ele.name == this.updateForm.get('productNameUpdate')?.value) == undefined ? new ProductVariants() : this.productVariantList.find(ele => ele.name == this.updateForm.get('productNameUpdate')?.value) as ProductVariants;
+    var productVariant:ProductVariants = this.productVariantList.find(ele => ele.id == this.updateForm.get('productIDUpdate')?.value) == undefined ? new ProductVariants() : this.productVariantList.find(ele => ele.id == this.updateForm.get('productIDUpdate')?.value) as ProductVariants;
+    console.log(productVariant);
     productVariant.parentProduct = this.allProducts[this.updateForm.get('productIDUpdate')?.value as number];
-    productVariant.name=this.createForm.get('productNameUpdate')?.value as unknown as string;
-    productVariant.description=this.createForm.get('productDescriptionUpdate')?.value as unknown as string;
-    productVariant.price= parseInt(this.createForm.get('productPriceUpdate')?.value as unknown as string);
-    productVariant.variantValue=this.createForm.get('variantValueUpdate')?.value as unknown as string;
+    productVariant.name=this.updateForm.get('productNameUpdate')?.value as unknown as string;
+    productVariant.description=this.updateForm.get('productDescriptionUpdate')?.value as unknown as string;
+    productVariant.price= parseInt(this.updateForm.get('productPriceUpdate')?.value as unknown as string);
+    productVariant.variantValue=this.updateForm.get('variantValueUpdate')?.value as unknown as string;
     return productVariant;
   }
 
@@ -100,6 +114,7 @@ export class ProductVariantsControlComponent<T> {
   GetallProductVariants<T>(){
     this.service.GetRequest<ProductVariants[]>("ProductVariants").subscribe( ele => {
       this.productVariantList = ele;
+      console.log(ele);
     });
   }
 

@@ -17,9 +17,15 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             context = c;
         }
+
+        public async Task<List<Company>> GetAll()
+        {
+            return await context.Company.ToListAsync();
+        }
+
         public async Task<Company> GetById(int id)
         {
-            return await context.Company.FirstOrDefaultAsync(company => company.Id == id);
+            return await context.Company.Include(company => company.Users).FirstOrDefaultAsync(company => company.Id == id);
         }
 
         public async Task<Company> GetByName(string name)
@@ -49,11 +55,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return true;
         }
 
-        public async Task<Company> CreateCompany(Company Company)
+        public async Task<Company> CreateCompany(Company company)
         {
-            await context.Company.AddAsync(Company);
-            await context.SaveChangesAsync(); // SAveChangesAsync()
-            return Company;
+            await context.Company.AddAsync(company);
+            await context.SaveChangesAsync();
+            return company;
         }
     }
 }

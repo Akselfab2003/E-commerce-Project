@@ -10,7 +10,7 @@
           role="tab"
           aria-controls="Created"
           aria-selected="true"
-        >Created
+        >Create
         </button>
       </li>
       <li class="nav-item" role="presentation">
@@ -24,7 +24,7 @@
           aria-controls="Updated"
           aria-selected="false"
         >
-          Updated
+          Update
         </button>
       </li>
       <li class="nav-item " role="presentation">
@@ -38,7 +38,7 @@
           aria-controls="pills-contact"
           aria-selected="false"
         >
-          Deleted
+          Delete
         </button>
       </li>
       <li class="nav-item" role="presentation">
@@ -121,7 +121,7 @@
           <div class="input-group">
               <label class="input-group-text" for="Categories">Products</label>
               <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDUpdate">
-                  <option *ngFor="let val of allProducts" [value]="val.id">{{val.title}}</option>
+                  <option *ngFor="let val of productVariantList" [value]="val.id">{{val.name}}</option>
               </select>
           </div>
       </div>
@@ -140,7 +140,7 @@
   
           <div >
               <label for="productPrice">Product price</label>
-              <input id="productPriceUpdate" autocomplete="new-password" type="number" formControlName="productPriceUpdate">
+              <input id="productPriceUpdate" autocomplete="new-password" type="text" formControlName="productPriceUpdate">
             </div>
   
           <div >
