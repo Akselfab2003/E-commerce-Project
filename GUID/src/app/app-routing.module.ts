@@ -44,7 +44,7 @@ const routes: Routes = [
   {path:"admin-user-control",component:AdminControlComponent},
   {path:"product-control",component:ProductControlComponent},
   {path:"product-variants-control",component:ProductVariantsControlComponent},
-  {path:"categories-control",component:CategoriesControlComponent}
+  {path:"categories-control",component:CategoriesControlComponent},
   {path:"product-variants-control",component:ProductVariantsControlComponent}
 ];
 
