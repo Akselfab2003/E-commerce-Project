@@ -65,7 +65,8 @@ namespace E_commerce.Test.UnitTests
              dataCollection.Users.Create(users).Wait();
 
             Users deleteUser = new Users() { Username = "DeleteTest", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
-             dataCollection.Users.Create(deleteUser).Wait();
+
+            dataCollection.Users.Create(deleteUser).Wait();
         }
         #endregion
 
