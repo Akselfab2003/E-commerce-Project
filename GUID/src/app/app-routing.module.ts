@@ -39,7 +39,8 @@ const routes: Routes = [
   {path:"AdminControl",component:AdminControlPanelComponent},
   {path:"UserControl",component:UserControlComponent},
   {path:"admin-user-control",component:AdminControlComponent},
-  {path:"product-control",component:ProductControlComponent}
+  {path:"product-control",component:ProductControlComponent},
+  {path:"product-variants-control",component:ProductVariantsControlComponent}
   
 ];
 

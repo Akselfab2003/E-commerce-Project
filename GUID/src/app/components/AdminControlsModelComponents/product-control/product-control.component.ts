@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Component, NgModule } from '@angular/core';
 import { Products } from '../../../models/Products';
 import { Categories } from '../../../models/Categories';
+import { ProductVariants } from '../../../models/ProductVariants';
 @Component({
   selector: 'app-product-control',
   templateUrl: './product-control.component.html',
@@ -18,7 +19,7 @@ export class ProductControlComponent<T> {
     variantsCreate: new FormControl<string>("",Validators.required)
   });
     updateForm = new FormGroup({
-    idUpdate:new FormControl(1,Validators.required),
+    productList: new FormControl<number>(1,Validators.required),
     titleUpdate: new FormControl<string>('',Validators.required),
     descriptionUpdate: new FormControl<string>('',Validators.required),
     priceUpdate: new FormControl<number>(1,Validators.required),
@@ -29,6 +30,8 @@ export class ProductControlComponent<T> {
     idDelete: new FormControl<number>(1,Validators.required),
   })
   public tags:Categories[] = [];
+  public varaints:ProductVariants[] = [];
+  public products:Products[] = [];
 
   constructor(private service:HttpserviceService<T>, private router:Router) {
   };
@@ -38,9 +41,17 @@ export class ProductControlComponent<T> {
         this.tags.push(item);
       }
     });
-
+    this.service.GetRequest<ProductVariants[]>("ProductVariants").subscribe((data)=>{
+      for(let item of data){
+        this.varaints.push(item);
+      }
+    });
+    this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
+      for(let item of data){
+        this.products.push(item);
+      }
+    });
   }
-
   create() {
     let product:Products= this.InputDataCreate();
     this.service.PostRequest<Products>("Products",product).subscribe((data)=>
@@ -64,22 +75,32 @@ export class ProductControlComponent<T> {
     product.title=this.createForm.get('titleCreate')?.value as string;
     product.description=this.createForm.get('descriptionCreate')?.value as string;
     product.price=this.createForm.get('priceCreate')?.value as number;
-    /*
-    product.productCategories=this.createForm.get('categoriesCreate')?.value?.toString();
-    product.productVariants=this.createForm.get('variantsCreate')?.value?.toString();
-    */
+    for(let tag of this.tags){
+      if(tag.name == this.createForm.get('categoriesCreate')?.value as string){
+        product.productCategories=tag;
+      }
+    }
+    for(let varaint of this.varaints){
+      if(varaint.name == this.createForm.get('variantsCreate')?.value as string){}
+        product.productVariants.push(varaint)
+    }
     return product;
   }
   InputDataUpdate():Products{
     let product:Products=new Products();
-    product.id=this.updateForm.get('idUpdate')?.value as number;
+    product.id=this.updateForm.get('productList')?.value as number;
     product.title=this.updateForm.get('titleUpdate')?.value as string;
     product.description=this.updateForm.get('descriptionUpdate')?.value as string;
     product.price=this.updateForm.get('priceUpdate')?.value as number;
-    /*
-    product.productCategories=this.createForm.get('categoriesCreate')?.value?.toString();
-    product.productVariants=this.createForm.get('variantsCreate')?.value?.toString();
-    */
+    for(let tag of this.tags){
+      if(tag.name == this.updateForm.get('categoriesUpdate')?.value as string){
+        product.productCategories=tag;
+      }
+    }
+    for(let varaint of this.varaints){
+      if(varaint.name == this.updateForm.get('variantsUpdate')?.value as string){}
+        product.productVariants.push(varaint)
+    }
     return product;
   }
 }
