@@ -209,10 +209,20 @@
       tabindex="0"
     >
       <div class="Select-Container">
-        <div class="Select-Card">
-          Test
+        <div *ngFor="let usr of UsersList"  class="Select-Card">
+          <span>
+            email: {{usr.email}}
+          <br>
+            username: {{usr.username}}
+            <br>
+
+
+            gender: {{usr.gender}}
+          </span>
         </div>
+    
       </div>
+    
     </div>
   </div>
 </div>

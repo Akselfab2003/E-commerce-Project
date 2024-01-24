@@ -1,3 +1,5 @@
+
+
 .UserControl{
     display: flex;
     align-items: center;
@@ -23,19 +25,13 @@
     padding: 40px;
 }
 .tab-container{
-    width: 50%;
+    width:75%;
     height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10%;
+    margin-top: 5%;
 }
-
-/* width: 80%;
-    height: 70%;
-    display: flex;
-    justify-content: center;
-    align-items: center; */
 
 .Create{
     height: 50%;
@@ -46,35 +42,26 @@ input.ng-invalid.ng-touched{
     border: red 2px solid;
 }
 .Select{
-    background-color:white;
 
 }
 
-.Select.active{
-    background-color: black !important;
-
-    &
-    #pills-tabContent {
-        width: 100% !important;
-        background-color: black !important;
-    }
-    
-}
 
 
 .SelectTab{
     width: 100%;
-    height: 50%;
+    height: 90%;
+
 }
 
 .Select-Container{
     display: grid;
-    width: 90%;
+    width: 100%;
     height: 100%;
     column-gap: 2%;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
     grid-template-rows: 35% 35% 35% 35%  ;
-    
+  
+    justify-content: center;
 }
 
 

@@ -28,7 +28,8 @@ body::-webkit-scrollbar{
     --primary: #343fd5;
     --secondary: #df92e8;
     --accent: #e16bc3;
-    --background-nav:#e16bc3
+    --background-nav:#e16bc3;
+    --WithStuff:75%;
 
 }
 body{
