@@ -13,19 +13,20 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Test
 {
-    public class CreateFakeDBDependencies
+    public class CreateFakeDBDependencies : IDisposable
     {
-        private readonly DBcontext FakeContext;
+        //private readonly DBcontext FakeContext;
         private readonly IDataCollection dataCollection;
         private readonly IConfiguration configuration;
+        private DbContextOptions<DBcontext> contextOptions;
+        private SqliteConnection connection;
 
         public CreateFakeDBDependencies() 
         {
-            var _connection = new SqliteConnection("Filename=:memory:");
-            _connection.Open();
+            connection = new SqliteConnection("Filename=:memory:");
+            connection.Open();
 
-            DbContextOptions<DBcontext> contextOptions =
-                new DbContextOptionsBuilder<DBcontext>().UseSqlite(_connection).Options;
+            contextOptions = new DbContextOptionsBuilder<DBcontext>().UseSqlite<DBcontext>(connection).Options;
 
 
             if (File.Exists("..\\net8.0\\Create data for local database\\Secret.json"))
@@ -47,16 +48,24 @@ namespace E_commerce.Test
 
             }
 
-            FakeContext = new DBcontext(contextOptions);
+           using var FakeContext = new DBcontext(contextOptions);
 
             if (FakeContext.Database.EnsureCreated())
             {
                 dataCollection = new DataCollection(FakeContext, configuration);
             }
         }
+
+        public DBcontext CreateContext() => new DBcontext(contextOptions);
+
+        public void Dispose()
+        {
+            connection.Dispose();
+        }
+
         public IDataCollection DataCollection
         {
-            get { return dataCollection; }
+            get { return new DataCollection(CreateContext(), configuration); }
         }
 
     }

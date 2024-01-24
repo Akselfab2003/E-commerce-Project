@@ -99,9 +99,6 @@ export class UserControlComponent<T> {
 
   }
 
-  
-
-
   SubmitUpdate() {
     let usr:User = this.ParseFormGroupUpdate()
 
@@ -115,7 +112,17 @@ export class UserControlComponent<T> {
 
   }
 
-
+  SubmitDelete() {
+      let usr:User = this.ParseFormGroupDelete()
+      this.http.PostRequest<User>("User/DeleteUser",usr).subscribe(data => {
+        if(data != null){
+          this.Delete.reset()
+          this.GetListOfUsers()
+        }
+      })
+      
+  
+  }
   SelectOnChange(value:string):void{
 
     var user:User =this.UsersList.find(ele => ele.username == value) == undefined ? new User() : this.UsersList.find(ele => ele.username == value) as User;
@@ -124,18 +131,6 @@ export class UserControlComponent<T> {
        this.Update.setValue({User:user.username,Username:user.username,Email:user.email,Password:user.password,Gender:user.gender},{emitEvent:false})
      
     }
-  }
-
-  SubmitDelete() {
-    let usr:User = this.ParseFormGroupDelete()
-    this.http.PostRequest<User>("User/DeleteUser",usr).subscribe(data => {
-      if(data != null){
-        this.Delete.reset()
-        this.GetListOfUsers()
-      }
-    })
-    
-
   }
 
 
