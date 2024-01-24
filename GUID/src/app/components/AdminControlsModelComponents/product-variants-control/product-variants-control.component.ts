@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpserviceService } from '../../../../Services/httpservice.service';
 import { Router } from '@angular/router';
 import { LoginObject } from '../../../models/LoginObject';

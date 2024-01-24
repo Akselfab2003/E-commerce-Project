@@ -31,12 +31,12 @@
     <li class="nav-item " role="presentation">
       <button
         class="nav-link"
-        id="pills-contact-tab"
+        id="Delete-tab"
         data-bs-toggle="pill"
-        data-bs-target="#pills-contact"
+        data-bs-target="#Delete"
         type="button"
         role="tab"
-        aria-controls="pills-contact"
+        aria-controls="Delete"
         aria-selected="false"
       >
         Deleted
@@ -125,8 +125,8 @@
     <div class="Update" >
       <form [formGroup]="Update" (ngSubmit)="SubmitUpdate()">
         <div class="input-group mb-3">
-          <label class="input-group-text" id="NameLabel" for="UserSelect" >User</label>
-          <select id="UserSelect" class="form-select" formControlName="User" aria-label="Select user to update" aria-placeholder="Select user to update">
+          <label class="input-group-text" id="NameLabel" for="UserUpdateSelect" >User</label>
+          <select id="UserUpdateSelect" class="form-select" formControlName="User" aria-label="Select user to update" aria-placeholder="Select user to update">
             <option value="" selected >Choose a User to Update</option>
             <option *ngFor="let usr of UsersList" [value]="usr.username" >{{usr.username}}</option>
           </select>
@@ -135,7 +135,7 @@
 
         <div class="input-group mb-3">
           <span class="input-group-text" id="NameLabel">Username</span>
-          <input class="form-control" id="UserName" placeholder="Test" aria-label="Username" formControlName="Username">
+          <input class="form-control" id="UserNameUpdate" placeholder="Test" aria-label="Username" formControlName="Username">
         </div>
   
         <div class="input-group mb-3 gap-5">
@@ -143,22 +143,22 @@
   
         
           <div class="form-check">
-            <input class="form-check-input" type="radio" [value]="true"  id="GenderMale" aria-label="Gender" formControlName="Gender">
-            <label class="form-check-label" for="GenderMale" id="GenderLabel"  >Male</label>
+            <input class="form-check-input" type="radio" [value]="true"  id="GenderUpdateMale" aria-label="Gender" formControlName="Gender">
+            <label class="form-check-label" for="GenderUpdateMale" id="GenderLabel"  >Male</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio"   id="GenderFemale" [value]="false" aria-label="Gender"  formControlName="Gender">
-            <label class="form-check-label" for="GenderFemale" id="GenderLabel"  >Female</label>
+            <input class="form-check-input" type="radio"   id="GenderUpdateFemale" [value]="false" aria-label="Gender"  formControlName="Gender">
+            <label class="form-check-label" for="GenderUpdateFemale" id="GenderLabel"  >Female</label>
           </div>
   
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="EmailLabel">Email</span>
-          <input class="form-control" type="email"  id="Email" placeholder="Test@Test.dk" aria-label="Email"  formControlName="Email">
+          <span class="input-group-text" id="EmailUpdateLabel">Email</span>
+          <input class="form-control" type="email"  id="EmailUpdate" placeholder="Test@Test.dk" aria-label="Email"  formControlName="Email">
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="EmailLabel">Password</span>
-          <input class="form-control" id="Password" type="password" placeholder="*********" aria-label="Password"  formControlName="Password">
+          <span class="input-group-text" id="PasswordUpdateLabel">Password</span>
+          <input class="form-control" id="PasswordUpdate" type="password" placeholder="*********" aria-label="Password"  formControlName="Password">
         </div>
         
   
@@ -173,12 +173,33 @@
     </div>
     <div
       class="tab-pane fade"
-      id="pills-contact"
+      id="Delete"
       role="tabpanel"
-      aria-labelledby="pills-contact-tab"
+      aria-labelledby="Delete-tab"
       tabindex="0"
     >
-      ...
+    <div class="Delete" >
+      <form [formGroup]="Delete" (ngSubmit)="SubmitDelete()">
+        <div class="input-group mb-3">
+          <label class="input-group-text" id="NameLabel" for="UserDeleteSelect" >User</label>
+          <select id="UserDeleteSelect" class="form-select"  formControlName="User" aria-label="Select user to update" aria-placeholder="Select user to update">
+            <option value="" selected >Choose a User to Update</option>
+            <option *ngFor="let usr of UsersList" [value]="usr.username" >{{usr.username}}</option>
+          </select>
+        </div>
+
+        <div class="input-group mb-3 d-flex justify-content-center">
+          <button class="btn btn-primary" [disabled]="!Delete.valid" type="submit">Submit</button>
+        </div>
+  
+      </form>
+      </div>
+      
+
+
+
+
+    
     </div>
     <div
       class="tab-pane fade"

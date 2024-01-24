@@ -3,8 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login-page/login-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductPageComponent } from './components/product-page/product-page.component';
@@ -25,6 +24,7 @@ import { AdminControlPanelComponent } from './components/admin-control-panel/adm
 import { UserControlComponent } from './components/AdminControlsModelComponents/user-control/user-control.component';
 import { AdminControlComponent } from './components/AdminControlsModelComponents/admin-control/admin-control.component';
 import { ProductVariantsControlComponent } from './components/AdminControlsModelComponents/product-variants-control/product-variants-control.component';
+import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
 
 
 @NgModule({
@@ -48,6 +48,7 @@ import { ProductVariantsControlComponent } from './components/AdminControlsModel
     AdminControlPanelComponent,
     UserControlComponent,
     AdminControlComponent,
+    ProductControlComponent,
     ProductVariantsControlComponent,
   ],
   imports: [

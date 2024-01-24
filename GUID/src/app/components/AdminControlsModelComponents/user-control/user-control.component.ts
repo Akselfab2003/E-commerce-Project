@@ -14,6 +14,8 @@ export class UserControlComponent<T> {
 
    Create!:FormGroup
    Update!:FormGroup
+   Delete!:FormGroup
+
    public UsersList:User[] = new Array<User>();
   constructor(private http:HttpserviceService<T>){
 
@@ -37,8 +39,19 @@ export class UserControlComponent<T> {
       Gender: new FormControl<boolean>(false, Validators.required),
     },{
       validators:validateUserSelected
-    })
+    });
+    this.Update.controls["User"].valueChanges.subscribe( value =>
+        {
+        if(value !=""){
 
+          this.SelectOnChange(value)
+        }
+        });
+    this.Delete = new FormGroup({
+      User: new FormControl<string>("",Validators.required),
+    },{
+      validators:validateUserSelected
+    })
     
 
   }
@@ -46,7 +59,6 @@ export class UserControlComponent<T> {
   GetListOfUsers(){
     this.http.GetRequest<User[]>("User/GetListOfUsers").subscribe(usr=> {
       this.UsersList = usr;
-      console.log(usr);
     })
 
   }
@@ -60,23 +72,28 @@ export class UserControlComponent<T> {
     user.password = this.Create.get("Password")?.value
     return user;
   }
-  ParseFormGroupUpdate() : User{
+  ParseFormGroupUpdate() : User {
     var user:User =  this.UsersList.find(ele => ele.username == this.Update.get("User")?.value) == undefined ? new User() : this.UsersList.find(ele => ele.username == this.Update.get("User")?.value) as User;
-    console.log(user)
     user.username = this.Update.get("Username")?.value
     user.email = this.Update.get("Email")?.value
     user.gender = this.Update.get("Gender")?.value
     user.password = this.Update.get("Password")?.value
     return user;
   }
+  ParseFormGroupDelete() : User{
+    var user:User =  this.UsersList.find(ele => ele.username == this.Delete.get("User")?.value) == undefined ? new User() : this.UsersList.find(ele => ele.username == this.Delete.get("User")?.value) as User;
+    return user;
+  }
 
   SubmitCreated() {
-    console.log("test")
     let usr:User = this.ParseFormGroupCreate()
-    console.log(usr)
 
     this.http.PostRequest<User>("User/createUser",usr).subscribe(data => {
-      console.log(data)
+      if(data != null){
+        this.Create.reset()
+        this.GetListOfUsers()
+
+      }
     })
     
 
@@ -86,15 +103,41 @@ export class UserControlComponent<T> {
 
 
   SubmitUpdate() {
-    console.log("test")
     let usr:User = this.ParseFormGroupUpdate()
-    console.log(usr)
 
     this.http.PutRequest<User>("User/UpdateUser",usr).subscribe(data => {
-      console.log(data)
+      if(data != null){
+        this.Update.reset()
+        this.GetListOfUsers()
+      }
     })
     
 
   }
+
+
+  SelectOnChange(value:string):void{
+
+    var user:User =this.UsersList.find(ele => ele.username == value) == undefined ? new User() : this.UsersList.find(ele => ele.username == value) as User;
+   
+    if(user != new User()){
+       this.Update.setValue({User:user.username,Username:user.username,Email:user.email,Password:user.password,Gender:user.gender},{emitEvent:false})
+     
+    }
+  }
+
+  SubmitDelete() {
+    let usr:User = this.ParseFormGroupDelete()
+    this.http.PostRequest<User>("User/DeleteUser",usr).subscribe(data => {
+      if(data != null){
+        this.Delete.reset()
+        this.GetListOfUsers()
+      }
+    })
+    
+
+  }
+
+
 
 }
