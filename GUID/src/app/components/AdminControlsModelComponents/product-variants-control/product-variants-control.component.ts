@@ -19,6 +19,7 @@ export class ProductVariantsControlComponent<T> {
 
   @Output() TagsChangedEvent = new EventEmitter<Products>()
 
+  productVariantList:ProductVariants[] = new Array<ProductVariants>();
   allProducts: Products[] = new Array<Products>();
   CurrentSelectedValue:string = "All";
 
@@ -38,13 +39,13 @@ export class ProductVariantsControlComponent<T> {
     productIDUpdate: new FormControl<number>(1, Validators.required),
   })
   deleteForm = new FormGroup({
-    productnameDelete: new FormControl(''),
+    productnameDelete: new FormControl<string>(''),
   })
   constructor(private service:HttpserviceService<T>, private router:Router) {
   };
 
   //starter forfra hvis login ikke passer
-  register() {
+  create() {
     let productVariant:ProductVariants= this.InputDataCreate();
     this.service.PostRequest<ProductVariants>("ProductVariants?ID=" + (this.createForm.get('productIDCreate')?.value as unknown as number),productVariant).subscribe((data)=>
     console.log(data)
@@ -52,13 +53,13 @@ export class ProductVariantsControlComponent<T> {
   }
   update(){
     let productVariant:ProductVariants= this.InputDataUpdate();
-    this.service.PutRequest<ProductVariants>("ProductVariants/1",productVariant).subscribe((data)=>
+    this.service.PutRequest<ProductVariants>("ProductVariants/" + (this.updateForm.get('productIDUpdate')?.value as unknown as number),productVariant).subscribe((data)=>
     console.log(data)
     );
   }
   delete(){
-    let username:string = this.deleteForm.get('productnameDelete')?.value?.toString() as string;
-    this.service.DeleteRequest<ProductVariants>("/ProductVariants/1"+username).subscribe((data)=>
+    console.log((this.deleteForm.get('productnameDelete')?.value as unknown as number));
+    this.service.DeleteRequest<any>("ProductVariants/" + (this.deleteForm.get('productnameDelete')?.value as unknown as number)).subscribe((data)=>
     console.log(data)
     );
   }
@@ -73,12 +74,13 @@ export class ProductVariantsControlComponent<T> {
     return productVariant;
   }
   InputDataUpdate():ProductVariants{
-    let productVariant:ProductVariants=new ProductVariants();
-    productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as number];
-    productVariant.name=this.createForm.get('productNameCreate')?.value as string;
-    productVariant.description=this.createForm.get('productDescriptionCreate')?.value as string;
-    productVariant.price= parseInt(this.createForm.get('productPriceCreate')?.value as unknown as string);
-    productVariant.variantValue=this.createForm.get('variantValueCreate')?.value as string;
+    //let productVariant:ProductVariants=new ProductVariants();
+    var productVariant:ProductVariants = this.productVariantList.find(ele => ele.name == this.updateForm.get('productNameUpdate')?.value) == undefined ? new ProductVariants() : this.productVariantList.find(ele => ele.name == this.updateForm.get('productNameUpdate')?.value) as ProductVariants;
+    productVariant.parentProduct = this.allProducts[this.updateForm.get('productIDUpdate')?.value as number];
+    productVariant.name=this.createForm.get('productNameUpdate')?.value as unknown as string;
+    productVariant.description=this.createForm.get('productDescriptionUpdate')?.value as unknown as string;
+    productVariant.price= parseInt(this.createForm.get('productPriceUpdate')?.value as unknown as string);
+    productVariant.variantValue=this.createForm.get('variantValueUpdate')?.value as unknown as string;
     return productVariant;
   }
 
@@ -95,8 +97,15 @@ export class ProductVariantsControlComponent<T> {
     });
   }
 
+  GetallProductVariants<T>(){
+    this.service.GetRequest<ProductVariants[]>("ProductVariants").subscribe( ele => {
+      this.productVariantList = ele;
+    });
+  }
+
   ngOnInit(){
    this.GetAllProducts<Products[]>()
+   this.GetallProductVariants<ProductVariants[]>()
   }
 
   setpost(ArrayOfCategories:Products[]){
