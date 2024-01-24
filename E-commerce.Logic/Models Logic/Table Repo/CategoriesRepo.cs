@@ -33,7 +33,12 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 Categories CategoriesEntity = await GetById(entity.Id);
 
                 Context.Categories.Remove(CategoriesEntity);
-
+                Products products= await Context.Products.FirstOrDefaultAsync(product => product.ProductCategories == CategoriesEntity);
+                if (products != null)
+                {
+                    products.ProductCategories = null;
+                    Context.Products.Update(products);
+                }
                 await Context.SaveChangesAsync();
             }
             catch

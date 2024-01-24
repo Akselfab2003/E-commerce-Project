@@ -20,6 +20,7 @@ import { UserControlComponent } from './components/AdminControlsModelComponents/
 import { AdminControlComponent } from './components/AdminControlsModelComponents/admin-control/admin-control.component';
 import { ProductVariantsControlComponent } from './components/AdminControlsModelComponents/product-variants-control/product-variants-control.component';
 import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
+import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -40,8 +41,8 @@ const routes: Routes = [
   {path:"UserControl",component:UserControlComponent},
   {path:"admin-user-control",component:AdminControlComponent},
   {path:"product-control",component:ProductControlComponent},
-  {path:"product-variants-control",component:ProductVariantsControlComponent}
-  
+  {path:"product-variants-control",component:ProductVariantsControlComponent},
+  {path:"categories-control",component:CategoriesControlComponent}
 ];
 
 @NgModule({

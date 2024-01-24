@@ -25,6 +25,7 @@ import { UserControlComponent } from './components/AdminControlsModelComponents/
 import { AdminControlComponent } from './components/AdminControlsModelComponents/admin-control/admin-control.component';
 import { ProductVariantsControlComponent } from './components/AdminControlsModelComponents/product-variants-control/product-variants-control.component';
 import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
+import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { ProductControlComponent } from './components/AdminControlsModelComponen
     AdminControlComponent,
     ProductControlComponent,
     ProductVariantsControlComponent,
+    CategoriesControlComponent,
   ],
   imports: [
     BrowserModule,
