@@ -1,0 +1,171 @@
+<div class="CompanyControl">
+    <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="Company-Created-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Created"
+          type="button"
+          role="tab"
+          aria-controls="Created"
+          aria-selected="true"
+        >Create
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="Updated-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Updated"
+          type="button"
+          role="tab"
+          aria-controls="Updated"
+          aria-selected="false"
+        >
+          Update
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link"
+          id="pills-contact-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-contact"
+          type="button"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >
+          Delete
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-disabled-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-disabled"
+          type="button"
+          role="tab"
+          aria-controls="pills-disabled"
+          aria-selected="false"
+        >
+          Select
+        </button>
+      </li>
+    </ul>
+    
+    <div class="tab-content" id="pills-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="Created"
+        role="tabpanel"
+        aria-labelledby="Created-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="createForm" (submit)="create()">
+      <h1>Create Company</h1>
+        <div>
+          <label for="CreateCompanyName">Company Name</label>
+          <input id="CreateCompanyName" type="text" formControlName="CreateCompanyName">
+        </div>
+        <div>
+          <label for="CreateCompanyEmail">Company Email</label>
+          <input id="CreateCompanyEmail" type="text" formControlName="CreateCompanyEmail">
+      </div>
+        <div>
+          <label for="CreateCompanyCVR">Company CVR</label>
+          <input id="CreateCompanyCVR" type="text" formControlName="CreateCompanyCVR">
+        </div>
+        <br>
+      
+        <button type="submit" class="btn"id="Create">Create &#8594;</button>
+      </form>
+    </div>
+      <div
+        class="tab-pane fade"
+        id="Updated"
+        role="tabpanel"
+        aria-labelledby="Updated-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="updateForm" (submit)="update()">
+        <h1>Update Company</h1>
+        <div>
+          <label for="UserUpdateSelect">Company</label>
+          <select formControlName="SelectCompanyUpdate">
+            <option value="" selected>Choose a Company to update</option>
+            <option *ngFor="let company of companyList" [value]="company.name">{{company.name}}</option>
+          </select>
+        </div>
+        <div>
+          <label for="UpdateCompanyName">Company Name</label>
+          <input id="UpdateCompanyName" type="text" formControlName="UpdateCompanyName">
+        </div>
+        <div>
+          <label for="UpdateCompanyEmail">Company Email</label>
+          <input id="UpdateCompanyEmail" type="text" formControlName="UpdateCompanyEmail">
+        </div>
+        <div>
+          <label for="UpdateCompanyCVR">Company CVR</label>
+          <input id="UpdateCompanyCVR" type="text" formControlName="UpdateCompanyCVR">
+        </div>
+        <br>
+        <button type="submit" class="btn"id="Update">Update &#8594;</button>
+      </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-contact"
+        role="tabpanel"
+        aria-labelledby="pills-contact-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="deleteForm" (submit)="delete()">
+        <h1>Delete Company</h1>
+          <div>
+            <label for="deleteCompany">Company</label>
+            <select name="" id="" formControlName="SelectCompanyDelete">
+              <option value="" selected>Choose a Company to update</option>
+              <option *ngFor="let company of companyList" [value]="company.name">{{company.name}}</option>
+            </select>
+          </div>
+          <br>
+          <button type="submit" class="btn" id="Delete">Delete &#8594;</button>
+        </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-disabled"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="selectForm">
+        <h1>Select Company</h1>
+        <div>
+          <label for="CompanySelect">Company</label>
+          <select formControlName="CompanySelect">
+            <option value="" selected>Choose a Company to Select</option>
+            <option *ngFor="let company of companyList" [value]="company.name">{{company.name}}</option>
+          </select>
+        </div>
+        <div>
+          <label for="SelectCompanyName">Company Name</label>
+          <input id="SelectCompanyName" type="text" formControlName="SelectCompanyName">
+        </div>
+        <div>
+          <label for="SelectCompanyEmail">Company Email</label>
+          <input id="SelectCompanyEmail" type="text" formControlName="SelectCompanyEmail">
+        </div>
+        <div>
+          <label for="SelectCompanyCVR">Company CVR</label>
+          <input id="SelectCompanyCVR" type="text" formControlName="SelectCompanyCVR">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  

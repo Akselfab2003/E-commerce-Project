@@ -1,4 +1,5 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -108,11 +109,19 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
 
-        [HttpPost]
+        [HttpPost("CreateProduct")]
         public async Task<ActionResult<Products>> PostProduct(Products product)
         {
-            await context.CreateProduct(product);
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            try
+            {
+                product.ProductCategories = await dataCollection.Categories.GetById(product.ProductCategories.Id);
+                await context.Create(product);
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return CreatedAtAction("GetCategories", new { id = product.Id }, product);
         }
 
         // DELETE: api/Heroes/5
@@ -125,7 +134,7 @@ namespace E_commerce_Project.Controllers
                 return NotFound();
             }
 
-            context.DeleteProduct(product);
+            await context.DeleteProduct(product);
 
             return NoContent();
         }

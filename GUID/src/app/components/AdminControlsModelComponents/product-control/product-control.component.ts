@@ -54,21 +54,36 @@ export class ProductControlComponent<T> {
   }
   create() {
     let product:Products= this.InputDataCreate();
-    this.service.PostRequest<Products>("Products",product).subscribe((data)=>
+    this.service.PostRequest<Products>("Products/CreateProduct",product).subscribe((data)=>
     console.log(data)
     )
+    this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
+      for(let item of data){
+        this.products.push(item);
+      }
+    });
   }
   update(){
     let product:Products= this.InputDataUpdate();
     this.service.PutRequest<Products>("Products/"+product.id,product).subscribe((data)=>
     console.log(data)
     );
+    this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
+      for(let item of data){
+        this.products.push(item);
+      }
+    });
   }
   delete(){
-    let id:number = this.deleteForm.get('idDelete')?.value as number;
-    this.service.DeleteRequest<Boolean>("Products/"+id).subscribe((data)=>
+    let product:Products=this.products.find(ele => ele.id == this.deleteForm.get("idDelete")?.value) == undefined ? new Products() : this.products.find(ele => ele.id == this.deleteForm.get("idDelete")?.value) as Products;
+    this.service.DeleteRequest<Boolean>("Products/"+product.id).subscribe((data)=>
     console.log(data)
     );
+    this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
+      for(let item of data){
+        this.products.push(item);
+      }
+    });
   }
   InputDataCreate():Products{
     let product:Products=new Products();
@@ -87,7 +102,7 @@ export class ProductControlComponent<T> {
     return product;
   }
   InputDataUpdate():Products{
-    let product:Products=new Products();
+    let product:Products=this.products.find(ele => ele.id == this.updateForm.get("productList")?.value) == undefined ? new Products() : this.products.find(ele => ele.id == this.updateForm.get("productList")?.value) as Products;
     product.id=this.updateForm.get('productList')?.value as number;
     product.title=this.updateForm.get('titleUpdate')?.value as string;
     product.description=this.updateForm.get('descriptionUpdate')?.value as string;

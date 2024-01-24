@@ -18,8 +18,10 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { AdminControlPanelComponent } from './components/admin-control-panel/admin-control-panel.component';
 import { UserControlComponent } from './components/AdminControlsModelComponents/user-control/user-control.component';
 import { AdminControlComponent } from './components/AdminControlsModelComponents/admin-control/admin-control.component';
+import { CompanyControlComponent } from './components/AdminControlsModelComponents/company-control/company-control.component';
 import { ProductVariantsControlComponent } from './components/AdminControlsModelComponents/product-variants-control/product-variants-control.component';
 import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
+import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -38,10 +40,12 @@ const routes: Routes = [
   {path:"carousel",component:CarouselComponent},
   {path:"AdminControl",component:AdminControlPanelComponent},
   {path:"UserControl",component:UserControlComponent},
+  {path:"CompanyControlComponent", component:CompanyControlComponent},
   {path:"admin-user-control",component:AdminControlComponent},
   {path:"product-control",component:ProductControlComponent},
+  {path:"product-variants-control",component:ProductVariantsControlComponent},
+  {path:"categories-control",component:CategoriesControlComponent},
   {path:"product-variants-control",component:ProductVariantsControlComponent}
-  
 ];
 
 @NgModule({
