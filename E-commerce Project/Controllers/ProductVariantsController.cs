@@ -12,7 +12,8 @@ namespace E_commerce_Project.Controllers
     public class ProductVariantsController : Controller
     {
         IProductVariants context;
-        public ProductVariantsController(IDataCollection c) { context = c.ProductVariants; } // Dependency Injection - DI
+        IDataCollection DataContext;
+        public ProductVariantsController(IDataCollection c) { context = c.ProductVariants; DataContext = c; } // Dependency Injection - DI
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductVariants>> GetProductVariantsById(int id)
@@ -61,9 +62,10 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants)
+        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants, int ID)
         {
-            await context.CreateProductVariants(productVariants);
+            productVariants.ParentProduct = await DataContext.Products.GetById(ID);
+            await context.Create(productVariants);
             return CreatedAtAction("GetProductVariants", new { id = productVariants.Id }, productVariants);
         }
 
