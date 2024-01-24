@@ -4,6 +4,7 @@ using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace E_commerce_Project.Controllers
 {
@@ -71,17 +72,17 @@ namespace E_commerce_Project.Controllers
 
         // DELETE: api/Heroes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProductVariants(int id)
+        public async Task<HttpStatusCode> DeleteProductVariants(int id)
         {
             var productVariants = await context.GetById(id);
             if (productVariants == null)
             {
-                return NotFound();
+                return HttpStatusCode.BadRequest;
             }
 
-            context.DeleteProductVariants(productVariants);
+            context.Delete(productVariants);
 
-            return NoContent();
+            return HttpStatusCode.Created;
         }
     }
 }

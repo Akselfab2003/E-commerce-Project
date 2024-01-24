@@ -68,7 +68,7 @@
       aria-labelledby="Created-tab"
       tabindex="0"
       >
-      <form [formGroup]="createForm" (submit)="register()" autocomplete="new-password">
+      <form [formGroup]="createForm" (submit)="create()" autocomplete="new-password">
         <h1>Create product variant</h1>
         
         <div class="d-flex align-items-center  flex-column filterContainer">
@@ -88,8 +88,9 @@
         </div>
       
         <div >
-          <label for="productDescription">Product description</label>
-          <input id="productDescriptionCreate" type="text" formControlName="productDescriptionCreate">
+          <label for="description">Description</label>
+            <textarea id="productDescriptionCreate" type="text" formControlName="productDescriptionCreate" rows="4" cols="50">
+            </textarea>
         </div>
 
         <div >
@@ -114,19 +115,32 @@
       >
       <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
         <h1>Update product</h1>
+
+        <div class="d-flex align-items-center  flex-column filterContainer">
+          <span class="filterTitle">Select a product</span>
+          <div class="input-group">
+              <label class="input-group-text" for="Categories">Products</label>
+              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDUpdate">
+                  <option *ngFor="let val of allProducts" [value]="val.id">{{val.title}}</option>
+              </select>
+          </div>
+      </div>
+      <br>
+
         <div >
             <label for="productName">Product name</label>
             <input id="productNameUpdate" type="text" formControlName="productNameUpdate">
           </div>
         
           <div >
-            <label for="productDescription">Product description</label>
-            <input id="productDescriptionUpdate" autocomplete="new-password" type="text"formControlName="productDescriptionUpdate">
+            <label for="description">Description</label>
+            <textarea id="productDescriptionUpdate" type="text" formControlName="productDescriptionUpdate" rows="4" cols="50">
+            </textarea>
           </div>
   
           <div >
-              <label for="productPricen">Product price</label>
-              <input id="productPricenUpdate" autocomplete="new-password" type="number" formControlName="productPricenUpdate">
+              <label for="productPrice">Product price</label>
+              <input id="productPriceUpdate" autocomplete="new-password" type="number" formControlName="productPriceUpdate">
             </div>
   
           <div >
@@ -146,10 +160,19 @@
       >
       <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
         <h1>Delete product</h1>
-          <div >
-            <label for="productname">Username</label>
-            <input id="productnameDelete" type="text" formControlName="productnameDelete">
+
+        <div class="d-flex align-items-center  flex-column filterContainer">
+          <span class="filterTitle">Select a product</span>
+          <div class="input-group">
+              <label class="input-group-text" for="Categories">Products</label>
+              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productnameDelete">
+                  <option *ngFor="let val of productVariantList" [value]="val.id">{{val.name}}</option>
+              </select>
           </div>
+      </div>
+      <br>
+
+          
           <br>
           <button type="submit" class="btn" id="Delete">Delete &#8594;</button>
         </form>
