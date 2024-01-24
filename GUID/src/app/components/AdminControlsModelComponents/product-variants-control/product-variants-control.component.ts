@@ -26,14 +26,14 @@ export class ProductVariantsControlComponent<T> {
   createForm = new FormGroup({
     productNameCreate: new FormControl<string>('', Validators.required),
     productDescriptionCreate: new FormControl<string>('', Validators.required),
-    productPricenCreate: new FormControl<number>(1, Validators.required),
+    productPriceCreate: new FormControl<string>('', Validators.required),
     variantValueCreate: new FormControl<string>('', Validators.required),
     productIDCreate: new FormControl<number>(1, Validators.required),
   });
   updateForm = new FormGroup({
     productNameUpdate: new FormControl<string>('', Validators.required),
     productDescriptionUpdate: new FormControl<string>('', Validators.required),
-    productPricenUpdate: new FormControl<number>(1, Validators.required),
+    productPriceUpdate: new FormControl<string>('', Validators.required),
     variantValueUpdate: new FormControl<string>('', Validators.required),
     productIDUpdate: new FormControl<number>(1, Validators.required),
   })
@@ -46,7 +46,7 @@ export class ProductVariantsControlComponent<T> {
   //starter forfra hvis login ikke passer
   register() {
     let productVariant:ProductVariants= this.InputDataCreate();
-    this.service.PostRequest<ProductVariants>("ProductVariants",productVariant).subscribe((data)=>
+    this.service.PostRequest<ProductVariants>("ProductVariants?ID=" + (this.createForm.get('productIDCreate')?.value as unknown as number),productVariant).subscribe((data)=>
     console.log(data)
     )
   }
@@ -64,21 +64,21 @@ export class ProductVariantsControlComponent<T> {
   }
   InputDataCreate():ProductVariants{
     let productVariant:ProductVariants=new ProductVariants();
-    productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as unknown as number];
-    productVariant.name=this.createForm.get('productNameCreate')?.value as unknown as string;
-    productVariant.description=this.createForm.get('productDescriptionCreate')?.value as unknown as string;
-    productVariant.price=this.createForm.get('productPriceCreate')?.value as unknown as number;
-    productVariant.variantValue=this.createForm.get('variantValueCreate')?.value as unknown as string;
+    productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as number];
+    productVariant.name=this.createForm.get('productNameCreate')?.value as string;
+    productVariant.description=this.createForm.get('productDescriptionCreate')?.value as string;
+    productVariant.price= parseInt(this.createForm.get('productPriceCreate')?.value as string);
+    productVariant.variantValue=this.createForm.get('variantValueCreate')?.value as string;
     console.log(productVariant)
     return productVariant;
   }
   InputDataUpdate():ProductVariants{
     let productVariant:ProductVariants=new ProductVariants();
-    productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as unknown as number];
-    productVariant.name=this.createForm.get('productNameCreate')?.value as unknown as string;
-    productVariant.description=this.createForm.get('productDescriptionCreate')?.value as unknown as string;
-    productVariant.price=this.createForm.get('productPriceCreate')?.value as unknown as number;
-    productVariant.variantValue=this.createForm.get('variantValueCreate')?.value as unknown as string;
+    productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as number];
+    productVariant.name=this.createForm.get('productNameCreate')?.value as string;
+    productVariant.description=this.createForm.get('productDescriptionCreate')?.value as string;
+    productVariant.price= parseInt(this.createForm.get('productPriceCreate')?.value as unknown as string);
+    productVariant.variantValue=this.createForm.get('variantValueCreate')?.value as string;
     return productVariant;
   }
 
