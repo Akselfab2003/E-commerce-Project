@@ -80,10 +80,9 @@ namespace E_commerce_Project.Controllers
         [HttpPost("RemoveFromBasket/{sessId}")]
         public async Task<List<BasketDetails>> DeleteBasketDetail(BasketDetails basketDetails, string sessId)
         {
-            Basket basket = await GetBasketBySessId(sessId);
-            basket.BasketDetails.Remove(basketDetails);
-            await dataCollectioncontext.Basket.Update(basket);
-            return basket.BasketDetails;
+            
+            await dataCollectioncontext.BasketDetails.Delete(basketDetails);
+            return (await GetBasketBySessId(sessId)).BasketDetails;
         }
 
 

@@ -93,7 +93,25 @@ export class BasketComponent<T> {
     basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
     this.basketItems.UpdateBasket(this.basket )
   }
-  
+
+  MinusProductUsingQtyClick(product: Products){
+
+    var basketDetailId = this.FindBasketDetailId(product);
+    var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
+    if(basketDetailObject != undefined ){
+
+        if(basketDetailObject.quantity > 1){
+          basketDetailObject.quantity = basketDetailObject.quantity - 1 ;
+          this.basketItems.UpdateBasket(this.basket)
+
+        }
+        else{
+         this.RemoveProductUsingQtyClick(basketDetailObject)
+        }
+
+    }
+  }
+
   FindBasketDetailId(product:Products){
     return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id
   }

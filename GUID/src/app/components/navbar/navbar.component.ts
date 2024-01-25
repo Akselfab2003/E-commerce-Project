@@ -11,21 +11,20 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  
   @ViewChild(BasketComponent)  private Basket!: BasketComponent<any>; 
   @Output() TagsChangedEvent = new EventEmitter<boolean>()
-
+  
   constructor(private router:Router){
-
   }
+
   public SearchForm:FormGroup = new FormGroup({
     SearchInput: new FormControl<string>("",Validators.required)
-  }) 
+  })
 
   public theme:boolean = true;
-  ngOnInit(){
 
-
-  }
+  ngOnInit(){}
   changeTheme(){
     this.theme=!this.theme
     this.TagsChangedEvent.emit(this.theme)
@@ -34,11 +33,9 @@ export class NavbarComponent {
     this.Basket.ChangeState()
     console.log("Tse")
   }
-
   Search(){
     var Input:string = this.SearchForm.get("SearchInput")?.value
     console.log(Input)
     this.router.navigate(["/Search",Input])
-
   }
 }

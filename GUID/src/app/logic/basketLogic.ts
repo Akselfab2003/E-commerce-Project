@@ -66,6 +66,7 @@ export class basketLogic<T> {
         this.basketDetails = data;
         console.log(data);
         
+        this.AddToBasketEvent.emit()
 
       });
     }

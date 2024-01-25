@@ -10,7 +10,7 @@
     <!--Cart Items-->
     <div class="cart-items">
       <div class="cart-item" *ngFor="let basketDetail of basket.basketDetails">
-        <div class="remove-item">
+        <div (click)="RemoveProductUsingQtyClick(basketDetail)" class="remove-item">
           <span>&times;</span>
         </div>
         <div class="item-img">
@@ -20,7 +20,7 @@
           <p>{{basketDetail.products.title}}</p>
           <strong>{{basketDetail.products.price | currency}}</strong>
           <div class="qty">
-            <span>-</span>
+            <span (click)="MinusProductUsingQtyClick(basketDetail.products)">-</span>
             <strong>{{basketDetail.quantity}}</strong>
             <span (click)="AddProductUsingQtyClick(basketDetail.products)">+</span>
           </div>
