@@ -22,6 +22,10 @@ export class CategoriesControlComponent<T> {
     deleteForm = new FormGroup({
       idDelete: new FormControl<number>(1,Validators.required),
     })
+    selectForm = new FormGroup({
+      categorieSelect: new FormControl<string>("",Validators.required),
+      nameSelect:new FormControl<string>("",Validators.required),
+    })
     public tags:Categories[] = [];
   
     constructor(private service:HttpserviceService<T>, private router:Router) {
@@ -30,6 +34,11 @@ export class CategoriesControlComponent<T> {
       this.service.GetRequest<Categories[]>("Filter/Categories").subscribe((data)=>{
         for(let item of data){
           this.tags.push(item);
+        }
+      });
+      this.selectForm.controls["categorieSelect"].valueChanges.subscribe(value =>{
+        if(value != null){
+          this.selectOnChange(value)
         }
       });
     }
@@ -80,5 +89,15 @@ export class CategoriesControlComponent<T> {
       }
       categorie.name=this.updateForm.get('nameUpdate')?.value as string;
       return categorie;
+    }
+    selectOnChange(value:string | null):void{
+
+      var categorie:Categories =this.tags.find(ele => ele.name == value) == undefined ? new Categories() : this.tags.find(ele => ele.name == value) as Categories;
+     if(categorie != new Categories()){
+      this.selectForm.setValue({
+        nameSelect: categorie.name,
+        categorieSelect:categorie.name,
+      },{emitEvent:false})
+    }
     }
   }
