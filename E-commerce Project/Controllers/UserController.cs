@@ -41,8 +41,6 @@ namespace E_commerce_Project.Controllers
 
         }
 
-
-
         [HttpGet("createEmptySession")]
         public async Task<Session> PostEmptySession()
         {
