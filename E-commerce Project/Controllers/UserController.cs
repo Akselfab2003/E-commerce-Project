@@ -146,7 +146,12 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
-                user.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
+                if(user.Password != (await collection.Users.GetById(user.Id)).Password)
+                {
+
+                    user.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
+                
+                }
 
                 return await collection.Users.Update(user);
             }
