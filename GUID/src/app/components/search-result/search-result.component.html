@@ -1,0 +1,13 @@
+
+<div class="productPageCompontent">
+
+  
+  <app-filters (TagsChangedEvent)="TagsChangeEventHandler($event)" ></app-filters>
+
+  <div class="container">
+    <div class="product-grid">
+      <app-product-card *ngFor="let pro of CurrentProductsDisplayedOnPage" [product]="pro"></app-product-card>
+  </div>
+</div>
+</div>
+
