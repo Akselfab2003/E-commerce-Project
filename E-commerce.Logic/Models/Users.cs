@@ -17,7 +17,7 @@ namespace E_commerce.Logic.Models
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string Email {  get; set; } = string.Empty;
-        public bool Gender { get; set; };
-        public virtual Company? Company { get; set; };
+        public bool Gender { get; set; }
+        public virtual Company? Company { get; set; }
     }
 }
