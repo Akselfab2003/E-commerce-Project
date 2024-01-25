@@ -60,9 +60,9 @@
   
     
     
-    <div class="tab-content" id="pills-tabContent">
+    <div class="tab-container tab-content" id="pills-tabContent">
       <div
-      class="tab-pane fade show active"
+      class="tab-pane fade show active TabContent"
       id="Created"
       role="tabpanel"
       aria-labelledby="Created-tab"
@@ -107,7 +107,7 @@
       </form>
     </div>
       <div
-        class="tab-pane fade"
+        class="tab-pane fade TabContent"
         id="Updated"
         role="tabpanel"
         aria-labelledby="Updated-tab"
@@ -152,7 +152,7 @@
       </form>
       </div>
       <div
-        class="tab-pane fade"
+        class="tab-pane fade TabContent"
         id="pills-contact"
         role="tabpanel"
         aria-labelledby="pills-contact-tab"
@@ -178,14 +178,29 @@
         </form>
       </div>
       <div
-        class="tab-pane fade"
+        class="tab-pane fade TabContent"
         id="pills-disabled"
         role="tabpanel"
         aria-labelledby="pills-disabled-tab"
         tabindex="0"
       >
-        ...
+        <div class="Select-Container">
+          
+        <div *ngFor="let val of productVariantList"  class="Select-Card">
+          <span>
+            <b>Id:</b> {{val.id}}
+            <br>
+            <b>Name:</b> {{val.name}}
+            <br>
+            <b>Description:</b> {{val.description}}
+            <br>
+            <b>Price:</b> {{val.price}}
+            <br>
+            <b>variantValue:</b> {{val.variantValue}}
+          </span>
+        </div>
       </div>
     </div>
   </div>
+</div>
   
