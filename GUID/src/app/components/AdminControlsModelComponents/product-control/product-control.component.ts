@@ -29,6 +29,14 @@ export class ProductControlComponent<T> {
   deleteForm = new FormGroup({
     idDelete: new FormControl<number>(1,Validators.required),
   })
+  selectForm = new FormGroup({
+    productSelect: new FormControl<number>(1, Validators.required),
+    titleSelect: new FormControl<string>('',Validators.required),
+    descriptionSelect: new FormControl<string>('',Validators.required),
+    priceSelect: new FormControl<number>(1,Validators.required),
+    categoriesSelect: new FormControl(),
+    variantsSelect: new FormControl()
+  })
   public tags:Categories[] = [];
   public varaints:ProductVariants[] = [];
   public products:Products[] = [];
@@ -49,6 +57,11 @@ export class ProductControlComponent<T> {
     this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
       for(let item of data){
         this.products.push(item);
+      }
+    });
+    this.selectForm.controls["productSelect"].valueChanges.subscribe(value =>{
+      if(value != null){
+        this.selectOnChange(value)
       }
     });
   }
@@ -117,5 +130,29 @@ export class ProductControlComponent<T> {
         product.productVariants.push(varaint)
     }
     return product;
+  }
+    selectOnChange(value:number | null):void{
+
+    var product:Products =this.products.find(ele => ele.id == value) == undefined ? new Products() : this.products.find(ele => ele.id == value) as Products;
+    if(product != new Products() && product.productCategories!=null){
+       this.selectForm.setValue({
+         titleSelect: product.title,
+        descriptionSelect:product.description,
+         productSelect: product.id,
+         priceSelect: product.price,
+         categoriesSelect: product.productCategories.name,
+         variantsSelect: product.productVariants,
+       },{emitEvent:false})
+     
+    }else{
+      this.selectForm.setValue({
+        titleSelect: product.title,
+       descriptionSelect:product.description,
+        productSelect: product.id,
+        priceSelect: product.price,
+        categoriesSelect: product.productCategories,
+        variantsSelect: product.productVariants,
+      },{emitEvent:false})
+    }
   }
 }

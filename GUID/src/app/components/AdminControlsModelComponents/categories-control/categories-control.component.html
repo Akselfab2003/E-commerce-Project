@@ -133,7 +133,20 @@
         aria-labelledby="pills-disabled-tab"
         tabindex="0"
       >
-        ...
+      <form [formGroup]="selectForm">
+        <h1>Select Categorie</h1>
+        <div>
+          <label for="categorieSelect">Categorie</label>
+          <select formControlName="categorieSelect">
+            <option value="" selected>Choose a Categorie to Select</option>
+            <option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</option>
+          </select>
+        </div>
+        <div>
+        <label for="name">Name</label>
+        <input id="nameSelect" type="text" formControlName="nameSelect">
+      </div>
+      </form>
       </div>
     </div>
   </div>
