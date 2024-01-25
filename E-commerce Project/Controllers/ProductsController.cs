@@ -138,5 +138,18 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("Search/{SearchInput}")]
+        public async Task<List<Products>> SearchForProducts(string SearchInput)
+        {
+            try
+            {
+                return await dataCollection.Products.SearchForProducts(SearchInput);
+            }
+            catch(Exception ex) 
+            {
+                return new List<Products> { };
+            }
+        }
     }
 }

@@ -4,7 +4,9 @@ using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -29,7 +31,7 @@ namespace E_commerce.Test.UnitTests
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
-            //Task.WaitAny(InsertTestData());
+            InsertTestData();
         }
         #region DataParameters
         public static IEnumerable<Object[]> SessionIdTestData()
@@ -52,7 +54,7 @@ namespace E_commerce.Test.UnitTests
         #endregion
 
         #region InsertData
-        [Fact,AttributePriority(-100)]
+      
         public void InsertTestData()
         {
             for (int i = 1; i <= 3; i++)
@@ -96,6 +98,7 @@ namespace E_commerce.Test.UnitTests
 
             output.WriteLine(JsonSerializer.Serialize(session1));
         }
+
         [Theory,AttributePriority(0)]
         [MemberData(nameof(SessionIdTestData))]
         public async Task GetSession(string sessionId)
@@ -108,7 +111,8 @@ namespace E_commerce.Test.UnitTests
             }
             catch (Exception ex)
             {
-                Assert.Fail(ex.Message);
+                output.WriteLine(sessionId);
+               Assert.Fail(ex.Message);
             }
             output.WriteLine(JsonSerializer.Serialize(session));
         }

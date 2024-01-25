@@ -65,5 +65,14 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             await context.SaveChangesAsync();
             return entity;
         }
+
+
+        public async Task<List<Products>> SearchForProducts(string SearchInput)
+        {
+            return await context.Products
+                                .Include(ele => ele.ProductVariants)
+                                .Include(ele => ele.Images)
+                                .Include(ele => ele.ProductCategories).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
+        }
     }
 }
