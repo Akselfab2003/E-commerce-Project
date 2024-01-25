@@ -39,11 +39,15 @@ namespace E_commerce_Project.Controllers
             Users? users = null;
             try
             {
+                if (sessid == "")
+                {
+                    users = (await dataCollection.Session.GetById(sessid)).user;
+
+                }
 
             }
             catch (Exception ex)
             {
-                users = (await dataCollection.Session.GetById(sessid)).user;
 
             }
 
@@ -139,12 +143,24 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
 
-        [HttpGet("Search/{SearchInput}")]
-        public async Task<List<Products>> SearchForProducts(string SearchInput)
+        [HttpGet("Search/")]
+        public async Task<List<Products>> SearchForProducts(string SearchInput,string sessid)
         {
             try
             {
-                return await dataCollection.Products.SearchForProducts(SearchInput);
+                Users? users = null;
+                try
+                {
+
+                    users = (await dataCollection.Session.GetById(sessid)).user;
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Products.SearchForProducts(SearchInput), users);
+
             }
             catch(Exception ex) 
             {

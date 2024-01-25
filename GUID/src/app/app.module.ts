@@ -27,6 +27,7 @@ import { ProductVariantsControlComponent } from './components/AdminControlsModel
 import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
 import { CompanyControlComponent } from './components/AdminControlsModelComponents/company-control/company-control.component';
 import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { CategoriesControlComponent } from './components/AdminControlsModelCompo
     ProductControlComponent,
     ProductVariantsControlComponent,
     CompanyControlComponent,
-    CategoriesControlComponent
+    CategoriesControlComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
