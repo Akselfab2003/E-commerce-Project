@@ -180,7 +180,37 @@
         aria-labelledby="pills-disabled-tab"
         tabindex="0"
       >
-        ...
+      <form [formGroup]="selectForm">
+        <h1>Select Product</h1>
+        <div>
+          <label for="productSelect">Product</label>
+          <select formControlName="productSelect">
+            <option value="" selected>Choose a Prodcut to Select</option>
+            <option *ngFor="let product of products" [value]="product.id">{{product.title}}</option>
+          </select>
+        </div>
+        <div>
+        <label for="title">Title</label>
+        <input id="titleSelect" type="text" formControlName="titleSelect">
+      </div>
+      <div>
+          <label for="description">Description</label>
+          <textarea id="descriptionSelect" type="text" formControlName="descriptionSelect" rows="4" cols="50">
+          </textarea>
+      </div>
+      <div>
+          <label for="price">Price</label>
+          <input id="priceSelect" type="number" formControlName="priceSelect">
+      </div>
+      <div>
+          <label for="productCategories">Categories</label>
+          <input id="categoriesSelect" formControlName="categoriesSelect">
+      </div>
+      <div>
+          <label for="productVariants">Variants </label>
+          <input id="variantsSelect" formControlName="variantsSelect" >
+      </div>
+      </form>
       </div>
     </div>
   </div>

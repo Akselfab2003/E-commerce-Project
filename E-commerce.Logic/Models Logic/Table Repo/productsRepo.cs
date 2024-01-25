@@ -41,7 +41,10 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<List<Products>?> GetAllProducts()
         {
-            return await context.Products.ToListAsync();
+            return await context.Products.Include(product => product.Images)
+                .Include(product => product.ProductCategories)
+                .Include(product => product.ProductVariants)
+                .ToListAsync();
 
         }
 
