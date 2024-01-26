@@ -44,9 +44,7 @@ export class CategoriesControlComponent<T> {
     }
     create() {
       let categorie:Categories= this.InputDataCreate();
-      this.service.PostRequest<Categories>("Filter/Categories",categorie).subscribe((data)=>
-      console.log(data)
-      )
+      this.service.PostRequest<Categories>("Filter/Categories",categorie).subscribe()
       this.service.GetRequest<Categories[]>("Filter/Categories").subscribe((data)=>{
         for(let item of data){
           this.tags.push(item);
@@ -55,9 +53,7 @@ export class CategoriesControlComponent<T> {
     }
     update(){
       let categorie:Categories= this.InputDataUpdate();
-      this.service.PutRequest<Categories>("Filter/"+categorie.id,categorie).subscribe((data)=>
-      console.log(data)
-      );
+      this.service.PutRequest<Categories>("Filter/"+categorie.id,categorie).subscribe();
       this.service.GetRequest<Categories[]>("Filter/Categories").subscribe((data)=>{
         for(let item of data){
           this.tags.push(item);
@@ -66,9 +62,7 @@ export class CategoriesControlComponent<T> {
     }
     delete(){
       let id:number = this.deleteForm.get('idDelete')?.value as number;
-      this.service.DeleteRequest<Boolean>("Filter/"+id).subscribe((data)=>
-      console.log(data)
-      );
+      this.service.DeleteRequest<Boolean>("Filter/"+id).subscribe();
       this.service.GetRequest<Categories[]>("Filter/Categories").subscribe((data)=>{
         for(let item of data){
           this.tags.push(item);
