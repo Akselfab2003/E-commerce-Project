@@ -86,7 +86,7 @@ export class BasketComponent<T> {
     var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
     if(basketDetailObject != undefined ){
 
-        if(basketDetailObject.quantity > 1){
+        if(basketDetailObject.quantity > 1 ){
           basketDetailObject.quantity = basketDetailObject.quantity - 1 ;
           this.basketItems.UpdateBasket(this.basket)
 

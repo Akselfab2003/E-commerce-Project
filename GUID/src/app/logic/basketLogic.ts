@@ -41,23 +41,29 @@ export class basketLogic<T> {
         var sessionId:string = sessionController.GetCookie();
         var newBasketDetails:BasketDetails = new BasketDetails();
         newBasketDetails.products = product;
-        console.log(this.primaryBasket.basketDetails.find(detail => detail.products.id == product.id))
-        if(this.primaryBasket.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
-          var basketDetailObject = this.primaryBasket.basketDetails.find(detail => detail.products.id == product.id)
-          basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-          this.UpdateBasket(this.primaryBasket);
-       
+        this.GetBasket().subscribe(data => {
 
-          this.AddToBasketEvent.emit()
-
-        }
-        else{
-          this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, newBasketDetails).subscribe((data)=>{
-            
+          console.log(data.basketDetails.find(detail => detail.products.id == product.id))
+  
+  
+          if(data.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
+            var basketDetailObject = data.basketDetails.find(detail => detail.products.id == product.id)
+            basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
+            this.UpdateBasket(data);
+         
+  
             this.AddToBasketEvent.emit()
-          });
+  
+          }
+          else{
+            this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, newBasketDetails).subscribe((data)=>{
+              
+              this.AddToBasketEvent.emit()
+            });
+  
+          }
+        })
 
-        }
 
     };
 
