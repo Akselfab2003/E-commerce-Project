@@ -52,7 +52,6 @@ export class basketLogic<T> {
             this.UpdateBasket(data);
          
   
-            this.AddToBasketEvent.emit()
   
           }
           else{
@@ -79,8 +78,8 @@ export class basketLogic<T> {
     }
   
     UpdateBasket(basket:Basket){
-      this.service.PutRequest<any>(`Basket/${basket.id}`,basket).subscribe((data)=>{
-       
+        this.service.PutRequest<any>(`Basket/${basket.id}`,basket).subscribe((data)=>{
+        this.AddToBasketEvent.emit()
       });
     }
 
