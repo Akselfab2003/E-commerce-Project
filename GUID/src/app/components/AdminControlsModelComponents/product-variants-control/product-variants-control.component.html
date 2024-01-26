@@ -68,43 +68,46 @@
       aria-labelledby="Created-tab"
       tabindex="0"
       >
-      <form [formGroup]="createForm" (submit)="create()" autocomplete="new-password">
-        <h1>Create product variant</h1>
-        
-        <div class="d-flex align-items-center  flex-column filterContainer">
-          <span class="filterTitle">Select a product</span>
-          <div class="input-group">
-              <label class="input-group-text" for="Categories">Products</label>
-              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDCreate">
-                  <option *ngFor="let val of allProducts" [value]="val.id">{{val.title}}</option>
-              </select>
+      <div class="Create">
+        <form [formGroup]="createForm" (submit)="create()" >
+          <h1>Create product variant</h1>
+          
+          <div class="d-flex align-items-center  flex-column filterContainer">
+            <span class="filterTitle">Select a product</span>
+            <div class="input-group">
+                <label class="input-group-text" for="Categories">Products</label>
+                <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDCreate">
+                    <option *ngFor="let val of allProducts" [value]="val.id">{{val.title}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+          
+          <div >
+            <label for="productName">Product name</label>
+            <input id="productNameCreate" type="text" formControlName="productNameCreate">
           </div>
+        
+          <div >
+            <label for="description">Description</label>
+              <textarea id="productDescriptionCreate" type="text" formControlName="productDescriptionCreate" rows="4" cols="50">
+              </textarea>
+          </div>
+  
+          <div >
+              <label for="productPrice">Product price</label>
+              <input id="productPriceCreate" type="text" formControlName="productPriceCreate">
+            </div>
+  
+          <div >
+              <label for="variantValue">Variant value</label>
+              <input id="variantValueCreate" type="text" formControlName="variantValueCreate">
+            </div>
+        
+          <button type="submit" class="btn"id="Create">Create &#8594;</button>
+        </form>
+
       </div>
-      <br>
-        
-        <div >
-          <label for="productName">Product name</label>
-          <input id="productNameCreate" type="text" formControlName="productNameCreate">
-        </div>
-      
-        <div >
-          <label for="description">Description</label>
-            <textarea id="productDescriptionCreate" type="text" formControlName="productDescriptionCreate" rows="4" cols="50">
-            </textarea>
-        </div>
-
-        <div >
-            <label for="productPrice">Product price</label>
-            <input id="productPriceCreate" type="text" formControlName="productPriceCreate">
-          </div>
-
-        <div >
-            <label for="variantValue">Variant value</label>
-            <input id="variantValueCreate" type="text" formControlName="variantValueCreate">
-          </div>
-      
-        <button type="submit" class="btn"id="Create">Create &#8594;</button>
-      </form>
     </div>
       <div
         class="tab-pane fade TabContent"
@@ -118,7 +121,7 @@
 
         <div class="d-flex align-items-center  flex-column filterContainer">
           <span class="filterTitle">Select a product</span>
-          <div class="input-group">
+          <div class="input-group mb-3">
               <label class="input-group-text" for="Categories">Products</label>
               <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDUpdate">
                   <option *ngFor="let val of productVariantList" [value]="val.id">{{val.name}}</option>

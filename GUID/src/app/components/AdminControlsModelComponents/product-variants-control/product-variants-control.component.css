@@ -8,7 +8,7 @@
 
 .menu{
     width: 90%;
-}
+} 
 
 input, label{
     display: block;
@@ -21,6 +21,10 @@ label{
     color: black;
 }
 
+.Create{
+    height: 50%;
+    gap: 10% ;
+}
 input{
     padding: 8px;
     height: 35px;
@@ -49,7 +53,7 @@ button{
 .btn[type=submit]:hover{
     background-color: rgb(182, 3, 128);
 }
-
+ 
 .TabContent{
     width: 75%;
     height: 75%;
@@ -65,11 +69,10 @@ button{
 
 .tab-container{
     width:100%;
-    height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5%;
+    
 }
 
 .SelectTab{
