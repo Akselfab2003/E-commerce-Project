@@ -247,7 +247,7 @@ namespace E_commerce_Project.Controllers
             catch (DbUpdateConcurrencyException)
             {
             }
-            return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
+            return new ObjectResult(new Session() { SessId=session.SessId,Created=session.Created,IsAdmin=session.IsAdmin}) { StatusCode = StatusCodes.Status201Created };
         }
         #endregion
 

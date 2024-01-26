@@ -38,7 +38,7 @@ export class LoginComponent<T> {
       
       sessionController.SetCookie(data));
 
-    this.router.navigate(['/profile']);
+    this.router.navigateByUrl('/profile');
   }
 }
 
