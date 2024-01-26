@@ -67,9 +67,7 @@ export class ProductControlComponent<T> {
   }
   create() {
     let product:Products= this.InputDataCreate();
-    this.service.PostRequest<Products>("Products/CreateProduct",product).subscribe((data)=>
-    console.log(data)
-    )
+    this.service.PostRequest<Products>("Products/CreateProduct",product).subscribe()
     this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
       for(let item of data){
         this.products.push(item);
@@ -78,9 +76,7 @@ export class ProductControlComponent<T> {
   }
   update(){
     let product:Products= this.InputDataUpdate();
-    this.service.PutRequest<Products>("Products/"+product.id,product).subscribe((data)=>
-    console.log(data)
-    );
+    this.service.PutRequest<Products>("Products/"+product.id,product).subscribe();
     this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
       for(let item of data){
         this.products.push(item);
@@ -89,9 +85,7 @@ export class ProductControlComponent<T> {
   }
   delete(){
     let product:Products=this.products.find(ele => ele.id == this.deleteForm.get("idDelete")?.value) == undefined ? new Products() : this.products.find(ele => ele.id == this.deleteForm.get("idDelete")?.value) as Products;
-    this.service.DeleteRequest<Boolean>("Products/"+product.id).subscribe((data)=>
-    console.log(data)
-    );
+    this.service.DeleteRequest<Boolean>("Products/"+product.id).subscribe();
     this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
       for(let item of data){
         this.products.push(item);
