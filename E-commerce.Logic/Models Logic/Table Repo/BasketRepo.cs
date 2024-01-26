@@ -48,7 +48,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 .Include(ele => ele.Session)
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Products)
-                .ThenInclude(ele => ele.ProductVariants)
+            
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Products)
                 .ThenInclude(ele => ele.Images).FirstOrDefaultAsync(Basket => Basket.Id == id);
@@ -60,7 +60,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 .Include(ele => ele.Session)
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Products)
-                .ThenInclude(ele => ele.ProductVariants)
+                
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Products)
                 .ThenInclude(ele => ele.Images)
