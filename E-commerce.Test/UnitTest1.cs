@@ -1,5 +1,7 @@
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Text.Json;
 using Xunit.Abstractions;
 
@@ -61,8 +63,13 @@ namespace E_commerce.Test
 
         }
 
+        [Fact]
+        public void Test()
+        {
 
-
+            var test = new NoContentResult();
+            Assert.Equal(HttpStatusCode.NoContent, (HttpStatusCode)test.StatusCode);
+        }
 
 
         //[Fact]

@@ -82,15 +82,33 @@ namespace E_commerce_Project.Controllers
             try
             {
                 Session session = await _session.GetById(sessionId);
-                if (session != null && session.user!=null)
-                {
-                    return true;
-                }else if (session != null && session.admin != null)
+                if (session != null && session.user != null)
                 {
                     return true;
                 }
-                else
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
+
+
+        [HttpGet("ValidateSessionAdmin/{sessionId}")]
+        public async Task<Boolean> ValidateAdminSession(string sessionId)
+        {
+            try
+            {
+                Session session = await _session.GetById(sessionId);
+                if (session != null)
                 {
+
+                    if (session != null && session.admin != null)
+                    {
+                        return true;
+                    }
+
                     return false;
                 }
             }
@@ -98,11 +116,12 @@ namespace E_commerce_Project.Controllers
             {
                 return false;
             }
+            return false;
         }
-        
+
         #endregion
 
-        #region   POST Requests
+            #region   POST Requests
         [HttpPost("createUser")]
         public async Task<HttpStatusCode> PostUser(Users users)
         {

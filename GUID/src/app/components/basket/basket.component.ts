@@ -1,10 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Products } from '../../models/Products';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscriber } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { HttpserviceService } from '../../../Services/httpservice.service';
 import { BasketDetails } from '../../models/BasketDetails';
 import { Basket } from '../../models/Basket';
 import { basketLogic } from '../../logic/basketLogic';
@@ -44,9 +40,7 @@ export class BasketComponent<T> {
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
-      console.log(res)
     });
-    //this.basket = this.basketItems.primaryBasket
   };
 
 
@@ -59,15 +53,7 @@ export class BasketComponent<T> {
   }
 
   getUniqueProducts(): BasketDetails[] {
-    /* this.basketItems.basketDetails.forEach((item) => {
-      const productId = item.products.id;
-      if (!uniqueProductIds.has(productId)) {
-        uniqueProductIds.add(productId);
-        uniqueProducts.push(item.products);
-      }
-    }); */
-
-    console.log(this.basketItems.basketDetails)
+  
     return this.basketItems.basketDetails;
   }
 
@@ -119,13 +105,6 @@ export class BasketComponent<T> {
   RemoveProductUsingQtyClick(basketDetails:BasketDetails){
     this.basketItems.RemoveFromBasket(basketDetails);
   }
-
-  /*
-  RemoveProductUsingQtyClick(basketDetails:BasketDetails){
-    this.basketItems.RemoveFromBasket(basketDetails);
-    this.calculateProductCounts(basketDetails.products.id);
-  }
-  */
 
   ChangeState() {
     this.BasketStateBool = !this.BasketStateBool;

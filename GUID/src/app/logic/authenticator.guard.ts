@@ -7,8 +7,10 @@ export const authenticatorGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
     const httpservice:HttpserviceService<any> = inject(HttpserviceService)
-    var test:boolean =  sessionController.ValidateSession(httpservice)
+    var test = sessionController.ValidateSession(httpservice).then(ele =>{
+      return ele
+    })
 
-  return test;
+    return test
 };
 

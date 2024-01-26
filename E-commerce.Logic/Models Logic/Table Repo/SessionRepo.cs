@@ -56,7 +56,10 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             try
             {
 
-            return await context.Sessions.FirstOrDefaultAsync(c => c.SessId == SessID);
+            return await context.Sessions
+                        .Include(session => session.user)
+                        .Include(session => session.admin)
+                        .FirstOrDefaultAsync(c => c.SessId == SessID);
             }
             catch (Exception ex)
             {

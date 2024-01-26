@@ -2,6 +2,7 @@
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic;
+using E_commerce_Project.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,14 @@ namespace E_commerce.Test.UnitTests
     {
         private readonly IDataCollection dataCollection;
         private readonly ITestOutputHelper output;
+        private ProductsController productsController;
         public ProductTests(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
             GenerateFakeProductData();
+            productsController = new ProductsController(dataCollection);
         }
-
 
 
         [Fact]
@@ -143,7 +145,7 @@ namespace E_commerce.Test.UnitTests
         {
            
 
-           List<Products>? GetAllproducts = await dataCollection.Products.GetAllProducts();
+           List<Products>? GetAllproducts =await productsController.GetAllProducts();
 
            Assert.True(GetAllproducts != null, "GetAllProducts Returned null");
 

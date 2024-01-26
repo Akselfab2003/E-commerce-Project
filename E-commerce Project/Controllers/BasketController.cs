@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.ContentModel;
+using System.Net;
 
 namespace E_commerce_Project.Controllers
 {
@@ -38,11 +39,11 @@ namespace E_commerce_Project.Controllers
         {
             Session session = await dataCollectioncontext.Session.GetById(sessid);
             var basket = await context.GetBySessId(session);
-
             if (basket == null)
             {
-                return null;
+                return new Basket();
             }
+            basket.BasketDetails = new List<BasketDetails>();
 
             return basket;
         }

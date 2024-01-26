@@ -4,6 +4,7 @@ using E_commerce.Logic;
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic;
+
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace E_commerce.Test.Create_data_for_local_database
 {
@@ -194,8 +196,8 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
             List<PriceListEntity> ListOfPriceListEntities = faker.GenerateBetween(1, products.Count()-1);
-            
 
+            
             return ListOfPriceListEntities;
 
 

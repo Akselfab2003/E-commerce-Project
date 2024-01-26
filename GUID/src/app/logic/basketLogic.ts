@@ -27,7 +27,8 @@ export class basketLogic<T> {
           this.primaryBasket = basket
           console.log(basket);
         })
-
+        
+        
         return   this.service.GetRequest<Basket>(`Basket/GetBasket/${sessionId}`)
 
        

@@ -8,7 +8,9 @@ export const adminGuard: CanActivateFn = (
   next:ActivatedRouteSnapshot,
   state:RouterStateSnapshot) => {
     const httpservice:HttpserviceService<any> = inject(HttpserviceService)
-    var test:boolean = adminController.ValidateSession(httpservice);
-
-  return test;
+    var test = adminController.ValidateSession(httpservice).then(ele =>{
+      return ele
+    })  
+     console.log(test)
+    return test;
 }

@@ -36,17 +36,25 @@ const routes: Routes = [
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
   {path:"basket",component:BasketComponent},
   {path:"checkout-page",component:CheckoutPageComponent},
-  {path:"admin-page",component:AdminControlPanelComponent,canActivate:[adminGuard]},
+  {path:"admin-page",component:AdminControlPanelComponent},
   {path:"admin-login",component:AdminLoginComponent},
   {path:"carousel",component:CarouselComponent},
-  {path:"AdminControl",component:AdminControlPanelComponent},
-  {path:"UserControl",component:UserControlComponent},
-  {path:"CompanyControlComponent", component:CompanyControlComponent},
-  {path:"admin-user-control",component:AdminControlComponent},
-  {path:"product-control",component:ProductControlComponent},
-  {path:"product-variants-control",component:ProductVariantsControlComponent},
-  {path:"categories-control",component:CategoriesControlComponent},
-  {path:"product-variants-control",component:ProductVariantsControlComponent},
+  {
+    path:"AdminControl",
+    children:[
+      {path:"",component:AdminControlPanelComponent},
+      {path:"UserControl",component:UserControlComponent,},
+      {path:"CompanyControlComponent", component:CompanyControlComponent},
+      {path:"admin-user-control",component:AdminControlComponent},
+      {path:"product-control",component:ProductControlComponent},
+      {path:"product-variants-control",component:ProductVariantsControlComponent},
+      {path:"categories-control",component:CategoriesControlComponent},
+
+    ],
+    canActivate:[adminGuard],
+  },
+
+  
   {path:"Search/:q",component:SearchResultComponent},
   
 ];
