@@ -41,9 +41,8 @@ namespace E_commerce_Project.Controllers
             var basket = await context.GetBySessId(session);
             if (basket == null)
             {
-                return new Basket();
+                return null;
             }
-            basket.BasketDetails = new List<BasketDetails>();
 
             return basket;
         }
