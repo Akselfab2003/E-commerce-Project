@@ -28,6 +28,7 @@ import { ProductControlComponent } from './components/AdminControlsModelComponen
 import { CompanyControlComponent } from './components/AdminControlsModelComponents/company-control/company-control.component';
 import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
+import { CarouselReviewsComponent } from './components/carousel-reviews/carousel-reviews.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { SearchResultComponent } from './components/search-result/search-result.
     ProductVariantsControlComponent,
     CompanyControlComponent,
     CategoriesControlComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    CarouselReviewsComponent
   ],
   imports: [
     BrowserModule,
