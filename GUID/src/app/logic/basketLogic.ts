@@ -25,7 +25,6 @@ export class basketLogic<T> {
         var sessionId:string = sessionController.GetCookie();
         this.service.GetRequest<Basket>(`Basket/GetBasket/${sessionId}`).subscribe(basket =>{
           this.primaryBasket = basket
-          console.log(basket);
         })
         
         
@@ -37,21 +36,18 @@ export class basketLogic<T> {
    
 
 
-    public AddToBasket(product:Products){
+    public AddToBasket(product:Products):Promise<any>{
         var sessionId:string = sessionController.GetCookie();
         var newBasketDetails:BasketDetails = new BasketDetails();
         newBasketDetails.products = product;
         this.GetBasket().subscribe(data => {
-
-          console.log(data.basketDetails.find(detail => detail.products.id == product.id))
   
   
           if(data.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
             var basketDetailObject = data.basketDetails.find(detail => detail.products.id == product.id)
-            basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
+            basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + product.Quantity : null;
             this.UpdateBasket(data).then(ele => {
               this.AddToBasketEvent.emit()
-
             }
             )
          
@@ -63,11 +59,11 @@ export class basketLogic<T> {
               
               this.AddToBasketEvent.emit()
             });
-  
           }
         })
-
-
+        return new Promise(resolve =>{
+          resolve("Success");
+        })
     };
 
     public RemoveFromBasket(basketDetails:BasketDetails){

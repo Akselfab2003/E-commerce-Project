@@ -3,6 +3,7 @@ import { Products } from '../../models/Products';
 import { Basket } from '../../models/Basket';
 import { BasketComponent } from '../basket/basket.component';
 import { basketLogic } from '../../logic/basketLogic';
+import { ProductPageComponent } from '../product-page/product-page.component';
 
 @Component({
   selector: 'app-product-card',
@@ -11,7 +12,7 @@ import { basketLogic } from '../../logic/basketLogic';
 })
 export class ProductCardComponent<T> {
 
-  constructor(private basketTest:basketLogic<T>)
+  constructor(private basketTest:basketLogic<T>, private productPage:ProductPageComponent<T>)
   {
 
   }
@@ -24,13 +25,15 @@ export class ProductCardComponent<T> {
   
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
-    this.basketTest.AddToBasket(this.product)
+    this.basketTest.AddToBasket(this.product);
   }
 
-  /*ButtonEvent(event: Event) {
-    event.stopPropagation()
-    console.log("product")
-    console.log(this.product)
-  }*/
+  AddProductQuantity(product:Products){
+    product.Quantity += 1
+  }
+
+  SubtractProductQuantity(product:Products){
+    product.Quantity -= 1
+  }
 
 }
