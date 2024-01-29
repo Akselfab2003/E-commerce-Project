@@ -59,8 +59,7 @@ import { ReviewsPageComponent } from './components/reviews-page/reviews-page.com
     CategoriesControlComponent,
     SearchResultComponent,
     CarouselReviewsComponent,
-    ReviewsPageComponent
-    SearchResultComponent,
+    ReviewsPageComponent,
     ImagesControlComponent
   ],
   imports: [
