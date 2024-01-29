@@ -33,7 +33,12 @@ export class ProductCardComponent<T> {
   }
 
   SubtractProductQuantity(product:Products){
-    product.Quantity -= 1
+    if(product.Quantity -1 <= 0){
+
+    }
+    else{
+      product.Quantity -= 1
+    }
   }
 
 }

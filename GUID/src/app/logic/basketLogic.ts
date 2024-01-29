@@ -52,6 +52,7 @@ export class basketLogic<T> {
   
           }
           else{
+            newBasketDetails.quantity = product.Quantity;
             this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, newBasketDetails).subscribe((data)=>{
               
               this.AddToBasketEvent.emit()
