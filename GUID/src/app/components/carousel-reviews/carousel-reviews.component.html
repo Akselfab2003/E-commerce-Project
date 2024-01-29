@@ -6,10 +6,9 @@
             #slickModal="slick-carousel"
             [config]="slideConfig">
             
-            <div ngxSlickItem *ngFor="let slide of CurrentProductsDisplayedOnPage" class="slide">
-                <img src="{{slide.images[0]?.imagePath}}" alt="" class="img-style">
-                <h3 classs="Title">{{slide.title}}</h3>
-                <p class="Price">{{slide.price | currency}}</p>
+            <div ngxSlickItem *ngFor="let slide of CurrentReviewDisplayedOnPage" class="slide">
+                <h3 classs="Title">{{slide.id}}</h3>
+                <p class="Price">{{slide.ReviewContent}}</p>
 
             </div>
         </ngx-slick-carousel>

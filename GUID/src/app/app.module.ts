@@ -29,7 +29,7 @@ import { CompanyControlComponent } from './components/AdminControlsModelComponen
 import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { CarouselReviewsComponent } from './components/carousel-reviews/carousel-reviews.component';
-
+import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,8 @@ import { CarouselReviewsComponent } from './components/carousel-reviews/carousel
     CompanyControlComponent,
     CategoriesControlComponent,
     SearchResultComponent,
-    CarouselReviewsComponent
+    CarouselReviewsComponent,
+    ReviewsPageComponent
   ],
   imports: [
     BrowserModule,

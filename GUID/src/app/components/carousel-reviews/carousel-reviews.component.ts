@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Products } from '../../models/Products';
 import { HttpClient } from '@angular/common/http';
 import { HttpserviceService } from '../../../Services/httpservice.service';
-import { basketLogic } from '../../logic/basketLogic';
 import { sessionController } from '../../logic/sessionLogic';
+import { Reviews } from '../../models/Reviews';
 
 @Component({
   selector: 'app-carousel-reviews',
@@ -11,24 +11,20 @@ import { sessionController } from '../../logic/sessionLogic';
   styleUrl: './carousel-reviews.component.css'
 })
 export class CarouselReviewsComponent<T> {
-  CurrentProductsDisplayedOnPage: Products[] = new Array<Products>();
+  CurrentReviewDisplayedOnPage: Reviews[] = new Array<Reviews>();
 
-  constructor(private http: HttpClient, private httpService: HttpserviceService<T>, private basketTest:basketLogic<T>) {}
+  constructor(private http: HttpClient, private httpService: HttpserviceService<T>) {}
   
   ngOnInit(): void {
     this.fetchDataFromApi();
   }
 
   fetchDataFromApi() {
-    this.httpService.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data) => {
-      this.CurrentProductsDisplayedOnPage = data;
+    this.httpService.GetRequest<Reviews[]>(`Reviews/Get_Reviews1?${sessionController.GetCookie()}`).subscribe((data) => {
+      this.CurrentReviewDisplayedOnPage = data;
       console.log(data);
     });
   };
-
-  AddToBasket(product: Products){
-    this.basketTest.AddToBasket(product)
-  }
   
 
   slideConfig = {

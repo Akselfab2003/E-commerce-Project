@@ -1,6 +1,5 @@
 ﻿using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Interfaces.Table_Interfaces;
-using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic.Cryptography;
 using E_commerce.Logic.Models_Logic.Table_Repo;
@@ -29,6 +28,7 @@ namespace E_commerce.Logic.Models_Logic
         private readonly IBasket basket;
         private readonly ICompany company;
         private readonly IHashing cryptography;
+        private readonly IReviews reviews;
 
         public DataCollection(DBcontext Context,IConfiguration configuration) 
         {
@@ -46,6 +46,7 @@ namespace E_commerce.Logic.Models_Logic
             adminUsers = new AdminUsersRepo(Context);
             priceList = new PriceListRepo(Context);
             company = new CompanyRepo(Context);
+            reviews = new ReviewsRepo(Context);
         }
 
         public IAdminUsers AdminUsers
@@ -108,5 +109,11 @@ namespace E_commerce.Logic.Models_Logic
         {
             get { return company; }
         }
+
+        public IReviews Reviews
+        {
+            get { return reviews; }
+        }
+
     }
 }
