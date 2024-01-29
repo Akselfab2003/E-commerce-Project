@@ -5,7 +5,7 @@ import { HttpserviceService } from "../../Services/httpservice.service";
 import { sessionController } from "./sessionLogic";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { Products } from "../models/Products";
-import { Observable, firstValueFrom } from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -49,11 +49,7 @@ export class basketLogic<T> {
           if(data.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
             var basketDetailObject = data.basketDetails.find(detail => detail.products.id == product.id)
             basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-            this.UpdateBasket(data).then(ele => {
-              this.AddToBasketEvent.emit()
-
-            }
-            )
+            this.UpdateBasket(data);
          
   
   
@@ -81,9 +77,10 @@ export class basketLogic<T> {
       });
     }
   
-     async UpdateBasket(basket:Basket){
-    
-      var test= await firstValueFrom(this.service.PutRequest<any>(`Basket/${basket.id}`,basket))
+    UpdateBasket(basket:Basket){
+        this.service.PutRequest<any>(`Basket/${basket.id}`,basket).subscribe((data)=>{
+        this.AddToBasketEvent.emit()
+      });
     }
 
     GetTotalPrice(){
