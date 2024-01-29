@@ -23,6 +23,8 @@ import { ProductVariantsControlComponent } from './components/AdminControlsModel
 import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
 import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
+import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
+
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -49,12 +51,11 @@ const routes: Routes = [
       {path:"product-control",component:ProductControlComponent},
       {path:"product-variants-control",component:ProductVariantsControlComponent},
       {path:"categories-control",component:CategoriesControlComponent},
-
+      
     ],
     canActivate:[adminGuard],
   },
-
-  
+  {path: "reviews-page", component:ReviewsPageComponent},
   {path:"Search/:q",component:SearchResultComponent},
   
 ];

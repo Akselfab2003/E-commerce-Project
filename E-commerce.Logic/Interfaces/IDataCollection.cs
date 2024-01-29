@@ -25,6 +25,7 @@ namespace E_commerce.Logic.Interfaces
         public IPriceList PriceList { get; }
         public ICompany Company { get; }
         public IHashing Cryptography {  get; }
+        public IReviews Reviews { get; }
 
     }
 }

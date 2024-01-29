@@ -18,51 +18,15 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             Context = context;
 
         }
-        public async Task<Reviews> CreateReview(Reviews entity)
-        {
-            Context.Reviews.Add(entity);
-
-            await Context.SaveChangesAsync();
-
-            return entity;
-        }
-
-        public async Task<bool> DeleteReview(int id)
-        {
-            try
-            {
-                Reviews ReviewsEntity = await GetById(id);
-
-                Context.Reviews.Remove(ReviewsEntity);
-
-                await Context.SaveChangesAsync();
-            }
-            catch
-            {
-                return false;
-            }
-
-
-            return true;
-        }
-
-     
 
         public async Task<Reviews> GetById(int id)
         {
             return await Context.Reviews.FirstOrDefaultAsync(r => r.Id == id);
         }
 
-    
-        public async Task<Reviews> UpdateReview(Reviews entity)
+        public async Task<List<Reviews>> GetByProductId(int id)
         {
-           
-            Context.Reviews.Update(entity);
-            await Context.SaveChangesAsync();
-
-            return entity;
-
-        
+            return await Context.Reviews.Where(r => r.Products.Id == id).ToListAsync();
         }
     }
 }
