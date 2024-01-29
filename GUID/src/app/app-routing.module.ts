@@ -23,7 +23,9 @@ import { ProductVariantsControlComponent } from './components/AdminControlsModel
 import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
 import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
+import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
 import { ImagesControlComponent } from './components/AdminControlsModelComponents/images-control/images-control.component';
+
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -55,8 +57,7 @@ const routes: Routes = [
     ],
     canActivate:[adminGuard],
   },
-
-  
+  {path: "reviews-page", component:ReviewsPageComponent},
   {path:"Search/:q",component:SearchResultComponent},
   
 ];

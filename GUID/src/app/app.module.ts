@@ -29,7 +29,8 @@ import { CompanyControlComponent } from './components/AdminControlsModelComponen
 import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { ImagesControlComponent } from './components/AdminControlsModelComponents/images-control/images-control.component';
-
+import { CarouselReviewsComponent } from './components/carousel-reviews/carousel-reviews.component';
+import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,9 @@ import { ImagesControlComponent } from './components/AdminControlsModelComponent
     ProductVariantsControlComponent,
     CompanyControlComponent,
     CategoriesControlComponent,
+    SearchResultComponent,
+    CarouselReviewsComponent,
+    ReviewsPageComponent
     SearchResultComponent,
     ImagesControlComponent
   ],
