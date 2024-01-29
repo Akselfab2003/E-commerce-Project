@@ -9,9 +9,7 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface IReviews : IGeneric<Reviews>
     {
-        public Task<Reviews> CreateReview(Reviews entity);
-        public Task<Reviews> UpdateReview(Reviews entity);
-        public Task<bool> DeleteReview(int id);
         public Task<Reviews> GetById(int id);
+        public Task<List<Reviews>> GetByProductId(int id);
     }
 }

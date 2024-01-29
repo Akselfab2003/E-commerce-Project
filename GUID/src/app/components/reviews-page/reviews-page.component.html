@@ -1,0 +1,11 @@
+<div clas="product-review">
+    <h2>Product Reviews</h2>
+</div>
+
+<div class="add-review">
+    <h3>Add Review</h3>
+    <input type="text" [(ngModel)]="newReview.Title" placeholder="Review Title">
+    <textarea [(ngModel)]="newReview.ReviewContent" placeholder="Your Review"></textarea>
+    <input type="number" [(ngModel)]="newReview.rating" placeholder="Rating 1-5">
+    <button (click)="addReview()"> Submit Review</button>
+</div>
