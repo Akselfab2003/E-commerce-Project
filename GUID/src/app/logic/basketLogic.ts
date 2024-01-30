@@ -83,8 +83,4 @@ export class basketLogic<T> {
         this.AddToBasketEvent.emit()
       });
     }
-
-    GetTotalPrice(){
-      this.service.GetRequest<Basket>(`BasketDetails`)
-    };
 }

@@ -43,7 +43,6 @@ export class BasketComponent<T> {
     });
   };
 
-
   calculateTotal(): number {
     return this.basketItems.basketDetails.reduce((total, item) => total + (item.quantity * item.products.price), 0);
   } 
@@ -80,7 +79,7 @@ export class BasketComponent<T> {
     this.basketItems.UpdateBasket(this.basket )
   }
 
-  MinusProductUsingQtyClick(product: Products){
+  SubtractProductUsingQtyClick(product: Products){
 
     var basketDetailId = this.FindBasketDetailId(product);
     var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
@@ -92,7 +91,7 @@ export class BasketComponent<T> {
 
         }
         else{
-         this.RemoveProductUsingQtyClick(basketDetailObject)
+         this.RemoveProductFromBasket(basketDetailObject)
         }
 
     }
@@ -102,7 +101,7 @@ export class BasketComponent<T> {
     return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id
   }
 
-  RemoveProductUsingQtyClick(basketDetails:BasketDetails){
+  RemoveProductFromBasket(basketDetails:BasketDetails){
     this.basketItems.RemoveFromBasket(basketDetails);
   }
 
