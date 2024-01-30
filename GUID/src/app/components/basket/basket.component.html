@@ -10,7 +10,7 @@
     <!--Cart Items-->
     <div class="cart-items">
       <div class="cart-item" *ngFor="let basketDetail of basket.basketDetails">
-        <div (click)="RemoveProductUsingQtyClick(basketDetail)" class="remove-item">
+        <div (click)="RemoveProductFromBasket(basketDetail)" class="remove-item">
           <span>&times;</span>
         </div>
         <div class="item-img">
@@ -20,7 +20,7 @@
           <p>{{basketDetail.products.title}}</p>
           <strong>{{basketDetail.products.price | currency}}</strong>
           <div class="qty">
-            <span (click)="MinusProductUsingQtyClick(basketDetail.products)">-</span>
+            <span (click)="SubtractProductUsingQtyClick(basketDetail.products)">-</span>
             <strong>{{basketDetail.quantity}}</strong>
             <span (click)="AddProductUsingQtyClick(basketDetail.products)">+</span>
           </div>
@@ -31,7 +31,7 @@
     <div class="cart-actions">
       <div class="subtotal">
         <p>SUBTOTAL</p>
-        <p><span id="subtotal-price">{{calculateTotal()| currency }}</span></p>
+        <p><span id="subtotal-price">{{calculateTotal() | currency}}</span></p>
       </div>
       <button routerLink="checkout-page">Checkout</button>
       <button (click)="closeBasket()">close</button>

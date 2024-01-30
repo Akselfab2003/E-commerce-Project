@@ -18,8 +18,10 @@ export class ProductDetailsPageComponent<T> {
   constructor(private route: ActivatedRoute, private service: HttpserviceService<T>, private basketTest:basketLogic<T>) {}
   public variants:ProductVariants[] = new Array<ProductVariants>();
   @Input() product: Products = new Products();
-  
+
   public SelectedVariant:ProductVariants = new ProductVariants();
+
+  public SelectedIdFromVariant:number = 0;
   GetProduct<T>(id:Number){
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
@@ -35,6 +37,14 @@ export class ProductDetailsPageComponent<T> {
   };
 
   SelectOnChange(){
+
+    var test:ProductVariants = new ProductVariants()
+    if(this.variants.length > 0){
+      var testtest
+       = this.variants.find(variant => variant.id == this.SelectedIdFromVariant)  ==  undefined ? new ProductVariants() :  this.variants.find(variant => variant.id == this.SelectedIdFromVariant);
+      this.SelectedVariant= testtest == undefined ? new ProductVariants(): testtest;
+    }
+   
     console.log(this.SelectedVariant)
   }
 
@@ -46,21 +56,24 @@ export class ProductDetailsPageComponent<T> {
       var NewBasketProduct:Products = this.product;
       var test:ProductVariants[] = new Array<ProductVariants>();
       test.push(this.SelectedVariant)
+
       NewBasketProduct.productVariants = test;
+    
+      console.log(this.product)
       this.basketTest.AddToBasket(NewBasketProduct)
     }
     else{
+      
       this.basketTest.AddToBasket(NewBasketProduct)
     }
   }
 
-  selectedId: number = 0;
   ngOnInit() {
-    
+    var selectedId:Number = 0;
     this.route.paramMap.subscribe((data)=>{
-      this.selectedId = Number(data.get('id'));
-      this.GetProduct(this.selectedId);
-      this.GetProductVariants(this.selectedId);
+      selectedId = Number(data.get('id'));
+      this.GetProduct(selectedId);
+      this.GetProductVariants(selectedId);
 
       console.log("ProductDetails Object:");
     })
