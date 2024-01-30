@@ -11,8 +11,8 @@
       </div>
       <div *ngIf="variants.length != 0" class="variant-selection">
         
-        <select id="variant" class="form-select" [(ngModel)]="SelectedVariant" (ngModelChange)="SelectOnChange()" >
-          <option *ngFor="let variant of variants" [value]="variant" >{{variant.name}}</option>
+        <select id="variant" class="form-select" [(ngModel)]="SelectedIdFromVariant" (ngModelChange)="SelectOnChange()" >
+          <option *ngFor="let variant of variants" [value]="variant.id" >{{variant.name}}</option>
         </select>
       </div>
       <div class="product-price">
