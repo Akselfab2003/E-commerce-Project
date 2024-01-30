@@ -126,8 +126,20 @@
         tabindex="0"
       >
       <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
-        <h1>Delete Categories</h1>
-
+        <h1>Delete Image</h1>
+        <div>
+          <label>Image from API</label>
+          <img [src]="deleteForm.get('imageDelete')?.value">
+        </div>
+        <div>
+        <label for="imageDelete">Image</label>
+        <select id="imageDelete" formControlName="imageDelete" aria-label="Select image to update" aria-placeholder="Select image to update">
+            <option selected value="" >Choose an Image to update</option>
+            <option *ngFor="let image of images" [value]="image.id">{{image.id}}</option>
+        </select>
+      </div>
+      <br>
+        <button type="submit" class="btn"id="Delete">Delete &#8594;</button>
         </form>
       </div>
       <div
@@ -138,7 +150,13 @@
         tabindex="0"
       >
       <form [formGroup]="selectForm">
-        <h1>Select Categorie</h1>
+        <h1>Select Image</h1>
+
+        <label for="imageDelete">Image</label>
+        <select id="imageDelete" formControlName="imageDelete" aria-label="Select image to update" aria-placeholder="Select image to update">
+            <option selected value="" >Choose an Image to update</option>
+            <option *ngFor="let image of images" [value]="image.imagePath">{{image.id}}</option>
+        </select>
       </form>
       </div>
     </div>

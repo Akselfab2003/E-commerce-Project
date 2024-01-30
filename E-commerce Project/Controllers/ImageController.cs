@@ -79,5 +79,21 @@ namespace E_commerce_Project.Controllers
             return Ok();
         }
         #endregion
+
+        #region DELETE Requests
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCategories(int id)
+        {
+            var image = await images.GetById(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            await collection.Images.DeleteImage(image);
+
+            return NoContent();
+        }
+        #endregion
     }
 }

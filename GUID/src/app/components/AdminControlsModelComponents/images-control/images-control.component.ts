@@ -21,8 +21,10 @@ export class ImagesControlComponent<T> implements OnInit {
     urlUpdate:new FormControl<string>("",Validators.required),
   })
   deleteForm = new FormGroup({
+    imageDelete: new FormControl<number>(1,Validators.required),
   })
   selectForm = new FormGroup({
+    imageSelect: new FormControl<number>(1,Validators.required),
   })
   public products:Products[] = [];
   public images:Images[] = [];
@@ -54,6 +56,8 @@ export class ImagesControlComponent<T> implements OnInit {
     });
   }
   delete(){
+    let id:number = this.deleteForm.get('imageDelete')?.value as number;
+    this.service.DeleteRequest<Boolean>("Image/"+id).subscribe();
   }
   InputDataCreate():Images{
     let image:Images=new Images();

@@ -128,7 +128,6 @@ namespace E_commerce_Project.Controllers
             return CreatedAtAction("GetCategories", new { id = product.Id }, product);
         }
 
-        // DELETE: api/Heroes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
