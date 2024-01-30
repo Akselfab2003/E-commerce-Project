@@ -16,5 +16,7 @@ namespace E_commerce.Logic.Models
         [Required]
         public Products Products { get; set; }
         public string ReviewContent { get; set; } = string.Empty;
+        public string ReviewTitle { get; set; }
+        public int ReviewRating { get; set; }
     }
 }

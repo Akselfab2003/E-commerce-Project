@@ -95,11 +95,11 @@
       <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
         <h1>Update Product with Image</h1>
           <div>
-            <label>Image from API</label>
+            <label>Image from DB</label>
             <img [src]="updateForm.get('imageUpdate')?.value">
           </div>  
             <div>
-              <label for="imageUpdate">Image</label>
+              <label for="imageUpdate">Url</label>
               <select id="imageUpdate" formControlName="imageUpdate" aria-label="Select image to update" aria-placeholder="Select image to update">
                   <option selected value="" >Choose an Image to update</option>
                   <option *ngFor="let image of images" [value]="image.imagePath">{{image.id}}</option>
@@ -128,14 +128,14 @@
       <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
         <h1>Delete Image</h1>
         <div>
-          <label>Image from API</label>
-          <img [src]="deleteForm.get('imageDelete')?.value">
+          <label>Image</label>
+          <img [src]="deleteForm.get('imageDelete')?.value?.imagePath">
         </div>
         <div>
-        <label for="imageDelete">Image</label>
-        <select id="imageDelete" formControlName="imageDelete" aria-label="Select image to update" aria-placeholder="Select image to update">
-            <option selected value="" >Choose an Image to update</option>
-            <option *ngFor="let image of images" [value]="image.id">{{image.id}}</option>
+        <label for="imageDelete">Url</label>
+        <select id="imageDelete" formControlName="imageDelete" aria-label="Choose an Image to Delete" aria-placeholder="Choose an Image to Delete">
+            <option selected value="" >Choose an Image to Delete</option>
+            <option *ngFor="let image of images" [ngValue]="image">{{image.id}}</option>
         </select>
       </div>
       <br>
@@ -151,12 +151,17 @@
       >
       <form [formGroup]="selectForm">
         <h1>Select Image</h1>
-
-        <label for="imageDelete">Image</label>
-        <select id="imageDelete" formControlName="imageDelete" aria-label="Select image to update" aria-placeholder="Select image to update">
+        <div>
+          <label>Image</label>
+          <img [src]="selectForm.get('imageSelect')?.value?.imagePath">
+        </div>
+        <div>
+        <label for="imageSelect">Url</label>
+        <select id="imageSelect" formControlName="imageSelect" aria-label="Select image to update" aria-placeholder="Select image to update">
             <option selected value="" >Choose an Image to update</option>
-            <option *ngFor="let image of images" [value]="image.imagePath">{{image.id}}</option>
+            <option *ngFor="let image of images" [ngValue]="image">{{image.id}}</option>
         </select>
+      </div>
       </form>
       </div>
     </div>

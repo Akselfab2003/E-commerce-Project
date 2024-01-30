@@ -4,6 +4,7 @@ using E_commerce.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240130105815_Added new properties to order model")]
+    partial class Addednewpropertiestoordermodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,16 +235,11 @@ namespace E_commerce.Logic.Migrations
                     b.Property<double>("total")
                         .HasColumnType("float");
 
-                    b.Property<int?>("variantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrdersId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("variantId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -268,9 +266,6 @@ namespace E_commerce.Logic.Migrations
 
                     b.Property<int?>("SessionId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Total")
-                        .HasColumnType("float");
 
                     b.Property<int?>("UsersId")
                         .HasColumnType("int");
@@ -371,13 +366,6 @@ namespace E_commerce.Logic.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ReviewContent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReviewRating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ReviewTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -631,13 +619,7 @@ namespace E_commerce.Logic.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_commerce.Logic.Models.ProductVariants", "variant")
-                        .WithMany()
-                        .HasForeignKey("variantId");
-
                     b.Navigation("Product");
-
-                    b.Navigation("variant");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>

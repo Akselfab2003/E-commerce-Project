@@ -12,11 +12,14 @@ namespace E_commerce_Project.Controllers
     {
         private readonly IOrders Context;
         private readonly IUsers IUserContext;
+        private readonly IDataCollection collection;
 
         public OrdersController(IDataCollection c) 
         {
             Context = c.Orders;
             IUserContext = c.Users;
+            collection = c;
+
         }
 
         [HttpGet("{sessid}")]
@@ -46,13 +49,32 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpPost(Name = "CreateOrder")]
-        public async Task<HttpStatusCode> CreateOrder(int userid,Orders order)
+        public async Task<HttpStatusCode> CreateOrder(string sessid,Orders order)
         {
             try
             {
                 var test = order;
-                test.Users = await IUserContext.GetById(userid);
-             await Context.Create(test);
+                Session session = (await collection.Session.GetById(sessid));
+                test.Session = session;
+                test.Users = null;
+                if(session.user != null)
+                {
+                   test.Users = session.user;
+                }
+              
+                foreach (OrderDetails details in test.OrderLines)
+                {
+
+                    details.Product = await collection.Products.GetById(details.Product.Id);
+                    if (details.variant != null)
+                    {
+                        details.variant = await collection.ProductVariants.GetById(details.variant.Id);
+                    }
+                    
+                    await collection.OrderDetails.Create(details);
+
+                }
+                await Context.Create(test);
             }
             catch 
             {
