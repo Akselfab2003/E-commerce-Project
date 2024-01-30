@@ -12,6 +12,6 @@
 
             </div>
         </ngx-slick-carousel>
-        <a id="btn" aria-current="page" class="buy-btn" routerLink="/reviews-page" routerLinkActive="active">Make Review</a>
+        <a id="btn" aria-current="page" class="buy-btn" [routerLink]="['/reviews-page', product.id]" routerLinkActive="active">Make Review for {{this.product.title}}</a>
     </div>
 </div>
