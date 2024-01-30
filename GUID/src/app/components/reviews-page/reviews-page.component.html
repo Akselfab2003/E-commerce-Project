@@ -3,9 +3,26 @@
 </div>
 
 <div class="add-review">
-    <h3>Add Review</h3>
-    <input type="text" [(ngModel)]="newReview.Title" placeholder="Review Title">
-    <textarea [(ngModel)]="newReview.ReviewContent" placeholder="Your Review"></textarea>
-    <input type="number" [(ngModel)]="newReview.rating" placeholder="Rating 1-5">
-    <button (click)="addReview()"> Submit Review</button>
+    <form [formGroup]="newReviewForm" (ngSubmit)="createReview()">
+    <h3>Add Review for {{this.product.title}}</h3>
+    <div>
+        <label for="review-title">Review Title</label>
+        <input type="text" id="review-title" formControlName="ReviewTitle" placeholder="Review Title">
+    </div>
+    <div>
+        <label for="review-content">Review Content</label>
+        <textarea  type="text" id="review-content" formControlName="ReviewContent" placeholder="Write your review here"></textarea>
+    </div>
+    <div>
+        <label for="review-rating">Review Rating</label>
+        <input type="number" id="review-rating" formControlName="ReviewRating" placeholder="rating 1-5">
+    </div>
+
+    <button (click)="createReview()"> Submit Review</button>
+
+    </form>
+
+    <!-- <input type="text" [(ngModel)]="newReviewForm" placeholder="Review Title">
+    <textarea [(ngModel)]="newReviewForm.ReviewContent" placeholder="Your Review"></textarea>
+    <input type="number" [(ngModel)]="newReviewForm.rating" placeholder="Rating 1-5"> -->
 </div>

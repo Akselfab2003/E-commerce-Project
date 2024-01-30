@@ -57,7 +57,7 @@ const routes: Routes = [
     ],
     canActivate:[adminGuard],
   },
-  {path: "reviews-page", component:ReviewsPageComponent},
+  {path: "reviews-page/:id", component:ReviewsPageComponent},
   {path:"Search/:q",component:SearchResultComponent},
   
 ];
