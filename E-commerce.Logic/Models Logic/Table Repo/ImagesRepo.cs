@@ -52,5 +52,9 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             await context.SaveChangesAsync();
             return image;
         }
+        public async Task<List<Images>> GetAllImages()
+        {
+            return await context.Images.ToListAsync();
+        }
     }
 }

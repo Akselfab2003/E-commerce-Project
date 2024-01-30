@@ -12,6 +12,7 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
         public Task<Images> GetById(int id);
 
         public Task<Images> UpdateImage(Images image);
+        public Task<List<Images>> GetAllImages();
 
         public Task<bool> DeleteImage(Images image);
 

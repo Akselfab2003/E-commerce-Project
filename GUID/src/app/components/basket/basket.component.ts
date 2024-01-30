@@ -77,13 +77,7 @@ export class BasketComponent<T> {
     var basketDetailId = this.FindBasketDetailId(product);
     var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
     basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-    this.basketItems.UpdateBasket(this.basket ).then(
-      ele => {
-         this.basketItems.AddToBasketEvent.emit()
-
-       }
-       
-     )
+    this.basketItems.UpdateBasket(this.basket )
   }
 
   MinusProductUsingQtyClick(product: Products){
@@ -94,13 +88,7 @@ export class BasketComponent<T> {
 
         if(basketDetailObject.quantity > 1 ){
           basketDetailObject.quantity = basketDetailObject.quantity - 1 ;
-          this.basketItems.UpdateBasket(this.basket).then(
-           ele => {
-              this.basketItems.AddToBasketEvent.emit()
-
-            }
-            
-          )
+          this.basketItems.UpdateBasket(this.basket)
 
         }
         else{

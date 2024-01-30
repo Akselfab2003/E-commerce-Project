@@ -8,6 +8,7 @@ export class Products{
     description:string="";
     price:number=0;
     images:Images[] = new Array<Images>;
+    Quantity:number=1;
     productVariants:ProductVariants[] = new Array<ProductVariants>;
     productCategories:Categories = new Categories;
     Active:boolean = false;

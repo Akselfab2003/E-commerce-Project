@@ -5,7 +5,7 @@ import { HttpserviceService } from "../../Services/httpservice.service";
 import { sessionController } from "./sessionLogic";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { Products } from "../models/Products";
-import { Observable, firstValueFrom } from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +25,6 @@ export class basketLogic<T> {
         var sessionId:string = sessionController.GetCookie();
         this.service.GetRequest<Basket>(`Basket/GetBasket/${sessionId}`).subscribe(basket =>{
           this.primaryBasket = basket
-          console.log(basket);
         })
         
         
@@ -37,37 +36,32 @@ export class basketLogic<T> {
    
 
 
-    public AddToBasket(product:Products){
+    public AddToBasket(product:Products):Promise<any>{
         var sessionId:string = sessionController.GetCookie();
         var newBasketDetails:BasketDetails = new BasketDetails();
         newBasketDetails.products = product;
         this.GetBasket().subscribe(data => {
-
-          console.log(data.basketDetails.find(detail => detail.products.id == product.id))
   
   
           if(data.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
             var basketDetailObject = data.basketDetails.find(detail => detail.products.id == product.id)
-            basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-            this.UpdateBasket(data).then(ele => {
-              this.AddToBasketEvent.emit()
-
-            }
-            )
+            basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + product.Quantity : null;
+            this.UpdateBasket(data);
          
   
   
           }
           else{
+            newBasketDetails.quantity = product.Quantity;
             this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, newBasketDetails).subscribe((data)=>{
               
               this.AddToBasketEvent.emit()
             });
-  
           }
         })
-
-
+        return new Promise(resolve =>{
+          resolve("Success");
+        })
     };
 
     public RemoveFromBasket(basketDetails:BasketDetails){
@@ -81,9 +75,10 @@ export class basketLogic<T> {
       });
     }
   
-     async UpdateBasket(basket:Basket){
-    
-      var test= await firstValueFrom(this.service.PutRequest<any>(`Basket/${basket.id}`,basket))
+    UpdateBasket(basket:Basket){
+        this.service.PutRequest<any>(`Basket/${basket.id}`,basket).subscribe((data)=>{
+        this.AddToBasketEvent.emit()
+      });
     }
 
     GetTotalPrice(){
