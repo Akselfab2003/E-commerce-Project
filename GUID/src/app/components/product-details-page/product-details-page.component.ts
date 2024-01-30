@@ -47,6 +47,9 @@ export class ProductDetailsPageComponent<T> {
       NewBasketProduct.productVariants = test;
       this.basketTest.AddToBasket(this.product)
     }
+    else{
+      this.basketTest.AddToBasket(this.product)
+    }
   }
 
   selectedId: number = 0;
