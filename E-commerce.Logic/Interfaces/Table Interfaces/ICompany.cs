@@ -9,6 +9,7 @@ namespace E_commerce.Logic.Interfaces
 {
     public interface ICompany : IGeneric<Company>
     {
+        public Task<List<Company>> GetAll();
         public Task<Company> GetById(int id);
 
         public Task<Company> GetByName(string name);

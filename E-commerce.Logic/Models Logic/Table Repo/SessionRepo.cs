@@ -18,44 +18,53 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             context = c; 
         }
-        public async Task<Session> CreateSession(Session session)
+        public async Task<Session> UserLogin(LoginObject loginObject)
         {
-            context.Sessions.Add(session);
-            await context.SaveChangesAsync();
+            Users user = context.Users.Where(usr => usr.Username == loginObject.username).First();
+            Session session = await GetById(loginObject.sessionId);
+            if (session != null)
+            {
+                session.user = user;
+                session.admin = null;
+                session.IsAdmin = false;
+                await Update(session);
+            }
+
             return session;
+
         }
-        public async Task<Session> Login(LoginObject loginObject)
+        public async Task<Session> AdminLogin(LoginObject loginObject)
         {
-                Users user = context.Users.Where(usr => usr.Username == loginObject.username).First();
-                Session session = await GetById(loginObject.sessionId);
-                if(session != null)
-                {
-                    session.user = user;
-                    await UpdateSession(session);
-                }
-                
-                return session;
+            AdminUsers user = context.AdminUsers.Where(usr => usr.Username == loginObject.username).First();
+            Session session = await GetById(loginObject.sessionId);
+            if (session != null)
+            {
+                session.user = null;
+                session.admin = user;
+                session.IsAdmin = true;
+                await Update(session);
+            }
+
+            return session;
 
         }
 
-        public async Task<bool> DeleteSession(string id)
-        {
-            try
-            {
-                Session session = await context.Sessions.FirstOrDefaultAsync(sessions=>sessions.SessId==id);
-                context.Sessions.Remove(session);
-                await context.SaveChangesAsync();
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
+
 
         public async Task<Session> GetById(string SessID)
         {
-            return await context.Sessions.FirstOrDefaultAsync(c => c.SessId == SessID);
+            try
+            {
+
+            return await context.Sessions
+                        .Include(session => session.user)
+                        .Include(session => session.admin)
+                        .FirstOrDefaultAsync(c => c.SessId == SessID);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
 
@@ -63,11 +72,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             return await context.Sessions.ToListAsync();
         }
-        public async Task<Session> UpdateSession(Session session)
-        {
-            context.Sessions.Update(session);
-            await context.SaveChangesAsync();
-            return session;
-        }
+
     }
 }

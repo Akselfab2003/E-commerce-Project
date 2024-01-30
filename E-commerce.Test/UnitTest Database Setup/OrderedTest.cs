@@ -14,16 +14,15 @@ namespace E_commerce.Test
         {
             var sortedlist = new SortedDictionary<int, List<ITestCase>>();
 
-            foreach (var testCase in testCases)
+            foreach (TTestCase testCase in testCases)
             {
                 int priority = 0;
 
-                foreach (var Attribute in testCase.TestMethod.Method.GetCustomAttributes(typeof(AttributePriority).AssemblyQualifiedName))
+                foreach (IAttributeInfo Attribute in testCase.TestMethod.Method.GetCustomAttributes(typeof(AttributePriority).AssemblyQualifiedName))
                 {
                     priority = Attribute.GetNamedArgument<int>("Priority");
-
-                    GetOrCreate(sortedlist, priority).Add(testCase);
                 }
+                    GetOrCreate(sortedlist, priority).Add(testCase);
             }
 
             foreach (var List in sortedlist.Keys.Select(Priority => sortedlist[Priority]))

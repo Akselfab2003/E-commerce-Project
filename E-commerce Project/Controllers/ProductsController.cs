@@ -1,4 +1,5 @@
 ﻿using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,11 @@ namespace E_commerce_Project.Controllers
     {
         IProducts context;
         private IDataCollection dataCollection;
-        public ProductsController(IDataCollection c) { context = c.Products; dataCollection = c; } // Dependency Injection - DI
+        public ProductsController(IDataCollection c) 
+        {
+            context = c.Products;
+            dataCollection = c;
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Products>> GetProductById(int id)
@@ -27,18 +32,64 @@ namespace E_commerce_Project.Controllers
             return product;
         }
 
-        [HttpGet("GetLimitedAmountOfProducts")]
-        public async Task<List<Products>> GetLimitedAmountOfProducts()
+        [HttpGet("GetLimitedAmountOfProducts/{sessid}")]
+        public async Task<List<Products>> GetLimitedAmountOfProducts(string sessid = "")
         {
-            return await context.GetProducts(40);
+            // var cookies = Request.Cookies;
+            Users? users = null;
+            try
+            {
+                if (sessid == "")
+                {
+                    users = (await dataCollection.Session.GetById(sessid)).user;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            //if (cookies != null && cookies.Count()>0 | sessid != "")
+            //{
+
+            //   cookies.TryGetValue("sessionId", out sessid);
+
+            // }
+
+            List<Products> products = await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await context.GetProducts(40), users);
+
+            return products;
         }
 
+        [HttpGet("GetAllProducts")]
+        public async Task<List<Products>?> GetAllProducts()
+        {
+            // var cookies = Request.Cookies;
+            Users? users = null;
+            try
+            {
+            List<Products> products =await context.GetAllProducts();
+
+            return products;
+            }
+            catch (Exception ex)
+            {
+                return null;
+
+            }
+
+        }
+
+
         [HttpPost("GetProductsThatArePartOfCategory")]
-        public async Task<List<Products>> GetProductsPartOfCategory(int CategoryId, int[] Productsids)
+        public async Task<List<Products>> GetProductsPartOfCategory(int CategoryId, int[] Productsids,string sessid)
         {
 
             Categories category = await dataCollection.Categories.GetById(CategoryId);
-            return await dataCollection.Categories.GetProductsFromCategory(category,Productsids);
+            Users? users = (await dataCollection.Session.GetById(sessid)).user;
+            return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Categories.GetProductsFromCategory(category, Productsids), users);
         }
 
         [HttpPut("{id}")]
@@ -51,6 +102,7 @@ namespace E_commerce_Project.Controllers
 
             try
             {
+                
                 await context.UpdateProduct(products);
             }
             catch (DbUpdateConcurrencyException)
@@ -61,14 +113,21 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
 
-        [HttpPost]
+        [HttpPost("CreateProduct")]
         public async Task<ActionResult<Products>> PostProduct(Products product)
         {
-            await context.CreateProduct(product);
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            try
+            {
+                product.ProductCategories = await dataCollection.Categories.GetById(product.ProductCategories.Id);
+                await context.Create(product);
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return CreatedAtAction("GetCategories", new { id = product.Id }, product);
         }
 
-        // DELETE: api/Heroes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -78,9 +137,34 @@ namespace E_commerce_Project.Controllers
                 return NotFound();
             }
 
-            context.DeleteProduct(product);
+            await context.DeleteProduct(product);
 
             return NoContent();
+        }
+
+        [HttpGet("Search/")]
+        public async Task<List<Products>> SearchForProducts(string SearchInput,string sessid)
+        {
+            try
+            {
+                Users? users = null;
+                try
+                {
+
+                    users = (await dataCollection.Session.GetById(sessid)).user;
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Products.SearchForProducts(SearchInput), users);
+
+            }
+            catch(Exception ex) 
+            {
+                return new List<Products> { };
+            }
         }
     }
 }

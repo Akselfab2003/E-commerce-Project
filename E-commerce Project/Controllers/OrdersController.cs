@@ -13,7 +13,9 @@ namespace E_commerce_Project.Controllers
         private readonly IOrders Context;
         private readonly IUsers IUserContext;
 
-        public OrdersController(IDataCollection c) { Context = c.Orders;
+        public OrdersController(IDataCollection c) 
+        {
+            Context = c.Orders;
             IUserContext = c.Users;
         }
 
@@ -50,7 +52,7 @@ namespace E_commerce_Project.Controllers
             {
                 var test = order;
                 test.Users = await IUserContext.GetById(userid);
-             await Context.CreateOrder(test);
+             await Context.Create(test);
             }
             catch 
             {

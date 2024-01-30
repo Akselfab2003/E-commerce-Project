@@ -2,6 +2,8 @@
 html{
     width: 100%;
     height: 100%;
+    background-color: var(--background) !important;
+
 }
 
 body {
@@ -10,6 +12,9 @@ body {
     height: 100%;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    background-color: var(--background) !important;
+    
+
 }
 
 body::-webkit-scrollbar{
@@ -17,7 +22,49 @@ body::-webkit-scrollbar{
 }
 
 
-:root[data-theme="light"] {
+:root{
+    --text: #050515;
+    --background: #fbfbfe;
+    --primary: #343fd5;
+    --secondary: #df92e8;
+    --accent: #e16bc3;
+    --background-nav:#e16bc3;
+    --WithStuff:75%;
+
+}
+body{
+    background-color: var(--background) !important;
+
+}
+
+[data-theme="light"] {
+    
+    --text: #050515;
+    --background: #fbfbfe;
+    --primary: #343fd5;
+    --secondary: #df92e8;
+    --accent: #e16bc3;
+    --primary-200: #aaafee;
+    /* --background-nav:var(--primary-100) !important; */
+    --background-nav:rgba(var(--primary-100),1)
+  }
+ [data-theme="dark"] {
+    --text: #eaeafa;
+    --background: #010104;
+    --primary: #2a34cb;
+    --secondary: #65176d;
+    --accent: #941e77;
+    --background-nav: rgba(255, 255, 255, 0.03)
+
+  
+  }
+
+
+
+
+
+
+  :root[data-theme="light"] {
     --text-50: #eaeafa;
     --text-100: #d6d6f5;
     --text-200: #acacec;
@@ -141,3 +188,6 @@ body::-webkit-scrollbar{
     --accent-950: #fbeaf6;
   
   }
+  .slick-prev:before, .slick-next:before {
+    color: black !important;
+}

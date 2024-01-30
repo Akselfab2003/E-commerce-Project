@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Test
 {
-    [CollectionDefinition("Services")]
+    [CollectionDefinition("Services",DisableParallelization =true)]
 
     public class CreateFakeDBDependenciesInjector : ICollectionFixture<CreateFakeDBDependencies>
     {

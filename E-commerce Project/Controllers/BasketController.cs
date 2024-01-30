@@ -4,6 +4,8 @@ using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ContentModel;
+using System.Net;
 
 namespace E_commerce_Project.Controllers
 {
@@ -37,7 +39,6 @@ namespace E_commerce_Project.Controllers
         {
             Session session = await dataCollectioncontext.Session.GetById(sessid);
             var basket = await context.GetBySessId(session);
-
             if (basket == null)
             {
                 return null;
@@ -56,9 +57,9 @@ namespace E_commerce_Project.Controllers
 
             try
             {
-                await context.UpdateBasket(basket);
+                await context.Update(basket);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
 
             }
@@ -71,9 +72,17 @@ namespace E_commerce_Project.Controllers
         {
             Basket basket = await GetBasketBySessId(sessid);
             basket.BasketDetails.Add(basketDetails);
-            await dataCollectioncontext.Basket.UpdateBasket(basket);
+            await dataCollectioncontext.Basket.Update(basket);
 
             return basket.BasketDetails;
+        }
+
+        [HttpPost("RemoveFromBasket/{sessId}")]
+        public async Task<List<BasketDetails>> DeleteBasketDetail(BasketDetails basketDetails, string sessId)
+        {
+            
+            await dataCollectioncontext.BasketDetails.Delete(basketDetails);
+            return (await GetBasketBySessId(sessId)).BasketDetails;
         }
 
 
@@ -100,7 +109,7 @@ namespace E_commerce_Project.Controllers
                 return NotFound();
             }
 
-            context.DeleteBasket(basket);
+            await context.Delete(basket);
 
             return NoContent();
         }

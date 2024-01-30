@@ -84,3 +84,9 @@ html, body {
     background-color: #2980b9;
     cursor: pointer;
 }
+
+
+.variant-selection{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

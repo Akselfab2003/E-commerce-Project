@@ -14,8 +14,9 @@ namespace E_commerce.Logic.Models
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public double Price { get; set; }
-        public virtual List<Images> Images { get; set; }
+        public virtual List<Images>? Images { get; set; }
         public virtual List<ProductVariants>? ProductVariants { get; set; }
-        public virtual Categories ProductCategories { get; set; }
+
+        public virtual Categories? ProductCategories { get; set; }
     }
 }

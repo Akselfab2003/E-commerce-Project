@@ -39,14 +39,26 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return true;
         }
 
+        public async Task<List<Products>?> GetAllProducts()
+        {
+            return await context.Products.Include(product => product.Images)
+                .Include(product => product.ProductCategories)
+                .Include(product => product.ProductVariants)
+                .ToListAsync();
+
+        }
+
         public async Task<Products> GetById(int id)
         {
-            return await context.Products.Include(product => product.Images).Include(product => product.ProductCategories).Include(product => product.ProductVariants).FirstOrDefaultAsync(product => product.Id == id);
+            return await context.Products
+                .Include(product => product.Images)
+                .Include(product => product.ProductCategories)
+                .FirstOrDefaultAsync(product => product.Id == id);
         }
 
         public async Task<List<Products>> GetProducts(int count)
-        {
-            return await context.Products.ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
+        {   
+            return await context.Products.Include(ele => ele.Images).Include(ele => ele.ProductCategories).Take(count).ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
         }
 
         public async Task<Products> UpdateProduct(Products entity)
@@ -54,6 +66,15 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             context.Update(entity);
             await context.SaveChangesAsync();
             return entity;
+        }
+
+
+        public async Task<List<Products>> SearchForProducts(string SearchInput)
+        {
+            return await context.Products
+                                .Include(ele => ele.ProductVariants)
+                                .Include(ele => ele.Images)
+                                .Include(ele => ele.ProductCategories).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
         }
     }
 }

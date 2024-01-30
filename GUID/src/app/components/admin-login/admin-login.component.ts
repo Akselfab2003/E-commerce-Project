@@ -4,6 +4,7 @@ import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Router } from '@angular/router';
 import { LoginObject } from '../../models/LoginObject';
 import { sessionController } from '../../logic/sessionLogic';
+import { Session } from '../../models/Session';
 
 @Component({
   selector: 'app-admin-login',
@@ -17,10 +18,8 @@ export class AdminLoginComponent<T> {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
-
   constructor(private service:HttpserviceService<T>, private router:Router) {
   };
-
 
   //starter forfra hvis login ikke passer
   login(){
@@ -31,9 +30,13 @@ export class AdminLoginComponent<T> {
     LoginTry.password =password;
     LoginTry.sessionId =sessionController.GetCookie();
     console.log(LoginTry);
-    this.service.PutRequest<LoginObject>("User/Login/AdminUsers",LoginTry).subscribe((data)=>
-      console.log(data));
 
-    this.router.navigate(['/admin-page']);
+    this.service.PutRequest<Session>("User/AdminLogin",LoginTry).subscribe((data)=>
+    {
+      sessionController.SetCookie(data);
+      this.router.navigateByUrl("/AdminControl")
+
+    }
+    );
   }
 }

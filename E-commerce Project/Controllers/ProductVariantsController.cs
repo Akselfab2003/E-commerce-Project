@@ -4,6 +4,7 @@ using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace E_commerce_Project.Controllers
 {
@@ -12,7 +13,8 @@ namespace E_commerce_Project.Controllers
     public class ProductVariantsController : Controller
     {
         IProductVariants context;
-        public ProductVariantsController(IDataCollection c) { context = c.ProductVariants; } // Dependency Injection - DI
+        IDataCollection DataContext;
+        public ProductVariantsController(IDataCollection c) { context = c.ProductVariants; DataContext = c; } // Dependency Injection - DI
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductVariants>> GetProductVariantsById(int id)
@@ -26,6 +28,33 @@ namespace E_commerce_Project.Controllers
 
             return productVariants;
         }
+
+        [HttpGet("")]
+        public async Task<List<ProductVariants>?> GetProductVariants()
+        {
+            var productVariants = await context.GetList();
+
+            if (productVariants == null)
+            {
+                return null;
+            }
+
+            return productVariants;
+        }
+
+        [HttpGet("GetProductVariants/{productid}")]
+        public async Task<List<ProductVariants>?> GetProductVariants(int productid)
+        {
+            var productVariants = await context.GetListOfProductVariantsByProductId(productid);
+
+            if (productVariants == null)
+            {
+                return null;
+            }
+
+            return productVariants;
+        }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProductVariants(int id, ProductVariants productVariantss)
@@ -48,25 +77,26 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants)
+        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants, int ID)
         {
-            await context.CreateProductVariants(productVariants);
+            productVariants.ParentProduct = await DataContext.Products.GetById(ID);
+            await context.Create(productVariants);
             return CreatedAtAction("GetProductVariants", new { id = productVariants.Id }, productVariants);
         }
 
         // DELETE: api/Heroes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProductVariants(int id)
+        public async Task<HttpStatusCode> DeleteProductVariants(int id)
         {
             var productVariants = await context.GetById(id);
             if (productVariants == null)
             {
-                return NotFound();
+                return HttpStatusCode.BadRequest;
             }
 
-            context.DeleteProductVariants(productVariants);
+            context.Delete(productVariants);
 
-            return NoContent();
+            return HttpStatusCode.Created;
         }
     }
 }

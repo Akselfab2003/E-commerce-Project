@@ -1,8 +1,10 @@
 ﻿using Bogus;
+using Bogus.Extensions.UnitedStates;
 using E_commerce.Logic;
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic;
+
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,9 +16,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace E_commerce.Test.Create_data_for_local_database
 {
+    [TestCaseOrderer("E_commerce.Test.OrderedTest", "E-commerce.Test")]
+
     [Collection("LocalDatabaseService")]
     public class FillDatabaseWithData
     {
@@ -30,13 +35,13 @@ namespace E_commerce.Test.Create_data_for_local_database
         
         }
 
-        [Fact] 
+        [Fact,AttributePriority(-10)] 
         public async Task Insertusers()
         {
             Faker<Users> faker = new Faker<Users>()
                 //.RuleFor(user => user.Id, data => data.IndexFaker)
                 .RuleFor(user => user.Username, data => data.Person.UserName)
-                .RuleFor(user => user.Password, data => data.Internet.Password(10))
+                .RuleFor(user => user.Password, data => "Test") /*data.Internet.Password(10)*/
                 .RuleFor(user => user.Email, data => data.Person.Email)
                 .RuleFor(user => user.Gender, data => data.Random.Bool());
 
@@ -47,12 +52,13 @@ namespace E_commerce.Test.Create_data_for_local_database
             {
                 user.Password = DataCollection.Cryptography.CreateNewPasswordHash(user.Password);
 
-                await DataCollection.Users.CreateUser(user);
+                await DataCollection.Users.Create(user);
             }
             Assert.True(data.Any());
 
         }
-        [Fact]
+
+        [Fact, AttributePriority(-9)]
         public async void InsertDataForProducts()
         {
             string[] categories = new string[50];
@@ -67,7 +73,6 @@ namespace E_commerce.Test.Create_data_for_local_database
             }
 
 
-            await InsertProducts();
 
 
 
@@ -76,7 +81,7 @@ namespace E_commerce.Test.Create_data_for_local_database
         }
 
 
-        [Fact]
+        [Fact, AttributePriority(-7)]
         public async void GenerateFakeOrders()
         {
            
@@ -103,7 +108,8 @@ namespace E_commerce.Test.Create_data_for_local_database
                         }
                     }
                     )
-                .RuleFor(orders => orders.Users, data => users);
+                .RuleFor(orders => orders.Users, data => users)
+                .RuleFor(orders => orders.Session, data => new Session());
             List<Orders> fakeorders = faker.GenerateBetween(25, 40);
             foreach(Orders order in fakeorders)
             {
@@ -113,7 +119,7 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
 
-        [Fact]
+        [Fact(Skip = "GenerateFakeBaskets doesn't need to be runned any more")]
         public async void GenerateFakeBaskets()
         {
             
@@ -151,6 +157,7 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
 
+        [Fact, AttributePriority(-8)]
 
         public async Task InsertProducts()
         {
@@ -169,6 +176,83 @@ namespace E_commerce.Test.Create_data_for_local_database
                 await DataCollection.Products.CreateProduct(product);
             }
             Assert.True(data.Any());
+
+        }
+
+
+
+
+        public async Task<List<PriceListEntity>> GetListPriceListEntities()
+        {
+
+            List<Products> products = await DataCollection.Products.GetProducts(40);
+
+            Assert.True(products.Count() > 0);
+
+            Faker<PriceListEntity> faker = new Faker<PriceListEntity>()
+                .RuleFor(Entity => Entity.PriceListPrice, data => 1.0)
+                .RuleFor(Entity => Entity.Product, data => products[data.IndexFaker]);
+
+
+
+            List<PriceListEntity> ListOfPriceListEntities = faker.GenerateBetween(1, products.Count()-1);
+
+            
+            return ListOfPriceListEntities;
+
+
+        }
+
+
+        [Fact, AttributePriority(-5)]
+
+        public async Task CreatePriceList()
+        {
+            Company company = await DataCollection.Company.GetById(1);
+            Users user = await DataCollection.Users.GetById(2);
+
+            Assert.NotNull(company);
+            Assert.NotNull(user);
+
+
+
+            Faker<PriceList> faker = new Faker<PriceList>()
+                .RuleFor(pricelist => pricelist.Companies, data => new List<Company>() { company })
+                .RuleFor(pricelist => pricelist.Users, data => new List<Users>() { user })
+                .RuleFor(pricelist => pricelist.PriceListProducts, await GetListPriceListEntities());
+
+            List<PriceList> priceLists = faker.GenerateBetween(1, 1);
+
+            foreach (PriceList priceList in priceLists)
+            {
+                await DataCollection.PriceList.Create(priceList);
+            }
+
+
+        }
+
+
+        [Fact, AttributePriority(-6)]
+        public async Task CreateCompany()
+        {
+            Users users = await DataCollection.Users.GetById(1);
+            Assert.NotNull(users);
+
+            Faker<Company> faker = new Faker<Company>()
+                .RuleFor(company => company.Name, data => data.Company.CompanyName())
+                .RuleFor(company => company.email, data => data.Person.Email)
+                .RuleFor(company => company.cvr, data => data.Company.Ein())
+                .RuleFor(company => company.Users, data => new List<Users>() { users });
+
+
+            List<Company> ListOfCompanies = faker.GenerateBetween(1, 1);
+
+            foreach (Company company in ListOfCompanies)
+            {
+                await DataCollection.Company.Create(company);
+            }
+
+
 
         }
 

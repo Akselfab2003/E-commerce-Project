@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Logic.Models_Logic.Table_Repo
 {
-    public class UsersRepo:  IUsers
+    public class UsersRepo: GenericRepo<Users>, IUsers
     {
         DBcontext context;
-        public UsersRepo(DBcontext c)
+        public UsersRepo(DBcontext c) : base(c)
         { 
             context = c;
         } // Dependency Injection - DI
@@ -25,13 +25,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<Users> GetById(int id)
         {
             return await context.Users.FirstOrDefaultAsync(Users => Users.Id == id);
-        }
-
-        public async Task<Users> UpdateUser(Users users)
-        {
-            context.Update(users);
-            await context.SaveChangesAsync();
-            return users;
         }
 
 
@@ -83,28 +76,17 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return true;
         }
 
-        public async Task<bool> DeleteUser(string name)
+        public async Task<List<Users?>> GetListOfUsers()
         {
             try
             {
-                Users users = await GetByName(name);
-                context.Users.Remove(users);
-                await context.SaveChangesAsync();
+                return await context.Users.ToListAsync();
             }
-            catch
+            catch(Exception ex)
             {
-                return false;
+                
             }
-
-            return true;
-        }
-
-
-        public async Task<Users> CreateUser(Users users)
-        {
-            context.Users.Add(users);
-            await context.SaveChangesAsync();
-            return users;
+            return null;
         }
     }
 }

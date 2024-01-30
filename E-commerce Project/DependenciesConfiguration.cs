@@ -13,7 +13,6 @@ namespace E_commerce_Project
         {
 
             services.AddDbContext<DBcontext>(con => con
-                                                     .UseLazyLoadingProxies()
                                                      .UseSqlServer(configuration.GetConnectionString("Connection"))
                                             );
 

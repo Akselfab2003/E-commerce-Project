@@ -1,8 +1,12 @@
-<div class="App-Root-Container">
-  
+<div [attr.data-theme]="theme" class="App-Root-Container">
   <div class="navbar-container">
-    <app-navbar></app-navbar>
+    <app-navbar (TagsChangedEvent)="ChangeTheme($event)"></app-navbar>
   </div>
+  <div class="Content">
+
+    <router-outlet></router-outlet>
+
+  </div>
+
 </div>
 
-<router-outlet></router-outlet>

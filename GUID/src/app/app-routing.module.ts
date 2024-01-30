@@ -12,9 +12,20 @@ import { authenticatorGuard } from '../app/logic/authenticator.guard'
 import { ProfileComponent } from './components/profile/profile.component';
 import { BasketComponent } from './components/basket/basket.component';
 import { CheckoutPageComponent } from './components/checkout-page/checkout-page.component';
-import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { adminGuard } from './logic/admin.guard';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { AdminControlPanelComponent } from './components/admin-control-panel/admin-control-panel.component';
+import { UserControlComponent } from './components/AdminControlsModelComponents/user-control/user-control.component';
+import { AdminControlComponent } from './components/AdminControlsModelComponents/admin-control/admin-control.component';
+import { CompanyControlComponent } from './components/AdminControlsModelComponents/company-control/company-control.component';
+import { ProductVariantsControlComponent } from './components/AdminControlsModelComponents/product-variants-control/product-variants-control.component';
+import { ProductControlComponent } from './components/AdminControlsModelComponents/product-control/product-control.component';
+import { CategoriesControlComponent } from './components/AdminControlsModelComponents/categories-control/categories-control.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
+import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
+import { ImagesControlComponent } from './components/AdminControlsModelComponents/images-control/images-control.component';
+
 
 const routes: Routes = [
   {path:"",component:HomePageComponent},
@@ -28,8 +39,27 @@ const routes: Routes = [
   {path:"profile",component:ProfileComponent,canActivate:[authenticatorGuard]},
   {path:"basket",component:BasketComponent},
   {path:"checkout-page",component:CheckoutPageComponent},
-  {path:"admin-page",component:AdminPageComponent,canActivate:[adminGuard]},
-  {path:"admin-login",component:AdminLoginComponent}
+  {path:"admin-page",component:AdminControlPanelComponent},
+  {path:"admin-login",component:AdminLoginComponent},
+  {path:"carousel",component:CarouselComponent},
+  {
+    path:"AdminControl",
+    children:[
+      {path:"",component:AdminControlPanelComponent},
+      {path:"UserControl",component:UserControlComponent,},
+      {path:"CompanyControlComponent", component:CompanyControlComponent},
+      {path:"admin-user-control",component:AdminControlComponent},
+      {path:"product-control",component:ProductControlComponent},
+      {path:"product-variants-control",component:ProductVariantsControlComponent},
+      {path:"categories-control",component:CategoriesControlComponent},
+      {path:"images-control",component:ImagesControlComponent},
+
+    ],
+    canActivate:[adminGuard],
+  },
+  {path: "reviews-page", component:ReviewsPageComponent},
+  {path:"Search/:q",component:SearchResultComponent},
+  
 ];
 
 @NgModule({

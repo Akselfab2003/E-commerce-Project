@@ -1,0 +1,141 @@
+<div class="AdminControl">
+    <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="Admin-Created-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Created"
+          type="button"
+          role="tab"
+          aria-controls="Created"
+          aria-selected="true"
+        >Created
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="Updated-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Updated"
+          type="button"
+          role="tab"
+          aria-controls="Updated"
+          aria-selected="false"
+        >
+          Updated
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link"
+          id="pills-contact-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-contact"
+          type="button"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >
+          Deleted
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-disabled-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-disabled"
+          type="button"
+          role="tab"
+          aria-controls="pills-disabled"
+          aria-selected="false"
+        >
+          Select
+        </button>
+      </li>
+    </ul>
+  
+  
+  
+  
+  
+  
+    
+    <div class="tab-content tab-container" id="pills-tabContent">
+      <div
+        class="tab-pane fade show active TabContent"
+        id="Created"
+        role="tabpanel"
+        aria-labelledby="Created-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="createForm" (submit)="register()" autocomplete="new-password">
+      <h1>Create Admin</h1>
+        <div >
+          <label for="username">Username</label>
+          <input id="usernameCreate" type="text" formControlName="usernameCreate">
+        </div>
+      
+        <div >
+          <label for="password">Password</label>
+          <input id="passwordCreate" autocomplete="new-password" type="password" formControlName="passwordCreate">
+        </div>
+        <br>
+      
+        <button type="submit" class="btn"id="Create">Create &#8594;</button>
+      </form>
+    </div>
+      <div
+        class="tab-pane fade TabContent"
+        id="Updated"
+        role="tabpanel"
+        aria-labelledby="Updated-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
+        <h1>Update Admin</h1>
+        <div >
+          <label for="username">Username</label>
+          <input id="usernameUpdate" type="text" formControlName="usernameUpdate">
+        </div>
+      
+        <div >
+          <label for="password">Password</label>
+          <input id="passwordUpdate" autocomplete="new-password" type="password" formControlName="passwordUpdate">
+        </div>
+        <br>
+      
+        <button type="submit" class="btn"id="Update">Update &#8594;</button>
+      </form>
+      </div>
+      <div
+        class="tab-pane fade TabContent"
+        id="pills-contact"
+        role="tabpanel"
+        aria-labelledby="pills-contact-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
+        <h1>Delete Admin</h1>
+          <div >
+            <label for="username">Username</label>
+            <input id="usernameDelete" type="text" formControlName="usernameDelete">
+          </div>
+          <br>
+          <button type="submit" class="btn" id="Delete">Delete &#8594;</button>
+        </form>
+      </div>
+      <div
+        class="tab-pane fade TabContent"
+        id="pills-disabled"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+      >
+        ...
+      </div>
+    </div>
+  </div>
+  

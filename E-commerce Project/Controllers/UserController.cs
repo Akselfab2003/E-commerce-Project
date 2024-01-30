@@ -21,11 +21,26 @@ namespace E_commerce_Project.Controllers
         {
             _users = _context.Users;
             _session = _context.Session;
-            //_adminUsers = _context.AdminUsers;
+            _adminUsers = _context.AdminUsers;
             collection = _context;
         }
 
         #region GET Requests
+        [HttpGet("GetListOfUsers")]
+        public async Task<List<Users?>> GetListOfUsers()
+        {
+            try
+            {
+                return await _users.GetListOfUsers();
+         
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
         [HttpGet("createEmptySession")]
         public async Task<Session> PostEmptySession()
         {
@@ -34,10 +49,10 @@ namespace E_commerce_Project.Controllers
             {
                 session1.user = null;
                 
-                await _session.CreateSession(session1);
+                await _session.Create(session1);
                 Basket basket = new Basket();
                 basket.Session = session1;
-                await collection.Basket.CreateBasket(basket);
+                await collection.Basket.Create(basket);
             }
             catch
             {
@@ -67,11 +82,7 @@ namespace E_commerce_Project.Controllers
             try
             {
                 Session session = await _session.GetById(sessionId);
-                if (session == null || session.user==null)
-                {
-                    return false;
-                }
-                else
+                if (session != null && session.user != null)
                 {
                     return true;
                 }
@@ -80,8 +91,34 @@ namespace E_commerce_Project.Controllers
             {
                 return false;
             }
+            return false;
         }
-        
+
+
+        [HttpGet("ValidateSessionAdmin/{sessionId}")]
+        public async Task<Boolean> ValidateAdminSession(string sessionId)
+        {
+            try
+            {
+                Session session = await _session.GetById(sessionId);
+                if (session != null)
+                {
+
+                    if (session != null && session.admin != null)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
+
         #endregion
 
         #region   POST Requests
@@ -90,25 +127,26 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
-                    users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+                        users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
 
-                    await _users.CreateUser(users);
+                    await _users.Create(users);
             }
-            catch
+            catch(Exception ex)
             {
+             
                 return HttpStatusCode.BadRequest;
             }
 
             return HttpStatusCode.Created;
         }
         [HttpPost("createAdmin")]
-        public async Task<HttpStatusCode> PostAdmin(AdminUsers users)
+        public async Task<HttpStatusCode> PostAdmin(AdminUsers adminUsers)
         {
             try
             {
-                users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+                adminUsers.Password = collection.Cryptography.CreateNewPasswordHash(adminUsers.Password);
 
-                await _adminUsers.CreateAdminUsers(users);
+                await _adminUsers.Create(adminUsers);
             }
             catch
             {
@@ -120,6 +158,28 @@ namespace E_commerce_Project.Controllers
         #endregion
 
         #region   PUT Requests
+        [HttpPut("UpdateUser")]
+        public async Task<Users?> UpdateUser(Users user)
+        {
+            try
+            {
+                if(user.Password != (await collection.Users.GetById(user.Id)).Password)
+                {
+
+                    user.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
+                
+                }
+
+                return await collection.Users.Update(user);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        } 
+
 
         [HttpPut("Login")]
         public async Task<IActionResult> PutSession(LoginObject loginObject)
@@ -128,7 +188,7 @@ namespace E_commerce_Project.Controllers
      
             try
             {
-                if (session.Created < DateTime.Now)
+                if (session.Created > DateTime.Now)
                 {
                     
 
@@ -138,7 +198,7 @@ namespace E_commerce_Project.Controllers
 
                     if (PasswordCorrect)
                     {
-                        session = await _session.Login(loginObject);
+                        session = await _session.UserLogin(loginObject);
                     }
                     else
                     {
@@ -172,7 +232,7 @@ namespace E_commerce_Project.Controllers
 
                     if (PasswordCorrect)
                     {
-                        session = await _session.Login(loginObject);
+                        session = await _session.AdminLogin(loginObject);
                     }
                     else
                     {
@@ -187,21 +247,34 @@ namespace E_commerce_Project.Controllers
             catch (DbUpdateConcurrencyException)
             {
             }
-            return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
+            return new ObjectResult(new Session() { SessId=session.SessId,Created=session.Created,IsAdmin=session.IsAdmin}) { StatusCode = StatusCodes.Status201Created };
         }
         #endregion
 
         #region DELETE Requests
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser(string name)
+        [HttpPost("DeleteUser")]
+        public async Task<Users?> DeleteUser(Users user)
         {
-            var user = await _users.GetByName(name);
+            try
+            {
+                return await _users.Delete(user);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        [HttpDelete("deleteAdmin/{username}")]
+        public async Task<IActionResult> DeleteAdmin(string username)
+        {
+            var user = await _adminUsers.GetByName(username);
             if (user == null)
             {
                 return NotFound();
             }
 
-            await _users.DeleteUser(user.Username);
+            await _adminUsers.Delete(user);
 
             return NoContent();
         }

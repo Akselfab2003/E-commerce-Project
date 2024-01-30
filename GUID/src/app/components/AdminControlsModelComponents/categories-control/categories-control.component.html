@@ -1,0 +1,153 @@
+<div class="CategorieControl">
+    <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="Product-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Created"
+          type="button"
+          role="tab"
+          aria-controls="Created"
+          aria-selected="true"
+        >Created
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="Updated-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Updated"
+          type="button"
+          role="tab"
+          aria-controls="Updated"
+          aria-selected="false"
+        >
+          Updated
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link"
+          id="pills-contact-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-contact"
+          type="button"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >
+          Deleted
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-disabled-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-disabled"
+          type="button"
+          role="tab"
+          aria-controls="pills-disabled"
+          aria-selected="false"
+        >
+          Select
+        </button>
+      </li>
+    </ul>
+  
+  
+  
+  
+  
+  
+    
+    <div class="tab-content" id="pills-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="Created"
+        role="tabpanel"
+        aria-labelledby="Created-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="createForm" (submit)="create()">
+      <h1>Create Categorie</h1>
+        <div>
+          <label for="name">Name</label>
+          <input id="nameCreate" type="text" formControlName="nameCreate">
+        </div>
+        <br>
+        <button type="submit" class="btn"id="Create">Create &#8594;</button>
+      </form>
+    </div>
+      <div
+        class="tab-pane fade"
+        id="Updated"
+        role="tabpanel"
+        aria-labelledby="Updated-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
+        <h1>Update Categorie</h1>
+        <div>
+            <label for="productCategories">Categories</label>
+            <select id="categoriesUpdate" formControlName="categoriesUpdate" aria-label="Select categoires to add" aria-placeholder="Select categoires to add">
+                <option selected value="" >Choose a Categorie</option>
+                <option *ngFor="let tag of tags" [value]="tag.name" >{{tag.name}}</option>
+            </select>
+        </div>
+        <div>
+            <label for="name">Name</label>
+            <input id="nameUpdate" type="text" formControlName="nameUpdate">
+          </div>
+        <br>
+      
+        <button type="submit" class="btn"id="Update">Update &#8594;</button>
+      </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-contact"
+        role="tabpanel"
+        aria-labelledby="pills-contact-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
+        <h1>Delete Categories</h1>
+          <div >
+            <label for="productCategories">Categories</label>
+            <select id="idDelete" formControlName="idDelete" aria-label="Select categoires to delete" aria-placeholder="Select categoires to delete">
+                <option selected value="" >Choose a Categorie</option>
+                <option *ngFor="let tag of tags" [value]="tag.id" >{{tag.name}}</option>
+            </select>
+          </div>
+          <br>
+          <button type="submit" class="btn" id="Delete">Delete &#8594;</button>
+        </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-disabled"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="selectForm">
+        <h1>Select Categorie</h1>
+        <div>
+          <label for="categorieSelect">Categorie</label>
+          <select formControlName="categorieSelect">
+            <option value="" selected>Choose a Categorie to Select</option>
+            <option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</option>
+          </select>
+        </div>
+        <div>
+        <label for="name">Name</label>
+        <input id="nameSelect" type="text" formControlName="nameSelect">
+      </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  

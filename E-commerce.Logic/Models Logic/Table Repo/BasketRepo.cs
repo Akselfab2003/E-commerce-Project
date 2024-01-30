@@ -44,12 +44,26 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
         public async Task<Basket> GetById(int id)
         {
-            return await context.Basket.FirstOrDefaultAsync(Basket => Basket.Id == id);
+            return await context.Basket
+                .Include(ele => ele.Session)
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Products)
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Products)
+                .ThenInclude(ele => ele.Images).FirstOrDefaultAsync(Basket => Basket.Id == id);
         }
 
         public async Task<Basket> GetBySessId(Session sessId)
         {
-            Basket userBasket = await context.Basket.FirstOrDefaultAsync(basket => basket.Session == sessId);
+            Basket userBasket = await context.Basket
+                .Include(ele => ele.Session)
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Products)
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Products)
+                .ThenInclude(ele => ele.Images)
+                .FirstOrDefaultAsync(basket => basket.Session == sessId);
+
             return userBasket;
                 
         }
