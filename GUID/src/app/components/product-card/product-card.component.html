@@ -1,4 +1,4 @@
-<div class="product-card">
+<div class="product-card" [routerLink]="['/product-details', product.id]">
     <div class="d-flex flex-column w-100 h-100 product-card-Container">
             <img loading="lazy" [src]="product.images[0].imagePath" alt="Product 1">
         
