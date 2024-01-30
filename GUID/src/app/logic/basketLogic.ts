@@ -43,8 +43,8 @@ export class basketLogic<T> {
         this.GetBasket().subscribe(data => {
   
   
-          if(data.basketDetails.find(detail => detail.products.id == product.id)!= undefined){
-            var basketDetailObject = data.basketDetails.find(detail => detail.products.id == product.id)
+          if(data.basketDetails.find(detail => detail.products.id == product.id)!= undefined ||  data.basketDetails.find(detail => detail.products.productVariants.includes(product.productVariants[0])!= undefined)){
+            var basketDetailObject = data.basketDetails.find(detail => detail.products.id == product.id) != undefined ?  data.basketDetails.find(detail => detail.products.id == product.id) :  data.basketDetails.find(detail => detail.products.productVariants.includes(product.productVariants[0]))
             basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + product.Quantity : null;
             this.UpdateBasket(data);
          

@@ -40,15 +40,17 @@ export class ProductDetailsPageComponent<T> {
 
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
+    var NewBasketProduct:Products = this.product;
+    NewBasketProduct.Quantity = 1;
     if(this.variants.length > 0 ){
       var NewBasketProduct:Products = this.product;
       var test:ProductVariants[] = new Array<ProductVariants>();
       test.push(this.SelectedVariant)
       NewBasketProduct.productVariants = test;
-      this.basketTest.AddToBasket(this.product)
+      this.basketTest.AddToBasket(NewBasketProduct)
     }
     else{
-      this.basketTest.AddToBasket(this.product)
+      this.basketTest.AddToBasket(NewBasketProduct)
     }
   }
 
