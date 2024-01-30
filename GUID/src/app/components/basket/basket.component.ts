@@ -32,6 +32,7 @@ export class BasketComponent<T> {
   public BasketStateBool:boolean = false;
 
   basket: Basket = new Basket();
+  subtotal:number = 0;
   constructor(private basketItems:basketLogic<T>)
   {
      basketItems.AddToBasketEvent.subscribe(ele => {this.GetBasket()})
@@ -40,11 +41,12 @@ export class BasketComponent<T> {
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
+      this.subtotal = this.calculateTotal(res.basketDetails);
     });
   };
 
-  calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => total + (item.quantity * item.products.price), 0);
+  calculateTotal(basketDetails:BasketDetails[]): number {
+    return basketDetails.reduce((total, item) => total + (item.quantity * item.products.price), 0);
   } 
 
   ngOnInit(){
