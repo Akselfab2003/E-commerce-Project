@@ -49,7 +49,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         }
         public async Task<List<ProductVariants>> GetListOfProductVariantsByProductId(int ProductId)
         {
-            return await context.ProductVariants.Where(variant => variant.ParentProduct.Id == ProductId).ToListAsync();
+            return await context.ProductVariants.Include(ele => ele.ParentProduct).Where(variant => variant.ParentProduct.Id == ProductId).ToListAsync();
         }
 
         public async Task<ProductVariants> UpdateProductVariants(ProductVariants entity)
