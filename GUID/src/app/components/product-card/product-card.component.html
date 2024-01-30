@@ -11,9 +11,9 @@
             <div class="button-qty-container">
                 <button (click)="AddToBasket($event)" aria-current="page" class="buy-btn">Add to basket</button>
                 <div class="qty">
-                    <span (click)="SubtractProductQuantity(product)">-</span>
+                    <span (click)="SubtractProductQuantity($event)">-</span>
                     <strong>{{product.Quantity}}</strong>
-                    <span (click)="AddProductQuantity(product)">+</span>
+                    <span (click)="AddProductQuantity($event)">+</span>
                 </div>
             </div>
         </div>

@@ -28,16 +28,18 @@ export class ProductCardComponent<T> {
     this.basketTest.AddToBasket(this.product);
   }
 
-  AddProductQuantity(product:Products){
-    product.Quantity += 1
+  AddProductQuantity(event: MouseEvent){
+    event.stopPropagation()
+    this.product.Quantity += 1
   }
 
-  SubtractProductQuantity(product:Products){
-    if(product.Quantity -1 <= 0){
+  SubtractProductQuantity(event: MouseEvent){
+    if(this.product.Quantity -1 <= 0){
 
     }
     else{
-      product.Quantity -= 1
+      event.stopPropagation()
+      this.product.Quantity -= 1
     }
   }
 
