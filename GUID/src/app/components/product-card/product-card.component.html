@@ -8,7 +8,14 @@
             <p>
                 <strong>${{product.price}}</strong>
             </p>
-            <a (click)="AddToBasket($event)" aria-current="page" class="buy-btn">Add to basket</a>
+            <div class="button-qty-container">
+                <button (click)="AddToBasket($event)" aria-current="page" class="buy-btn">Add to basket</button>
+                <div class="qty">
+                    <span (click)="SubtractProductQuantity(product)">-</span>
+                    <strong>{{product.Quantity}}</strong>
+                    <span (click)="AddProductQuantity(product)">+</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -4,6 +4,8 @@ import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Products } from '../../models/Products';
 import { Categories } from '../../models/Categories';
 import { sessionController } from '../../logic/sessionLogic';
+import { Title } from '@angular/platform-browser';
+import { ProductVariants } from '../../models/ProductVariants';
 
 @Component({
   selector: 'app-product-page',
@@ -20,8 +22,13 @@ export class ProductPageComponent<T> {
 
   GetProducts<T>(): void {
     this.service.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data) => {
-      this.CurrentProductsOnPage = data;
-      this.CurrentProductsDisplayedOnPage = data;
+      var newProductsArray:Products[] = new Array<Products>();
+
+      newProductsArray = data.map(ele => ele = {id: ele.id, title: ele.title, description: ele.description, images: ele.images, price: ele.price, productCategories: ele.productCategories, productVariants: ele.productVariants, Quantity: 1, Active: ele.Active} )
+      console.log("newProductsArray", newProductsArray);
+
+      this.CurrentProductsOnPage = newProductsArray;
+      this.CurrentProductsDisplayedOnPage = newProductsArray;
     });
   };
 

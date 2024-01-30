@@ -9,7 +9,25 @@
       <h3>Order Summary</h3>
       <ul>
         <li *ngFor="let details of basketItems.basketDetails">
-          {{ details.products.title }} - {{ details.products.price| currency }}
+          <div class="basket-detail" >
+            <div class="Product-Img">
+              <img [src]="details.products.images[0].imagePath" class="Img" alt="Product-Img">
+            </div>
+            <div class="Product-Title-container">
+              <span class="Product-Title">
+                {{ details.products.title }}
+
+              </span>
+            </div>
+            <div class="Product-Price-container">
+              <span class="Product-Price">
+
+                {{ details.products.price| currency }}
+              </span>
+              
+            </div>
+
+          </div>
         </li>
       </ul>
       <p><strong>Total: {{calculateTotal()| currency }}</strong> </p>
