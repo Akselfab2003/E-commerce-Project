@@ -138,9 +138,7 @@ export class ProductControlComponent<T> {
     return product;
   }
     selectOnChange(value:number | null):void{
-
     var product:Products =this.products.find(ele => ele.id == value) == undefined ? new Products() : this.products.find(ele => ele.id == value) as Products;
-    console.log(product);
     if(product != new Products() && product.productCategories!=null){
       if(product.images.length!=0){
         this.selectForm.setValue({
