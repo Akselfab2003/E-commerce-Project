@@ -8,6 +8,7 @@ import { basketLogic } from '../../logic/basketLogic';
 import { ProductVariants } from '../../models/ProductVariants';
 import { FormControl, Validators } from '@angular/forms';
 import { LoginObject } from '../../models/LoginObject';
+import { BasketDetails } from '../../models/BasketDetails';
 
 @Component({
   selector: 'app-product-details-page',
@@ -54,13 +55,15 @@ export class ProductDetailsPageComponent<T> {
     NewBasketProduct.Quantity = 1;
     if(this.variants.length > 0 ){
       var NewBasketProduct:Products = this.product;
-      var test:ProductVariants[] = new Array<ProductVariants>();
-      test.push(this.SelectedVariant)
-
-      NewBasketProduct.productVariants = test;
+   
     
       console.log(this.product)
-      this.basketTest.AddToBasket(NewBasketProduct)
+      var testbasketdetail:BasketDetails = new BasketDetails();
+      
+      testbasketdetail.variant = this.SelectedVariant;
+      testbasketdetail.quantity = this.product.Quantity; 
+      console.log(testbasketdetail);
+      this.basketTest.AddBasketDetail(testbasketdetail)
     }
     else{
       

@@ -72,10 +72,13 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("BasketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
+                    b.Property<int?>("ProductsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VariantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -83,6 +86,8 @@ namespace E_commerce.Logic.Migrations
                     b.HasIndex("BasketId");
 
                     b.HasIndex("ProductsId");
+
+                    b.HasIndex("VariantId");
 
                     b.ToTable("BasketDetails");
                 });
@@ -220,7 +225,7 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("OrdersId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<double>("price")
@@ -576,11 +581,15 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasOne("E_commerce.Logic.Models.Products", "Products")
                         .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductsId");
+
+                    b.HasOne("E_commerce.Logic.Models.ProductVariants", "Variant")
+                        .WithMany()
+                        .HasForeignKey("VariantId");
 
                     b.Navigation("Products");
+
+                    b.Navigation("Variant");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Company", b =>
@@ -627,9 +636,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasOne("E_commerce.Logic.Models.Products", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("E_commerce.Logic.Models.ProductVariants", "variant")
                         .WithMany()

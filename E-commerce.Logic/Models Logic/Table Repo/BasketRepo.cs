@@ -62,6 +62,14 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Products)
                 .ThenInclude(ele => ele.Images)
+                .Include(ele => ele.Session)
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Variant)
+                .ThenInclude(ele => ele.ParentProduct)
+                .Include(ele => ele.Session)
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Products)
+                .ThenInclude(ele => ele.ProductVariants)
                 .FirstOrDefaultAsync(basket => basket.Session == sessId);
 
             return userBasket;

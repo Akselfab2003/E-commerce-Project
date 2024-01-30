@@ -65,7 +65,7 @@ namespace E_commerce_Project.Controllers
                 foreach (OrderDetails details in test.OrderLines)
                 {
 
-                    details.Product = await collection.Products.GetById(details.Product.Id);
+                    //details.Product = await collection.Products.GetById(details.Product.Id);
                     if (details.variant != null)
                     {
                         details.variant = await collection.ProductVariants.GetById(details.variant.Id);

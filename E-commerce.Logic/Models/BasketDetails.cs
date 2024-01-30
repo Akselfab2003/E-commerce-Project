@@ -12,8 +12,12 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
         public int Quantity { get; set; } = 1;
-        public virtual Products Products { get; set; }
-        public virtual ProductVariants Variants { get; set; }
+        public  Products? Products { get; set; }
+    
+        public  ProductVariants? Variant { get; set;}
+
+       
+
 
     }
 }

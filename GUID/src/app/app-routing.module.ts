@@ -50,7 +50,6 @@ const routes: Routes = [
       {path:"CompanyControlComponent", component:CompanyControlComponent},
       {path:"admin-user-control",component:AdminControlComponent},
       {path:"product-control",component:ProductControlComponent},
-      {path:"product-variants-control",component:ProductVariantsControlComponent},
       {path:"categories-control",component:CategoriesControlComponent},
       {path:"images-control",component:ImagesControlComponent},
 
@@ -59,7 +58,8 @@ const routes: Routes = [
   },
   {path: "reviews-page/:id", component:ReviewsPageComponent},
   {path:"Search/:q",component:SearchResultComponent},
-  
+  {path:"product-variants-control",component:ProductVariantsControlComponent},
+
 ];
 
 @NgModule({

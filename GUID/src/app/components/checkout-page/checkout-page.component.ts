@@ -65,7 +65,7 @@ export class CheckoutPageComponent <T> {
     var order:Order = this.FillUpOrderObjectWithUserInput();
     console.log(this.basketItems.basketDetails)
     this.basketItems.basketDetails.forEach(ele => {
-      order.OrderLines?.push({id:0,product:ele.products,variant:(ele.products.productVariants != undefined ? ele.products.productVariants[ele.products.productVariants.length-1]:undefined ),price:ele.products.price,quantity:ele.quantity,total:(ele.products.price*ele.quantity)})
+      order.OrderLines?.push({id:0,product:(ele.products != undefined ? ele.products :undefined ),variant:(ele.variant != undefined ? ele.variant :undefined ),price:ele.variant.price,quantity:ele.quantity,total:(ele.variant.price*ele.quantity)})
     })
     order.users = new User();
     console.log(order)
@@ -77,7 +77,7 @@ export class CheckoutPageComponent <T> {
   
 
   calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => total + (item.quantity * item.products.price), 0);
+    return this.basketItems.basketDetails.reduce((total, item) => total + (item.quantity * item.variant.price), 0);
   } 
 
   placeOrder(order:Order): void {
