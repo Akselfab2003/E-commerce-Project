@@ -16,6 +16,8 @@ namespace E_commerce.Logic.Models_Logic
     {
         private readonly IAdminUsers adminUsers;
         private readonly IOrders orders;
+        private readonly IOrderDetails orderDetails;
+
         private readonly IUsers users;
         private readonly Isession session;
         private readonly ITags tags;
@@ -47,6 +49,7 @@ namespace E_commerce.Logic.Models_Logic
             priceList = new PriceListRepo(Context);
             company = new CompanyRepo(Context);
             reviews = new ReviewsRepo(Context);
+            orderDetails = new OrderDetailsRepo(Context);
         }
 
         public IAdminUsers AdminUsers
@@ -114,6 +117,9 @@ namespace E_commerce.Logic.Models_Logic
         {
             get { return reviews; }
         }
-
+        public IOrderDetails OrderDetails
+        {
+            get { return orderDetails; }
+        }
     }
 }
