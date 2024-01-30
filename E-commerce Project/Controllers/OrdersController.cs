@@ -69,9 +69,17 @@ namespace E_commerce_Project.Controllers
                     if (details.variant != null)
                     {
                         details.variant = await collection.ProductVariants.GetById(details.variant.Id);
+                        await collection.OrderDetails.Create(details);
+
                     }
+                    else
+                    {
+                        details.Product = await collection.Products.GetById(details.Product.Id);
+
+                        await collection.OrderDetails.Create(details);
+                    }
+
                     
-                    await collection.OrderDetails.Create(details);
 
                 }
                 await Context.Create(test);

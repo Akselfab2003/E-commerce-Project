@@ -41,14 +41,18 @@ export class BasketComponent<T> {
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
-      this.subtotal = this.calculateTotal(res.basketDetails);
+      this.subtotal = this.calculateTotal();
+      console.log(res)
     });
   };
 
-  calculateTotal(basketDetails:BasketDetails[]): number {
-    return basketDetails.reduce((total, item) => total + (item.quantity * item.products.price), 0);
-  } 
+  calculateTotal(): number {
+    return this.basketItems.basketDetails.reduce((total, item) => 
 
+      total + (item.quantity * (item.products == undefined ? item.variant : item.products).price), 0);
+    
+
+  } 
   ngOnInit(){
     this.GetBasket();
   }

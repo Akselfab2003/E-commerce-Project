@@ -57,7 +57,7 @@ export class CheckoutPageComponent <T> {
     order.fullname = this.UserInfo.get("fullName")?.value;
     order.email =  this.UserInfo.get("email")?.value;
     order.address = this.UserInfo.get("address")?.value;
-    order.total =  this.calculateTotal()
+    var test =  this.basketItems.basketDetails
     return order
   }
 
@@ -65,8 +65,13 @@ export class CheckoutPageComponent <T> {
     var order:Order = this.FillUpOrderObjectWithUserInput();
     console.log(this.basketItems.basketDetails)
     this.basketItems.basketDetails.forEach(ele => {
-      order.OrderLines?.push({id:0,product:(ele.products != undefined ? ele.products :undefined ),variant:(ele.variant != undefined ? ele.variant :undefined ),price:ele.variant.price,quantity:ele.quantity,total:(ele.variant.price*ele.quantity)})
+      var currentElement = ele.products == undefined ? ele.variant : ele.products;
+
+      order.OrderLines?.push({id:0,product:(ele.products != undefined ? ele.products :undefined ),variant:(ele.variant != undefined ? ele.variant :undefined ),price:currentElement.price,quantity:ele.quantity,total:(currentElement.price*ele.quantity)})
     })
+
+    order.total =  this.calculateTotal()
+
     order.users = new User();
     console.log(order)
 
@@ -77,7 +82,11 @@ export class CheckoutPageComponent <T> {
   
 
   calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => total + (item.quantity * item.variant.price), 0);
+    return this.basketItems.basketDetails.reduce((total, item) => 
+
+      total + (item.quantity * (item.products == undefined ? item.variant : item.products).price), 0);
+    
+
   } 
 
   placeOrder(order:Order): void {
