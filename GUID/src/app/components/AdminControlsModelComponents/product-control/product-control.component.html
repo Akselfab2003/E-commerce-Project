@@ -122,7 +122,7 @@
         aria-labelledby="Updated-tab"
         tabindex="0"
       >
-      <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
+      <form [formGroup]="updateForm" (submit)="update()">
         <h1>Update Product</h1>
         <div>
           <img [src]="updateForm.get('imagesUpdate')?.value?.imagePath">
@@ -180,7 +180,7 @@
         aria-labelledby="pills-contact-tab"
         tabindex="0"
       >
-      <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
+      <form [formGroup]="deleteForm" (submit)="delete()">
         <h1>Delete Product</h1>
           <div >
             <label for="id">Product Id</label>
