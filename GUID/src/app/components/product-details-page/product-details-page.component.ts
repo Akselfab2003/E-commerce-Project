@@ -53,7 +53,10 @@ export class ProductDetailsPageComponent<T> {
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
     var NewBasketProduct:Products = this.product;
-    this.basketTest.AddToBasket(((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) ? undefined : this.product),(  (Object.entries(this.product).toString() != Object.entries(new Products()).toString()) ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
+    console.log((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) )
+    
+    console.log((Object.entries(this.product).toString() != Object.entries(new Products()).toString()) )
+    this.basketTest.AddToBasket(((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) ? undefined : this.product),(  (this.variants.length == 0) ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
 
   }
 

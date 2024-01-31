@@ -14,10 +14,10 @@
           <span>&times;</span>
         </div>
         <div class="item-img">
-          <img  [src]="(basketDetail.products == undefined ? basketDetail.products : basketDetail.products ).images[0].imagePath" alt="Product Image">
+          <img  [src]="(basketDetail.products == undefined ? basketDetail.variant.parentProduct : basketDetail.products ).images[0].imagePath" alt="Product Image">
         </div>
         <div class="item-details">
-          <p>{{basketDetail.products.title}}</p>
+          <p>{{(basketDetail.products == undefined ? basketDetail.variant.name : basketDetail.products.title )}}</p>
           <strong>{{(basketDetail.products == undefined ? basketDetail.variant : basketDetail.products ).price| currency}}</strong>
           <div class="qty">
             <span (click)="SubtractProductUsingQtyClick(basketDetail.products)">-</span>

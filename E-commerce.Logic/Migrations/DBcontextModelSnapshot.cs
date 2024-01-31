@@ -40,7 +40,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AdminUsers", (string)null);
+                    b.ToTable("AdminUsers");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Basket", b =>
@@ -58,7 +58,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("SessionId");
 
-                    b.ToTable("Basket", (string)null);
+                    b.ToTable("Basket");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.BasketDetails", b =>
@@ -89,7 +89,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("VariantId");
 
-                    b.ToTable("BasketDetails", (string)null);
+                    b.ToTable("BasketDetails");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Categories", b =>
@@ -106,7 +106,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Company", b =>
@@ -136,7 +136,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("PriceListId");
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.DiscountCodes", b =>
@@ -171,7 +171,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("BasketDetailsId");
 
-                    b.ToTable("DiscountCodes", (string)null);
+                    b.ToTable("DiscountCodes");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Favorites", b =>
@@ -189,7 +189,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("ProductIdId");
 
-                    b.ToTable("Favorites", (string)null);
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Images", b =>
@@ -211,7 +211,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.OrderDetails", b =>
@@ -248,7 +248,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("variantId");
 
-                    b.ToTable("OrderDetails", (string)null);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>
@@ -286,7 +286,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.PriceList", b =>
@@ -303,7 +303,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PriceList", (string)null);
+                    b.ToTable("PriceList");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.ProductVariants", b =>
@@ -336,7 +336,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("ParentProductId");
 
-                    b.ToTable("ProductVariants", (string)null);
+                    b.ToTable("ProductVariants");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Products", b =>
@@ -365,7 +365,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("ProductCategoriesId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Reviews", b =>
@@ -399,7 +399,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("UserIdId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Session", b =>
@@ -432,7 +432,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("Users");
 
-                    b.ToTable("Sessions", (string)null);
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.SupportTickets", b =>
@@ -454,7 +454,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("UserIdId");
 
-                    b.ToTable("SuportTickets", (string)null);
+                    b.ToTable("SuportTickets");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Tags", b =>
@@ -471,7 +471,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags", (string)null);
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.UserDetails", b =>
@@ -496,7 +496,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("UserIdId");
 
-                    b.ToTable("UserDetails", (string)null);
+                    b.ToTable("UserDetails");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Users", b =>
@@ -537,7 +537,7 @@ namespace E_commerce.Logic.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.PriceListEntity", b =>
@@ -563,7 +563,7 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("priceListEntities", (string)null);
+                    b.ToTable("priceListEntities");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Basket", b =>
@@ -669,7 +669,7 @@ namespace E_commerce.Logic.Migrations
             modelBuilder.Entity("E_commerce.Logic.Models.ProductVariants", b =>
                 {
                     b.HasOne("E_commerce.Logic.Models.Products", "ParentProduct")
-                        .WithMany("ProductVariants")
+                        .WithMany()
                         .HasForeignKey("ParentProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -797,8 +797,6 @@ namespace E_commerce.Logic.Migrations
             modelBuilder.Entity("E_commerce.Logic.Models.Products", b =>
                 {
                     b.Navigation("Images");
-
-                    b.Navigation("ProductVariants");
                 });
 #pragma warning restore 612, 618
         }

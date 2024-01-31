@@ -37,6 +37,23 @@ namespace E_commerce_Project.Controllers
         }
         #endregion
 
+        #region PUT Requests
+        [HttpPut("UpdatePriceList")]
+        public async Task<PriceList?> UpdateUser(PriceList priceList)
+        {
+            try
+            {
+                return await collection.PriceList.Update(priceList);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        }
+        #endregion
+
         #region GET Requests
         [HttpGet("GetListOfPriceList")]
         public async Task<List<PriceList?>> GetListOfPriceList()

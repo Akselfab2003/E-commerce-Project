@@ -6,6 +6,7 @@ import { Pricelist } from '../../../models/PriceList';
 import { Products } from '../../../models/Products';
 import { Company } from '../../../models/Company';
 import { User } from '../../../models/User';
+import { PriceListEntity } from '../../../models/PriceListEntity';
 @Component({
   selector: 'app-price-list-control',
   templateUrl: './price-list-control.component.html',
@@ -17,10 +18,14 @@ export class PriceListControlComponent<T> {
 });
   updatePriceListForm= new FormGroup({
     pricelistList:new FormControl<number>(1,Validators.required),
-    productList: new FormControl<number>(1,Validators.required),
-    companyList: new FormControl<string>('',Validators.required),
-    usersList: new FormControl<string>('',Validators.required),
+    nameUpdate: new FormControl<string>("",Validators.required),
   });
+  AddDeleteItems= new FormGroup({
+    priceLists: new FormControl(),
+    productList: new FormControl(),
+    companyList: new FormControl(),
+    usersList: new FormControl(),
+  })
   public products:Products[]=[];
   public companies:Company[]=[];
   public users:User[]=[];
@@ -47,7 +52,63 @@ create(){
   let pricelist:Pricelist= this.InputDataCreate();
   this.service.PostRequest<Pricelist>("PriceList",pricelist).subscribe()
 }
+
 updatePriceList(){
+  let pricelist:Pricelist= new Pricelist();
+  pricelist.id=this.updatePriceListForm.get("pricelistList")?.value as number;
+  pricelist.name=this.updatePriceListForm.get("nameUpdate")?.value as string;
+  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
+}
+
+addProduct(){
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  if(pricelist.priceListProducts==null){
+    pricelist.priceListProducts=[];
+  }
+  let priceEntity:PriceListEntity=new PriceListEntity();
+  
+  let product:Products=this.AddDeleteItems.get("productList")?.value;
+  priceEntity.priceListPrice=product.price;
+  priceEntity.product=product;
+
+  pricelist.priceListProducts.push(priceEntity);
+  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
+}
+
+deleteProduct(){
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  if(pricelist.priceListProducts==null){
+    pricelist.priceListProducts=[];
+  }
+  let priceEntity:PriceListEntity=new PriceListEntity();
+  let priceEntityList:PriceListEntity[]=[];
+
+  let product:Products=this.AddDeleteItems.get("productList")?.value;
+  priceEntity.priceListPrice=product.price;
+  priceEntity.product=product;
+
+  console.log();
+  for(let item of pricelist.priceListProducts){
+    if(item!=priceEntity){
+      priceEntityList.push(item);
+    }
+  }
+  pricelist.priceListProducts=priceEntityList;
+  
+  this.service.PutRequest<Pricelist>("UpdatePriceList",pricelist).subscribe();
+}
+
+addCompany(){
+
+}
+deleteCompany(){
+
+}
+
+addUser(){
+
+}
+deleteUser(){
 
 }
 
