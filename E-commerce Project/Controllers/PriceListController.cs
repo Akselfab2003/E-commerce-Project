@@ -36,5 +36,22 @@ namespace E_commerce_Project.Controllers
             return HttpStatusCode.Created;
         }
         #endregion
+
+        #region GET Requests
+        [HttpGet("GetListOfPriceList")]
+        public async Task<List<PriceList?>> GetListOfPriceList()
+        {
+            try
+            {
+                return await priceList.GetListOfPriceList();
+
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+        #endregion
     }
 }

@@ -1,4 +1,4 @@
-<div class="ProductControl">
+<div class="PriceListControl">
     <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
       <li class="nav-item" role="presentation">
         <button
@@ -92,13 +92,35 @@
       <form [formGroup]="updatePriceListForm" (submit)="updatePriceList()">
         <h1>Update PriceList</h1>
         <div>
+            <label for="priceList">PriceList</label>
+            <select id="pricelistList" formControlName="pricelistList" aria-label="Select pricelist" aria-placeholder="Select pricelist">
+              <option selected value="" >Choose a Price List</option>
+              <option *ngFor="let pricelist of pricelists" [value]="pricelist.id" >{{pricelist.name}}</option>
+            </select>
+        </div>
+        <div>
             <label for="product">Product</label>
             <select id="productList" formControlName="productList" aria-label="Select product" aria-placeholder="Select product">
               <option selected value="" >Choose a Product</option>
               <option *ngFor="let product of products" [value]="product.id" >{{product.title}}</option>
             </select>
           </div>
-          
+          <div>
+            <label for="company">Company</label>
+            <select id="companyList" formControlName="companyList" aria-label="Select company" aria-placeholder="Select company">
+              <option selected value="" >Choose a Company</option>
+              <option *ngFor="let company of companies" [value]="company.name" >{{company.name}}</option>
+            </select>
+          </div>
+          <div>
+            <label for="users">Users</label>
+            <select id="usersList" formControlName="usersList" aria-label="Select users" aria-placeholder="Select users">
+              <option selected value="" >Choose a User</option>
+              <option *ngFor="let user of users" [value]="user.username" >{{user.username}}</option>
+            </select>
+          </div>
+          <br>
+          <button type="submit" class="btn"id="Update">Update &#8594;</button>
       </form>
       </div>
       <div
@@ -108,9 +130,9 @@
         aria-labelledby="pills-contact-tab"
         tabindex="0"
       >
-      <form [formGroup]="deleteForm" (submit)="delete()">
+<!--       <form [formGroup]="deleteForm" (submit)="delete()">
         <h1>Delete PriceList</h1>
-        </form>
+        </form> -->
       </div>
       <div
         class="tab-pane fade"
@@ -119,9 +141,9 @@
         aria-labelledby="pills-disabled-tab"
         tabindex="0"
       >
-      <form [formGroup]="selectForm">
+<!--       <form [formGroup]="selectForm">
         <h1>Select PriceList</h1>
-      </form>
+      </form> -->
       </div>
     </div>
   </div>
