@@ -5,7 +5,7 @@ export class Reviews{
     id:number=0;
     UserId:User = new User;
     Products:Products = new Products;
-    ReviewContent:string = "";
-    ReviewTitle:string = "";
-    ReviewRating:number = 0;
+    reviewContent:string = "";
+    reviewTitle:string = "";
+    reviewRating:number = 0;
 }
