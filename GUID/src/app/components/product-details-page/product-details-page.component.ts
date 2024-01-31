@@ -26,7 +26,8 @@ export class ProductDetailsPageComponent<T> {
   GetProduct<T>(id:Number){
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
-      console.log(data)
+      this.product.Quantity = 1;
+      console.log("GET PRODUCT TEST", data)
     });
   };
 
@@ -52,7 +53,8 @@ export class ProductDetailsPageComponent<T> {
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
     var NewBasketProduct:Products = this.product;
-    NewBasketProduct.Quantity = 1;
+    //NewBasketProduct.Quantity = 1;
+    console.log("TEST", NewBasketProduct)
     if(this.variants.length > 0 ){
       var NewBasketProduct:Products = this.product;
    
@@ -68,6 +70,24 @@ export class ProductDetailsPageComponent<T> {
     else{
       
       this.basketTest.AddToBasket(NewBasketProduct)
+    }
+  }
+
+  AddProductQuantity(event: MouseEvent){
+    event.stopPropagation()
+    this.product.Quantity += 1
+    console.log(this.product.Quantity)
+    
+  }
+
+  SubtractProductQuantity(event: MouseEvent){
+    if(this.product.Quantity -1 <= 0){
+
+    }
+    else{
+      event.stopPropagation()
+      this.product.Quantity -= 1
+      console.log(this.product.Quantity)
     }
   }
 
