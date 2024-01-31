@@ -68,8 +68,14 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Variant)
                 .ThenInclude(ele => ele.ParentProduct)
-                
-              
+
+
+                .Include(ele => ele.Session)
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Variant)
+                .ThenInclude(ele => ele.ParentProduct)
+
+
 
                 .Include(ele => ele.Session)
                 .Include(ele => ele.BasketDetails)
