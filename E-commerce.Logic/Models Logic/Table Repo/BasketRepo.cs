@@ -56,6 +56,12 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<Basket> GetBySessId(Session sessId)
         {
             Basket userBasket = await context.Basket
+
+                .Include(ele => ele.BasketDetails)
+                .ThenInclude(ele => ele.Variant)
+                .ThenInclude(ele => ele.ParentProduct)
+                .ThenInclude(ele => ele.Images)
+
                 .Include(ele => ele.Session)
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Products)
@@ -73,7 +79,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 .Include(ele => ele.Session)
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Variant)
-                .ThenInclude(ele => ele.ParentProduct)
 
 
 
@@ -81,6 +86,9 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 .Include(ele => ele.BasketDetails)
                 .ThenInclude(ele => ele.Products)
                 .ThenInclude(ele => ele.ProductCategories)
+
+
+
                 .FirstOrDefaultAsync(basket => basket.Session == sessId);
 
             return userBasket;

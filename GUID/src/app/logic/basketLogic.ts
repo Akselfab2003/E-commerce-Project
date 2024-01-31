@@ -37,10 +37,10 @@ export class basketLogic<T> {
    
     public AddVariantBasket(VaraintDetail:BasketDetails){
       this.GetBasket().subscribe(data => {
-        var variant = data.basketDetails.find(ele => ele.variant == VaraintDetail.variant);
+        var variant = data.basketDetails.find(ele => ele.variant.id == VaraintDetail.variant.id);
         if(variant != null)
         {
-          variant.products = new Products();
+          
           variant != undefined ? variant.quantity = variant.quantity+VaraintDetail.quantity: null;
           this.UpdateBasket(data);
 

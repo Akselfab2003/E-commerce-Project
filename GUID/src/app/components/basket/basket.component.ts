@@ -43,12 +43,12 @@ export class BasketComponent<T> {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
       this.subtotal = this.calculateTotal();
-      console.log(res)
+      console.log("Your basket:",res)
     });
   };
 
   GetProductVariant(){
-    
+
   }
   calculateTotal(): number {
     return this.basketItems.basketDetails.reduce((total, item) => 
