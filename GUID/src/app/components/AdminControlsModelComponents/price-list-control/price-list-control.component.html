@@ -41,6 +41,20 @@
           Deleted
         </button>
       </li>
+      <li class="nav-item " role="presentation">
+        <button
+        class="nav-link"
+        id="items-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#items"
+        type="button"
+        role="tab"
+        aria-controls="items"
+        aria-selected="false"
+        >
+          Add/Delete Items
+        </button>
+      </li>
       <li class="nav-item" role="presentation">
         <button
           class="nav-link"
@@ -74,7 +88,7 @@
       <form [formGroup]="createForm" (submit)="create()">
       <h1>Create PriceList</h1>
       <div>
-        <label for="name">Name</label>
+        <label for="nameCreate">Name</label>
         <input id="nameCreate" type="text" formControlName="nameCreate">
       </div>
       <br>
@@ -92,32 +106,15 @@
       <form [formGroup]="updatePriceListForm" (submit)="updatePriceList()">
         <h1>Update PriceList</h1>
         <div>
-            <label for="priceList">PriceList</label>
+            <label for="pricelistList">PriceList</label>
             <select id="pricelistList" formControlName="pricelistList" aria-label="Select pricelist" aria-placeholder="Select pricelist">
               <option selected value="" >Choose a Price List</option>
               <option *ngFor="let pricelist of pricelists" [value]="pricelist.id" >{{pricelist.name}}</option>
             </select>
         </div>
         <div>
-            <label for="product">Product</label>
-            <select id="productList" formControlName="productList" aria-label="Select product" aria-placeholder="Select product">
-              <option selected value="" >Choose a Product</option>
-              <option *ngFor="let product of products" [value]="product.id" >{{product.title}}</option>
-            </select>
-          </div>
-          <div>
-            <label for="company">Company</label>
-            <select id="companyList" formControlName="companyList" aria-label="Select company" aria-placeholder="Select company">
-              <option selected value="" >Choose a Company</option>
-              <option *ngFor="let company of companies" [value]="company.name" >{{company.name}}</option>
-            </select>
-          </div>
-          <div>
-            <label for="users">Users</label>
-            <select id="usersList" formControlName="usersList" aria-label="Select users" aria-placeholder="Select users">
-              <option selected value="" >Choose a User</option>
-              <option *ngFor="let user of users" [value]="user.username" >{{user.username}}</option>
-            </select>
+            <label for="nameUpdate">Name</label>
+            <input id="nameUpdate" type="text" formControlName="nameUpdate">
           </div>
           <br>
           <button type="submit" class="btn"id="Update">Update &#8594;</button>
@@ -133,6 +130,53 @@
 <!--       <form [formGroup]="deleteForm" (submit)="delete()">
         <h1>Delete PriceList</h1>
         </form> -->
+      </div>
+      <div class="tab-content" id="pills-tabContent">
+        <div
+        class="tab-pane fade"
+        id="items"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+        >
+        <form [formGroup]="AddDeleteItems" (submit)="create()">
+        <h1>Add/Delete items</h1>
+        <div>
+            <label for="priceLists">PriceList</label>
+            <select id="priceLists" formControlName="priceLists" aria-label="Select pricelist" aria-placeholder="Select pricelist">
+              <option selected value="" >Choose a Price List</option>
+              <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist" >{{pricelist.name}}</option>
+            </select>
+        </div>
+        <div>
+            <label for="productList">Product</label>
+            <select id="productList" formControlName="productList" aria-label="Select product" aria-placeholder="Select product">
+              <option selected value="" >Choose a Product</option>
+              <option *ngFor="let product of products" [ngValue]="product" >{{product.title}}</option>
+            </select>
+            <button (click)="addProduct()">Add Product</button>
+            <button (click)="deleteProduct()">Delete Product</button>
+          </div>
+          <div>
+            <label for="companyList">Company</label>
+            <select id="companyList" formControlName="companyList" aria-label="Select company" aria-placeholder="Select company">
+              <option selected value="" >Choose a Company</option>
+              <option *ngFor="let company of companies" [ngValue]="company" >{{company.name}}</option>
+            </select>
+            <button (click)="addCompany()">Add Company</button>
+            <button (click)="deleteCompany()">Delete Company</button>
+          </div>
+          <div>
+            <label for="usersList">Users</label>
+            <select id="usersList" formControlName="usersList" aria-label="Select users" aria-placeholder="Select users">
+              <option selected value="" >Choose a User</option>
+              <option *ngFor="let user of users" [ngValue]="user" >{{user.username}}</option>
+            </select>
+            <button (click)="addUser()">Add User</button>
+            <button (click)="deleteUser()">Delete User</button>
+          </div>
+        <br>
+        </form>
       </div>
       <div
         class="tab-pane fade"
