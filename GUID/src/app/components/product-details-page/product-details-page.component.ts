@@ -53,7 +53,10 @@ export class ProductDetailsPageComponent<T> {
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
     var NewBasketProduct:Products = this.product;
-    this.basketTest.AddToBasket((this.SelectedVariant != new ProductVariants() ? undefined : this.product),(this.product != new Products() ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
+    console.log((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) )
+    
+    console.log((Object.entries(this.product).toString() != Object.entries(new Products()).toString()) )
+    this.basketTest.AddToBasket(((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) ? undefined : this.product),(  (this.variants.length == 0) ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
 
   }
 
@@ -79,6 +82,7 @@ export class ProductDetailsPageComponent<T> {
     var selectedId:Number = 0;
     this.route.paramMap.subscribe((data)=>{
       selectedId = Number(data.get('id'));
+      
       this.GetProduct(selectedId);
       this.GetProductVariants(selectedId);
 

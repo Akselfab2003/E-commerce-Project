@@ -33,6 +33,7 @@ export class BasketComponent<T> {
 
   basket: Basket = new Basket();
   subtotal:number = 0;
+
   constructor(private basketItems:basketLogic<T>)
   {
      basketItems.AddToBasketEvent.subscribe(ele => {this.GetBasket()})
@@ -42,10 +43,13 @@ export class BasketComponent<T> {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
       this.subtotal = this.calculateTotal();
-      console.log(res)
+      console.log("Your basket:",res)
     });
   };
 
+  GetProductVariant(){
+
+  }
   calculateTotal(): number {
     return this.basketItems.basketDetails.reduce((total, item) => 
 
