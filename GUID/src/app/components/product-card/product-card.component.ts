@@ -4,6 +4,7 @@ import { Basket } from '../../models/Basket';
 import { BasketComponent } from '../basket/basket.component';
 import { basketLogic } from '../../logic/basketLogic';
 import { ProductPageComponent } from '../product-page/product-page.component';
+import { Images } from '../../models/Images';
 
 @Component({
   selector: 'app-product-card',
@@ -41,6 +42,22 @@ export class ProductCardComponent<T> {
       event.stopPropagation()
       this.product.Quantity -= 1
     }
+  }
+
+
+
+
+  ImageCheckSrc(images:Images[]){
+    
+    if(images.length == 0){
+      return "https://fastly.picsum.photos/id/1025/1000/1500.jpg?hmac=1LkHmpIJnIt0_dmhCgO3F2PNh8RM2zXK13TcTtKK-1A"
+    } 
+    else{
+      return images[0].imagePath;
+    }
+    
+   // console.log(event.target)
+    //this.src='https://fastly.picsum.photos/id/1025/1000/1500.jpg?hmac=1LkHmpIJnIt0_dmhCgO3F2PNh8RM2zXK13TcTtKK-1A'
   }
 
 }
