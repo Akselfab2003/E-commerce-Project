@@ -4,6 +4,7 @@ using E_commerce.Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Logic.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240130115631_Added_Title_and_Rating")]
+    partial class Added_Title_and_Rating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,13 +75,10 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("BasketId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductsId")
+                    b.Property<int>("ProductsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VariantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -86,8 +86,6 @@ namespace E_commerce.Logic.Migrations
                     b.HasIndex("BasketId");
 
                     b.HasIndex("ProductsId");
-
-                    b.HasIndex("VariantId");
 
                     b.ToTable("BasketDetails");
                 });
@@ -225,7 +223,7 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("OrdersId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<double>("price")
@@ -237,16 +235,11 @@ namespace E_commerce.Logic.Migrations
                     b.Property<double>("total")
                         .HasColumnType("float");
 
-                    b.Property<int?>("variantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrdersId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("variantId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -259,23 +252,8 @@ namespace E_commerce.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SessionId")
+                    b.Property<int>("SessionId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Total")
-                        .HasColumnType("float");
 
                     b.Property<int?>("UsersId")
                         .HasColumnType("int");
@@ -296,10 +274,6 @@ namespace E_commerce.Logic.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -585,15 +559,11 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasOne("E_commerce.Logic.Models.Products", "Products")
                         .WithMany()
-                        .HasForeignKey("ProductsId");
-
-                    b.HasOne("E_commerce.Logic.Models.ProductVariants", "Variant")
-                        .WithMany()
-                        .HasForeignKey("VariantId");
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Products");
-
-                    b.Navigation("Variant");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Company", b =>
@@ -640,22 +610,20 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasOne("E_commerce.Logic.Models.Products", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("E_commerce.Logic.Models.ProductVariants", "variant")
-                        .WithMany()
-                        .HasForeignKey("variantId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
-
-                    b.Navigation("variant");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>
                 {
                     b.HasOne("E_commerce.Logic.Models.Session", "Session")
                         .WithMany()
-                        .HasForeignKey("SessionId");
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("E_commerce.Logic.Models.Users", "Users")
                         .WithMany()

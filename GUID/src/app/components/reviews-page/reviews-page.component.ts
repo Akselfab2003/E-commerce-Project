@@ -5,8 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Products } from '../../models/Products';
 import { ActivatedRoute } from '@angular/router';
-
-
+import { sessionController } from '../../logic/sessionLogic';
 
 
 @Component({
@@ -29,20 +28,22 @@ export class ReviewsPageComponent<T> {
 
   createReview(){
     let review:Reviews = new Reviews();
-    review.ReviewTitle = this.newReviewForm.get('ReviewTitle')?.value as string;
-    review.ReviewContent = this.newReviewForm.get('ReviewContent')?.value as string;
-    review.ReviewRating = this.newReviewForm.get('ReviewRating')?.value as number;
+    review.Products = this.product;
+    review.reviewTitle = this.newReviewForm.get('ReviewTitle')?.value as string;
+    review.reviewContent = this.newReviewForm.get('ReviewContent')?.value as string;
+    review.reviewRating = this.newReviewForm.get('ReviewRating')?.value as number;
 
-    console.log(review);
     return review;
-  }
+  };
 
   addReview(){
+    this.createReview();
+    let sessId: string = sessionController.GetCookie();
     let review:Reviews = this.createReview();
-    this.service.PostRequest<Reviews>("Reviews" + (this.newReviewForm.get('ReviewTitle')?.value as unknown as string),review).subscribe((data)=>
+    this.service.PostRequest<any>(`Reviews/CreateReviews/${sessId}`,review).subscribe((data)=>
     console.log(data)
     )
-  }
+  };
 
   GetProduct<T>(id:Number){
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{

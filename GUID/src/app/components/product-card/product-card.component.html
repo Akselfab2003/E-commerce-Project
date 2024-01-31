@@ -1,6 +1,6 @@
 <div class="product-card" [routerLink]="['/product-details', product.id]">
     <div class="d-flex flex-column w-100 h-100 product-card-Container">
-            <img loading="lazy" [src]="product.images[0].imagePath" alt="Product 1">
+            <img loading="lazy" [src]="ImageCheckSrc(product.images) "  alt="Product 1">
         
         <div class="product-info">
             <span  class="filterTitle">{{product.title}}</span>

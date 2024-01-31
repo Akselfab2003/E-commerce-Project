@@ -23,13 +23,13 @@ namespace E_commerce_Project.Controllers
 
         #region GET Requests
         //GET:
-        [HttpGet("Get_Reviews{productid}")]
-        public async Task<ActionResult<List<Reviews>>> GetReviewsByProductid(int id)
+        [HttpGet("Get_Reviews/{productid}")]
+        public async Task<ActionResult<List<Reviews>>> GetReviewsByProductid(int productid)
         {
             List<Reviews> reviews = new List<Reviews>();
             try
             {
-                reviews = await DataCollection_Reviews.GetByProductId(id);
+                reviews = await DataCollection_Reviews.GetByProductId(productid);
             }
             catch (Exception ex)
             {
@@ -40,19 +40,21 @@ namespace E_commerce_Project.Controllers
         #endregion
 
         #region Post Requests
-        [HttpPost("CreateReviews")]
+        [HttpPost("CreateReviews/{sessId}")]
         public async Task<ActionResult<Reviews>> createReviews(Reviews reviews, string sessId)
         {
             try
             {
                 reviews.UserId = (await DataCollection_controller.Session.GetById(sessId)).user;
+                reviews.Products = (await DataCollection_controller.Products.GetById(reviews.Products.Id));
                 await DataCollection_Reviews.Create(reviews);
             }
             catch
             {
 
             }
-            return CreatedAtAction("GetReviews", new { id = reviews.Id }, reviews);
+            //return CreatedAtAction("GetReviews", new { id = reviews.Id }, reviews);
+            return Ok();
         }
         #endregion
 
