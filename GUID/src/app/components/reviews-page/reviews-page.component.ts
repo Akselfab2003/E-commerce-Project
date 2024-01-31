@@ -62,6 +62,47 @@ export class ReviewsPageComponent<T> {
       this.GetProduct(selectedId);
     })
   }
+
+  selectedRating: number = 0;
+
+  handleRatingSelection(rating: number) {
+    this.selectedRating = rating;
+    console.log("Selected rating:", this.selectedRating);
+  }
+
+ /*  submitReview() {
+    if (this.selectedRating > 0) {
+      console.log("Submitting rating:", this.selectedRating);
+      this.selectedRating = 0; // Reset selectedRating
+    } else {
+      console.log("Please select a rating before submitting.");
+    }
+  } */
+
+  /* addRating( addEventListener: any){
+    const ratingContainer = document.getElementById("rating");
+  const submitBtn = document.getElementById("submitBtn");
+  let selectedRating: number = 0;
+
+  if (ratingContainer && submitBtn) {
+    ratingContainer.addEventListener("click", (event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.type === "radio") {
+        selectedRating = parseInt(target.value);
+        console.log("Selected rating:", selectedRating);
+      }
+    });
+
+    submitBtn.addEventListener("click", () => {
+      if (selectedRating > 0) {
+        console.log("Submitting rating:", selectedRating);
+        selectedRating = 0; // Reset selectedRating
+      } else {
+        console.log("Please select a rating before submitting.");
+      }
+    });
+    }
+  } */
 }
 
 
