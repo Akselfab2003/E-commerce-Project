@@ -56,6 +56,18 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
             return products;
         }
+        public async Task<List<PriceList?>> GetListOfPriceList()
+        {
+            try
+            {
+                return await context.PriceList.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
 
     }
 }

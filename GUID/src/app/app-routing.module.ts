@@ -25,6 +25,7 @@ import { CategoriesControlComponent } from './components/AdminControlsModelCompo
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
 import { ImagesControlComponent } from './components/AdminControlsModelComponents/images-control/images-control.component';
+import { PriceListControlComponent } from './components/AdminControlsModelComponents/price-list-control/price-list-control.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
       {path:"product-control",component:ProductControlComponent},
       {path:"categories-control",component:CategoriesControlComponent},
       {path:"images-control",component:ImagesControlComponent},
+      {path:"price-list-control",component:PriceListControlComponent},
 
     ],
     canActivate:[adminGuard],
