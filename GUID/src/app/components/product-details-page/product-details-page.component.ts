@@ -26,7 +26,8 @@ export class ProductDetailsPageComponent<T> {
   GetProduct<T>(id:Number){
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
-      console.log(data)
+      this.product.Quantity = 1;
+      console.log("GET PRODUCT TEST", data)
     });
   };
 
@@ -52,22 +53,25 @@ export class ProductDetailsPageComponent<T> {
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
     var NewBasketProduct:Products = this.product;
-    NewBasketProduct.Quantity = 1;
-    if(this.variants.length > 0 ){
-      var NewBasketProduct:Products = this.product;
-   
+    this.basketTest.AddToBasket((this.SelectedVariant != new ProductVariants() ? undefined : this.product),(this.product != new Products() ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
+
+  }
+
+  AddProductQuantity(event: MouseEvent){
+    event.stopPropagation()
+    this.product.Quantity += 1
+    console.log(this.product.Quantity)
     
-      console.log(this.product)
-      var testbasketdetail:BasketDetails = new BasketDetails();
-      
-      testbasketdetail.variant = this.SelectedVariant;
-      testbasketdetail.quantity = this.product.Quantity; 
-      console.log(testbasketdetail);
-      this.basketTest.AddBasketDetail(testbasketdetail)
+  }
+
+  SubtractProductQuantity(event: MouseEvent){
+    if(this.product.Quantity -1 <= 0){
+
     }
     else{
-      
-      this.basketTest.AddToBasket(NewBasketProduct)
+      event.stopPropagation()
+      this.product.Quantity -= 1
+      console.log(this.product.Quantity)
     }
   }
 

@@ -43,7 +43,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             return await context.Products.Include(product => product.Images)
                 .Include(product => product.ProductCategories)
-                .Include(product => product.ProductVariants)
                 .ToListAsync();
 
         }
@@ -72,7 +71,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<List<Products>> SearchForProducts(string SearchInput)
         {
             return await context.Products
-                                .Include(ele => ele.ProductVariants)
                                 .Include(ele => ele.Images)
                                 .Include(ele => ele.ProductCategories).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
         }

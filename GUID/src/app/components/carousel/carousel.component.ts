@@ -30,7 +30,7 @@ export class CarouselComponent<T> implements OnInit {
   };
 
   AddToBasket(product: Products){
-    this.basketTest.AddToBasket(product)
+    this.basketTest.AddToBasket(product,undefined,1)
   }
   
 

@@ -29,9 +29,9 @@ export class ReviewsPageComponent<T> {
   createReview(){
     let review:Reviews = new Reviews();
     review.Products = this.product;
-    review.ReviewTitle = this.newReviewForm.get('ReviewTitle')?.value as string;
-    review.ReviewContent = this.newReviewForm.get('ReviewContent')?.value as string;
-    review.ReviewRating = this.newReviewForm.get('ReviewRating')?.value as number;
+    review.reviewTitle = this.newReviewForm.get('ReviewTitle')?.value as string;
+    review.reviewContent = this.newReviewForm.get('ReviewContent')?.value as string;
+    review.reviewRating = this.newReviewForm.get('ReviewRating')?.value as number;
 
     return review;
   };

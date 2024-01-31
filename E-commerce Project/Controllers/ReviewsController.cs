@@ -23,13 +23,13 @@ namespace E_commerce_Project.Controllers
 
         #region GET Requests
         //GET:
-        [HttpGet("Get_Reviews{productid}")]
-        public async Task<ActionResult<List<Reviews>>> GetReviewsByProductid(int id)
+        [HttpGet("Get_Reviews/{productid}")]
+        public async Task<ActionResult<List<Reviews>>> GetReviewsByProductid(int productid)
         {
             List<Reviews> reviews = new List<Reviews>();
             try
             {
-                reviews = await DataCollection_Reviews.GetByProductId(id);
+                reviews = await DataCollection_Reviews.GetByProductId(productid);
             }
             catch (Exception ex)
             {
