@@ -22,7 +22,7 @@ namespace E_commerce_Project.Controllers
         }
         #region POST Requests
         [HttpPost]
-        public async Task<HttpStatusCode> PostUser(Images image)
+        public async Task<HttpStatusCode> PostImage(Images image)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace E_commerce_Project.Controllers
 
         #region DELETE Requests
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategories(int id)
+        public async Task<IActionResult> DeleteImages(int id)
         {
             var image = await images.GetById(id);
             if (image == null)
