@@ -119,6 +119,17 @@ namespace E_commerce_Project.Controllers
             try
             {
                 product.ProductCategories = await dataCollection.Categories.GetById(product.ProductCategories.Id);
+                
+                List<Images> images = new List<Images>(); //(await dataCollection.Images.GetAllImages()).Where(ele => product.Images.Contains(ele)).ToList();
+                foreach (var item in product.Images)
+                {
+                    item.Id = 0;
+
+                    images.Add(item);
+                }
+
+                product.Images = images;
+
                 await context.Create(product);
             }
             catch (Exception ex)
@@ -137,7 +148,7 @@ namespace E_commerce_Project.Controllers
                 return NotFound();
             }
 
-            await context.DeleteProduct(product);
+            await context.Delete(product);
 
             return NoContent();
         }
