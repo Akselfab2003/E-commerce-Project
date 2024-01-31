@@ -86,7 +86,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             // List<Products> Products = await Context.Products.Include(Cat => Cat.ProductCategories).Include(ele => ele.Images).Where(ele => ele.ProductCategories == category).ToListAsync();
             List<Products> Products = await Context.Products.Include(product => product.Images)
                 .Include(product => product.ProductCategories)
-                .Include(product => product.ProductVariants).Where(product => ProductIds.Contains(product.Id) && product.ProductCategories == category ).ToListAsync();
+                .Where(product => ProductIds.Contains(product.Id) && product.ProductCategories == category ).ToListAsync();
             return Products;
 
 

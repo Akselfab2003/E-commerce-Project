@@ -52,23 +52,8 @@ export class ProductDetailsPageComponent<T> {
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
     var NewBasketProduct:Products = this.product;
-    NewBasketProduct.Quantity = 1;
-    if(this.variants.length > 0 ){
-      var NewBasketProduct:Products = this.product;
-   
-    
-      console.log(this.product)
-      var testbasketdetail:BasketDetails = new BasketDetails();
-      
-      testbasketdetail.variant = this.SelectedVariant;
-      testbasketdetail.quantity = this.product.Quantity; 
-      console.log(testbasketdetail);
-      this.basketTest.AddBasketDetail(testbasketdetail)
-    }
-    else{
-      
-      this.basketTest.AddToBasket(NewBasketProduct)
-    }
+    this.basketTest.AddToBasket((this.SelectedVariant != new ProductVariants() ? undefined : this.product),(this.product != new Products() ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
+
   }
 
   ngOnInit() {
