@@ -72,10 +72,13 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("BasketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
+                    b.Property<int?>("ProductsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VariantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -83,6 +86,8 @@ namespace E_commerce.Logic.Migrations
                     b.HasIndex("BasketId");
 
                     b.HasIndex("ProductsId");
+
+                    b.HasIndex("VariantId");
 
                     b.ToTable("BasketDetails");
                 });
@@ -220,7 +225,7 @@ namespace E_commerce.Logic.Migrations
                     b.Property<int?>("OrdersId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<double>("price")
@@ -232,11 +237,16 @@ namespace E_commerce.Logic.Migrations
                     b.Property<double>("total")
                         .HasColumnType("float");
 
+                    b.Property<int?>("variantId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrdersId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("variantId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -249,8 +259,23 @@ namespace E_commerce.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("SessionId")
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SessionId")
                         .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.Property<int?>("UsersId")
                         .HasColumnType("int");
@@ -556,11 +581,15 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasOne("E_commerce.Logic.Models.Products", "Products")
                         .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductsId");
+
+                    b.HasOne("E_commerce.Logic.Models.ProductVariants", "Variant")
+                        .WithMany()
+                        .HasForeignKey("VariantId");
 
                     b.Navigation("Products");
+
+                    b.Navigation("Variant");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Company", b =>
@@ -607,20 +636,22 @@ namespace E_commerce.Logic.Migrations
 
                     b.HasOne("E_commerce.Logic.Models.Products", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("E_commerce.Logic.Models.ProductVariants", "variant")
+                        .WithMany()
+                        .HasForeignKey("variantId");
 
                     b.Navigation("Product");
+
+                    b.Navigation("variant");
                 });
 
             modelBuilder.Entity("E_commerce.Logic.Models.Orders", b =>
                 {
                     b.HasOne("E_commerce.Logic.Models.Session", "Session")
                         .WithMany()
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SessionId");
 
                     b.HasOne("E_commerce.Logic.Models.Users", "Users")
                         .WithMany()

@@ -70,8 +70,12 @@ namespace E_commerce_Project.Controllers
         [HttpPost("AddToBasket/{sessid}")]
         public async Task<List<BasketDetails>> PostBasket(BasketDetails basketDetails, string sessid)
         {
+            BasketDetails test = basketDetails;
+            test.Products = basketDetails.Products == new Products() ? null : (await dataCollectioncontext.Products.GetById(basketDetails.Products.Id));
+            test.Variant = basketDetails.Variant == null ? null : (await dataCollectioncontext.ProductVariants.GetById(basketDetails.Variant.Id));
+            await dataCollectioncontext.BasketDetails.Create(test);
             Basket basket = await GetBasketBySessId(sessid);
-            basket.BasketDetails.Add(basketDetails);
+            basket.BasketDetails.Add(test);
             await dataCollectioncontext.Basket.Update(basket);
 
             return basket.BasketDetails;

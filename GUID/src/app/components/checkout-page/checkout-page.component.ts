@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Products } from '../../models/Products';
-import { Order } from '../../models/Order';
+import {  Order } from '../../models/Order';
 import { sessionController } from '../../logic/sessionLogic';
 import { Session } from '../../models/Session';
 import { Basket } from '../../models/Basket';
 import { basketLogic } from '../../logic/basketLogic';
+import { orderDetails } from '../../models/orderDetails';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-checkout-page',
@@ -25,6 +28,8 @@ export class CheckoutPageComponent <T> {
     basketTest.AddToBasketEvent.subscribe(ele => {this.GetBasket()})
 
    };
+  UserInfo!:FormGroup
+
 
   billingDetails = {
     fullName: '',
@@ -34,6 +39,12 @@ export class CheckoutPageComponent <T> {
 
   ngOnInit(): void {
     this.GetBasket();
+   this.UserInfo = new FormGroup({
+      fullName: new FormControl<string>("",Validators.required),
+      email: new FormControl<string>("",Validators.required),
+      address: new FormControl<string>("",Validators.required),
+    })
+  
   };
 
   GetBasket(){
@@ -41,12 +52,47 @@ export class CheckoutPageComponent <T> {
     this.basketTest.GetBasket().subscribe(res => this.basketItems = res)
   }
 
+  FillUpOrderObjectWithUserInput():Order{
+    var order:Order = new Order();
+    order.fullname = this.UserInfo.get("fullName")?.value;
+    order.email =  this.UserInfo.get("email")?.value;
+    order.address = this.UserInfo.get("address")?.value;
+    var test =  this.basketItems.basketDetails
+    return order
+  }
+
+  GenerateOrder(){
+    var order:Order = this.FillUpOrderObjectWithUserInput();
+    console.log(this.basketItems.basketDetails)
+    this.basketItems.basketDetails.forEach(ele => {
+      var currentElement = ele.products == undefined ? ele.variant : ele.products;
+
+      order.OrderLines?.push({id:0,product:(ele.products != undefined ? ele.products :undefined ),variant:(ele.variant != undefined ? ele.variant :undefined ),price:currentElement.price,quantity:ele.quantity,total:(currentElement.price*ele.quantity)})
+    })
+
+    order.total =  this.calculateTotal()
+
+    order.users = new User();
+    console.log(order)
+
+    console.log(JSON.stringify(order))
+    this.placeOrder(order);
+  }
+
+  
+
   calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => total + item.products.price, 0);
+    return this.basketItems.basketDetails.reduce((total, item) => 
+
+      total + (item.quantity * (item.products == undefined ? item.variant : item.products).price), 0);
+    
+
   } 
 
-  placeOrder(): void {
-    // Handle the order placement logic, e.g., send data to the server
-    console.log('Placing order:', this.billingDetails, 'Items:', this.basketItems, this.GetBasket());
+  placeOrder(order:Order): void {
+
+    this.service.PostRequest<any>(`Orders?sessid=${sessionController.GetCookie()}`,order).subscribe((Data) => {
+      console.log(Data)
+    })
   }
 }

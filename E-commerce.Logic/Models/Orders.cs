@@ -15,10 +15,24 @@ namespace E_commerce.Logic.Models
         
         public int Id { get; set; }
 
+
+        [Required]
+        public string FullName { get; set; } = string.Empty;
+
+        [Required]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Address { get; set; } = string.Empty;
+
         public virtual Users? Users { get; set; }
 
-        public virtual Session Session { get; set; }
+        public virtual Session? Session { get; set; }
+
         public virtual List<OrderDetails> OrderLines { get; set; }
+
+
+        public double Total {  get; set; }
 
       
     }

@@ -15,14 +15,14 @@
             </div>
             <div class="Product-Title-container">
               <span class="Product-Title">
-                {{ details.products.title }}
+                {{ details.variant.name }}
 
               </span>
             </div>
             <div class="Product-Price-container">
               <span class="Product-Price">
 
-                {{ details.products.price| currency }}
+                {{ details.variant.price| currency }}
               </span>
               
             </div>
@@ -35,17 +35,17 @@
   
     <div class="billing-details">
       <h3>Billing Details</h3>
-      <form ngModelOptions="{standalone: true}">
+      <form  [formGroup]="UserInfo" (ngSubmit)="GenerateOrder()">
         <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" [(ngModel)]="billingDetails.fullName" required>
+        <input type="text" id="fullName" name="fullName" type="text" formControlName="fullName" >
   
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" [(ngModel)]="billingDetails.email" required>
+        <input type="email" id="email" name="email" formControlName="email" >
   
         <label for="address">Address:</label>
-        <textarea id="address" name="address" [(ngModel)]="billingDetails.address" required></textarea>
+        <textarea id="address" name="address" formControlName="address" ></textarea>
   
-        <button type="button" (click)="placeOrder()">Place Order</button>
+        <button type="submit" >Place Order</button>
       </form>
     </div>
   </div>

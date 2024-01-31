@@ -83,4 +83,15 @@ export class basketLogic<T> {
         this.AddToBasketEvent.emit()
       });
     }
+
+
+    AddBasketDetail(detail:BasketDetails){ 
+
+      var sessionId:string = sessionController.GetCookie();
+
+      this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, detail).subscribe((data)=>{        
+      this.AddToBasketEvent.emit()
+    });
+  }
+
 }
