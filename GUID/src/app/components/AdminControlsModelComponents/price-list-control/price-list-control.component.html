@@ -1,4 +1,4 @@
-<div class="CategorieControl">
+<div class="ProductControl">
     <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
       <li class="nav-item" role="presentation">
         <button
@@ -72,13 +72,14 @@
         tabindex="0"
       >
       <form [formGroup]="createForm" (submit)="create()">
-      <h1>Create Categorie</h1>
-        <div>
-          <label for="name">Name</label>
-          <input id="nameCreate" type="text" formControlName="nameCreate">
-        </div>
-        <br>
-        <button type="submit" class="btn"id="Create">Create &#8594;</button>
+      <h1>Create PriceList</h1>
+      <div>
+        <label for="name">Name</label>
+        <input id="nameCreate" type="text" formControlName="nameCreate">
+      </div>
+      <br>
+
+      <button type="submit" class="btn"id="Create">Create &#8594;</button>
       </form>
     </div>
       <div
@@ -88,22 +89,16 @@
         aria-labelledby="Updated-tab"
         tabindex="0"
       >
-      <form [formGroup]="updateForm" (submit)="update()">
-        <h1>Update Categorie</h1>
+      <form [formGroup]="updatePriceListForm" (submit)="updatePriceList()">
+        <h1>Update PriceList</h1>
         <div>
-            <label for="productCategories">Categories</label>
-            <select id="categoriesUpdate" formControlName="categoriesUpdate" aria-label="Select categoires to add" aria-placeholder="Select categoires to add">
-                <option selected value="" >Choose a Categorie</option>
-                <option *ngFor="let tag of tags" [value]="tag.name" >{{tag.name}}</option>
+            <label for="product">Product</label>
+            <select id="productList" formControlName="productList" aria-label="Select product" aria-placeholder="Select product">
+              <option selected value="" >Choose a Product</option>
+              <option *ngFor="let product of products" [value]="product.id" >{{product.title}}</option>
             </select>
-        </div>
-        <div>
-            <label for="name">Name</label>
-            <input id="nameUpdate" type="text" formControlName="nameUpdate">
           </div>
-        <br>
-      
-        <button type="submit" class="btn"id="Update">Update &#8594;</button>
+          
       </form>
       </div>
       <div
@@ -114,16 +109,7 @@
         tabindex="0"
       >
       <form [formGroup]="deleteForm" (submit)="delete()">
-        <h1>Delete Categories</h1>
-          <div >
-            <label for="productCategories">Categories</label>
-            <select id="idDelete" formControlName="idDelete" aria-label="Select categoires to delete" aria-placeholder="Select categoires to delete">
-                <option selected value="" >Choose a Categorie</option>
-                <option *ngFor="let tag of tags" [value]="tag.id" >{{tag.name}}</option>
-            </select>
-          </div>
-          <br>
-          <button type="submit" class="btn" id="Delete">Delete &#8594;</button>
+        <h1>Delete PriceList</h1>
         </form>
       </div>
       <div
@@ -134,18 +120,7 @@
         tabindex="0"
       >
       <form [formGroup]="selectForm">
-        <h1>Select Categorie</h1>
-        <div>
-          <label for="categorieSelect">Categorie</label>
-          <select formControlName="categorieSelect">
-            <option value="" selected>Choose a Categorie to Select</option>
-            <option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</option>
-          </select>
-        </div>
-        <div>
-        <label for="name">Name</label>
-        <input id="nameSelect" type="text" formControlName="nameSelect">
-      </div>
+        <h1>Select PriceList</h1>
       </form>
       </div>
     </div>

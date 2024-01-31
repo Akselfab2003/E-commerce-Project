@@ -21,7 +21,12 @@ export class CarouselReviewsComponent<T> {
   }
 
   fetchDataFromApi() {
-    this.httpService.GetRequest<Reviews[]>(`Reviews/Get_Reviews1?${sessionController.GetCookie()}`).subscribe((data) => {
+    this.httpService.GetRequest<Reviews[]>(`Reviews/Get_Reviews/${this.product.id}`).subscribe((data) => {
+      var newReviewsArray: Reviews[] = new Array<Reviews>();
+
+      //newReviewsArray = data.map(ele => ele = {id: ele.id, ReviewTitle: ele.reviewTitle, ReviewContent: ele.reviewContent, ReviewRating: ele.reviewRating, Products: ele.Products, UserId: ele.UserId})
+      console.log("newReviewsArray", newReviewsArray);
+
       this.CurrentReviewDisplayedOnPage = data;
       console.log(data);
     });

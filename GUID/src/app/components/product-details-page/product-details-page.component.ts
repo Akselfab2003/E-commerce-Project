@@ -26,7 +26,8 @@ export class ProductDetailsPageComponent<T> {
   GetProduct<T>(id:Number){
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
-      console.log(data)
+      this.product.Quantity = 1;
+      console.log("GET PRODUCT TEST", data)
     });
   };
 
@@ -54,6 +55,24 @@ export class ProductDetailsPageComponent<T> {
     var NewBasketProduct:Products = this.product;
     this.basketTest.AddToBasket((this.SelectedVariant != new ProductVariants() ? undefined : this.product),(this.product != new Products() ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
 
+  }
+
+  AddProductQuantity(event: MouseEvent){
+    event.stopPropagation()
+    this.product.Quantity += 1
+    console.log(this.product.Quantity)
+    
+  }
+
+  SubtractProductQuantity(event: MouseEvent){
+    if(this.product.Quantity -1 <= 0){
+
+    }
+    else{
+      event.stopPropagation()
+      this.product.Quantity -= 1
+      console.log(this.product.Quantity)
+    }
   }
 
   ngOnInit() {
