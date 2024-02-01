@@ -4,6 +4,7 @@ import { Products } from '../../models/Products';
 import { BasketDetails } from '../../models/BasketDetails';
 import { Basket } from '../../models/Basket';
 import { basketLogic } from '../../logic/basketLogic';
+import { ProductVariants } from '../../models/ProductVariants';
 
 @Component({
   selector: 'app-basket',
@@ -82,16 +83,17 @@ export class BasketComponent<T> {
     return uniqueBasketDetails;
   }
 
-  AddProductUsingQtyClick(product: Products){
-    var basketDetailId = this.FindBasketDetailId(product);
+  AddProductUsingQtyClick(product?:Products,variant?:ProductVariants){
+    var basketDetailId = this.FindBasketDetailId(product, variant);
+    console.log("BasketDetailId =", basketDetailId)
     var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
     basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
     this.basketItems.UpdateBasket(this.basket )
   }
 
-  SubtractProductUsingQtyClick(product: Products){
+  SubtractProductUsingQtyClick(product?:Products,variant?:ProductVariants){
 
-    var basketDetailId = this.FindBasketDetailId(product);
+    var basketDetailId = this.FindBasketDetailId(product, variant);
     var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
     if(basketDetailObject != undefined ){
 
@@ -107,8 +109,34 @@ export class BasketComponent<T> {
     }
   }
 
-  FindBasketDetailId(product:Products){
-    return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id
+  FindBasketDetailId(product?:Products,variant?:ProductVariants):number{
+  //Wont be able to find Variant Id and therefore not able to add or subtract using the - and + signs?
+  
+  //return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id -- original working line (without variants)
+
+    /* var test = this.basket.basketDetails.find(detail =>{
+      //console.log(detail.products.id), console.log(product?.id), console.log("Variant Id",variant?.id)
+      if(product != null){
+         (detail.products.id == product.id) ? detail.id : 1
+      }
+      else if(variant != undefined && detail.variant != undefined)
+      {
+        //console.log("DETAIL VARIANT ID",detail.variant),
+        (detail.variant.id == variant.id) ? detail.id : 1
+      }
+      console.log(detail);
+    })
+    console.log("FIND BASKET DETAIL TEST",test);
+    return test != undefined ?test.id:0; */
+
+    var value:number;
+    if(product != undefined && this.basket.basketDetails != undefined){
+      value = (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products == product)?.id) != undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id))?.id : 0
+      return value;
+    }
+    else{
+      return 1
+    }
   }
 
   RemoveProductFromBasket(basketDetails:BasketDetails){

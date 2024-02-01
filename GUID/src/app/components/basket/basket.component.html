@@ -20,9 +20,9 @@
           <p>{{(basketDetail.products == undefined ? basketDetail.variant.name : basketDetail.products.title )}}</p>
           <strong>{{(basketDetail.products == undefined ? basketDetail.variant : basketDetail.products ).price| currency}}</strong>
           <div class="qty">
-            <span (click)="SubtractProductUsingQtyClick(basketDetail.products)">-</span>
+            <span (click)="SubtractProductUsingQtyClick(basketDetail.products, basketDetail.variant)">-</span>
             <strong>{{basketDetail.quantity}}</strong>
-            <span (click)="AddProductUsingQtyClick(basketDetail.products)">+</span>
+            <span (click)="AddProductUsingQtyClick(basketDetail.products, basketDetail.variant)">+</span>
           </div>
         </div>
       </div>

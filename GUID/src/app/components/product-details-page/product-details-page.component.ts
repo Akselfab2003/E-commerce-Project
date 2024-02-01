@@ -23,6 +23,8 @@ export class ProductDetailsPageComponent<T> {
   public SelectedVariant:ProductVariants = new ProductVariants();
 
   public SelectedIdFromVariant:number = 0;
+  public variantQuantity:number = 1;
+
   GetProduct<T>(id:Number){
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
@@ -56,15 +58,16 @@ export class ProductDetailsPageComponent<T> {
     console.log((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) )
     
     console.log((Object.entries(this.product).toString() != Object.entries(new Products()).toString()) )
-    this.basketTest.AddToBasket(((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) ? undefined : this.product),(  (this.variants.length == 0) ? undefined : this.SelectedVariant),(this.product == undefined ? 1:undefined))
+    this.basketTest.AddToBasket(((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) ? undefined : this.product),(  (this.variants.length == 0) ? undefined : this.SelectedVariant),(this.product == undefined ? this.variantQuantity: this.variantQuantity))
 
   }
 
   AddProductQuantity(event: MouseEvent){
     event.stopPropagation()
-    this.product.Quantity += 1
-    console.log(this.product.Quantity)
-    
+    this.product.Quantity += 1;
+    this.variantQuantity +=1;
+    console.log(this.product.Quantity);
+    console.log(this.variantQuantity);
   }
 
   SubtractProductQuantity(event: MouseEvent){
@@ -73,8 +76,10 @@ export class ProductDetailsPageComponent<T> {
     }
     else{
       event.stopPropagation()
-      this.product.Quantity -= 1
-      console.log(this.product.Quantity)
+      this.product.Quantity -= 1;
+      this.variantQuantity -=1;
+      console.log(this.product.Quantity);
+      console.log(this.variantQuantity);
     }
   }
 
