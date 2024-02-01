@@ -21,6 +21,7 @@ namespace E_commerce_Project.Controllers
             dataCollectioncontext = c;
         }
 
+        #region GET Requests
         [HttpGet("{id}")]
         public async Task<ActionResult<Basket>> GetBasketById(int id)
         {
@@ -46,7 +47,46 @@ namespace E_commerce_Project.Controllers
 
             return basket;
         }
+        #endregion
 
+        #region POST Reqeusts
+        [HttpPost("AddToBasket/{sessid}")]
+        public async Task<List<BasketDetails>> PostBasket(BasketDetails basketDetails, string sessid)
+        {
+            BasketDetails test = basketDetails;
+            test.Products = basketDetails.Products == new Products() ? null : (await dataCollectioncontext.Products.GetById(basketDetails.Products.Id));
+            test.Variant = basketDetails.Variant == null ? null : (await dataCollectioncontext.ProductVariants.GetById(basketDetails.Variant.Id));
+            await dataCollectioncontext.BasketDetails.Create(test);
+            Basket basket = await GetBasketBySessId(sessid);
+            basket.BasketDetails.Add(test);
+            await dataCollectioncontext.Basket.Update(basket);
+
+            return basket.BasketDetails;
+        }
+
+        [HttpPost("CreateBasket")]
+        public async Task<Basket> CreateBasket()
+        {
+            Basket basket = new Basket();
+
+            basket.BasketDetails = new List<BasketDetails> { };
+            basket.Session = new Session();
+
+            await dataCollectioncontext.Basket.Create(basket);
+
+            return basket;
+        }
+
+        [HttpPost("RemoveFromBasket/{sessId}")]
+        public async Task<List<BasketDetails>> DeleteBasketDetail(BasketDetails basketDetails, string sessId)
+        {
+
+            await dataCollectioncontext.BasketDetails.Delete(basketDetails);
+            return (await GetBasketBySessId(sessId)).BasketDetails;
+        }
+        #endregion
+
+        #region PUT Requests
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBasket(int id, Basket basket)
         {
@@ -66,44 +106,9 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
+        #endregion
 
-        [HttpPost("AddToBasket/{sessid}")]
-        public async Task<List<BasketDetails>> PostBasket(BasketDetails basketDetails, string sessid)
-        {
-            BasketDetails test = basketDetails;
-            test.Products = basketDetails.Products == new Products() ? null : (await dataCollectioncontext.Products.GetById(basketDetails.Products.Id));
-            test.Variant = basketDetails.Variant == null ? null : (await dataCollectioncontext.ProductVariants.GetById(basketDetails.Variant.Id));
-            await dataCollectioncontext.BasketDetails.Create(test);
-            Basket basket = await GetBasketBySessId(sessid);
-            basket.BasketDetails.Add(test);
-            await dataCollectioncontext.Basket.Update(basket);
-
-            return basket.BasketDetails;
-        }
-
-        [HttpPost("RemoveFromBasket/{sessId}")]
-        public async Task<List<BasketDetails>> DeleteBasketDetail(BasketDetails basketDetails, string sessId)
-        {
-            
-            await dataCollectioncontext.BasketDetails.Delete(basketDetails);
-            return (await GetBasketBySessId(sessId)).BasketDetails;
-        }
-
-
-        [HttpPost("CreateBasket")]
-        public async Task<Basket> CreateBasket()
-        {
-            Basket basket = new Basket();
-
-            basket.BasketDetails = new List<BasketDetails> { };
-            basket.Session = new Session();
-
-           // await dataCollectioncontext.Basket.CreateBasket(basket);
-            await dataCollectioncontext.Basket.Create(basket);
-
-            return basket;
-        }
-        // DELETE: api/Heroes/5
+        #region DELETE Requests
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBasket(Basket entity)
         {
@@ -117,5 +122,6 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }
