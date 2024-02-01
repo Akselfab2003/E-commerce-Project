@@ -52,6 +52,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             return await context.Products
                 .Include(product => product.Images)
                 .Include(product => product.ProductCategories)
+
                 .FirstOrDefaultAsync(product => product.Id == id);
         }
 

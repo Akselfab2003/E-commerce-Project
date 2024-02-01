@@ -8,21 +8,21 @@
     <div class="order-summary">
       <h3>Order Summary</h3>
       <ul>
-        <li *ngFor="let details of basketItems.basketDetails">
+        <li *ngFor="let detail of basketItems.basketDetails">
           <div class="basket-detail" >
             <div class="Product-Img">
-              <img [src]="details.products.images[0].imagePath" class="Img" alt="Product-Img">
+              <img [src]="(detail.products == undefined ? detail.variant.parentProduct : detail.products ).images[0].imagePath" class="Img" alt="Product-Img">
             </div>
             <div class="Product-Title-container">
               <span class="Product-Title">
-                {{ details.variant.name }}
+                {{ (detail.products == undefined ? detail.variant.name : detail.products.title )}}
 
               </span>
             </div>
             <div class="Product-Price-container">
               <span class="Product-Price">
 
-                {{ details.variant.price| currency }}
+                {{ (detail.products == undefined ? detail.variant : detail.products ).price| currency }}
               </span>
               
             </div>

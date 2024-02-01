@@ -26,7 +26,7 @@ export class ProductCardComponent<T> {
   
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
-    this.basketTest.AddToBasket(this.product);
+    this.basketTest.AddToBasket(this.product,undefined,1);
   }
 
   AddProductQuantity(event: MouseEvent){
