@@ -142,14 +142,16 @@
         <form [formGroup]="AddDeleteItems" (submit)="create()">
         <h1>Add/Delete items</h1>
         <div>
+          <form [formGroup]="SelectOptions">
           <label class="checkcontainer">Add
-            <input type="radio" checked="checked" name="radio" [value]="true" formControlName="option">
+            <input type="radio" checked="checked" [value]="true" formControlName="option">
             <span class="radiobtn"></span>
           </label>
           <label class="checkcontainer">Delete
-            <input type="radio" name="radio" [value]="false" formControlName="option">
+            <input type="radio" [value]="false" formControlName="option">
             <span class="radiobtn"></span>
           </label>
+        </form>
         </div>
         <div>
             <label for="priceLists">PriceList</label>

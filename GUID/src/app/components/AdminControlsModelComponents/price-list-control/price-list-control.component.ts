@@ -28,7 +28,7 @@ export class PriceListControlComponent<T> {
     usersList: new FormControl(),
   })
   SelectOptions= new FormGroup({
-    option: new FormControl<boolean>(true,Validators.required),
+    option: new FormControl<boolean|undefined>(undefined,Validators.required),
   })
   public products:Products[]=[];
   public companies:Company[]=[];
@@ -38,23 +38,27 @@ constructor(private service:HttpserviceService<T>, private router:Router) {
 };
 
 ngOnInit(){
-  this.SelectOptions.controls["option"].valueChanges.subscribe( value =>
+  this.service.GetRequest<Pricelist[]>("PriceList/GetListOfPriceList").subscribe(data=> {
+    this.pricelists = data;
+  });
+  this.AddDeleteItems.controls["priceLists"].valueChanges.subscribe( value =>
     {
-      if(value==true){
-        this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
-          this.products=data;
-          });
-        this.service.GetRequest<Company[]>("Company/GetAllCompanies").subscribe(data=> {
-          this.companies = data;
-        });
-        this.service.GetRequest<User[]>("User/GetListOfUsers").subscribe(data=> {
-          this.users = data;
-        });
-        this.service.GetRequest<Pricelist[]>("PriceList/GetListOfPriceList").subscribe(data=> {
-          this.pricelists = data;
+      if(!this.SelectOptions.get("option")?.value){
+        this.service.GetRequest<Pricelist>("PriceList/PriceList/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=> {
+          this.products=Array.from(data.priceListProducts,ele=>ele.product);
+          this.companies=data.companies;
+          this.users=data.users;
         });
       }else{
-
+        this.service.GetRequest<Products[]>("PriceList/Product/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+          this.products=data;
+        })
+        this.service.GetRequest<User[]>("PriceList/Users/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+          this.users=data;
+        })
+        this.service.GetRequest<Company[]>("PriceList/Companies/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+          this.companies=data;
+        })
       }
     });
 
