@@ -97,7 +97,11 @@ namespace E_commerce_Project.Controllers
 
             try
             {
-                await context.Update(basket);
+                foreach (var item in basket.BasketDetails)
+                {
+                    await dataCollectioncontext.BasketDetails.Update(item);
+                }
+               // await context.Update(basket);
             }
             catch (Exception ex)
             {

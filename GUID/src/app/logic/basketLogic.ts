@@ -58,7 +58,7 @@ export class basketLogic<T> {
 
     public AddProductToBasket(ProductDetail:BasketDetails){
       this.GetBasket().subscribe(data => {
-        var productFromBasketDetails = data.basketDetails.find(ele => ele.products.id == ProductDetail.products.id);
+        var productFromBasketDetails = data.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == ProductDetail.products.id);
         if(productFromBasketDetails != null)
         {
 
