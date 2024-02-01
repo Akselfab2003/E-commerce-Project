@@ -4,6 +4,7 @@ using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -40,7 +41,6 @@ namespace E_commerce_Project.Controllers
             }
 
         }
-
         [HttpGet("createEmptySession")]
         public async Task<Session> PostEmptySession()
         {
@@ -94,7 +94,7 @@ namespace E_commerce_Project.Controllers
             return false;
         }
 
-
+        [Tags(new string[] { "Admin" })]
         [HttpGet("ValidateSessionAdmin/{sessionId}")]
         public async Task<Boolean> ValidateAdminSession(string sessionId)
         {
@@ -139,6 +139,7 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.Created;
         }
+        [Tags(new string[] { "Admin" })]
         [HttpPost("createAdmin")]
         public async Task<HttpStatusCode> PostAdmin(AdminUsers adminUsers)
         {
@@ -215,6 +216,7 @@ namespace E_commerce_Project.Controllers
             }
             return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
         }
+        [Tags(new string[] { "Admin" })]
         [HttpPut("AdminLogin")]
         public async Task<IActionResult> PutAdmin(LoginObject loginObject)
         {
@@ -264,7 +266,7 @@ namespace E_commerce_Project.Controllers
                 return null;
             }
         }
-
+        [Tags(new string[] { "Admin" })]
         [HttpDelete("deleteAdmin/{username}")]
         public async Task<IActionResult> DeleteAdmin(string username)
         {
