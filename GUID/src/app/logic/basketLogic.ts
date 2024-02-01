@@ -85,6 +85,7 @@ export class basketLogic<T> {
           this.AddProductToBasket(newBasketDetails)
         }
         else{
+          console.log(Quantity)
 
           newBasketDetails.quantity = (Quantity !=undefined && Quantity != 0) ? Quantity : 1
           this.AddVariantBasket(newBasketDetails);
@@ -94,8 +95,6 @@ export class basketLogic<T> {
           resolve("Success");
         })
     };
-
-
 
 
 

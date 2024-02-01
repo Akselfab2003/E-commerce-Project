@@ -47,6 +47,7 @@ export class CompanyControlComponent<T> {
 
   
 
+  //Sender brugerens input til databasen
   GetListOfCompanies(){
     this.service.GetRequest<Company[]>("Company/GetAllCompanies").subscribe(company=> {
       this.companyList = company;
@@ -54,6 +55,8 @@ export class CompanyControlComponent<T> {
     })
   }
 
+
+  //Sender brugerens input til databasen
   create() {
     let company:Company = this.InputDataCreateCompany();
     this.service.PostRequest<Company>("Company/CreateCompany",company).subscribe(data => {
@@ -64,6 +67,7 @@ export class CompanyControlComponent<T> {
     })
   }
 
+  //Sender brugerens input til databasen
   update(){
     let company:Company = this.InputDataUpdateCompany();
     this.service.PutRequest<Company>("Company/UpdateCompany",company).subscribe(data => {
@@ -73,6 +77,8 @@ export class CompanyControlComponent<T> {
     })
   }
 
+
+  //Sender brugerens input til databasen
   delete() {
     let company:Company = this.InputDataDeleteCompany()
     this.service.PostRequest<Company>("Company/DeleteCompany",company).subscribe(data => {
@@ -83,6 +89,8 @@ export class CompanyControlComponent<T> {
     })
   }
 
+
+
   InputDataCreateCompany(): Company {
     let company: Company = new Company();
     company.name = this.createForm.get('CreateCompanyName')?.value as string;
@@ -92,6 +100,7 @@ export class CompanyControlComponent<T> {
     return company;
   }
   
+
   InputDataUpdateCompany():Company{
     var company:Company = this.companyList.find(ele => ele.name == this.updateForm.get("SelectCompanyUpdate")?.value) == undefined ? new Company() : this.companyList.find(ele => ele.name == this.updateForm.get("SelectCompanyUpdate")?.value) as Company;
     company.name = this.updateForm.get('UpdateCompanyName')?.value as string;
@@ -101,10 +110,12 @@ export class CompanyControlComponent<T> {
     return company;
   }
 
+
   InputDataDeleteCompany():Company{
     var company:Company = this.companyList.find(ele => ele.name == this.deleteForm.get("SelectCompanyDelete")?.value) == undefined ? new Company() : this.companyList.find(ele => ele.name == this.deleteForm.get("SelectCompanyDelete")?.value) as Company;
     return company;
   }
+
 
   selectOnChange(value:string | null):void{
 
@@ -116,6 +127,7 @@ export class CompanyControlComponent<T> {
     }
   }
 
+  
   ngOnInit(){
     this.GetListOfCompanies();
     this.selectForm.controls["CompanySelect"].valueChanges.subscribe(value =>{

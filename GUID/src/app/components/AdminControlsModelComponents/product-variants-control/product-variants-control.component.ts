@@ -44,7 +44,7 @@ export class ProductVariantsControlComponent<T> {
   constructor(private service:HttpserviceService<T>, private router:Router) {
   };
 
-  //starter forfra hvis login ikke passer
+  //creates a new product variant
   create() {
     let productVariant:ProductVariants= this.InputDataCreate();
     this.service.PostRequest<ProductVariants>("ProductVariants?ID=" + (this.createForm.get('productIDCreate')?.value as unknown as number),productVariant).subscribe((data)=>
@@ -52,12 +52,8 @@ export class ProductVariantsControlComponent<T> {
     )
   }
 
+  //updates a product variant
   update(){
-    /* let productVariant:ProductVariants= this.InputDataUpdate();
-    this.service.PutRequest<ProductVariants>("ProductVariants/",productVariant).subscribe((data)=>
-    console.log(data)
-    ); */
-
     let variant:ProductVariants= this.InputDataUpdate();
     console.log((this.updateForm.get('productIDUpdate')?.value as unknown as number));
     console.log(variant);
@@ -68,6 +64,7 @@ export class ProductVariantsControlComponent<T> {
     });
   }
 
+  //deletes a product variant
   delete(){
     console.log((this.deleteForm.get('productnameDelete')?.value as unknown as number));
     this.service.DeleteRequest<any>("ProductVariants/" + (this.deleteForm.get('productnameDelete')?.value as unknown as number)).subscribe((data)=>
@@ -75,6 +72,7 @@ export class ProductVariantsControlComponent<T> {
     );
   }
 
+  //creates a new product variant with data from the create form
   InputDataCreate():ProductVariants{
     let productVariant:ProductVariants=new ProductVariants();
     productVariant.parentProduct = this.allProducts[this.createForm.get('productIDCreate')?.value as number];
@@ -86,8 +84,8 @@ export class ProductVariantsControlComponent<T> {
     return productVariant;
   }
 
+  //creates a new product variant with data from the update form
   InputDataUpdate():ProductVariants{
-    //let productVariant:ProductVariants=new ProductVariants();
     var productVariant:ProductVariants = this.productVariantList.find(ele => ele.id == this.updateForm.get('productIDUpdate')?.value) == undefined ? new ProductVariants() : this.productVariantList.find(ele => ele.id == this.updateForm.get('productIDUpdate')?.value) as ProductVariants;
     console.log(productVariant);
     productVariant.parentProduct = this.allProducts[this.updateForm.get('productIDUpdate')?.value as number];
@@ -98,6 +96,7 @@ export class ProductVariantsControlComponent<T> {
     return productVariant;
   }
 
+  //fetches all products from the server and adds a new product with id 0, title "All", and Active status true to the list.
   GetAllProducts<T>(){
     this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe( ele => {
       let Allproduct:Products =  new Products;
@@ -106,11 +105,13 @@ export class ProductVariantsControlComponent<T> {
       Allproduct.title = "All";
       Allproduct.Active = true;
 
+    // Calls the setpost method with the response data from the server and the Allproduct object
       this.setpost([...ele,Allproduct]);
 
     });
   }
 
+  //fetches all product variants from the server and assigns them to the productVariantList property.
   GetallProductVariants<T>(){
     this.service.GetRequest<ProductVariants[]>("ProductVariants").subscribe( ele => {
       this.productVariantList = ele;
@@ -123,15 +124,16 @@ export class ProductVariantsControlComponent<T> {
    this.GetallProductVariants<ProductVariants[]>()
   }
 
+  //sorts the received array of products by id and assigns it to the allProducts property.
   setpost(ArrayOfCategories:Products[]){
     this.allProducts = ArrayOfCategories.sort((a:Products,b:Products) => a.id-b.id)
     console.log(this.allProducts)
 
   }
 
+  //checks if the title of each product in allProducts matches the CurrentSelectedValue. If a match is found, it emits the TagsChangedEvent with the matching product and sets its Active status to true.
   selectChanged()
   {
- 
     this.allProducts.forEach(ele => {
       
       if(ele.title == this.CurrentSelectedValue){
