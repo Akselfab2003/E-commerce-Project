@@ -23,8 +23,12 @@ export class PriceListControlComponent<T> {
   AddDeleteItems= new FormGroup({
     priceLists: new FormControl(),
     productList: new FormControl(),
+    priceUpdate: new FormControl<number>(1,Validators.required),
     companyList: new FormControl(),
     usersList: new FormControl(),
+  })
+  SelectOptions= new FormGroup({
+    option: new FormControl<boolean>(true,Validators.required),
   })
   public products:Products[]=[];
   public companies:Company[]=[];
@@ -34,18 +38,26 @@ constructor(private service:HttpserviceService<T>, private router:Router) {
 };
 
 ngOnInit(){
-  this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
-    this.products=data;
+  this.SelectOptions.controls["option"].valueChanges.subscribe( value =>
+    {
+      if(value==true){
+        this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
+          this.products=data;
+          });
+        this.service.GetRequest<Company[]>("Company/GetAllCompanies").subscribe(data=> {
+          this.companies = data;
+        });
+        this.service.GetRequest<User[]>("User/GetListOfUsers").subscribe(data=> {
+          this.users = data;
+        });
+        this.service.GetRequest<Pricelist[]>("PriceList/GetListOfPriceList").subscribe(data=> {
+          this.pricelists = data;
+        });
+      }else{
+
+      }
     });
-  this.service.GetRequest<Company[]>("Company/GetAllCompanies").subscribe(data=> {
-    this.companies = data;
-  });
-  this.service.GetRequest<User[]>("User/GetListOfUsers").subscribe(data=> {
-    this.users = data;
-  });
-  this.service.GetRequest<Pricelist[]>("PriceList/GetListOfPriceList").subscribe(data=> {
-    this.pricelists = data;
-  });
+
 }
 
 create(){
@@ -57,7 +69,7 @@ updatePriceList(){
   let pricelist:Pricelist= new Pricelist();
   pricelist.id=this.updatePriceListForm.get("pricelistList")?.value as number;
   pricelist.name=this.updatePriceListForm.get("nameUpdate")?.value as string;
-  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
+  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList/"+pricelist.id,pricelist).subscribe();
 }
 
 addProduct(){
@@ -72,7 +84,7 @@ addProduct(){
   priceEntity.product=product;
 
   pricelist.priceListProducts.push(priceEntity);
-  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
+  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList/"+pricelist.id,pricelist).subscribe();
 }
 
 deleteProduct(){
@@ -87,7 +99,6 @@ deleteProduct(){
   priceEntity.priceListPrice=product.price;
   priceEntity.product=product;
 
-  console.log();
   for(let item of pricelist.priceListProducts){
     if(item!=priceEntity){
       priceEntityList.push(item);
@@ -99,17 +110,61 @@ deleteProduct(){
 }
 
 addCompany(){
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  if(pricelist.companies==null){
+    pricelist.companies=[];
+  }
+  
+  let company:Company=this.AddDeleteItems.get("companyList")?.value;
 
+  pricelist.companies.push(company);
+  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
 }
 deleteCompany(){
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  if(pricelist.companies==null){
+    pricelist.companies=[];
+  }
+  let company:Company=this.AddDeleteItems.get("companyList")?.value;
+  let companyList:Company[]=[];
 
+  for(let item of pricelist.companies){
+    if(item!=company){
+      companyList.push(item);
+    }
+  }
+  pricelist.companies=companyList;
+  
+  this.service.PutRequest<Pricelist>("UpdatePriceList",pricelist).subscribe();
 }
 
 addUser(){
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  if(pricelist.users==null){
+    pricelist.users=[];
+  }
+  
+  let users:User=this.AddDeleteItems.get("usersList")?.value;
 
+  pricelist.users.push(users);
+  this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
 }
 deleteUser(){
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  if(pricelist.users==null){
+    pricelist.users=[];
+  }
+  let user:User=this.AddDeleteItems.get("usersList")?.value;
+  let userList:User[]=[];
 
+  for(let item of pricelist.users){
+    if(item!=user){
+      userList.push(item);
+    }
+  }
+  pricelist.users=userList;
+  
+  this.service.PutRequest<Pricelist>("UpdatePriceList",pricelist).subscribe();
 }
 
 InputDataCreate():Pricelist{
