@@ -142,6 +142,16 @@
         <form [formGroup]="AddDeleteItems" (submit)="create()">
         <h1>Add/Delete items</h1>
         <div>
+          <label class="checkcontainer">Add
+            <input type="radio" checked="checked" name="radio" [value]="true" formControlName="option">
+            <span class="radiobtn"></span>
+          </label>
+          <label class="checkcontainer">Delete
+            <input type="radio" name="radio" [value]="false" formControlName="option">
+            <span class="radiobtn"></span>
+          </label>
+        </div>
+        <div>
             <label for="priceLists">PriceList</label>
             <select id="priceLists" formControlName="priceLists" aria-label="Select pricelist" aria-placeholder="Select pricelist">
               <option selected value="" >Choose a Price List</option>
@@ -154,8 +164,10 @@
               <option selected value="" >Choose a Product</option>
               <option *ngFor="let product of products" [ngValue]="product" >{{product.title}}</option>
             </select>
-            <button (click)="addProduct()">Add Product</button>
-            <button (click)="deleteProduct()">Delete Product</button>
+          </div>
+          <div>
+            <label for="priceUpdate">Product Price</label>
+            <input id="priceUpdate" type="number" formControlName="priceUpdate">
           </div>
           <div>
             <label for="companyList">Company</label>
@@ -163,8 +175,6 @@
               <option selected value="" >Choose a Company</option>
               <option *ngFor="let company of companies" [ngValue]="company" >{{company.name}}</option>
             </select>
-            <button (click)="addCompany()">Add Company</button>
-            <button (click)="deleteCompany()">Delete Company</button>
           </div>
           <div>
             <label for="usersList">Users</label>
@@ -172,10 +182,9 @@
               <option selected value="" >Choose a User</option>
               <option *ngFor="let user of users" [ngValue]="user" >{{user.username}}</option>
             </select>
-            <button (click)="addUser()">Add User</button>
-            <button (click)="deleteUser()">Delete User</button>
           </div>
         <br>
+        <button type="submit" class="btn"id="Update">Update &#8594;</button>
         </form>
       </div>
       <div

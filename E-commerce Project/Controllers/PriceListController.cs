@@ -38,17 +38,22 @@ namespace E_commerce_Project.Controllers
         #endregion
 
         #region PUT Requests
-        [HttpPut("UpdatePriceList")]
-        public async Task<PriceList?> UpdateUser(PriceList priceList)
+        [HttpPut("UpdatePriceList/{id}")]
+        public async Task<PriceList?> UpdateUser(int id,PriceList priceList)
         {
-            try
+            //Users user=
+            if (id == priceList.Id)
             {
-                return await collection.PriceList.Update(priceList);
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    return await collection.PriceList.Update(priceList);
+                }
+                catch (Exception ex)
+                {
 
+                }
             }
+
 
             return null;
         }

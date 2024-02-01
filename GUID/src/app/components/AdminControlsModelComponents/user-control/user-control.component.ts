@@ -16,6 +16,7 @@ export class UserControlComponent<T> {
    Update!:FormGroup
    Delete!:FormGroup
 
+   // Array to hold the list of User objects
    public UsersList:User[] = new Array<User>();
   constructor(private http:HttpserviceService<T>){
 
@@ -24,13 +25,14 @@ export class UserControlComponent<T> {
 
   ngOnInit(){
     this.GetListOfUsers()
+    // Initialization of Create FormGroup with form controls for Username, Password, Email, and Gender
     this.Create = new FormGroup({
       Username: new FormControl<string>('', Validators.required),
       Password: new FormControl<string>('', Validators.required),
       Email: new FormControl<string>('', [Validators.required, Validators.email]),
       Gender: new FormControl<boolean>(false, Validators.required),
     })
-
+    // Initialization of Update FormGroup with form controls for User, Username, Password, Email, and Gender
     this.Update = new FormGroup({
       User: new FormControl<string>("",Validators.required),
       Username: new FormControl<string>('', Validators.required),
@@ -40,6 +42,7 @@ export class UserControlComponent<T> {
     },{
       validators:validateUserSelected
     });
+    // checks for value changes of the 'User' control in the Update form
     this.Update.controls["User"].valueChanges.subscribe( value =>
         {
         if(value !=""){
@@ -47,15 +50,15 @@ export class UserControlComponent<T> {
           this.SelectOnChange(value)
         }
         });
+    // Initialization of Delete FormGroup with a form control for User
     this.Delete = new FormGroup({
       User: new FormControl<string>("",Validators.required),
     },{
       validators:validateUserSelected
     })
-    
-
   }
 
+  //gets a list of all users from the database
   GetListOfUsers(){
     this.http.GetRequest<User[]>("User/GetListOfUsers").subscribe(usr=> {
       this.UsersList = usr;
@@ -63,7 +66,7 @@ export class UserControlComponent<T> {
 
   }
 
-
+//creates a new User object from the values in the Create form and returns it.
   ParseFormGroupCreate() : User{
     var user:User= new User()
     user.username = this.Create.get("Username")?.value
@@ -72,6 +75,7 @@ export class UserControlComponent<T> {
     user.password = this.Create.get("Password")?.value
     return user;
   }
+  //finds a User object in the UsersList that matches the username in the Update form, updates its values with the form values, and returns it.
   ParseFormGroupUpdate() : User {
     var user:User =  this.UsersList.find(ele => ele.username == this.Update.get("User")?.value) == undefined ? new User() : this.UsersList.find(ele => ele.username == this.Update.get("User")?.value) as User;
     user.username = this.Update.get("Username")?.value
@@ -80,11 +84,13 @@ export class UserControlComponent<T> {
     user.password = this.Update.get("Password")?.value
     return user;
   }
+  //finds a User object in the UsersList that matches the username in the Delete form and returns it.
   ParseFormGroupDelete() : User{
     var user:User =  this.UsersList.find(ele => ele.username == this.Delete.get("User")?.value) == undefined ? new User() : this.UsersList.find(ele => ele.username == this.Delete.get("User")?.value) as User;
     return user;
   }
 
+//calls the ParseFormGroupCreate method to get a User object, sends a POST request to the server to create the user, and then resets the Create form and fetches the updated list of users.
   SubmitCreated() {
     let usr:User = this.ParseFormGroupCreate()
 
@@ -92,13 +98,11 @@ export class UserControlComponent<T> {
       if(data != null){
         this.Create.reset()
         this.GetListOfUsers()
-
       }
     })
-    
-
   }
 
+  //calls the ParseFormGroupUpdate method to get a User object, sends a PUT request to the server to update the user, and then resets the Update form and fetches the updated list of users.
   SubmitUpdate() {
     let usr:User = this.ParseFormGroupUpdate()
 
@@ -108,10 +112,9 @@ export class UserControlComponent<T> {
         this.GetListOfUsers()
       }
     })
-    
-
   }
 
+  //calls the ParseFormGroupDelete method to get a User object, sends a POST request to the server to delete the user, and then resets the Delete form and fetches the updated list of users.
   SubmitDelete() {
       let usr:User = this.ParseFormGroupDelete()
       this.http.PostRequest<User>("User/DeleteUser",usr).subscribe(data => {
@@ -120,18 +123,15 @@ export class UserControlComponent<T> {
           this.GetListOfUsers()
         }
       })
-      
-  
   }
+
+  //triggered when the selected value in the Update form changes
   SelectOnChange(value:string):void{
 
     var user:User =this.UsersList.find(ele => ele.username == value) == undefined ? new User() : this.UsersList.find(ele => ele.username == value) as User;
    
     if(user != new User()){
        this.Update.setValue({User:user.username,Username:user.username,Email:user.email,Password:user.password,Gender:user.gender},{emitEvent:false})
-     
     }
   }
-
-
 }

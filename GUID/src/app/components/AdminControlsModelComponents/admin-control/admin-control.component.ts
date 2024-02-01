@@ -27,31 +27,37 @@ export class AdminControlComponent<T> {
   constructor(private service:HttpserviceService<T>, private router:Router) {
   };
 
-  //starter forfra hvis login ikke passer
+//Sender brugerens input til databasen
   register() {
     let user:LoginObject= this.InputDataCreate();
     this.service.PostRequest<LoginObject>("User/createAdmin",user).subscribe((data)=>
     console.log(data)
     )
   }
+
+  //Sender brugerens input til databasen
   update(){
     let user:LoginObject= this.InputDataUpdate();
     this.service.PutRequest<Session>("User/AdminLogin",user).subscribe((data)=>
     console.log(data)
     );
   }
+
+  //Sender brugerens input til databasen
   delete(){
     let username:string = this.deleteForm.get('usernameDelete')?.value?.toString() as string;
     this.service.DeleteRequest<Session>("User/deleteAdmin/"+username).subscribe((data)=>
     console.log(data)
     );
   }
+  
   InputDataCreate():LoginObject{
     let user:LoginObject=new LoginObject();
     user.username=this.createForm.get('usernameCreate')?.value?.toString() as string;
     user.password=this.createForm.get('passwordCreate')?.value?.toString() as string;
     return user;
   }
+
   InputDataUpdate():LoginObject{
     let user:LoginObject=new LoginObject();
     user.username=this.updateForm.get('usernameUpdate')?.value?.toString() as string;
