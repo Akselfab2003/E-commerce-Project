@@ -11,13 +11,9 @@ namespace E_commerce.Logic.Interfaces
     {
         public Task<List<Company>> GetAll();
         public Task<Company> GetById(int id);
-
         public Task<Company> GetByName(string name);
-
         public Task<Company> UpdateCompany(Company Company);
-
         public Task<bool> DeleteCompany(int id);
-
         public Task<Company> CreateCompany(Company Company);
     }
 }

@@ -12,7 +12,6 @@ namespace E_commerce.Logic.Interfaces
         public Task<Users> GetByName(string name);
         public Task<Users> GetById(int id);
         public Task<List<Users>> GetListOfUsers();
-
         public Task<bool> CheckLogin(LoginObject loginObject);
     }
 }

@@ -10,11 +10,8 @@ namespace E_commerce.Logic.Interfaces
     public interface IOrderDetails : IGeneric<OrderDetails>
     {
         public Task<OrderDetails> GetById(int id);
-
         public Task<OrderDetails> UpdateOrderDetails(OrderDetails OrderDetails);
-
         public Task<bool> DeleteOrderDetails(int id);
-
         public Task<OrderDetails> CreateOrderDetails(OrderDetails OrderDetails);
     }
 }
