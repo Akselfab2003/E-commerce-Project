@@ -29,7 +29,7 @@ export class PriceListControlComponent<T> {
     usersList: new FormControl(),
   })
   SelectOptions= new FormGroup({
-    option: new FormControl<boolean>(true,Validators.required),
+    option: new FormControl<boolean|undefined>(undefined,Validators.required),
   })
 
    // Variabler for at gemme produkter, virksomheder, brugere og prisliste
@@ -43,11 +43,9 @@ constructor(private service:HttpserviceService<T>, private router:Router) {};
 
 //Kaldes når brugeren vælger en prisliste
 ngOnInit(){
-  //Henter alle produkter, virksomheder, brugere og prislister
   this.SelectOptions.controls["option"].valueChanges.subscribe( value =>
     {
       if(value==true){
-        // Henter data fra serveren når option er true
         this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
           this.products=data;
           });
@@ -61,6 +59,15 @@ ngOnInit(){
           this.pricelists = data;
         });
       }else{
+        this.service.GetRequest<Products[]>("PriceList/Product/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+          this.products=data;
+        })
+        this.service.GetRequest<User[]>("PriceList/Users/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+          this.users=data;
+        })
+        this.service.GetRequest<Company[]>("PriceList/Companies/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+          this.companies=data;
+        })
       }
   });
 }

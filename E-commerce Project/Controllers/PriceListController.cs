@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using E_commerce.Logic.Models;
 using System.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_Project.Controllers
 {
@@ -73,6 +74,58 @@ namespace E_commerce_Project.Controllers
                 return null;
             }
 
+        }
+        [HttpGet("PriceList/{id}")]
+        public async Task<IActionResult> GetPriceList(int id)
+        {
+            try
+            {
+                var priceList = await collection.PriceList.GetById(id);
+                return Ok(priceList);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return NoContent();
+        }
+        [HttpGet("Product/{id}")]
+        public async Task<IActionResult> GetPriceListProduct(int id)
+        {
+            try
+            {
+                var priceList = await collection.PriceList.GetProductsNotPartOfPriceList(id);
+                return Ok(priceList);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return NoContent();
+        }
+        [HttpGet("Users/{id}")]
+        public async Task<IActionResult> GetPriceListUsers(int id)
+        {
+            try
+            {
+                var priceList = await collection.PriceList.GetUsersNotPartOfPriceList(id);
+                return Ok(priceList);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return NoContent();
+        }
+        [HttpGet("Companies/{id}")]
+        public async Task<IActionResult> GetPriceListCompanies(int id)
+        {
+            try
+            {
+                var priceList = await collection.PriceList.GetCompaniesNotPartOfPriceList(id);
+                return Ok(priceList);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return NoContent();
         }
         #endregion
     }
