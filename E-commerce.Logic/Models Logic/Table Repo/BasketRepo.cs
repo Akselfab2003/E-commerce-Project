@@ -82,10 +82,10 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
 
 
-                .Include(ele => ele.Session)
-                .Include(ele => ele.BasketDetails)
-                .ThenInclude(ele => ele.Products)
-                .ThenInclude(ele => ele.ProductCategories)
+                //.Include(ele => ele.Session)
+                //.Include(ele => ele.BasketDetails)
+                //.ThenInclude(ele => ele.Products)
+                //.ThenInclude(ele => ele.ProductCategories)
 
 
 

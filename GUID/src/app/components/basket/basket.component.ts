@@ -83,12 +83,12 @@ export class BasketComponent<T> {
     return uniqueBasketDetails;
   }
 
-  AddProductUsingQtyClick(product?:Products,variant?:ProductVariants){
-    var basketDetailId = this.FindBasketDetailId(product, variant);
-    console.log("BasketDetailId =", basketDetailId)
-    var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
-    basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-    this.basketItems.UpdateBasket(this.basket )
+  AddProductUsingQtyClick(basketDetails:BasketDetails)
+  {
+    var test = {id: basketDetails.products.id, title: basketDetails.products.title, description: basketDetails.products.description, images: basketDetails.products.images, price: basketDetails.products.price, productCategories: basketDetails.products.productCategories, productVariants:basketDetails.products.productVariants, Quantity: basketDetails.quantity, Active: basketDetails.products.Active}
+
+
+    this.basketItems.AddToBasket( test,basketDetails.variant,undefined )
   }
 
   SubtractProductUsingQtyClick(product?:Products,variant?:ProductVariants){
@@ -109,7 +109,7 @@ export class BasketComponent<T> {
     }
   }
 
-  FindBasketDetailId(product?:Products,variant?:ProductVariants):number{
+  FindBasketDetailId(Product?:Products,variant?:ProductVariants):number{
   //Wont be able to find Variant Id and therefore not able to add or subtract using the - and + signs?
   
   //return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id -- original working line (without variants)
@@ -129,14 +129,22 @@ export class BasketComponent<T> {
     console.log("FIND BASKET DETAIL TEST",test);
     return test != undefined ?test.id:0; */
 
-    var value:number;
-    if(product != undefined && this.basket.basketDetails != undefined){
-      value = (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products == product)?.id) != undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id))?.id : 0
-      return value;
-    }
-    else{
-      return 1
-    }
+   
+      var value;
+      if(Product != undefined && this.basket.basketDetails.length > 0 && this.basket.basketDetails.find(ele => ele.products != undefined || ele.products != null)){
+        value = this.basket.basketDetails.find(ele => ele.products == Product) //!= undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id)) : 0
+        console.log("Hit")
+        console.log(value?.id) 
+        return (value != undefined ? value.id : 0)
+      }
+      else{
+        value = this.basket.basketDetails.find(ele => ele.variant == variant) //!= undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id)) : 0
+        console.log("Hit variant")
+        console.log(value?.id) 
+        return (value != undefined ? value.id : 0)
+      }
+
+    
   }
 
   RemoveProductFromBasket(basketDetails:BasketDetails){
