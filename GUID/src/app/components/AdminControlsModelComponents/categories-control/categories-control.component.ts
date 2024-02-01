@@ -12,6 +12,7 @@ import { ProductVariants } from '../../../models/ProductVariants';
   styleUrl: './categories-control.component.css'
 })
 export class CategoriesControlComponent<T> {
+    //Gemmer brugerens input i variabler
     createForm = new FormGroup({
       nameCreate: new FormControl<string>('',Validators.required),
     });
@@ -42,6 +43,8 @@ export class CategoriesControlComponent<T> {
         }
       });
     }
+
+    //Sender brugerens input til databasen
     create() {
       let categorie:Categories= this.InputDataCreate();
       this.service.PostRequest<Categories>("Filter/Categories",categorie).subscribe()
@@ -51,6 +54,8 @@ export class CategoriesControlComponent<T> {
         }
       });
     }
+
+    //Sender brugerens input til databasen
     update(){
       let categorie:Categories= this.InputDataUpdate();
       this.service.PutRequest<Categories>("Filter/"+categorie.id,categorie).subscribe();
@@ -60,6 +65,8 @@ export class CategoriesControlComponent<T> {
         }
       });
     }
+
+    //Sender brugerens input til databasen
     delete(){
       let id:number = this.deleteForm.get('idDelete')?.value as number;
       this.service.DeleteRequest<Boolean>("Filter/"+id).subscribe();
@@ -69,11 +76,15 @@ export class CategoriesControlComponent<T> {
         }
       });
     }
+
+
     InputDataCreate():Categories{
       let categorie:Categories=new Categories();
       categorie.name=this.createForm.get('nameCreate')?.value as string;
       return categorie;
     }
+
+
     InputDataUpdate():Categories{
       let categorie:Categories = new Categories();
       for(let tag of this.tags){
@@ -84,6 +95,8 @@ export class CategoriesControlComponent<T> {
       categorie.name=this.updateForm.get('nameUpdate')?.value as string;
       return categorie;
     }
+
+    
     selectOnChange(value:string | null):void{
 
       var categorie:Categories =this.tags.find(ele => ele.name == value) == undefined ? new Categories() : this.tags.find(ele => ele.name == value) as Categories;

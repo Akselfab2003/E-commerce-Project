@@ -13,6 +13,7 @@ import { PriceListEntity } from '../../../models/PriceListEntity';
   styleUrl: './price-list-control.component.css'
 })
 export class PriceListControlComponent<T> {
+  // Opretter FormGroup-objekter for skemaerne
   createForm = new FormGroup({
   nameCreate: new FormControl<string>('',Validators.required),
 });
@@ -30,17 +31,23 @@ export class PriceListControlComponent<T> {
   SelectOptions= new FormGroup({
     option: new FormControl<boolean>(true,Validators.required),
   })
+
+   // Variabler for at gemme produkter, virksomheder, brugere og prisliste
   public products:Products[]=[];
   public companies:Company[]=[];
   public users:User[]=[];
   public pricelists:Pricelist[]=[];
-constructor(private service:HttpserviceService<T>, private router:Router) {
-};
 
+constructor(private service:HttpserviceService<T>, private router:Router) {};
+
+
+//Kaldes når brugeren vælger en prisliste
 ngOnInit(){
+  //Henter alle produkter, virksomheder, brugere og prislister
   this.SelectOptions.controls["option"].valueChanges.subscribe( value =>
     {
       if(value==true){
+        // Henter data fra serveren når option er true
         this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
           this.products=data;
           });
@@ -54,17 +61,17 @@ ngOnInit(){
           this.pricelists = data;
         });
       }else{
-
       }
-    });
-
+  });
 }
 
+//opretter en prisliste
 create(){
   let pricelist:Pricelist= this.InputDataCreate();
   this.service.PostRequest<Pricelist>("PriceList",pricelist).subscribe()
 }
 
+//Updaterer en prisliste
 updatePriceList(){
   let pricelist:Pricelist= new Pricelist();
   pricelist.id=this.updatePriceListForm.get("pricelistList")?.value as number;
@@ -72,6 +79,8 @@ updatePriceList(){
   this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList/"+pricelist.id,pricelist).subscribe();
 }
 
+
+//tilføjer et produkt til en prisliste
 addProduct(){
   let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
   if(pricelist.priceListProducts==null){
@@ -87,6 +96,8 @@ addProduct(){
   this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList/"+pricelist.id,pricelist).subscribe();
 }
 
+
+//fjerner et produkt fra en prisliste
 deleteProduct(){
   let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
   if(pricelist.priceListProducts==null){
@@ -109,6 +120,8 @@ deleteProduct(){
   this.service.PutRequest<Pricelist>("UpdatePriceList",pricelist).subscribe();
 }
 
+
+//tilføjer en virksomhed til en prisliste
 addCompany(){
   let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
   if(pricelist.companies==null){
@@ -120,6 +133,9 @@ addCompany(){
   pricelist.companies.push(company);
   this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
 }
+
+
+//fjerner en virksomhed fra en prisliste
 deleteCompany(){
   let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
   if(pricelist.companies==null){
@@ -138,6 +154,8 @@ deleteCompany(){
   this.service.PutRequest<Pricelist>("UpdatePriceList",pricelist).subscribe();
 }
 
+
+//tilføjer en bruger til en prisliste
 addUser(){
   let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
   if(pricelist.users==null){
@@ -149,6 +167,9 @@ addUser(){
   pricelist.users.push(users);
   this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
 }
+
+
+//fjerner en bruger fra en prisliste
 deleteUser(){
   let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
   if(pricelist.users==null){
@@ -167,6 +188,8 @@ deleteUser(){
   this.service.PutRequest<Pricelist>("UpdatePriceList",pricelist).subscribe();
 }
 
+
+//opretter prisliste baseret på brugers input
 InputDataCreate():Pricelist{
   let pricelist:Pricelist=new Pricelist();
   pricelist.name=this.createForm.get('nameCreate')?.value as string;
