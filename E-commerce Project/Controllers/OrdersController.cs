@@ -19,11 +19,11 @@ namespace E_commerce_Project.Controllers
             Context = c.Orders;
             IUserContext = c.Users;
             collection = c;
-
         }
 
+        #region GET Requests
         [HttpGet("{sessid}")]
-        public async Task<ActionResult<List<Orders>>> GetOrderstBysessID(string sessid)
+        public async Task<ActionResult<List<Orders>>> GetOrdersBysessID(string sessid)
         {
             var order = await Context.GetBysessId(sessid);
 
@@ -36,7 +36,7 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpGet("id/{id}")]
-        public async Task<ActionResult<Orders>> GetOrderstById(int id)
+        public async Task<ActionResult<Orders>> GetOrdersById(int id)
         {
             var order = await Context.GetById(id);
 
@@ -47,7 +47,9 @@ namespace E_commerce_Project.Controllers
 
             return order;
         }
+        #endregion
 
+        #region POST Reguests
         [HttpPost(Name = "CreateOrder")]
         public async Task<HttpStatusCode> CreateOrder(string sessid,Orders order)
         {
@@ -64,8 +66,6 @@ namespace E_commerce_Project.Controllers
               
                 foreach (OrderDetails details in test.OrderLines)
                 {
-
-                    //details.Product = await collection.Products.GetById(details.Product.Id);
                     if (details.variant != null)
                     {
                         details.variant = await collection.ProductVariants.GetById(details.variant.Id);
@@ -78,9 +78,6 @@ namespace E_commerce_Project.Controllers
                         details.variant = null;
                         await collection.OrderDetails.Create(details);
                     }
-
-                    
-
                 }
                 await Context.Create(test);
             }
@@ -91,5 +88,6 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.Created;
         }
+        #endregion
     }
 }

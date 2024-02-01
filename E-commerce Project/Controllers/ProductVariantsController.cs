@@ -16,6 +16,7 @@ namespace E_commerce_Project.Controllers
         IDataCollection DataContext;
         public ProductVariantsController(IDataCollection c) { context = c.ProductVariants; DataContext = c; } // Dependency Injection - DI
 
+        #region GET Requests
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductVariants>> GetProductVariantsById(int id)
         {
@@ -54,8 +55,19 @@ namespace E_commerce_Project.Controllers
 
             return productVariants;
         }
+        #endregion
 
+        #region POST Requests
+        [HttpPost]
+        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants, int ID)
+        {
+            productVariants.ParentProduct = await DataContext.Products.GetById(ID);
+            await context.Create(productVariants);
+            return CreatedAtAction("GetProductVariants", new { id = productVariants.Id }, productVariants);
+        }
+        #endregion
 
+        #region PUT Requests
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProductVariants(int id, ProductVariants productVariantss)
         {
@@ -75,16 +87,9 @@ namespace E_commerce_Project.Controllers
 
             return NoContent();
         }
+        #endregion
 
-        [HttpPost]
-        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants, int ID)
-        {
-            productVariants.ParentProduct = await DataContext.Products.GetById(ID);
-            await context.Create(productVariants);
-            return CreatedAtAction("GetProductVariants", new { id = productVariants.Id }, productVariants);
-        }
-
-        // DELETE: api/Heroes/5
+        #region DELETE Requests
         [HttpDelete("{id}")]
         public async Task<HttpStatusCode> DeleteProductVariants(int id)
         {
@@ -98,5 +103,6 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.Created;
         }
+        #endregion
     }
 }

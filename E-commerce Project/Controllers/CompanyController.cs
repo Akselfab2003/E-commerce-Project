@@ -19,6 +19,7 @@ namespace E_commerce_Project.Controllers
             dataCollection = c;
         }
 
+        #region GET Requests
         [HttpGet("GetAllCompanies")]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
         {
@@ -38,7 +39,9 @@ namespace E_commerce_Project.Controllers
 
             return company;
         }
+        #endregion
 
+        #region POST Requests
         [HttpPost("CreateCompany")]
         public async Task<HttpStatusCode> PostCompany(Company company)
         {
@@ -52,7 +55,9 @@ namespace E_commerce_Project.Controllers
             }
             return HttpStatusCode.Created;
         }
+        #endregion
 
+        #region PUT Requests
         [HttpPut("UpdateCompany")]
         public async Task<HttpStatusCode> PutCompany(Company company)
         {
@@ -67,7 +72,9 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.OK;
         }
+        #endregion
 
+        #region DELETE Requests
         [HttpPost("DeleteCompany")]
         public async Task<Company> DeleteCompany(Company company)
         {
@@ -80,5 +87,6 @@ namespace E_commerce_Project.Controllers
                 return null;
             }
         }
+        #endregion
     }
 }
