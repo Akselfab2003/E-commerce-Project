@@ -24,7 +24,7 @@ export class ProductPageComponent<T> {
     this.service.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data) => {
       var newProductsArray:Products[] = new Array<Products>();
 
-      newProductsArray = data.map(ele => ele = {id: ele.id, title: ele.title, description: ele.description, images: ele.images, price: ele.price, productCategories: ele.productCategories, productVariants: ele.productVariants, Quantity: 1, Active: ele.Active} )
+      newProductsArray = data.filter(ele => ele.title != "").map(ele => ele = {id: ele.id, title: ele.title, description: ele.description, images: ele.images, price: ele.price, productCategories: ele.productCategories, productVariants: ele.productVariants, Quantity: 1, Active: ele.Active} )
       console.log("newProductsArray", newProductsArray);
 
       this.CurrentProductsOnPage = newProductsArray;
