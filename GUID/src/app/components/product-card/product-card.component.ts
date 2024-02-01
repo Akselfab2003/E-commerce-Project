@@ -26,7 +26,7 @@ export class ProductCardComponent<T> {
   
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
-    this.basketTest.AddToBasket(this.product,undefined,1);
+    this.basketTest.AddToBasket(this.product,undefined,this.product.Quantity);
   }
 
   AddProductQuantity(event: MouseEvent){
@@ -56,7 +56,7 @@ export class ProductCardComponent<T> {
       return images[0].imagePath;
     }
     
-   // console.log(event.target)
+    // console.log(event.target)
     //this.src='https://fastly.picsum.photos/id/1025/1000/1500.jpg?hmac=1LkHmpIJnIt0_dmhCgO3F2PNh8RM2zXK13TcTtKK-1A'
   }
 
