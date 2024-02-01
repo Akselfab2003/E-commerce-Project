@@ -87,7 +87,7 @@ namespace E_commerce_Project.Controllers
                 try
                 {
 
-                    users = (await dataCollection.Session.GetById(sessid)).user;
+                        users = (await dataCollection.Session.GetById(sessid)).user;
                 }
                 catch (Exception ex)
                 {
