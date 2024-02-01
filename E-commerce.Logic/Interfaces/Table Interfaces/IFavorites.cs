@@ -10,11 +10,8 @@ namespace E_commerce.Logic.Interfaces
     public interface IFavorites : IGeneric<Favorites>
     {
         public Task<Favorites> GetById(int id);
-
         public Task<Favorites> UpdateFavorites(Favorites Favorites);
-
         public Task<bool> DeleteFavorites(int id);
-
         public Task<Favorites> CreateFavorites(Favorites Favorites);
     }
 }

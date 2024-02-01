@@ -27,6 +27,5 @@ namespace E_commerce.Logic.Interfaces
         public IHashing Cryptography {  get; }
         public IReviews Reviews { get; }
         public IOrderDetails OrderDetails { get; }
-
     }
 }
