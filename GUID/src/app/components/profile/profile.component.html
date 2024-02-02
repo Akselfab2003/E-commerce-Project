@@ -12,11 +12,38 @@
     <div class="order-history">
       <h2>Order History</h2>
       <ul>
-        <li *ngFor="let Order of orders">
-          <p><strong>Order:</strong> {{ Order.id }}</p>
-          <!-- <p><strong>Date:</strong> {{ order.date | date }}</p> -->
-          <!-- Add more order details as needed -->
+        <!-- <li *ngFor="let order of orders">
+          <div *ngFor="let detail of order.orderlines">
+
+
+          <div class="basket-detail" >
+
+            
+            <div class="Product-Img">
+               <img [src]="((detail.product == undefined ? detail.variant?.parentProduct?.images[0] : detail.product.images[0]).imagePath )" class="Img" alt="Product-Img">             </div>
+            <div class="Product-Title-container">
+              <span class="Product-Title">
+                {{ (detail.product == undefined ? detail.variant?.name : detail.product.title )}}
+
+              </span>
+            </div>
+            <div class="Product-Price-container">
+              <span class="Product-Price">
+
+                {{ detail.total | currency }}
+              </span>
+              
+            </div>
+
+          </div>
+        </div>
         </li>
+ -->
+         <li *ngFor="let Order of orders">
+          <p><strong>Order:</strong> {{ Order.id }}</p>
+         <!--  <p><strong>Date:</strong> {{ order.date | date }}</p> -->
+          <!-- Add more order details as needed -->
+        </li> 
       </ul>
     </div>
   </div>
