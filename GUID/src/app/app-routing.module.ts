@@ -54,13 +54,13 @@ const routes: Routes = [
       {path:"categories-control",component:CategoriesControlComponent},
       {path:"images-control",component:ImagesControlComponent},
       {path:"price-list-control",component:PriceListControlComponent},
+      {path:"product-variants-control",component:ProductVariantsControlComponent},
 
     ],
     canActivate:[adminGuard],
   },
   {path: "reviews-page/:id", component:ReviewsPageComponent},
   {path:"Search/:q",component:SearchResultComponent},
-  {path:"product-variants-control",component:ProductVariantsControlComponent},
 
 ];
 
