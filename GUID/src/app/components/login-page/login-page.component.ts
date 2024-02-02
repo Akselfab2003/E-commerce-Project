@@ -34,11 +34,16 @@ export class LoginComponent<T> {
     LoginTry.password =password;
     LoginTry.sessionId =sessionController.GetCookie();
     console.log(LoginTry);
-    this.service.PutRequest<Session>("User/Login",LoginTry).subscribe((data)=>
-      
-      sessionController.SetCookie(data));
+    this.service.PutRequest<Session>("User/Login",LoginTry).subscribe((data)=>{
 
-    this.router.navigateByUrl('/profile');
+      sessionController.SetCookie(data)
+
+      this.router.navigateByUrl('/profile');
+    }
+      
+    
+    );
+
   }
 }
 
