@@ -128,5 +128,21 @@ namespace E_commerce_Project.Controllers
             return NoContent();
         }
         #endregion
+
+        #region DELETE Requests
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePriceList(int id)
+        {
+            var pricelist = await priceList.GetById(id);
+            if (pricelist == null)
+            {
+                return NotFound();
+            }
+
+            await collection.PriceList.Delete(pricelist);
+
+            return NoContent();
+        }
+        #endregion
     }
 }
