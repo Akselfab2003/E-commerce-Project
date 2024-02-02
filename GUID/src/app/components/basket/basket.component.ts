@@ -31,7 +31,7 @@ import { ProductVariants } from '../../models/ProductVariants';
 export class BasketComponent<T> {
   public BasketState:string = "Closed";
   public BasketStateBool:boolean = false;
-
+  public Quantity:number = 1
   basket: Basket = new Basket();
   subtotal:number = 0;
 
@@ -43,7 +43,7 @@ export class BasketComponent<T> {
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
-      this.subtotal = this.calculateTotal();
+      this.subtotal = this.calculateTotal(res);
       console.log("Your basket:",res)
     });
   };
@@ -51,13 +51,14 @@ export class BasketComponent<T> {
   GetProductVariant(){
 
   }
-  calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => 
+  calculateTotal(basket:Basket): number {
+    return basket.basketDetails.reduce((total, item) => 
 
       total + (item.quantity * (item.products == undefined ? item.variant : item.products).price), 0);
     
 
   } 
+
   ngOnInit(){
     this.GetBasket();
   }
@@ -85,10 +86,16 @@ export class BasketComponent<T> {
 
   AddProductUsingQtyClick(basketDetails:BasketDetails)
   {
-    var test = {id: basketDetails.products.id, title: basketDetails.products.title, description: basketDetails.products.description, images: basketDetails.products.images, price: basketDetails.products.price, productCategories: basketDetails.products.productCategories, productVariants:basketDetails.products.productVariants, Quantity: basketDetails.quantity, Active: basketDetails.products.Active}
+    console.log("Test",basketDetails)
+    var test =  undefined
+
+    if(basketDetails.products != null){
+
+       test = {id: basketDetails.products.id, title: basketDetails.products.title, description: basketDetails.products.description, images: basketDetails.products.images, price: basketDetails.products.price, productCategories: basketDetails.products.productCategories, productVariants:basketDetails.products.productVariants, Quantity: 1, Active: basketDetails.products.Active}
+    }
 
 
-    this.basketItems.AddToBasket( test,basketDetails.variant,undefined )
+    this.basketItems.AddToBasket( test,basketDetails.variant,(basketDetails.variant != undefined ? 1 : undefined) )
   }
 
   SubtractProductUsingQtyClick(product?:Products,variant?:ProductVariants){

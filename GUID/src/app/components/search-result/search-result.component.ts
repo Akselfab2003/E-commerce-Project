@@ -26,11 +26,16 @@ export class SearchResultComponent<T> {
     console.log(sessionController.GetCookie())
     var sessid = sessionController.GetCookie();
     this.service.GetRequest<Products[]>(`Products/Search?SearchInput=${Input}&sessid=${sessid}`).subscribe((data) => {
-      console.log(data)
-      this.CurrentProductsOnPage = data;
-      this.CurrentProductsDisplayedOnPage = data;
+      var newProductsArray:Products[] = new Array<Products>();
+
+      newProductsArray = data.filter(ele => ele.title != "").map(ele => ele = {id: ele.id, title: ele.title, description: ele.description, images: ele.images, price: ele.price, productCategories: ele.productCategories, productVariants: ele.productVariants, Quantity: 1, Active: ele.Active} )
+      console.log("newProductsArray", newProductsArray);
+
+      this.CurrentProductsOnPage = newProductsArray;
+      this.CurrentProductsDisplayedOnPage = newProductsArray;
     });
   };
+ 
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(param => {

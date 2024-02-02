@@ -105,7 +105,6 @@ export class basketLogic<T> {
         console.log(data);
         
         this.AddToBasketEvent.emit()
-
       });
     }
   
@@ -119,9 +118,7 @@ export class basketLogic<T> {
 
 
     AddBasketDetail(detail:BasketDetails){ 
-
       var sessionId:string = sessionController.GetCookie();
-
       this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, detail).subscribe((data)=>{        
       this.AddToBasketEvent.emit()
     });

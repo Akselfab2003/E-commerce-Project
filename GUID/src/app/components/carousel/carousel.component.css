@@ -59,10 +59,10 @@
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
-    cursor: pointer;
     transition: background-color 0.3s;
   }
   
   #btn:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #2980b9;
+    cursor: pointer;
   }

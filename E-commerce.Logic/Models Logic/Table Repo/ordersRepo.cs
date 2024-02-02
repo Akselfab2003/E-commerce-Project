@@ -69,7 +69,20 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             Session session = await dataCollection.GetById(sessid);
            
-            List < Orders>userOrders = await context.Orders.Include(order => order.OrderLines).Where(order => order.Session.SessId == sessid ).ToListAsync();
+            List < Orders>userOrders = await context.Orders
+                .Include(order => order.OrderLines)
+                .ThenInclude(order => order.Product)
+                .ThenInclude(order => order.Images)
+                .Include(order => order.OrderLines)
+                .ThenInclude(order => order.variant)
+                .ThenInclude(order => order.ParentProduct)
+                .ThenInclude(order => order.Images)
+
+                .Include(order => order.OrderLines)
+                .ThenInclude(order => order.variant)
+                .ThenInclude(order => order.ParentProduct)
+                .ThenInclude(order => order.Images)
+                .Where(order => order.Session.SessId == sessid ).ToListAsync();
 
             return userOrders;
         }
