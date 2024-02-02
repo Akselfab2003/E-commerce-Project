@@ -4,7 +4,7 @@ import { Reviews } from '../../models/Reviews';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Products } from '../../models/Products';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { sessionController } from '../../logic/sessionLogic';
 
 
@@ -24,7 +24,7 @@ export class ReviewsPageComponent<T> {
     ReviewRating: new FormControl<number>(1, Validators.required),
   })
 
-  constructor(private http: HttpClient, private service:HttpserviceService<T>, private route:ActivatedRoute) { }
+  constructor(private http: HttpClient, private service:HttpserviceService<T>, private route:ActivatedRoute, private router:Router) { }
 
   createReview(){
     let review:Reviews = new Reviews();
@@ -40,8 +40,11 @@ export class ReviewsPageComponent<T> {
     this.createReview();
     let sessId: string = sessionController.GetCookie();
     let review:Reviews = this.createReview();
-    this.service.PostRequest<any>(`Reviews/CreateReviews/${sessId}`,review).subscribe((data)=>
-    console.log(data)
+    this.service.PostRequest<any>(`Reviews/CreateReviews/${sessId}`,review).subscribe((data)=>{
+
+      console.log(data)
+      this.router.navigateByUrl(`/product-details/${this.product.id}`);
+    }
     )
   };
 

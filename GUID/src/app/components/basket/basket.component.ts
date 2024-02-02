@@ -43,7 +43,7 @@ export class BasketComponent<T> {
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
-      this.subtotal = this.calculateTotal();
+      this.subtotal = this.calculateTotal(res);
       console.log("Your basket:",res)
     });
   };
@@ -51,13 +51,14 @@ export class BasketComponent<T> {
   GetProductVariant(){
 
   }
-  calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => 
+  calculateTotal(basket:Basket): number {
+    return basket.basketDetails.reduce((total, item) => 
 
       total + (item.quantity * (item.products == undefined ? item.variant : item.products).price), 0);
     
 
   } 
+
   ngOnInit(){
     this.GetBasket();
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { sessionController } from '../../logic/sessionLogic';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
@@ -30,6 +30,7 @@ export class CarouselComponent<T> implements OnInit {
   };
 
   AddToBasket(product: Products){
+    event?.stopPropagation()
     this.basketTest.AddToBasket(product,undefined,1)
   }
   
