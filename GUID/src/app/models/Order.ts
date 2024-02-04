@@ -8,5 +8,5 @@ export class Order{
     email:string =  "";
     address:string =  "";
     total:number = 0;
-    OrderLines?:orderDetails[] =new Array<orderDetails>();
+    orderLines:orderDetails[] =new Array<orderDetails>();
 }
