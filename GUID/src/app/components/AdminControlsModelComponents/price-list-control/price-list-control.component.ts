@@ -7,6 +7,7 @@ import { Products } from '../../../models/Products';
 import { Company } from '../../../models/Company';
 import { User } from '../../../models/User';
 import { PriceListEntity } from '../../../models/PriceListEntity';
+import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-price-list-control',
   templateUrl: './price-list-control.component.html',
@@ -31,12 +32,20 @@ export class PriceListControlComponent<T> {
   SelectOptions= new FormGroup({
     option: new FormControl<boolean|undefined>(undefined,Validators.required),
   })
+  deleteForm = new FormGroup({
+    priceListDelete: new FormControl<number>(1,Validators.required)
+  })
+  selectForm = new FormGroup({
+    selectPriceList: new FormControl<number>(1,Validators.required),
+    selectDescription: new FormControl(),
+  })
 
    // Variabler for at gemme produkter, virksomheder, brugere og prisliste
   public products:Products[]=[];
   public companies:Company[]=[];
   public users:User[]=[];
   public pricelists:Pricelist[]=[];
+  public json:string="";
 
 constructor(private service:HttpserviceService<T>, private router:Router) {};
 
@@ -44,6 +53,11 @@ constructor(private service:HttpserviceService<T>, private router:Router) {};
 //Kaldes når brugeren vælger en prisliste
 ngOnInit(){
   this.ResetForms();
+  this.selectForm.controls["selectPriceList"].valueChanges.subscribe(value =>{
+    this.service.GetRequest<Pricelist>("PriceList/PriceList/"+this.selectForm.get("selectPriceList")?.value).subscribe(data=> {
+      this.json = JSON.stringify(data);
+    });
+  });
 }
 
 //opretter en prisliste
@@ -58,6 +72,7 @@ updatePriceList(){
   pricelist.id=this.updatePriceListForm.get("pricelistList")?.value as number;
   pricelist.name=this.updatePriceListForm.get("nameUpdate")?.value as string;
   this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList/"+pricelist.id,pricelist).subscribe();
+  this.ResetForms();
 }
 
 addAndDeleteItems(){
@@ -76,7 +91,9 @@ addAndDeleteItems(){
 }
 
 delete(){
-  
+  let id:number=this.deleteForm.get('priceListDelete')?.value as number;
+  this.service.DeleteRequest<Boolean>("PriceList/"+id).subscribe();
+  this.ResetForms();
 }
 
 //tilføjer et produkt til en prisliste
@@ -207,12 +224,15 @@ InputDataCreate():Pricelist{
 }
 ResetForms(){
   this.AddDeleteItems.reset();
+  this.deleteForm.reset();
+  this.updatePriceListForm.reset();
   this.service.GetRequest<Pricelist[]>("PriceList/GetListOfPriceList").subscribe(data=> {
     this.pricelists = data;
   });
   this.SelectOptions.controls["option"].valueChanges.subscribe( value =>
     {
       if(value==true){
+        console.log(value)
         this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
           this.products=data;
           });
@@ -226,15 +246,15 @@ ResetForms(){
           this.pricelists = data;
         });
       }else{
-        this.service.GetRequest<Products[]>("PriceList/Product/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
-          this.products=data;
-        })
-        this.service.GetRequest<User[]>("PriceList/Users/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
-          this.users=data;
-        })
-        this.service.GetRequest<Company[]>("PriceList/Companies/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
-          this.companies=data;
-        })
+          this.service.GetRequest<Products[]>("PriceList/Product/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+            this.products=data;
+          })
+          this.service.GetRequest<User[]>("PriceList/Users/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+            this.users=data;
+          })
+          this.service.GetRequest<Company[]>("PriceList/Companies/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
+            this.companies=data;
+          })
       }
   });
 }

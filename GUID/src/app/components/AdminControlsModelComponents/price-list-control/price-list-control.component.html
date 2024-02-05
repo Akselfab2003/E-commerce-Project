@@ -127,9 +127,18 @@
         aria-labelledby="pills-contact-tab"
         tabindex="0"
       >
-<!--       <form [formGroup]="deleteForm" (submit)="delete()">
+      <form [formGroup]="deleteForm" (submit)="delete()">
         <h1>Delete PriceList</h1>
-        </form> -->
+        <div>
+        <label for="priceListDelete">PriceList</label>
+        <select id="priceListDelete" formControlName="priceListDelete" aria-label="Choose a PriceList to delete" aria-placeholder="Choose an PriceList to delete">
+            <option selected value="" >Choose a PriceList</option>
+            <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist.id">{{pricelist.name}}</option>
+        </select>
+      </div>
+      <br>
+        <button type="submit" class="btn"id="Delete">Delete &#8594;</button>
+        </form>
       </div>
       <div class="tab-content" id="pills-tabContent">
         <div
@@ -196,9 +205,22 @@
         aria-labelledby="pills-disabled-tab"
         tabindex="0"
       >
-<!--       <form [formGroup]="selectForm">
+      <form [formGroup]="selectForm">
         <h1>Select PriceList</h1>
-      </form> -->
+        <div>
+            <label for="selectPriceList">PriceList</label>
+            <select id="selectPriceList" formControlName="selectPriceList" aria-label="Select pricelist" aria-placeholder="Select pricelist">
+              <option selected value="" >Choose a Price List</option>
+              <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist.id" >{{pricelist.name}}</option>
+            </select>
+        </div>
+        <div>
+          <label for="selectDescription">Description</label>
+          <textarea id="selectDescription" type="text" rows="10" cols="100">
+            {{json}}
+          </textarea>
+        </div>
+        </form>
       </div>
     </div>
   </div>
