@@ -67,7 +67,7 @@ export class CheckoutPageComponent <T> {
     this.basketItems.basketDetails.forEach(ele => {
       var currentElement = ele.products == undefined ? ele.variant : ele.products;
 
-      order.OrderLines?.push({id:0,product:(ele.products != undefined ? ele.products :undefined ),variant:(ele.variant != undefined ? ele.variant :undefined ),price:currentElement.price,quantity:ele.quantity,total:(currentElement.price*ele.quantity)})
+      order.orderLines?.push({id:0,product:(ele.products != undefined ? ele.products :undefined ),variant:(ele.variant != undefined ? ele.variant :undefined ),price:currentElement.price,quantity:ele.quantity,total:(currentElement.price*ele.quantity)})
     })
 
     order.total =  this.calculateTotal()

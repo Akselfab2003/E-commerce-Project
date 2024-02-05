@@ -22,6 +22,7 @@ export class ProfileComponent<T> {
   ngOnInit(): void {
     this.GetUser();
     this.GetOrders();
+    console.log("Test",this.orders)
   };
 
   GetUser(){
@@ -38,7 +39,7 @@ export class ProfileComponent<T> {
 
     this.service.GetRequest<Order[]>("Orders/"+sessid).subscribe((data)=>{
       this.orders = data;
-      console.log(this.orders)
+      console.log("Test", this.orders)
     });
   }
 }

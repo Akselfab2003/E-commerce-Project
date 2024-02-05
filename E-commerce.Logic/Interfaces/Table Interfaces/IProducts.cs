@@ -16,6 +16,10 @@ namespace E_commerce.Logic.Interfaces
         public Task<List<Products>> GetProducts(int count);
         public Task<List<Products>?> GetAllProducts();
         public Task<List<Products>> SearchForProducts(string SearchInput);
+        public Task<List<Products>> SearchForProductsNewWay(string SearchInput);
+
+        public Task<List<Products>> SearchForProductsAsyncTest(string SearchInput);
+
 
     }
 }

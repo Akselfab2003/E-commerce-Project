@@ -4,6 +4,7 @@ using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace E_commerce_Project.Controllers
 {
@@ -40,7 +41,7 @@ namespace E_commerce_Project.Controllers
             {
                 if (sessid == "")
                 {
-                    users = (await dataCollection.Session.GetById(sessid)).user;
+                    users = (await dataCollection.Session.GetById(sessid))?.user;
 
                 }
             }
@@ -87,7 +88,7 @@ namespace E_commerce_Project.Controllers
                 try
                 {
 
-                        users = (await dataCollection.Session.GetById(sessid)).user;
+                        users = (await dataCollection.Session.GetById(sessid))?.user;
                 }
                 catch (Exception ex)
                 {
@@ -100,6 +101,115 @@ namespace E_commerce_Project.Controllers
             catch (Exception ex)
             {
                 return new List<Products> { };
+            }
+        }
+        //"00:00:00.0018953"
+
+
+        [HttpGet("SearchTest/")]
+        public async Task<TimeSpan?> SearchTest(string SearchInput, string sessid)
+        {
+            try
+            {
+                //Users? users = null;
+                //try
+                //{
+
+                //    users = (await dataCollection.Session.GetById(sessid))?.user;
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+                TimeSpan test = new TimeSpan();
+                for (int i = 0; i < 10; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    List<Products> products = await dataCollection.Products.SearchForProducts(SearchInput);
+
+                    stopwatch.Stop();
+                    test = test.Add(stopwatch.Elapsed);
+                }
+
+                return (test.Divide(10));
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        //"00:00:00.6733213"
+        //"00:00:00.0029060"
+
+        [HttpGet("SearchTestNewWay/")]
+        public async Task<TimeSpan> SearchTestNewWay(string SearchInput, string sessid)
+        {
+            try
+            {
+                //Users? users = null;
+                //try
+                //{
+
+                //    users = (await dataCollection.Session.GetById(sessid))?.user;
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+                TimeSpan test = new TimeSpan();
+                for (int i = 0; i < 10; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    List<Products> products = await dataCollection.Products.SearchForProductsNewWay(SearchInput);
+               
+                    stopwatch.Stop();
+                    test = test.Add(stopwatch.Elapsed);
+                }
+       
+                return (test.Divide(10));
+            }
+            catch (Exception ex)
+            {
+                return new TimeSpan();
+            }
+        }
+
+
+
+
+        //"00:00:00.0029826"
+
+
+        [HttpGet("SearchTestNewWaysecondWay/")]
+        public async Task<TimeSpan> SearchTestNewWaysecondWay(string SearchInput, string sessid)
+        {
+            try
+            {
+                //Users? users = null;
+                //try
+                //{
+
+                //    users = (await dataCollection.Session.GetById(sessid))?.user;
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+                TimeSpan test = new TimeSpan();
+                for (int i = 0; i < 10; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    List<Products> products = await dataCollection.Products.SearchForProductsAsyncTest(SearchInput);
+                    stopwatch.Stop();
+                    test = test.Add(stopwatch.Elapsed);
+                }
+
+                return (test.Divide(10));
+            }
+            catch (Exception ex)
+            {
+                return new TimeSpan();
             }
         }
         #endregion
