@@ -39,9 +39,12 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
             if (user != null)
             {
-                
-                
 
+                int count = (context.PriceList.ToList()).Count();
+                if (count > 0)
+                {
+
+                
                 PriceList priceList = await context.PriceList.Where(priceList => priceList.Users.Contains(user) || priceList.Companies.Contains(user.Company == null ? new Company() : user.Company)).FirstAsync();
 
                 List<Products> ProductsWithNewPrices = new List<Products>();
@@ -61,6 +64,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 }
 
                 return ProductsWithNewPrices;
+                }
             }
 
             return products;
