@@ -76,15 +76,16 @@ namespace E_commerce_Project.Controllers
 
         #region DELETE Requests
         [HttpPost("DeleteCompany")]
-        public async Task<Company> DeleteCompany(Company company)
+        public async Task<HttpStatusCode> DeleteCompany(Company company)
         {
             try
             {
-                return await context.Delete(company);
+                await context.Delete(company);
+                return HttpStatusCode.NoContent;
             }
             catch (Exception ex)
             {
-                return null;
+                return HttpStatusCode.BadRequest;
             }
         }
         #endregion

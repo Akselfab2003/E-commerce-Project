@@ -33,7 +33,7 @@
         <p>SUBTOTAL</p>
         <p><span id="subtotal-price">{{this.subtotal | currency}}</span></p>
       </div>
-      <button routerLink="checkout-page">Checkout</button>
+      <button (click)="closeBasket()" routerLink="checkout-page">Checkout</button>
       <button (click)="closeBasket()">close</button>
     </div>
   </div>

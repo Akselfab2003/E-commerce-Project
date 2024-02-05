@@ -45,8 +45,7 @@ namespace E_commerce.Test.UnitTests
             Assert.Equal(basket, basketReturnedUsingSessId);
 
             basket.Session.SessId = "Updated-SessId";
-            //BasketDetails basketDetails = new BasketDetails();
-            //basket.BasketDetails.Add(basketDetails);
+
             Basket updatedBasket = await dataCollection.Basket.UpdateBasket(basket);
             Assert.True(updatedBasket.Session.SessId == basket.Session.SessId);
             output.WriteLine(JsonSerializer.Serialize(updatedBasket));
