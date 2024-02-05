@@ -254,7 +254,7 @@ namespace E_commerce_Project.Controllers
         #endregion
 
         #region DELETE Requests
-        [HttpPost("DeleteUser")]
+        [HttpDelete("DeleteUser")]
         public async Task<Users?> DeleteUser(Users user)
         {
             try

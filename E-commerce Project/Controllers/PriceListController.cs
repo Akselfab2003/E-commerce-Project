@@ -40,23 +40,23 @@ namespace E_commerce_Project.Controllers
 
         #region PUT Requests
         [HttpPut("UpdatePriceList/{id}")]
-        public async Task<PriceList?> UpdateUser(int id,PriceList priceList)
+        public async Task<HttpStatusCode> UpdateUser(int id,PriceList priceList)
         {
             //Users user=
             if (id == priceList.Id)
             {
                 try
                 {
-                    return await collection.PriceList.Update(priceList);
+                    await collection.PriceList.Update(priceList);
                 }
                 catch (Exception ex)
                 {
-
+                    return HttpStatusCode.BadRequest;
                 }
             }
 
 
-            return null;
+            return HttpStatusCode.Created;
         }
         #endregion
 
@@ -76,72 +76,71 @@ namespace E_commerce_Project.Controllers
 
         }
         [HttpGet("PriceList/{id}")]
-        public async Task<IActionResult> GetPriceList(int id)
+        public async Task<PriceList> GetPriceList(int id)
         {
             try
             {
-                var priceList = await collection.PriceList.GetById(id);
-                return Ok(priceList);
+                return await collection.PriceList.GetById(id);
             }
             catch (DbUpdateConcurrencyException)
             {
+                return null;
             }
-            return NoContent();
         }
         [HttpGet("Product/{id}")]
-        public async Task<IActionResult> GetPriceListProduct(int id)
+        public async Task<List<Products>> GetPriceListProduct(int id)
         {
             try
             {
-                var priceList = await collection.PriceList.GetProductsNotPartOfPriceList(id);
-                return Ok(priceList);
+                List<Products> priceList = await collection.PriceList.GetProductsNotPartOfPriceList(id);
+                return priceList;
             }
             catch (DbUpdateConcurrencyException)
             {
+                return null;
             }
-            return NoContent();
         }
         [HttpGet("Users/{id}")]
-        public async Task<IActionResult> GetPriceListUsers(int id)
+        public async Task<List<Users>> GetPriceListUsers(int id)
         {
             try
             {
-                var priceList = await collection.PriceList.GetUsersNotPartOfPriceList(id);
-                return Ok(priceList);
+                List<Users> priceList = await collection.PriceList.GetUsersNotPartOfPriceList(id);
+                return priceList;
             }
             catch (DbUpdateConcurrencyException)
             {
+                return null;
             }
-            return NoContent();
         }
         [HttpGet("Companies/{id}")]
-        public async Task<IActionResult> GetPriceListCompanies(int id)
+        public async Task<List<Company>> GetPriceListCompanies(int id)
         {
             try
             {
-                var priceList = await collection.PriceList.GetCompaniesNotPartOfPriceList(id);
-                return Ok(priceList);
+                List<Company> priceList = await collection.PriceList.GetCompaniesNotPartOfPriceList(id);
+                return priceList;
             }
             catch (DbUpdateConcurrencyException)
             {
+                return null;
             }
-            return NoContent();
         }
         #endregion
 
         #region DELETE Requests
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePriceList(int id)
+        public async Task<HttpStatusCode> DeletePriceList(int id)
         {
             var pricelist = await priceList.GetById(id);
             if (pricelist == null)
             {
-                return NotFound();
+                return HttpStatusCode.NotFound;
             }
 
             await collection.PriceList.Delete(pricelist);
 
-            return NoContent();
+            return HttpStatusCode.Created;
         }
         #endregion
     }
