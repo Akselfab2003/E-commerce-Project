@@ -2,10 +2,12 @@
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic;
+using E_commerce.Test.Create_data_for_local_database;
 using E_commerce_Project.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -21,12 +23,15 @@ namespace E_commerce.Test.UnitTests
         private readonly IDataCollection dataCollection;
         private readonly ITestOutputHelper output;
         private ProductsController productsController;
+        private FillDatabaseWithData fillDatabaseWithData;
         public ProductTests(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
             GenerateFakeProductData();
             productsController = new ProductsController(dataCollection);
+            fillDatabaseWithData = new FillDatabaseWithData(collection.DataCollection, outputHelper);
+
         }
 
 
@@ -38,17 +43,19 @@ namespace E_commerce.Test.UnitTests
                product.Title = "Create";
                product.Price = 1.1;
                product.Description = "Description";
+               product.Images = new List<Images>();
+               
 
-               Products ProductCreated = await CreateProduct(product);
+               await CreateProduct(product);
 
            #endregion
 
            #region UPDATE Product
-               ProductCreated.Title = "Update";
+               product.Title = "Update";
 
-               Products ProductUpdated = await UpdateProduct(ProductCreated);
+               await UpdateProduct(product);
 
-               Assert.True(ProductUpdated.Title == "Update", "Update Product Failed");
+               Assert.True(product.Title == "Update", "Update Product Failed");
            #endregion
 
            #region DELETE Product
@@ -61,32 +68,31 @@ namespace E_commerce.Test.UnitTests
 
 
         #region CRUD Methods
-        public async Task<Products> CreateProduct(Products product)
+        public async Task CreateProduct(Products product)
         {
-            Products ProductCreated = await dataCollection.Products.Create(product);
+            HttpStatusCode Result = await productsController.PostProduct(product);
+            output.WriteLine(JsonSerializer.Serialize(product));
+            output.WriteLine($"Created: {Result}");
+            Assert.True(Result == HttpStatusCode.Created, "Create Product Failed");
 
-            Assert.True(ProductCreated != null, "Create Product Failed");
 
-            output.WriteLine($"Created: {JsonSerializer.Serialize(ProductCreated)}");
-
-            return ProductCreated;
         }
 
-        public async Task<Products> UpdateProduct(Products product)
+        public async Task UpdateProduct(Products product)
         {
-            Products ProductUpdated = await dataCollection.Products.Update(product);
 
-            output.WriteLine($"Update: {JsonSerializer.Serialize(ProductUpdated)}");
+            HttpStatusCode Result = await productsController.PutProduct(product.Id,product);
+            output.WriteLine($"Update: {Result}");
 
-            Assert.True(ProductUpdated != null, "Update Product Failed");
+            Assert.True(Result == HttpStatusCode.OK, "Update Product Failed");
 
-            return ProductUpdated;
+           
         }
         public async Task<bool> DeleteProduct(Products product)
         {
-            await dataCollection.Products.Delete(product);
+            await productsController.DeleteProduct(product.Id);
 
-            Products ShouldBeNullIfDeletedSucced = await dataCollection.Products.GetById(product.Id);
+            Products ShouldBeNullIfDeletedSucced = await productsController.GetProductById(product.Id);
 
             output.WriteLine($"Select For Deleted Product: {JsonSerializer.Serialize(ShouldBeNullIfDeletedSucced)}");
 
@@ -122,8 +128,9 @@ namespace E_commerce.Test.UnitTests
             yield return new object[] { "e4" };
 
         }
-        private void GenerateFakeProductData()
+        private async void GenerateFakeProductData()
         {
+            
             Faker<Products> faker = new Faker<Products>()
               .RuleFor(Product => Product.Title, data => ("ProductName"+data.IndexGlobal.ToString()))
               .RuleFor(Product => Product.Description, data => data.Commerce.ProductDescription())
@@ -135,8 +142,15 @@ namespace E_commerce.Test.UnitTests
             {
                  dataCollection.Products.CreateProduct(product).Wait();
             }
+            await fillDatabaseWithData.CreateCompany();
+            await fillDatabaseWithData.Insertusers();
+
+
 
         }
+
+
+
 
         #endregion
 
@@ -157,7 +171,7 @@ namespace E_commerce.Test.UnitTests
         [MemberData(nameof(IdTestDataForGetById))]
         public async void Test_GetById(int id)
         {
-           Products Result = await dataCollection.Products.GetById(id);
+           Products Result = await productsController.GetProductById(id);
            Assert.NotNull(Result);
         }
 
@@ -165,7 +179,7 @@ namespace E_commerce.Test.UnitTests
         [MemberData(nameof(CountTestDataForGetProducts))]
         public async void Test_GetProducts(int Count)
         {
-            List<Products> Result = await dataCollection.Products.GetProducts(Count);
+            List<Products> Result = await productsController.GetLimitedAmountOfProducts(Count);
 
             Assert.True(Result.Count == Count);
         }

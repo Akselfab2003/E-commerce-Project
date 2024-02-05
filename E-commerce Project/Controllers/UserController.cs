@@ -37,7 +37,7 @@ namespace E_commerce_Project.Controllers
             }
             catch
             {
-                return null;
+                return new List<Users>();
             }
 
         }
@@ -46,15 +46,13 @@ namespace E_commerce_Project.Controllers
         {
             Session session1 = new Session();
             try
-            {
-                session1.user = null;
-                
+            {              
                 await _session.Create(session1);
                 Basket basket = new Basket();
                 basket.Session = session1;
                 await collection.Basket.Create(basket);
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }
@@ -63,17 +61,17 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpGet("SessionId{sessionId}")]
-        public async Task<IActionResult> GetSession(string sessionId)
+        public async Task<Session> GetSession(string sessionId)
         {
             try
             {
-                var session =await _session.GetById(sessionId);
-                return Ok(session);
+                Session session =await _session.GetById(sessionId);
+                return session;
             }
             catch (DbUpdateConcurrencyException)
             {
+                return new Session();
             }
-            return NoContent();
         }
 
         [HttpGet("ValidateSession/{sessionId}")]
@@ -184,7 +182,7 @@ namespace E_commerce_Project.Controllers
 
 
         [HttpPut("Login")]
-        public async Task<IActionResult> PutSession(LoginObject loginObject)
+        public async Task<HttpStatusCode> PutSession(LoginObject loginObject)
         {
             Session session = await _session.GetById(loginObject.sessionId);
      
@@ -204,22 +202,23 @@ namespace E_commerce_Project.Controllers
                     }
                     else
                     {
-                        return BadRequest();
+                        return HttpStatusCode.BadRequest;
                     }
                 }
                 else
                 {
-                    return BadRequest();
+                    return HttpStatusCode.BadRequest;
                 }
             }
             catch (DbUpdateConcurrencyException)
             {
+                return HttpStatusCode.BadRequest;
             }
-            return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
+            return HttpStatusCode.OK;
         }
         [Tags(new string[] { "Admin" })]
         [HttpPut("AdminLogin")]
-        public async Task<IActionResult> PutAdmin(LoginObject loginObject)
+        public async Task<HttpStatusCode> PutAdmin(LoginObject loginObject)
         {
             Session session = await _session.GetById(loginObject.sessionId);
 
@@ -239,18 +238,19 @@ namespace E_commerce_Project.Controllers
                     }
                     else
                     {
-                        return BadRequest();
+                        return HttpStatusCode.BadRequest;
                     }
                 }
                 else
                 {
-                    return BadRequest();
+                    return HttpStatusCode.BadRequest;
                 }
             }
             catch (DbUpdateConcurrencyException)
             {
+                return HttpStatusCode.BadRequest;
             }
-            return new ObjectResult(new Session() { SessId=session.SessId,Created=session.Created,IsAdmin=session.IsAdmin}) { StatusCode = StatusCodes.Status201Created };
+            return HttpStatusCode.OK;
         }
         #endregion
 

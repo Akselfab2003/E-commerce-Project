@@ -35,6 +35,12 @@ namespace E_commerce.Test.Create_data_for_local_database
         
         }
 
+        public FillDatabaseWithData(IDataCollection dataCollection,ITestOutputHelper outputHelper) 
+        {
+            this.output = outputHelper;
+            this.DataCollection = dataCollection;
+        }
+
         [Fact,AttributePriority(-10)] 
         public async Task Insertusers()
         {

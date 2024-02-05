@@ -93,6 +93,7 @@ export class CheckoutPageComponent <T> {
 
     this.service.PostRequest<any>(`Orders?sessid=${sessionController.GetCookie()}`,order).subscribe((Data) => {
       console.log(Data)
+      this.UserInfo.reset();
     })
   }
 }

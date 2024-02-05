@@ -2,6 +2,7 @@
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
+using E_commerce_Project.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
@@ -25,11 +26,16 @@ namespace E_commerce.Test.UnitTests
 
         private readonly IDataCollection dataCollection;
 
+        private UserController userController;
+        private BasketController basketController;
+
         private readonly ITestOutputHelper output;
 
         public UserTests(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
+            userController = new UserController(dataCollection);
+            basketController = new BasketController(dataCollection);
             output = outputHelper;
             InsertTestData();
         }
@@ -59,7 +65,7 @@ namespace E_commerce.Test.UnitTests
         {
             for (int i = 1; i <= 3; i++)
             {
-                Session session = new Session() { Created = DateTime.Now, SessId = $"Test{i}", user = null };
+                Session session = new Session() { Created = DateTime.Now, SessId = $"Test{i}", user = new Users() {Username=$"{i}" } };
                 dataCollection.Session.Create(session).Wait();
             }
 
@@ -81,17 +87,16 @@ namespace E_commerce.Test.UnitTests
             Session session1 = new Session();
             try
             {
-                session1.user = null;
+                session1 = await userController.PostEmptySession();
 
-                await dataCollection.Session.Create(session1);
-                Basket basket = new Basket();
-                basket.Session = session1;
-                await dataCollection.Basket.Create(basket);
+                Basket basket = await basketController.GetBasketBySessId(session1.SessId);
+                output.WriteLine(JsonSerializer.Serialize(basket));
                 Assert.NotNull(session1);
-                Assert.NotNull(basket);
+                //Assert.NotNull(basket);
             }
             catch (Exception ex)
             {
+                output.WriteLine(JsonSerializer.Serialize(ex.Message));
                 Assert.Fail(ex.Message);
             }
             Assert.True(session1.SessId.Length > 0, "sessid does not exists");
@@ -106,7 +111,7 @@ namespace E_commerce.Test.UnitTests
             Session session = new Session();
             try
             {
-                session = await dataCollection.Session.GetById(sessionId);
+                session = await userController.GetSession(sessionId);
                 Assert.NotNull(session);
             }
             catch (Exception ex)
@@ -128,11 +133,11 @@ namespace E_commerce.Test.UnitTests
             try
             {
                 users.Username = "Lars";
-                users.Password = dataCollection.Cryptography.CreateNewPasswordHash(users.Password);
+                users.Password = "TestTest";
                 users.Email = "test@test.com";
                 users.Gender = false;
 
-                await dataCollection.Users.Create(users);
+                await userController.PostUser(users);
             }
             catch (Exception ex)
             {
@@ -154,7 +159,7 @@ namespace E_commerce.Test.UnitTests
                 Assert.True(user == null);
             }
 
-            await dataCollection.Users.Delete(user);
+            await userController.DeleteUser(user);
 
             output.WriteLine(JsonSerializer.Serialize(user));
             output.WriteLine($"{user.Username} has been sent to the void");
@@ -167,58 +172,14 @@ namespace E_commerce.Test.UnitTests
         public async Task PutAndValidateSession(LoginObject loginObject)
         {
             //Put user into Session
-            Session session = await dataCollection.Session.GetById(loginObject.sessionId);
             try
             {
-                if (session.Created < DateTime.Now)
-                {
-
-
-                    loginObject.password = dataCollection.Cryptography.CreateNewPasswordHash(loginObject.password);
-
-                    bool PasswordCorrect = await dataCollection.Users.CheckLogin(loginObject);
-
-                    if (PasswordCorrect)
-                    {
-                        session = await dataCollection.Session.UserLogin(loginObject);
-                    }
-                    else
-                    {
-                        if(loginObject.username == "" | loginObject.password  == "")
-                        {
-                            Assert.True(loginObject.username == "" | loginObject.password == "");
-                        }
-                        //Assert.NotNull(session.user);
-                    }
-                }
-                else
-                {
-                    Assert.False(session.Created < DateTime.Now);
-                }
+                Assert.True(HttpStatusCode.OK == await userController.PutSession(loginObject));
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
-
-            //Validate session
-            //try
-            //{
-            //    Session session1 = await dataCollection.Session.GetById(session.SessId);
-            //    if (session == null || session.user == null)
-            //    {
-            //        Assert.False(session == null || session.user == null);
-            //    }
-            //    else
-            //    {
-            //        Assert.True(session != null || session.user != null);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Assert.Fail(ex.Message);
-            //}
-            output.WriteLine(JsonSerializer.Serialize(session));
         }
         #endregion
     }

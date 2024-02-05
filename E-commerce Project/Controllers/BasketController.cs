@@ -51,7 +51,7 @@ namespace E_commerce_Project.Controllers
 
         #region POST Reqeusts
         [HttpPost("AddToBasket/{sessid}")]
-        public async Task<List<BasketDetails>> PostBasket(BasketDetails basketDetails, string sessid)
+        public async Task<HttpStatusCode> PostBasket(BasketDetails basketDetails, string sessid)
         {
             BasketDetails test = basketDetails;
             test.Products = basketDetails.Products == new Products() ? null : (await dataCollectioncontext.Products.GetById(basketDetails.Products.Id));
@@ -61,11 +61,11 @@ namespace E_commerce_Project.Controllers
             basket.BasketDetails.Add(test);
             await dataCollectioncontext.Basket.Update(basket);
 
-            return basket.BasketDetails;
+            return HttpStatusCode.Created;
         }
 
         [HttpPost("CreateBasket")]
-        public async Task<Basket> CreateBasket()
+        public async Task<HttpStatusCode> CreateBasket()
         {
             Basket basket = new Basket();
 
@@ -74,25 +74,25 @@ namespace E_commerce_Project.Controllers
 
             await dataCollectioncontext.Basket.Create(basket);
 
-            return basket;
+            return HttpStatusCode.Created;
         }
 
         [HttpPost("RemoveFromBasket/{sessId}")]
-        public async Task<List<BasketDetails>> DeleteBasketDetail(BasketDetails basketDetails, string sessId)
+        public async Task<HttpStatusCode> DeleteBasketDetail(BasketDetails basketDetails, string sessId)
         {
 
             await dataCollectioncontext.BasketDetails.Delete(basketDetails);
-            return (await GetBasketBySessId(sessId)).BasketDetails;
+            return HttpStatusCode.Created;
         }
         #endregion
 
         #region PUT Requests
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBasket(int id, Basket basket)
+        public async Task<HttpStatusCode> PutBasket(int id, Basket basket)
         {
             if (id != basket.Id)
             {
-                return BadRequest();
+                return HttpStatusCode.BadRequest;
             }
 
             try
@@ -101,30 +101,28 @@ namespace E_commerce_Project.Controllers
                 {
                     await dataCollectioncontext.BasketDetails.Update(item);
                 }
-               // await context.Update(basket);
             }
             catch (Exception ex)
             {
 
             }
 
-            return NoContent();
+            return HttpStatusCode.OK;
         }
         #endregion
 
         #region DELETE Requests
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBasket(Basket entity)
+        public async Task<HttpStatusCode> DeleteBasket(Basket entity)
         {
             var basket = await context.GetById(entity.Id);
             if (basket == null)
             {
-                return NotFound();
+                return HttpStatusCode.NotFound;
             }
 
             await context.Delete(basket);
-
-            return NoContent();
+            return HttpStatusCode.NoContent;
         }
         #endregion
     }
