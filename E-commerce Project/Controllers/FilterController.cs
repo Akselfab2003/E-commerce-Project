@@ -84,7 +84,7 @@ namespace E_commerce_Project.Controllers
 
         #endregion
 
-        #region Put Requests
+        #region Delete Requests
 
         [HttpDelete("{id}")]
         public async Task<HttpStatusCode> DeleteCategories(int id)
