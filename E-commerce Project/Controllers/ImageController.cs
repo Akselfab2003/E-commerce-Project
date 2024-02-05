@@ -52,7 +52,7 @@ namespace E_commerce_Project.Controllers
             }
             catch (Exception ex)
             {
-                return null;
+                return new List<Images>();
 
             }
 
@@ -61,11 +61,11 @@ namespace E_commerce_Project.Controllers
 
         #region PUT Requests
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutImage(int id,Images image)
+        public async Task<HttpStatusCode> PutImage(int id,Images image)
         {
             if (id != image.Id)
             {
-                return BadRequest();
+                return HttpStatusCode.BadRequest;
             }
             try
             {
@@ -73,26 +73,26 @@ namespace E_commerce_Project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest();
+                return HttpStatusCode.BadRequest;
             }
 
-            return Ok();
+            return HttpStatusCode.OK;
         }
         #endregion
 
         #region DELETE Requests
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteImages(int id)
+        public async Task<HttpStatusCode> DeleteImages(int id)
         {
             var image = await images.GetById(id);
             if (image == null)
             {
-                return NotFound();
+                return HttpStatusCode.BadRequest;
             }
 
             await collection.Images.DeleteImage(image);
 
-            return NoContent();
+            return HttpStatusCode.NoContent;
         }
         #endregion
     }

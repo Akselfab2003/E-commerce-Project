@@ -54,9 +54,7 @@ namespace E_commerce_Project.Controllers
                     return HttpStatusCode.BadRequest;
                 }
             }
-
-
-            return HttpStatusCode.Created;
+            return HttpStatusCode.OK;
         }
         #endregion
 
@@ -97,7 +95,7 @@ namespace E_commerce_Project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return null;
+                return new List<Products>();
             }
         }
         [HttpGet("Users/{id}")]
@@ -110,7 +108,7 @@ namespace E_commerce_Project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return null;
+                return new List<Users>();
             }
         }
         [HttpGet("Companies/{id}")]
@@ -123,7 +121,7 @@ namespace E_commerce_Project.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return null;
+                return new List<Company>();
             }
         }
         #endregion
@@ -140,7 +138,7 @@ namespace E_commerce_Project.Controllers
 
             await collection.PriceList.Delete(pricelist);
 
-            return HttpStatusCode.Created;
+            return HttpStatusCode.NoContent;
         }
         #endregion
     }
