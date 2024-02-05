@@ -3,6 +3,7 @@ using E_commerce.Logic.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using E_commerce.Logic.Models;
+using System.Net;
 
 namespace E_commerce_Project.Controllers
 {
@@ -41,7 +42,7 @@ namespace E_commerce_Project.Controllers
 
         #region Post Requests
         [HttpPost("CreateReviews/{sessId}")]
-        public async Task<ActionResult<Reviews>> createReviews(Reviews reviews, string sessId)
+        public async Task<HttpStatusCode> createReviews(Reviews reviews, string sessId)
         {
             try
             {
@@ -54,22 +55,22 @@ namespace E_commerce_Project.Controllers
 
             }
             //return CreatedAtAction("GetReviews", new { id = reviews.Id }, reviews);
-            return Ok();
+            return HttpStatusCode.Created;
         }
         #endregion
 
         #region Delete Request
         [HttpDelete ("{id}")]
-        public async Task<IActionResult> DeleteReview(int id)
+        public async Task<HttpStatusCode> DeleteReview(int id)
         {
             var review = await DataCollection_Reviews.GetById(id);
             if(review == null)
             {
-                return NotFound();
+                return HttpStatusCode.NoContent;
             }
             await DataCollection_Reviews.Delete(review);
 
-            return NoContent();
+            return HttpStatusCode.NoContent;
         }
         #endregion
     }
