@@ -22,6 +22,7 @@ export class NavbarComponent {
     SearchInput: new FormControl<string>("",Validators.required)
   })
 
+  public isLogedin:boolean = false;
   public theme:boolean = true;
 
   ngOnInit(){}
@@ -37,5 +38,13 @@ export class NavbarComponent {
     var Input:string = this.SearchForm.get("SearchInput")?.value
     console.log(Input)
     this.router.navigate(["/Search",Input])
+  }
+
+  Logout(){
+    if(this.isLogedin == true){
+      adminController.Logout()
+      this.isLogedin = false
+      this.router.navigateByUrl("/Login")
+    }
   }
 }

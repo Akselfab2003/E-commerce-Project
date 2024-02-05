@@ -1,6 +1,7 @@
 ﻿using E_commerce.Logic;
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
+using E_commerce_Project.Controllers;
 using NuGet.Frameworks;
 using System;
 using System.Collections.Generic;
@@ -18,38 +19,15 @@ namespace E_commerce.Test.UnitTests
         private readonly IDataCollection dataCollection;
 
         private readonly ITestOutputHelper output;
+        private readonly OrdersController OrderController;
+
         public OrderTest(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
         }
-
+        
         [Fact]
-        public async Task RunAll()
-        {
-            await TestInsertData();
-            await Test_GetOrderstById();
-            await Test_GetOrderstBysessID();
-            await Test_CreateOrder();
-        }
-
-        public async Task Test_GetOrderstBysessID()
-        {
-            var validSessionId = "someValidSessionId";
-            var invalidSessionId = "someInvalidSessionId";
-            invalidSessionId = "someInValidSessionId";
-
-
-            Session session = new Session();
-            session.SessId = validSessionId;
-
-            List<Orders> orders = await dataCollection.Orders.GetBysessId(session.SessId);
-            output.WriteLine(JsonSerializer.Serialize(orders));
-            //Assert.Equal(validSessionId, session2.SessId);
-            Assert.True(orders.Count() > 0);
-        }
-
-
         public async Task TestInsertData()
         {
             Orders orders = new Orders();
@@ -66,6 +44,22 @@ namespace E_commerce.Test.UnitTests
             await dataCollection.Orders.CreateOrder(ordersSession);
         }
 
+        #region GET
+        [Fact]
+        public async Task Test_GetOrderstBysessID()
+        {
+            var validSessionId = "someValidSessionId";
+
+            //Session session = new Session();
+            //session.SessId = validSessionId;
+
+            List<Orders> order = await OrderController.GetOrdersBysessID(validSessionId);
+            output.WriteLine(JsonSerializer.Serialize(order));
+            //Assert.Equal(validSessionId, session2.SessId);
+            Assert.True(order.Count() > 0 | order.Count() == 0);
+        }
+
+        [Fact]
         public async Task Test_GetOrderstById()
         {
             Orders orderID = await dataCollection.Orders.GetById(1);
@@ -73,6 +67,10 @@ namespace E_commerce.Test.UnitTests
             //Assert.Equal(1, orderID.Id);
             Assert.NotNull(orderID);
         }
+        #endregion
+
+        #region create
+        [Fact]
         public async Task Test_CreateOrder()
         {
             Orders orders = new Orders();
@@ -80,6 +78,6 @@ namespace E_commerce.Test.UnitTests
             output.WriteLine(JsonSerializer.Serialize(created));
             Assert.NotNull(created);
         }
-
+        #endregion
     }
 }

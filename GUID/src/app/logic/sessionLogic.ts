@@ -5,8 +5,7 @@ import { Session } from "../models/Session";
 export class sessionController <T> {
 
 
-    constructor(){
-    }
+    constructor(){}
     private static validated:boolean = false;
 
     public static GetCookie():string{
@@ -35,4 +34,11 @@ export class sessionController <T> {
             sessionController.SetCookie(data);
          });
     }
+
+    public static isLogedin(httpservice:HttpserviceService<any>):Observable<boolean>{
+        let sessid:string = this.GetCookie();
+        return httpservice.GetRequest<boolean>("User/ValidateSession/"+sessid);
+    }
+
+
 }

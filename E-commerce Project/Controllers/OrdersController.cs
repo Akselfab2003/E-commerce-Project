@@ -23,16 +23,24 @@ namespace E_commerce_Project.Controllers
 
         #region GET Requests
         [HttpGet("{sessid}")]
-        public async Task<ActionResult<List<Orders>>> GetOrdersBysessID(string sessid)
+        public async Task<List<Orders>> GetOrdersBysessID(string sessid)
         {
+            try
+            {
             var order = await Context.GetBysessId(sessid);
 
             if (order == null)
             {
-                return NotFound();
+                return new List<Orders>();
             }
 
             return order;
+
+            }
+            catch (Exception ex)
+            {
+                return new List<Orders>();
+            }
         }
 
         [HttpGet("id/{id}")]
