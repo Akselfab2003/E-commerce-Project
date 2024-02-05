@@ -87,10 +87,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 {
                     if (pricelist.PriceListProducts.Any(c => c.Product == product))
                     {
-
-                    }
-                    else
-                    {
                         products.Add(product);
                     }
                 }
@@ -107,7 +103,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             try
             {
                 var pricelist = await GetById(id);
-                return await context.Users.Where(ele => !pricelist.Users.Any(c => c.Equals(ele))).ToListAsync();
+                return await context.Users.Where(ele => pricelist.Users.Any(c => c.Equals(ele))).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -119,7 +115,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             try
             {
                 var pricelist = await GetById(id);
-                return await context.Company.Where(ele => !pricelist.Companies.Any(c => c.Equals(ele))).ToListAsync();
+                return await context.Company.Where(ele => pricelist.Companies.Any(c => c.Equals(ele))).ToListAsync();
             }
             catch (Exception ex)
             {
