@@ -23,7 +23,7 @@ export class PriceListControlComponent<T> {
     nameUpdate: new FormControl<string>("",Validators.required),
   });
   AddDeleteItems= new FormGroup({
-    priceLists: new FormControl(),
+    priceLists: new FormControl<number>(1,Validators.required),
     productList: new FormControl(),
     priceUpdate: new FormControl<number>(1,Validators.required),
     companyList: new FormControl(),
@@ -98,7 +98,7 @@ delete(){
 
 //tilføjer et produkt til en prisliste
 addProduct(){
-  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) as Pricelist;
   if(pricelist.priceListProducts==null){
     console.log(pricelist);
     pricelist.priceListProducts=[];
@@ -118,7 +118,7 @@ addProduct(){
 
 //fjerner et produkt fra en prisliste
 deleteProduct(){
-  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) as Pricelist;
   if(pricelist.priceListProducts==null){
     pricelist.priceListProducts=[];
   }
@@ -144,7 +144,7 @@ deleteProduct(){
 
 //tilføjer en virksomhed til en prisliste
 addCompany(){
-  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) as Pricelist;
   if(pricelist.companies==null){
     pricelist.companies=[];
   }
@@ -158,7 +158,7 @@ addCompany(){
 
 //fjerner en virksomhed fra en prisliste
 deleteCompany(){
-  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) as Pricelist;
   if(pricelist.companies==null){
     pricelist.companies=[];
   }
@@ -180,7 +180,7 @@ deleteCompany(){
   
   //tilføjer en bruger til en prisliste
   addUser(){
-    let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+    let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) as Pricelist;
     if(pricelist.users==null){
       pricelist.users=[];
     }
@@ -195,7 +195,7 @@ deleteCompany(){
 
 //fjerner en bruger fra en prisliste
 deleteUser(){
-  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value.id) as Pricelist;
+  let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) as Pricelist;
   if(pricelist.users==null){
     pricelist.users=[];
   }
@@ -229,10 +229,23 @@ ResetForms(){
   this.service.GetRequest<Pricelist[]>("PriceList/GetListOfPriceList").subscribe(data=> {
     this.pricelists = data;
   });
+  this.AddDeleteItems.controls["priceLists"].valueChanges.subscribe(value =>{
+    let isDelete:boolean=this.SelectOptions.controls["option"]?.value as boolean;
+      if(isDelete==false){
+        this.service.GetRequest<Products[]>("PriceList/Product/"+this.AddDeleteItems.get('priceLists')?.value).subscribe(data=>{
+          this.products=data;
+        })
+        this.service.GetRequest<User[]>("PriceList/Users/"+this.AddDeleteItems.get('priceLists')?.value).subscribe(data=>{
+          this.users=data;
+        })
+        this.service.GetRequest<Company[]>("PriceList/Companies/"+this.AddDeleteItems.get('priceLists')?.value).subscribe(data=>{
+          this.companies=data;
+        })
+      }
+    });
   this.SelectOptions.controls["option"].valueChanges.subscribe( value =>
     {
       if(value==true){
-        console.log(value)
         this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
           this.products=data;
           });
@@ -245,17 +258,7 @@ ResetForms(){
         this.service.GetRequest<Pricelist[]>("PriceList/GetListOfPriceList").subscribe(data=> {
           this.pricelists = data;
         });
-      }else{
-          this.service.GetRequest<Products[]>("PriceList/Product/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
-            this.products=data;
-          })
-          this.service.GetRequest<User[]>("PriceList/Users/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
-            this.users=data;
-          })
-          this.service.GetRequest<Company[]>("PriceList/Companies/"+this.AddDeleteItems.get('priceLists')?.value.id).subscribe(data=>{
-            this.companies=data;
-          })
       }
   });
-}
+};
 }
