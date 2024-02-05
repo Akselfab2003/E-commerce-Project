@@ -43,7 +43,7 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpGet("GetLimitedAmountOfProducts/{sessid}")]
-        public async Task<List<Products>> GetLimitedAmountOfProducts(string sessid = "")
+        public async Task<List<Products>> GetLimitedAmountOfProducts(int count=40,string sessid = "")
         {
             Users? users = null;
             try

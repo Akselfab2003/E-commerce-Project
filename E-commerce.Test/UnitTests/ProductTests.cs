@@ -2,6 +2,7 @@
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic;
+using E_commerce.Test.Create_data_for_local_database;
 using E_commerce_Project.Controllers;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,15 @@ namespace E_commerce.Test.UnitTests
         private readonly IDataCollection dataCollection;
         private readonly ITestOutputHelper output;
         private ProductsController productsController;
+        private FillDatabaseWithData fillDatabaseWithData;
         public ProductTests(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
             GenerateFakeProductData();
             productsController = new ProductsController(dataCollection);
+            fillDatabaseWithData = new FillDatabaseWithData(collection.DataCollection, outputHelper);
+
         }
 
 
@@ -124,7 +128,7 @@ namespace E_commerce.Test.UnitTests
             yield return new object[] { "e4" };
 
         }
-        private void GenerateFakeProductData()
+        private async void GenerateFakeProductData()
         {
             
             Faker<Products> faker = new Faker<Products>()
@@ -138,11 +142,14 @@ namespace E_commerce.Test.UnitTests
             {
                  dataCollection.Products.CreateProduct(product).Wait();
             }
+            await fillDatabaseWithData.CreateCompany();
+            await fillDatabaseWithData.Insertusers();
 
-            
+
+
         }
 
-       
+
 
 
         #endregion
@@ -164,7 +171,7 @@ namespace E_commerce.Test.UnitTests
         [MemberData(nameof(IdTestDataForGetById))]
         public async void Test_GetById(int id)
         {
-           Products Result = await dataCollection.Products.GetById(id);
+           Products Result = await productsController.GetProductById(id);
            Assert.NotNull(Result);
         }
 
@@ -172,7 +179,7 @@ namespace E_commerce.Test.UnitTests
         [MemberData(nameof(CountTestDataForGetProducts))]
         public async void Test_GetProducts(int Count)
         {
-            List<Products> Result = await dataCollection.Products.GetProducts(Count);
+            List<Products> Result = await productsController.GetLimitedAmountOfProducts(Count);
 
             Assert.True(Result.Count == Count);
         }

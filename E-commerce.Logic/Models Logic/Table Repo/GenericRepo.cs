@@ -27,7 +27,7 @@ namespace E_commerce.Logic.Models
             }
             catch(Exception ex) 
             {
-            
+                
             }
 
             return entity;
