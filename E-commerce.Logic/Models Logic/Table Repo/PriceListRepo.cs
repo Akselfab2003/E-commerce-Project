@@ -39,9 +39,12 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
 
             if (user != null)
             {
-                
-                
 
+                int count = (context.PriceList.ToList()).Count();
+                if (count > 0)
+                {
+
+                
                 PriceList priceList = await context.PriceList.Where(priceList => priceList.Users.Contains(user) || priceList.Companies.Contains(user.Company == null ? new Company() : user.Company)).FirstAsync();
 
                 List<Products> ProductsWithNewPrices = new List<Products>();
@@ -61,6 +64,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 }
 
                 return ProductsWithNewPrices;
+                }
             }
 
             return products;
@@ -87,10 +91,6 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 {
                     if (pricelist.PriceListProducts.Any(c => c.Product == product))
                     {
-
-                    }
-                    else
-                    {
                         products.Add(product);
                     }
                 }
@@ -107,7 +107,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             try
             {
                 var pricelist = await GetById(id);
-                return await context.Users.Where(ele => !pricelist.Users.Any(c => c.Equals(ele))).ToListAsync();
+                return await context.Users.Where(ele => pricelist.Users.Any(c => c.Equals(ele))).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             try
             {
                 var pricelist = await GetById(id);
-                return await context.Company.Where(ele => !pricelist.Companies.Any(c => c.Equals(ele))).ToListAsync();
+                return await context.Company.Where(ele => pricelist.Companies.Any(c => c.Equals(ele))).ToListAsync();
             }
             catch (Exception ex)
             {
