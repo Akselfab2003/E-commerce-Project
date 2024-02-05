@@ -166,7 +166,7 @@
             <label for="priceLists">PriceList</label>
             <select id="priceLists" formControlName="priceLists" aria-label="Select pricelist" aria-placeholder="Select pricelist">
               <option selected value="" >Choose a Price List</option>
-              <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist" >{{pricelist.name}}</option>
+              <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist.id" >{{pricelist.name}}</option>
             </select>
         </div>
         <div>
