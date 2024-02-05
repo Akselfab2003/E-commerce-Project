@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Net;
 
 namespace E_commerce_Project.Controllers
 {
@@ -22,15 +23,23 @@ namespace E_commerce_Project.Controllers
 
         #region GET Requests
         [HttpGet("{id}")]
-        public async Task<ActionResult<Products>> GetProductById(int id)
+        public async Task<Products?> GetProductById(int id)
         {
-            var product = await context.GetById(id);
-
-            if (product == null)
+            try
             {
-                return NotFound();
+                var product = await context.GetById(id);
+                if (product == null)
+                {
+                    return null;
+                }
+                return product;
+
             }
-            return product;
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
 
         [HttpGet("GetLimitedAmountOfProducts/{sessid}")]
@@ -216,13 +225,21 @@ namespace E_commerce_Project.Controllers
 
         #region POST Requests
         [HttpPost("CreateProduct")]
-        public async Task<ActionResult<Products>> PostProduct(Products product)
+        public async Task<HttpStatusCode> PostProduct(Products product)
         {
             try
             {
-                product.ProductCategories = await dataCollection.Categories.GetById(product.ProductCategories.Id);
+
+                if (product.ProductCategories != null)
+                {
+
+                product.ProductCategories =  await dataCollection.Categories.GetById(product.ProductCategories.Id);
                 
-                List<Images> images = new List<Images>(); //(await dataCollection.Images.GetAllImages()).Where(ele => product.Images.Contains(ele)).ToList();
+                }
+                
+                List<Images> images = new List<Images>();
+                if(product.Images != null)
+                {
                 foreach (var item in product.Images)
                 {
                     item.Id = 0;
@@ -232,23 +249,28 @@ namespace E_commerce_Project.Controllers
 
                 product.Images = images;
 
+
+                }
+                
+                //(await dataCollection.Images.GetAllImages()).Where(ele => product.Images.Contains(ele)).ToList();
                 await context.Create(product);
             }
             catch (Exception ex)
             {
+                return HttpStatusCode.BadRequest;
             }
 
-            return CreatedAtAction("GetCategories", new { id = product.Id }, product);
+            return HttpStatusCode.Created;
         }
         #endregion
 
         #region PUT Products
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Products products)
+        public async Task<HttpStatusCode> PutProduct(int id, Products products)
         {
             if (id != products.Id)
             {
-                return BadRequest();
+                return HttpStatusCode.BadRequest;
             }
 
             try
@@ -261,23 +283,31 @@ namespace E_commerce_Project.Controllers
 
             }
 
-            return NoContent();
+            return HttpStatusCode.OK;
         }
         #endregion
 
         #region DELETE Requests
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<HttpStatusCode> DeleteProduct(int id)
         {
             var product = await context.GetById(id);
+            try
+            {
+
             if (product == null)
             {
-                return NotFound();
+                return HttpStatusCode.BadRequest;
             }
 
             await context.Delete(product);
+            }
+            catch (Exception ex)
+            {
+                return HttpStatusCode.BadRequest;
+            }
 
-            return NoContent();
+            return HttpStatusCode.NoContent;
         }
         #endregion
     }
