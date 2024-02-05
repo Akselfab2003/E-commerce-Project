@@ -86,7 +86,7 @@ namespace E_commerce_Project.Controllers
                 return HttpStatusCode.BadRequest;
             }
 
-            return HttpStatusCode.Created;
+            return HttpStatusCode.OK;
         }
         #endregion
     }

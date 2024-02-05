@@ -160,7 +160,7 @@ namespace E_commerce_Project.Controllers
 
         #region   PUT Requests
         [HttpPut("UpdateUser")]
-        public async Task<Users?> UpdateUser(Users user)
+        public async Task<HttpStatusCode> UpdateUser(Users user)
         {
             try
             {
@@ -170,15 +170,16 @@ namespace E_commerce_Project.Controllers
                     user.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
                 
                 }
+                await collection.Users.Update(user);
 
-                return await collection.Users.Update(user);
+                return HttpStatusCode.OK;
             }
             catch (Exception ex)
             {
 
+            return HttpStatusCode.BadRequest;
             }
 
-            return null;
         } 
 
 
@@ -255,15 +256,16 @@ namespace E_commerce_Project.Controllers
 
         #region DELETE Requests
         [HttpPost("DeleteUser")]
-        public async Task<Users?> DeleteUser(Users user)
+        public async Task<HttpStatusCode> DeleteUser(Users user)
         {
             try
             {
-                return await _users.Delete(user);
+                await _users.Delete(user);
+                return HttpStatusCode.NoContent;
             }
             catch(Exception ex)
             {
-                return null;
+                return HttpStatusCode.BadRequest;
             }
         }
         [Tags(new string[] { "Admin" })]

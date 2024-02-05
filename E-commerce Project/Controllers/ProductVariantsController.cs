@@ -59,21 +59,21 @@ namespace E_commerce_Project.Controllers
 
         #region POST Requests
         [HttpPost]
-        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants, int ID)
+        public async Task<HttpStatusCode> PostProductVariants(ProductVariants productVariants, int ID)
         {
             productVariants.ParentProduct = await DataContext.Products.GetById(ID);
             await context.Create(productVariants);
-            return CreatedAtAction("GetProductVariants", new { id = productVariants.Id }, productVariants);
+            return HttpStatusCode.Created;
         }
         #endregion
 
         #region PUT Requests
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProductVariants(int id, ProductVariants productVariantss)
+        public async Task<HttpStatusCode> PutProductVariants(int id, ProductVariants productVariantss)
         {
             if (id != productVariantss.Id)
             {
-                return BadRequest();
+                return HttpStatusCode.BadRequest;
             }
 
             try
@@ -85,7 +85,7 @@ namespace E_commerce_Project.Controllers
 
             }
 
-            return NoContent();
+            return HttpStatusCode.OK;
         }
         #endregion
 
@@ -101,7 +101,7 @@ namespace E_commerce_Project.Controllers
 
             context.Delete(productVariants);
 
-            return HttpStatusCode.Created;
+            return HttpStatusCode.NoContent;
         }
         #endregion
     }
