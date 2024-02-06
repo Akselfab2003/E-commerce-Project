@@ -1,7 +1,7 @@
-<h2>Thank you for your order!</h2>
 <div class="Confirmation-Container">
+  <h2>Thank you for your order! {{order.fullname}}</h2>
+  <h3>Order Details:</h3>
   <div class="Order-Info">
-    <h3>TEST</h3>
     <h4>Full Name: {{order.fullname}}</h4>
     <h4>Email: {{order.email}}</h4>
     <h4>Address: {{order.address}}</h4>
@@ -14,15 +14,50 @@
           <img  [src]="orderLine.product.images[0].imagePath" alt="Product Image">
         </div>
         <div>
-          TEST
+          <span class="Product-Title">
+            {{orderLine.product.title}}
+          </span>
         </div>
         <div>
-          TEST2
+          <span class="Product-Price">
+
+            {{orderLine.product.price | currency}}
+          </span>
+        </div>
+        <div>
+          <span class="Product-Quantity">
+
+            {{orderLine.product.Quantity}}
+          </span>
+        </div>
+      </li>
+    </div>
+
+    <div *ngIf="orderLine.product == null && orderLine.variant != undefined">
+      <li>
+        <div class="OrderLine-Image">
+          <img  [src]="orderLine.variant.parentProduct.images[0].imagePath" alt="Product Image">
+        </div>
+        <div>
+          <span class="Product-Title">
+            {{orderLine.variant.name}}
+          </span>
+        </div>
+        <div>
+          <span class="Product-Price">
+
+            {{orderLine.variant.price| currency}}
+          </span>
+        </div>
+        <div>
+          <span class="Product-Quantity">
+
+            {{orderLine.variant.parentProduct.Quantity}}
+          </span>
         </div>
       </li>
     </div>
   </ul>
-  </div>
 </div>
 <!-- <div class="OrderConfirmation-Content">
   <div class="Order-Details" *ngFor="let orderLine of order.orderLines">
