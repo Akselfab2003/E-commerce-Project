@@ -97,7 +97,6 @@ export class CheckoutPageComponent <T> {
         sessionController.SetCookie(Data)
       }
 
-
       console.log(Data)
 
     })

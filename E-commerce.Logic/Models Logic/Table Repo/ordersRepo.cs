@@ -77,12 +77,11 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 .ThenInclude(order => order.variant)
                 .ThenInclude(order => order.ParentProduct)
                 .ThenInclude(order => order.Images)
-
                 .Include(order => order.OrderLines)
                 .ThenInclude(order => order.variant)
                 .ThenInclude(order => order.ParentProduct)
                 .ThenInclude(order => order.Images)
-                .Where(order => order.Session.SessId == sessid ).ToListAsync();
+                .Where(order => order.Session.SessId == sessid || order.Session.user == session.user).ToListAsync();
 
             return userOrders;
         }

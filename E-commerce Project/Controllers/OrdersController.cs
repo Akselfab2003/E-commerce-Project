@@ -101,8 +101,14 @@ namespace E_commerce_Project.Controllers
             if(session.user != null)
             {
                 newsession.user = session.user;
-              await  collection.Session.Update(session);
             }
+            else
+            {
+                newsession.user = null;
+            }
+            await collection.Session.Update(session);
+
+
 
             return newsession;
         }
