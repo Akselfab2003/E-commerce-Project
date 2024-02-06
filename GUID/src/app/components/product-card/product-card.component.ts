@@ -5,6 +5,8 @@ import { BasketComponent } from '../basket/basket.component';
 import { basketLogic } from '../../logic/basketLogic';
 import { ProductPageComponent } from '../product-page/product-page.component';
 import { Images } from '../../models/Images';
+import { ProductVariants } from '../../models/ProductVariants';
+import { HttpserviceService } from '../../../Services/httpservice.service';
 
 @Component({
   selector: 'app-product-card',
@@ -13,16 +15,21 @@ import { Images } from '../../models/Images';
 })
 export class ProductCardComponent<T> {
 
-  constructor(private basketTest:basketLogic<T>, private productPage:ProductPageComponent<T>)
+  constructor(private basketTest:basketLogic<T>, private productPage:ProductPageComponent<T>,private service:HttpserviceService<T>)
   {
 
   }
 
   @Input() product: Products = new Products();
   
+  ngOnInit(){
+    this.GetProductVariants(this.product.id)
+  }
   @ViewChild(BasketComponent<any>) basketComponent!: BasketComponent<any>;
 
   basket:Basket = new Basket();
+
+  public ProductContainsVariants:boolean = false;
   
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
@@ -43,6 +50,12 @@ export class ProductCardComponent<T> {
       this.product.Quantity -= 1
     }
   }
+  GetProductVariants<T>(id:Number){
+    this.service.GetRequest<boolean>(`ProductVariants/ProductContainsVariants/${id}`).subscribe((data)=>{
+      this.ProductContainsVariants = data;
+       
+    });
+  };
 
 
 

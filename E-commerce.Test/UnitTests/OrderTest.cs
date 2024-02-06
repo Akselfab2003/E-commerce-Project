@@ -66,40 +66,40 @@ namespace E_commerce.Test.UnitTests
 
         }
 
-        public async void GenerateFakeOrders()
-        {
+        //public async void GenerateFakeOrders()
+        //{
 
-            //Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
+        //    //Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
 
-            List<Products> productlists = await DataCollection.Products.GetProducts(40);
+        //    List<Products> productlists = await DataCollection.Products.GetProducts(40);
 
-            Assert.True(productlists.Count() > 0, "No products was found!");
+        //    Assert.True(productlists.Count() > 0, "No products was found!");
 
-            Users users = await DataCollection.Users.GetById(1);
+        //    Users users = await DataCollection.Users.GetById(1);
 
-            Assert.True(users != null, "No user was found!");
+        //    Assert.True(users != null, "No user was found!");
 
-            Faker<Orders> faker = new Faker<Orders>()
-                .RuleFor(orders => orders.OrderLines, data =>
-                    new List<OrderDetails>()
-                    {
-                        new OrderDetails
-                        {
-                                Product  = productlists[data.Random.Number(0,productlists.Count()-1)],
-                                price = Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")),
-                                quantity =1,
-                                total= Convert.ToDouble(data.Commerce.Price(0, 1000, 2, ""))
-                        }
-                    }
-                    )
-                .RuleFor(orders => orders.Users, data => users)
-                .RuleFor(orders => orders.Session, data => new Session());
-            List<Orders> fakeorders = faker.GenerateBetween(25, 40);
-            foreach (Orders order in fakeorders)
-            {
-                await DataCollection.Orders.CreateOrder(order);
-            }
-        }
+        //    Faker<Orders> faker = new Faker<Orders>()
+        //        .RuleFor(orders => orders.OrderLines, data =>
+        //            new List<OrderDetails>()
+        //            {
+        //                new OrderDetails
+        //                {
+        //                        Product  = productlists[data.Random.Number(0,productlists.Count()-1)],
+        //                        price = Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")),
+        //                        quantity =1,
+        //                        total= Convert.ToDouble(data.Commerce.Price(0, 1000, 2, ""))
+        //                }
+        //            }
+        //            )
+        //        .RuleFor(orders => orders.Users, data => users)
+        //        .RuleFor(orders => orders.Session, data => new Session());
+        //    List<Orders> fakeorders = faker.GenerateBetween(25, 40);
+        //    foreach (Orders order in fakeorders)
+        //    {
+        //        await DataCollection.Orders.CreateOrder(order);
+        //    }
+        //}
         #endregion
 
         #region GET
