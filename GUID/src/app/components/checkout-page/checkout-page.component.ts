@@ -91,9 +91,15 @@ export class CheckoutPageComponent <T> {
 
   placeOrder(order:Order): void {
 
-    this.service.PostRequest<any>(`Orders?sessid=${sessionController.GetCookie()}`,order).subscribe((Data) => {
+    this.service.PostRequest<Session|null>(`Orders?sessid=${sessionController.GetCookie()}`,order).subscribe((Data) => {
+
+      if(Data != null){
+        sessionController.SetCookie(Data)
+      }
+
+
       console.log(Data)
-      this.UserInfo.reset();
+
     })
   }
 }

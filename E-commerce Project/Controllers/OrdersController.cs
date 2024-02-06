@@ -59,12 +59,13 @@ namespace E_commerce_Project.Controllers
 
         #region POST Reguests
         [HttpPost(Name = "CreateOrder")]
-        public async Task<HttpStatusCode> CreateOrder(string sessid,Orders order)
+        public async Task<Session?> CreateOrder(string sessid,Orders order)
         {
+
+            Session session = (await collection.Session.GetById(sessid));
             try
             {
                 var test = order;
-                Session session = (await collection.Session.GetById(sessid));
                 test.Session = session;
                 test.Users = null;
                 if(session.user != null)
@@ -91,10 +92,19 @@ namespace E_commerce_Project.Controllers
             }
             catch 
             {
-                return HttpStatusCode.BadRequest;
+                
+                return null ;
             }
 
-            return HttpStatusCode.OK;
+            UserController userController = new UserController(collection);
+            Session newsession = await userController.PostEmptySession();
+            if(session.user != null)
+            {
+                newsession.user = session.user;
+              await  collection.Session.Update(session);
+            }
+
+            return newsession;
         }
         #endregion
     }
