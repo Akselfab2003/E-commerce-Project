@@ -36,7 +36,6 @@ export class LoginComponent<T> {
     console.log(LoginTry);
     this.service.PutRequest<Session>("User/Login",LoginTry).subscribe((data)=>{
 
-      sessionController.SetCookie(data)
 
       this.router.navigateByUrl('/profile');
     }
