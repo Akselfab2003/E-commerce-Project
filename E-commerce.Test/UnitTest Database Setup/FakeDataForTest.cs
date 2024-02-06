@@ -54,7 +54,7 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
             //Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
 
-            List<Products> productlists = await DataCollection.Products.GetProducts(40);
+            List<Products> productlists = await InsertProducts(); // await DataCollection.Products.GetProducts(40);
 
             //Assert.True(productlists.Count() > 0, "No products was found!");
 
@@ -69,15 +69,14 @@ namespace E_commerce.Test.UnitTest_Database_Setup
                         new OrderDetails
                         {
                                 Product  = productlists[data.Random.Number(0,productlists.Count()-1)],
-                                price = Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")),
-                                quantity =1,
-                                total= Convert.ToDouble(data.Commerce.Price(0, 1000, 2, ""))
+                                price =  productlists[data.Random.Number(0,productlists.Count()-1)].Price,
+                                quantity =2,
+                                total= productlists[data.Random.Number(0,productlists.Count()-1)].Price * 2,
                         }
                     }
-                    )
-                .RuleFor(orders => orders.Session, data => new Session() { SessId = sessid }) ;
+                    );
             List<Orders> fakeorders = faker.GenerateBetween(25, 40);
-
+            
             return fakeorders;
            
         }
@@ -125,7 +124,8 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
         public async Task<List<Products>> InsertProducts()
         {
-            List<Categories> categories = await DataCollection.Categories.GetAllUniqueCategories();
+
+            List<Categories> categories = await InsertDataForProducts();
             Faker<Products> faker = new Faker<Products>()
                 .RuleFor(Product => Product.Title, data => data.Commerce.ProductName())
                 .RuleFor(Product => Product.Description, data => data.Commerce.ProductDescription())
