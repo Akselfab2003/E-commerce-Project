@@ -41,7 +41,23 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
 
         }
+        public async Task<Reviews> GetReviews()
+        {
+            List<Products> productlists = await InsertProducts();
 
+            Faker<Reviews> faker = new Faker<Reviews>()
+                //.RuleFor(user => user.Id, data => data.IndexFaker)
+                .RuleFor(user => user.Id, data => 0)
+                .RuleFor(user => user.Products, data => (productlists[0])) /*data.Internet.Password(10)*/
+                .RuleFor(user => user.ReviewContent, data => data.Rant.Review())
+                .RuleFor(user => user.ReviewTitle, data => data.Rant.Review())
+                .RuleFor(user => user.ReviewRating, data => data.Random.Int(0, 5));
+
+            return faker.Generate();
+
+
+
+        }
         public async Task<List<Categories>> InsertDataForProducts()
         {
             string[] categories = new string[50];
