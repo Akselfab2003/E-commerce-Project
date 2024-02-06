@@ -42,7 +42,7 @@ export class ReviewsPageComponent<T> {
     let review:Reviews = this.createReview();
     this.service.PostRequest<any>(`Reviews/CreateReviews/${sessId}`,review).subscribe((data)=>{
 
-      console.log(data)
+       
       this.router.navigateByUrl(`/product-details/${this.product.id}`);
     }
     )
@@ -51,7 +51,7 @@ export class ReviewsPageComponent<T> {
   GetProduct<T>(id:Number){
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
-      console.log(data)
+       
     });
   };
 
@@ -59,8 +59,8 @@ export class ReviewsPageComponent<T> {
     this.route.paramMap.subscribe((data)=>{
       var selectedId = Number(data.get('id'));
 
-      console.log("ProductDetails Object:");
-      console.log(selectedId);
+       
+       
 
       this.GetProduct(selectedId);
     })
@@ -70,15 +70,15 @@ export class ReviewsPageComponent<T> {
 
   handleRatingSelection(rating: number) {
     this.selectedRating = rating;
-    console.log("Selected rating:", this.selectedRating);
+     
   }
 
  /*  submitReview() {
     if (this.selectedRating > 0) {
-      console.log("Submitting rating:", this.selectedRating);
+       
       this.selectedRating = 0; // Reset selectedRating
     } else {
-      console.log("Please select a rating before submitting.");
+       
     }
   } */
 
@@ -92,16 +92,16 @@ export class ReviewsPageComponent<T> {
       const target = event.target as HTMLInputElement;
       if (target.type === "radio") {
         selectedRating = parseInt(target.value);
-        console.log("Selected rating:", selectedRating);
+         
       }
     });
 
     submitBtn.addEventListener("click", () => {
       if (selectedRating > 0) {
-        console.log("Submitting rating:", selectedRating);
+         
         selectedRating = 0; // Reset selectedRating
       } else {
-        console.log("Please select a rating before submitting.");
+         
       }
     });
     }

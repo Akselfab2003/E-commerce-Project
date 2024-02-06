@@ -38,13 +38,13 @@ export class RegisterComponent<T> {
   
   register() {
     let user:User= this.InputDataUser();
-    this.service.PostRequest<User>("User/createUser",user).subscribe((data)=>
-    console.log(data)
+    this.service.PostRequest<User>("User/createUser",user).subscribe((data)=>{}
+     
     )
     let registerObject:LoginObject = this.InputDataObject(sessionController.GetCookie());
     
-    this.service.PutRequest<User>("User/Login",registerObject).subscribe((data)=>
-    console.log(data));
+    this.service.PutRequest<User>("User/Login",registerObject).subscribe((data)=>{}
+    );
 
     this.router.navigateByUrl('/Login');
   }

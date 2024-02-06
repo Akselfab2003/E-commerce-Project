@@ -29,14 +29,14 @@ export class ProductDetailsPageComponent<T> {
     this.service.GetRequest<Products>(`Products/${id}`).subscribe((data)=>{
       this.product = data;
       this.product.Quantity = 1;
-      console.log("GET PRODUCT TEST", data)
+       
     });
   };
 
   GetProductVariants<T>(id:Number){
     this.service.GetRequest<ProductVariants[]>(`ProductVariants/GetProductVariants/${id}`).subscribe((data)=>{
       this.variants = data;
-      console.log(data)
+       
     });
   };
 
@@ -49,15 +49,15 @@ export class ProductDetailsPageComponent<T> {
       this.SelectedVariant= testtest == undefined ? new ProductVariants(): testtest;
     }
    
-    console.log(this.SelectedVariant)
+     
   }
 
   AddToBasket(event: MouseEvent){
     event.stopPropagation()
     var NewBasketProduct:Products = this.product;
-    console.log((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) )
+     
     
-    console.log((Object.entries(this.product).toString() != Object.entries(new Products()).toString()) )
+     
     this.basketTest.AddToBasket(((Object.entries(this.SelectedVariant).toString() != Object.entries(new ProductVariants()).toString()) ? undefined : this.product),(  (this.variants.length == 0) ? undefined : this.SelectedVariant),(this.product == undefined ? this.variantQuantity: this.variantQuantity))
 
   }
@@ -66,8 +66,8 @@ export class ProductDetailsPageComponent<T> {
     event.stopPropagation()
     this.product.Quantity += 1;
     this.variantQuantity +=1;
-    console.log(this.product.Quantity);
-    console.log(this.variantQuantity);
+     
+     
   }
 
   SubtractProductQuantity(event: MouseEvent){
@@ -78,8 +78,8 @@ export class ProductDetailsPageComponent<T> {
       event.stopPropagation()
       this.product.Quantity -= 1;
       this.variantQuantity -=1;
-      console.log(this.product.Quantity);
-      console.log(this.variantQuantity);
+       
+       
     }
   }
 
@@ -91,7 +91,7 @@ export class ProductDetailsPageComponent<T> {
       this.GetProduct(selectedId);
       this.GetProductVariants(selectedId);
 
-      console.log("ProductDetails Object:");
+       
     })
   }
 }

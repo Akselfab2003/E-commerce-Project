@@ -30,24 +30,21 @@ export class AdminControlComponent<T> {
 //Sender brugerens input til databasen
   register() {
     let user:LoginObject= this.InputDataCreate();
-    this.service.PostRequest<LoginObject>("User/createAdmin",user).subscribe((data)=>
-    console.log(data)
-    )
+    this.service.PostRequest<LoginObject>("User/createAdmin",user).subscribe((data)=>{}
+    );
   }
 
   //Sender brugerens input til databasen
   update(){
     let user:LoginObject= this.InputDataUpdate();
-    this.service.PutRequest<Session>("User/AdminLogin",user).subscribe((data)=>
-    console.log(data)
+    this.service.PutRequest<Session>("User/AdminLogin",user).subscribe((data)=>{}
     );
   }
 
   //Sender brugerens input til databasen
   delete(){
     let username:string = this.deleteForm.get('usernameDelete')?.value?.toString() as string;
-    this.service.DeleteRequest<Session>("User/deleteAdmin/"+username).subscribe((data)=>
-    console.log(data)
+    this.service.DeleteRequest<Session>("User/deleteAdmin/"+username).subscribe((data)=>{}
     );
   }
   

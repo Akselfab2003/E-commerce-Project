@@ -28,11 +28,6 @@ export class NavbarComponent {
   public theme:boolean = true;
 
   ngOnInit(){
-    /* sessionController.ValidateSession(this.httpService).then((data)=>{
-        this.isLogedin = data
-        console.log(data);
-    }); */
-
     sessionController.LoginState.subscribe((data)=>{
       this.isLogedin = data
     });
@@ -45,11 +40,9 @@ export class NavbarComponent {
   }
   changeBasket(){
     this.Basket.ChangeState()
-    console.log("Tse")
   }
   Search(){
     var Input:string = this.SearchForm.get("SearchInput")?.value
-    console.log(Input)
     this.router.navigate(["/Search",Input])
   }
 

@@ -13,7 +13,7 @@ export class AppComponent<T> {
 
 
 ChangeTheme($event: boolean) {
-  console.log($event)
+   
   if($event){
     this.theme = "dark"
   }
@@ -29,7 +29,7 @@ ChangeTheme($event: boolean) {
   }
 
   CheckifSessionShouldBeCreated(){
-    console.log("Test If This Runs As The First method")
+     
     var CurrentCookieValue:any = sessionController.GetCookie()
     if (CurrentCookieValue==undefined || CurrentCookieValue == null ){
         sessionController.CreateEmptySession(this.service)

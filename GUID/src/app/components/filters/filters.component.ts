@@ -39,7 +39,7 @@ export class FiltersComponent <T> {
 
   setpost(ArrayOfCategories:Categories[]){
     this.Categories = ArrayOfCategories.sort((a:Categories,b:Categories) => a.id-b.id)
-    console.log(this.Categories)
+     
 
   }
 

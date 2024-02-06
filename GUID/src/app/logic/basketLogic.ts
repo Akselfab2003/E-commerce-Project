@@ -85,7 +85,7 @@ export class basketLogic<T> {
           this.AddProductToBasket(newBasketDetails)
         }
         else{
-          console.log(Quantity)
+           
 
           newBasketDetails.quantity = (Quantity !=undefined && Quantity != 0) ? Quantity : 1
           this.AddVariantBasket(newBasketDetails);
@@ -102,16 +102,16 @@ export class basketLogic<T> {
       var sessionId:string = sessionController.GetCookie();
       this.service.PostRequest<BasketDetails[]>(`Basket/RemoveFromBasket/${sessionId}`, basketDetails).subscribe((data)=>{
         this.basketDetails = data;
-        console.log(data);
+         
         
         this.AddToBasketEvent.emit()
       });
     }
   
     UpdateBasket(basket:Basket){
-        console.log("Your Basket",basket)
+         
         this.service.PutRequest<any>(`Basket/${basket.id}`,basket).subscribe((data)=>{
-          console.log(data)
+           
         this.AddToBasketEvent.emit()
       });
     }
