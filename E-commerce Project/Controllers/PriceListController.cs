@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using E_commerce.Logic.Models;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
+using E_commerce.Logic;
 
 namespace E_commerce_Project.Controllers
 {
@@ -39,22 +40,23 @@ namespace E_commerce_Project.Controllers
         #endregion
 
         #region PUT Requests
-        [HttpPut("UpdatePriceList/{id}")]
-        public async Task<HttpStatusCode> UpdateUser(int id,PriceList priceList)
+        [HttpPut("UpdatePriceList")]
+        public async Task<HttpStatusCode> UpdatePriceList(PriceList _priceList)
         {
-            //Users user=
-            if (id == priceList.Id)
+            try
             {
-                try
-                {
-                    await collection.PriceList.Update(priceList);
-                }
-                catch (Exception ex)
-                {
-                    return HttpStatusCode.BadRequest;
-                }
+                PriceListEntity entity = _priceList.PriceListProducts.FirstOrDefault(ele => ele.Id == 0);
+                entity.Product = await collection.Products.GetById(entity.Product.Id);
+                await collection.PriceListEntity.Create(entity);
+                PriceList priceList = await collection.PriceList.GetById(_priceList.Id);
+                priceList.PriceListProducts.Add(entity);
+                await collection.PriceList.Update(priceList);
+                return HttpStatusCode.OK;
             }
-            return HttpStatusCode.OK;
+            catch (Exception ex)
+            {
+                return HttpStatusCode.BadRequest;
+            }
         }
         #endregion
 

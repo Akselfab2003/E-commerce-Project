@@ -71,11 +71,11 @@ namespace E_commerce.Test.UnitTests
 
             //Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
 
-            List<Products> productlists = await DataCollection.Products.GetProducts(40);
+            List<Products> productlists = await dataCollection.Products.GetProducts(40);
 
             Assert.True(productlists.Count() > 0, "No products was found!");
 
-            Users users = await DataCollection.Users.GetById(1);
+            Users users = await dataCollection.Users.GetById(1);
 
             Assert.True(users != null, "No user was found!");
 
@@ -97,7 +97,7 @@ namespace E_commerce.Test.UnitTests
             List<Orders> fakeorders = faker.GenerateBetween(25, 40);
             foreach (Orders order in fakeorders)
             {
-                await DataCollection.Orders.CreateOrder(order);
+                await dataCollection.Orders.CreateOrder(order);
             }
         }
         #endregion
