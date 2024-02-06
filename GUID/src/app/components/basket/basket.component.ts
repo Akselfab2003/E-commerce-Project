@@ -43,6 +43,9 @@ export class BasketComponent<T> {
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
+      if(res.basketDetails == undefined || res.basketDetails == null || res.basketDetails.length == 0){
+        this.basket.basketDetails = new Array<BasketDetails>();
+      }
       this.subtotal = this.calculateTotal(res);
       console.log("Your basket:",res)
     });
