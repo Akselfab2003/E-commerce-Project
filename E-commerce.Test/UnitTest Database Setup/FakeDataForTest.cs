@@ -206,7 +206,7 @@ namespace E_commerce.Test.UnitTest_Database_Setup
             Faker<Company> faker = new Faker<Company>()
                 .RuleFor(company => company.Name, data => data.Company.CompanyName())
                 .RuleFor(company => company.email, data => data.Person.Email)
-                .RuleFor(company => company.cvr, data => data.Company.Ein())
+                .RuleFor(company => company.cvr, data => data.Company.CompanySuffix())
                 .RuleFor(company => company.Users, data => new List<Users>() { users });
 
 

@@ -31,6 +31,7 @@ namespace E_commerce.Logic.Models_Logic
         private readonly ICompany company;
         private readonly IHashing cryptography;
         private readonly IReviews reviews;
+        private readonly IPriceListEntity priceListEntity;
 
         public DataCollection(DBcontext Context,IConfiguration configuration) 
         {
@@ -50,6 +51,7 @@ namespace E_commerce.Logic.Models_Logic
             company = new CompanyRepo(Context);
             reviews = new ReviewsRepo(Context);
             orderDetails = new OrderDetailsRepo(Context);
+            priceListEntity = new PriceListEntityRepo(Context);
         }
 
         public IAdminUsers AdminUsers
@@ -120,6 +122,10 @@ namespace E_commerce.Logic.Models_Logic
         public IOrderDetails OrderDetails
         {
             get { return orderDetails; }
+        }
+        public IPriceListEntity PriceListEntity
+        {
+            get { return priceListEntity; }
         }
     }
 }
