@@ -125,7 +125,7 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
-                        users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+                    users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
 
                     await _users.Create(users);
             }
