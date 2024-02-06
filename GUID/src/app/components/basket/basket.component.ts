@@ -47,7 +47,6 @@ export class BasketComponent<T> {
         this.basket.basketDetails = new Array<BasketDetails>();
       }
       this.subtotal = this.calculateTotal(res);
-      console.log("Your basket:",res)
     });
   };
 
@@ -89,7 +88,6 @@ export class BasketComponent<T> {
 
   AddProductUsingQtyClick(basketDetails:BasketDetails)
   {
-    console.log("Test",basketDetails)
     var test =  undefined
 
     if(basketDetails.products != null){
@@ -125,32 +123,28 @@ export class BasketComponent<T> {
   //return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id -- original working line (without variants)
 
     /* var test = this.basket.basketDetails.find(detail =>{
-      //console.log(detail.products.id), console.log(product?.id), console.log("Variant Id",variant?.id)
+      // 
       if(product != null){
          (detail.products.id == product.id) ? detail.id : 1
       }
       else if(variant != undefined && detail.variant != undefined)
       {
-        //console.log("DETAIL VARIANT ID",detail.variant),
+        // 
         (detail.variant.id == variant.id) ? detail.id : 1
       }
-      console.log(detail);
+       
     })
-    console.log("FIND BASKET DETAIL TEST",test);
+     
     return test != undefined ?test.id:0; */
 
    
       var value;
       if(Product != undefined && this.basket.basketDetails.length > 0 && this.basket.basketDetails.find(ele => ele.products != undefined || ele.products != null)){
         value = this.basket.basketDetails.find(ele => ele.products == Product) //!= undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id)) : 0
-        console.log("Hit")
-        console.log(value?.id) 
         return (value != undefined ? value.id : 0)
       }
       else{
         value = this.basket.basketDetails.find(ele => ele.variant == variant) //!= undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id)) : 0
-        console.log("Hit variant")
-        console.log(value?.id) 
         return (value != undefined ? value.id : 0)
       }
 

@@ -23,13 +23,13 @@ export class SearchResultComponent<T> {
 
 
   GetProducts(Input:string): void {
-    console.log(sessionController.GetCookie())
+     
     var sessid = sessionController.GetCookie();
     this.service.GetRequest<Products[]>(`Products/Search?SearchInput=${Input}&sessid=${sessid}`).subscribe((data) => {
       var newProductsArray:Products[] = new Array<Products>();
 
       newProductsArray = data.filter(ele => ele.title != "").map(ele => ele = {id: ele.id, title: ele.title, description: ele.description, images: ele.images, price: ele.price, productCategories: ele.productCategories, productVariants: ele.productVariants, Quantity: 1, Active: ele.Active} )
-      console.log("newProductsArray", newProductsArray);
+       
 
       this.CurrentProductsOnPage = newProductsArray;
       this.CurrentProductsDisplayedOnPage = newProductsArray;
@@ -40,7 +40,7 @@ export class SearchResultComponent<T> {
   ngOnInit(): void {
     this.route.paramMap.subscribe(param => {
     var SearchInput:string = param.get("q")?.toString() == undefined ?  "" :  String(param.get("q"));
-    console.log(SearchInput)
+     
     this.GetProducts(SearchInput);
     })
   };
@@ -48,12 +48,12 @@ export class SearchResultComponent<T> {
 
   ButtonEvent(event: Event) {
     event.stopPropagation()
-    console.log("test")
+     
     //this.GetProducts();
   }
 
   TagsChangeEventHandler($event: Categories) {
-    console.log("Select statment")
+     
     if ($event.id != 0) {
       // this.service.GetRequest<Products[]>("Products/GetProductsThatArePartOfCategory?id="+$event.id).subscribe((data)=>{
       //   this.Product = data;

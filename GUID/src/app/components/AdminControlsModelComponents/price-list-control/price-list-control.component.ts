@@ -76,9 +76,9 @@ updatePriceList(){
 }
 
 addAndDeleteItems(){
-  console.log(this.SelectOptions.get("option")?.value)
+   
   if(this.SelectOptions.get("option")?.value &&this.AddDeleteItems.get("priceLists")?.value!=null){
-    console.log(this.AddDeleteItems.get("priceLists")?.value)
+     
     this.addProduct();
     this.addCompany();
     this.addUser();
@@ -100,7 +100,7 @@ delete(){
 addProduct(){
   let pricelist:Pricelist = this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) == undefined ? new Pricelist() : this.pricelists.find(ele => ele.id == this.AddDeleteItems.get("priceLists")?.value) as Pricelist;
   if(pricelist.priceListProducts==null){
-    console.log(pricelist);
+     
     pricelist.priceListProducts=[];
   }
     let priceEntity:PriceListEntity=new PriceListEntity();

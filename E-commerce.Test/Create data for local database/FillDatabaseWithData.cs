@@ -72,12 +72,7 @@ namespace E_commerce.Test.Create_data_for_local_database
                 await DataCollection.Categories.CreateCategories(category);
             }
 
-
-
-
-
             Assert.True(data.Any());
-
         }
 
 
