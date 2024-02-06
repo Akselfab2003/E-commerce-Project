@@ -30,7 +30,7 @@ input[type=text],[type=email],[type=password],select{
 }
 
 #btn[type=submit]:hover{
-    background-color: rgb(182, 3, 128);
+    background-color: #2980b9;
 }
 
 .form{

@@ -4,6 +4,8 @@ import { adminGuard } from '../../logic/admin.guard';
 import { adminController } from '../../logic/adminLogic';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { sessionController } from '../../logic/sessionLogic';
+import { HttpserviceService } from '../../../Services/httpservice.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +17,7 @@ export class NavbarComponent {
   @ViewChild(BasketComponent)  private Basket!: BasketComponent<any>; 
   @Output() TagsChangedEvent = new EventEmitter<boolean>()
   
-  constructor(private router:Router){
+  constructor(private router:Router, private httpService:HttpserviceService<any>, private route: Router){
   }
 
   public SearchForm:FormGroup = new FormGroup({
@@ -25,10 +27,21 @@ export class NavbarComponent {
   public isLogedin:boolean = false;
   public theme:boolean = true;
 
-  ngOnInit(){}
+  ngOnInit(){
+    /* sessionController.ValidateSession(this.httpService).then((data)=>{
+        this.isLogedin = data
+        console.log(data);
+    }); */
+
+    sessionController.LoginState.subscribe((data)=>{
+      this.isLogedin = data
+    });
+  };
+
   changeTheme(){
     this.theme=!this.theme
     this.TagsChangedEvent.emit(this.theme)
+
   }
   changeBasket(){
     this.Basket.ChangeState()
@@ -42,9 +55,10 @@ export class NavbarComponent {
 
   Logout(){
     if(this.isLogedin == true){
-      adminController.Logout()
+      sessionController.CreateEmptySession(this.httpService);
       this.isLogedin = false
-      this.router.navigateByUrl("/Login")
     }
+    this.router.navigateByUrl("/home-page");
+
   }
 }
