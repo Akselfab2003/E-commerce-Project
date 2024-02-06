@@ -64,7 +64,7 @@ export class CheckoutPageComponent <T> {
 
   GenerateOrder(){
     var order:Order = this.FillUpOrderObjectWithUserInput();
-    console.log(this.basketItems.basketDetails)
+     
     this.basketItems.basketDetails.forEach(ele => {
       var currentElement = ele.products == undefined ? ele.variant : ele.products;
 
@@ -74,9 +74,9 @@ export class CheckoutPageComponent <T> {
     order.total =  this.calculateTotal()
 
     order.users = new User();
-    console.log(order)
+     
 
-    console.log(JSON.stringify(order))
+     
     this.placeOrder(order);
   }
 

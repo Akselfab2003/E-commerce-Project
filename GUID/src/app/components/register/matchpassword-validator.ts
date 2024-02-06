@@ -13,7 +13,7 @@ export const matchpassword : ValidatorFn = (control: AbstractControl):Validation
         return{
             passwordmatcherror : true,
             showError(): void {
-                console.log("You made the mistake 'smør 40'");
+                 
               }
         }
     }

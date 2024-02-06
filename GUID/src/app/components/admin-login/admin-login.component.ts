@@ -29,11 +29,10 @@ export class AdminLoginComponent<T> {
     LoginTry.username = username;
     LoginTry.password =password;
     LoginTry.sessionId =sessionController.GetCookie();
-    console.log(LoginTry);
+     
 
     this.service.PutRequest<Session>("User/AdminLogin",LoginTry).subscribe((data)=>
     {
-      sessionController.SetCookie(data);
       this.router.navigateByUrl("/AdminControl")
 
     }

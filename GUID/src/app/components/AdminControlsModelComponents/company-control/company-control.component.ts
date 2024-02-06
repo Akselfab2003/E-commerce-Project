@@ -51,7 +51,6 @@ export class CompanyControlComponent<T> {
   GetListOfCompanies(){
     this.service.GetRequest<Company[]>("Company/GetAllCompanies").subscribe(company=> {
       this.companyList = company;
-      console.log(company);
     })
   }
 
@@ -106,7 +105,6 @@ export class CompanyControlComponent<T> {
     company.name = this.updateForm.get('UpdateCompanyName')?.value as string;
     company.email = this.updateForm.get('UpdateCompanyEmail')?.value as string;
     company.cvr = this.updateForm.get('UpdateCompanyCVR')?.value as string;
-    console.log(company);
     return company;
   }
 

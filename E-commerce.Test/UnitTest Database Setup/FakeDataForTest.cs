@@ -1,42 +1,27 @@
 ﻿using Bogus;
-using Bogus.Extensions.UnitedStates;
-using E_commerce.Logic;
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
-using E_commerce.Logic.Models_Logic;
-
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
+using E_commerce.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace E_commerce.Test.Create_data_for_local_database
+namespace E_commerce.Test.UnitTest_Database_Setup
 {
-    [TestCaseOrderer("E_commerce.Test.OrderedTest", "E-commerce.Test")]
-
-    [Collection("LocalDatabaseService")]
-    public class FillDatabaseWithData
+    public class FakeDataForTest
     {
-        private readonly ITestOutputHelper output;
-        private  IDataCollection DataCollection;
+        private IDataCollection DataCollection;
 
-        public FillDatabaseWithData(GenerateFakeDataForDatabase collection,ITestOutputHelper outputHelper) 
+        public FakeDataForTest(IDataCollection collection)
         {
-            this.output = outputHelper;
-            this.DataCollection = collection.DataCollection;
-        
+            this.DataCollection = collection;
+
         }
 
-        [Fact,AttributePriority(-10)] 
-        public async Task Insertusers()
+        public async Task<Users> GetFakeusers()
         {
             Faker<Users> faker = new Faker<Users>()
                 //.RuleFor(user => user.Id, data => data.IndexFaker)
@@ -45,50 +30,37 @@ namespace E_commerce.Test.Create_data_for_local_database
                 .RuleFor(user => user.Email, data => data.Person.Email)
                 .RuleFor(user => user.Gender, data => data.Random.Bool());
 
-            List<Users> data = faker.GenerateBetween(10, 20);
+            return faker.Generate();
 
-            output.WriteLine(JsonSerializer.Serialize(data));
-            foreach (Users user in data)
-            {
-                user.Password = DataCollection.Cryptography.CreateNewPasswordHash(user.Password);
 
-                await DataCollection.Users.Create(user);
-            }
-            Assert.True(data.Any());
 
         }
 
-        [Fact, AttributePriority(-9)]
-        public async void InsertDataForProducts()
+        public async Task<List<Categories>> InsertDataForProducts()
         {
             string[] categories = new string[50];
             Faker<Categories> faker = new Faker<Categories>()
-                .RuleFor(categories => categories.Name, data => data.Commerce.Categories(1)[0]) ;
- 
-            List<Categories> data = faker.GenerateBetween(50,50);
+                .RuleFor(categories => categories.Name, data => data.Commerce.Categories(1)[0]);
 
-            foreach (Categories category in data.DistinctBy(t => t.Name).ToList())
-            {
-                await DataCollection.Categories.CreateCategories(category);
-            }
+            List<Categories> data = faker.GenerateBetween(50, 50);
 
-            Assert.True(data.Any());
+            return data.DistinctBy(t => t.Name).ToList();
+
         }
 
 
-        [Fact, AttributePriority(-7)]
-        public async void GenerateFakeOrders()
+        public async Task<List<Orders>> GenerateFakeOrders(string sessid)
         {
-           
-            Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
+
+            //Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
 
             List<Products> productlists = await DataCollection.Products.GetProducts(40);
 
-            Assert.True(productlists.Count() > 0, "No products was found!");
-            
-            Users users = await DataCollection.Users.GetById(1);
-            
-            Assert.True(users != null,"No user was found!");
+            //Assert.True(productlists.Count() > 0, "No products was found!");
+
+            //Users users = await DataCollection.Users.GetById(1);
+
+            //Assert.True(users != null, "No user was found!");
 
             Faker<Orders> faker = new Faker<Orders>()
                 .RuleFor(orders => orders.OrderLines, data =>
@@ -103,13 +75,11 @@ namespace E_commerce.Test.Create_data_for_local_database
                         }
                     }
                     )
-                .RuleFor(orders => orders.Users, data => users)
-                .RuleFor(orders => orders.Session, data => new Session());
+                .RuleFor(orders => orders.Session, data => new Session() { SessId = sessid }) ;
             List<Orders> fakeorders = faker.GenerateBetween(25, 40);
-            foreach(Orders order in fakeorders)
-            {
-               await DataCollection.Orders.CreateOrder(order);
-            }
+
+            return fakeorders;
+           
         }
 
 
@@ -117,19 +87,19 @@ namespace E_commerce.Test.Create_data_for_local_database
         [Fact(Skip = "GenerateFakeBaskets doesn't need to be runned any more")]
         public async void GenerateFakeBaskets()
         {
-            
+
             List<Products> productlists = await DataCollection.Products.GetProducts(40);
 
             Assert.True(productlists.Count() > 0, "No products was found!");
-            
+
             Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
 
             List<Session> sessions = await DataCollection.Session.GetAllSessions();
 
             Assert.True(sessions.Count() > 0, "No Session was found!");
-    
+
             Session session = sessions.Where(ele => ele.user != null).First();
- 
+
             Faker<Basket> faker = new Faker<Basket>()
                 .RuleFor(basket => basket.BasketDetails, data =>
                     new List<BasketDetails>()
@@ -137,14 +107,14 @@ namespace E_commerce.Test.Create_data_for_local_database
                         new BasketDetails
                         {
                                 Products  = productlists[data.Random.Number(0,productlists.Count()-1)],
-                            
+
                         }
                     }
                     )
                 .RuleFor(orders => orders.Session, data => session);
 
-            List<Basket> fakebasket = faker.GenerateBetween(1,1);
-          
+            List<Basket> fakebasket = faker.GenerateBetween(1, 1);
+
             await DataCollection.Basket.CreateBasket(fakebasket[0]);
 
 
@@ -152,25 +122,19 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
 
-        [Fact, AttributePriority(-8)]
 
-        public async Task InsertProducts()
+        public async Task<List<Products>> InsertProducts()
         {
             List<Categories> categories = await DataCollection.Categories.GetAllUniqueCategories();
             Faker<Products> faker = new Faker<Products>()
                 .RuleFor(Product => Product.Title, data => data.Commerce.ProductName())
                 .RuleFor(Product => Product.Description, data => data.Commerce.ProductDescription())
                 .RuleFor(Product => Product.Price, data => Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")))
-                .RuleFor(Product => Product.Images, data => (new List<Images> { (new Images() { ImagePath = data.Image.PicsumUrl(1000, 1500, false, false) })}))
-                .RuleFor(Product => Product.ProductCategories,data => data.PickRandom(categories));
+                .RuleFor(Product => Product.Images, data => (new List<Images> { (new Images() { ImagePath = data.Image.PicsumUrl(1000, 1500, false, false) }) }))
+                .RuleFor(Product => Product.ProductCategories, data => data.PickRandom(categories));
             List<Products> data = faker.GenerateBetween(10, 20);
 
-            
-            foreach (Products product in data)
-            {
-                await DataCollection.Products.CreateProduct(product);
-            }
-            Assert.True(data.Any());
+            return data;
 
         }
 
@@ -190,9 +154,9 @@ namespace E_commerce.Test.Create_data_for_local_database
 
 
 
-            List<PriceListEntity> ListOfPriceListEntities = faker.GenerateBetween(1, products.Count()-1);
+            List<PriceListEntity> ListOfPriceListEntities = faker.GenerateBetween(1, products.Count() - 1);
 
-            
+
             return ListOfPriceListEntities;
 
 
@@ -251,5 +215,7 @@ namespace E_commerce.Test.Create_data_for_local_database
 
         }
 
-    }
+    
+
+}
 }

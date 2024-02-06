@@ -25,7 +25,6 @@ export class CarouselComponent<T> implements OnInit {
   fetchDataFromApi() {
     this.httpService.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data) => {
       this.CurrentProductsDisplayedOnPage = data;
-      console.log(data);
     });
   };
 

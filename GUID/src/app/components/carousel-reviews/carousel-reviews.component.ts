@@ -24,11 +24,7 @@ export class CarouselReviewsComponent<T> {
     this.httpService.GetRequest<Reviews[]>(`Reviews/Get_Reviews/${this.product.id}`).subscribe((data) => {
       var newReviewsArray: Reviews[] = new Array<Reviews>();
 
-      //newReviewsArray = data.map(ele => ele = {id: ele.id, ReviewTitle: ele.reviewTitle, ReviewContent: ele.reviewContent, ReviewRating: ele.reviewRating, Products: ele.Products, UserId: ele.UserId})
-      console.log("newReviewsArray", newReviewsArray);
-
       this.CurrentReviewDisplayedOnPage = data;
-      console.log(data);
     });
   };
   
