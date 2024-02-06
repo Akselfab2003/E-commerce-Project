@@ -33,7 +33,6 @@ export class AdminLoginComponent<T> {
 
     this.service.PutRequest<Session>("User/AdminLogin",LoginTry).subscribe((data)=>
     {
-      sessionController.SetCookie(data);
       this.router.navigateByUrl("/AdminControl")
 
     }

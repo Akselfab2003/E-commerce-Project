@@ -223,7 +223,7 @@ namespace E_commerce_Project.Controllers
 
             try
             {
-                if (session.Created > DateTime.Now)
+                if (session.Created.AddHours(2) > DateTime.Now)
                 {
 
 
