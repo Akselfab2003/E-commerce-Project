@@ -32,6 +32,7 @@ import { ImagesControlComponent } from './components/AdminControlsModelComponent
 import { CarouselReviewsComponent } from './components/carousel-reviews/carousel-reviews.component';
 import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
 import { PriceListControlComponent } from './components/AdminControlsModelComponents/price-list-control/price-list-control.component';
+import { OrderConfirmationPageComponent } from './components/order-confirmation-page/order-confirmation-page.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { PriceListControlComponent } from './components/AdminControlsModelCompon
     CarouselReviewsComponent,
     ReviewsPageComponent,
     ImagesControlComponent,
-    PriceListControlComponent
+    PriceListControlComponent,
+    OrderConfirmationPageComponent
   ],
   imports: [
     BrowserModule,
