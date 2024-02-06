@@ -15,18 +15,15 @@ export class OrderConfirmationPageComponent<T> {
     
   }
   public order: Order = new Order();
-  //public orderLines:orderDetails[] = this.order.orderLines
 
   GetOrder(sessId:String){
     console.log("getting order");
-        this.service.GetRequest<Order[]>(`Orders/${sessId}`).subscribe(orderInfo =>{
-          this.order = orderInfo[0];
+        this.service.GetRequest<Order>(`Orders/CreateOrder/${sessId}`).subscribe(orderInfo =>{
+          this.order = orderInfo;
           console.log("Your Order:", {orderInfo});
           console.log("ORDER OBJECT:", this.order);
         })
   }
-
-
 
   ngOnInit(){
     this.route.paramMap.subscribe((data)=>{
