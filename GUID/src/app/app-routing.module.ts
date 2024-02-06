@@ -26,6 +26,7 @@ import { SearchResultComponent } from './components/search-result/search-result.
 import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
 import { ImagesControlComponent } from './components/AdminControlsModelComponents/images-control/images-control.component';
 import { PriceListControlComponent } from './components/AdminControlsModelComponents/price-list-control/price-list-control.component';
+import { OrderConfirmationPageComponent } from './components/order-confirmation-page/order-confirmation-page.component';
 
 
 const routes: Routes = [
@@ -61,6 +62,7 @@ const routes: Routes = [
   },
   {path: "reviews-page/:id", component:ReviewsPageComponent},
   {path:"Search/:q",component:SearchResultComponent},
+  {path: "order-confirmation-page/:sessId", component:OrderConfirmationPageComponent},
 
 ];
 

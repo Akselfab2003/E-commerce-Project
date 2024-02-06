@@ -21,6 +21,11 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
         }
 
+        public FakeDataForTest()
+        {
+
+        }
+
         public async Task<Users> GetFakeusers()
         {
             Faker<Users> faker = new Faker<Users>()

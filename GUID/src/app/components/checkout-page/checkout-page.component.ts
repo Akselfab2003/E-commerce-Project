@@ -9,6 +9,7 @@ import { basketLogic } from '../../logic/basketLogic';
 import { orderDetails } from '../../models/orderDetails';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout-page',
@@ -22,7 +23,7 @@ export class CheckoutPageComponent <T> {
   orders:Order[] = new Array<Order>();
   session:Session = new Session();
 
-  constructor(private service:HttpserviceService<T>, private basketTest:basketLogic<T>) 
+  constructor(private service:HttpserviceService<T>, private basketTest:basketLogic<T>, private router:Router) 
   {
 
     basketTest.AddToBasketEvent.subscribe(ele => {this.GetBasket()})
@@ -90,15 +91,14 @@ export class CheckoutPageComponent <T> {
   } 
 
   placeOrder(order:Order): void {
-
     this.service.PostRequest<Session|null>(`Orders?sessid=${sessionController.GetCookie()}`,order).subscribe((Data) => {
-
+      var currentSessId = Data?.sessId;
       if(Data != null){
         sessionController.SetCookie(Data)
       }
 
-       
-
+      console.log(Data)
+      this.router.navigate(["/order-confirmation-page", currentSessId]);
     })
   }
 }

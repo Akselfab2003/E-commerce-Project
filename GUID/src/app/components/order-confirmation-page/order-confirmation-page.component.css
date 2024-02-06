@@ -1,0 +1,94 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 5px 0;
+  }
+
+.OrderConfirmation-Content{
+    display: flex;
+    width: 50%;
+    height: 50%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+/*   .Order-Detail{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-wrap: nowrap;
+  }
+  
+  
+  .Product-Img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 40%;
+  }
+  
+  
+  .Img{
+    width: 35%;
+    height: 35%;
+  } */
+  
+  .Product-Title-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+  }
+  
+  .Product-Title{
+    text-align: center;
+    text-wrap: wrap;
+    font-weight: bold;
+  }
+  
+  .Product-Price-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+  }
+  
+  .Product-Quantity-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+  }
+
+
+
+
+
+
+  .Confirmation-Container{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 3%;
+  }
+
+  .Order-Summary{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .OrderLine-Image{
+    
+  }
