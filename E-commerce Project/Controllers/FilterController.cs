@@ -41,7 +41,7 @@ namespace E_commerce_Project.Controllers
 
 
 
-        [HttpGet("Categories")]
+        [HttpGet("Categories/{id}")]
         public async Task<Categories?> GetCategoryById(int id)
         {
            
