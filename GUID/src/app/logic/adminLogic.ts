@@ -5,9 +5,6 @@ import { inject } from '@angular/core';
 import { runInInjectionContext } from '@angular/core';
 
 export class adminController{
-    static Logout() {
-      throw new Error('Method not implemented.');
-    }
     private static validated:boolean = false;
     public static   async ValidateSession(httpservice:HttpserviceService<any>) : Promise<boolean>{
         let sessid:string=sessionController.GetCookie();

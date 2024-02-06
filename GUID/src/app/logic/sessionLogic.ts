@@ -1,9 +1,11 @@
 import { Observable, Subject, asyncScheduler, firstValueFrom, scheduled, take, takeUntil } from "rxjs";
 import { HttpserviceService } from "../../Services/httpservice.service";
 import { Session } from "../models/Session";
+import { EventEmitter } from "@angular/core";
 
 export class sessionController <T> {
 
+    public static LoginState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(){}
     private static validated:boolean = false;
@@ -26,6 +28,7 @@ export class sessionController <T> {
     public static   async ValidateSession(httpservice:HttpserviceService<any>) : Promise<boolean>{
         let sessid:string= this.GetCookie();
         var test =   await firstValueFrom<boolean>(httpservice.GetRequest<boolean>("User/ValidateSession/"+sessid).pipe(take(1)));
+        this.LoginState.emit(test);
         return test;
     }
 
@@ -34,11 +37,4 @@ export class sessionController <T> {
             sessionController.SetCookie(data);
          });
     }
-
-    public static isLogedin(httpservice:HttpserviceService<any>):Observable<boolean>{
-        let sessid:string = this.GetCookie();
-        return httpservice.GetRequest<boolean>("User/ValidateSession/"+sessid);
-    }
-
-
 }
