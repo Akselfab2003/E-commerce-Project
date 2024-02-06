@@ -185,7 +185,6 @@ namespace E_commerce_Project.Controllers
         public async Task<HttpStatusCode> PutSession(LoginObject loginObject)
         {
             Session session = await _session.GetById(loginObject.sessionId);
-            var test = session.Created.AddHours(2);
             try
             {
                 if (session.Created.AddHours(2) > DateTime.Now)
