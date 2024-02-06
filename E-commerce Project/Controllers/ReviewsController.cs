@@ -25,7 +25,7 @@ namespace E_commerce_Project.Controllers
         #region GET Requests
         //GET:
         [HttpGet("Get_Reviews/{productid}")]
-        public async Task<ActionResult<List<Reviews>>> GetReviewsByProductid(int productid)
+        public async Task<List<Reviews>> GetReviewsByProductid(int productid)
         {
             List<Reviews> reviews = new List<Reviews>();
             try
@@ -59,19 +59,6 @@ namespace E_commerce_Project.Controllers
         }
         #endregion
 
-        #region Delete Request
-        [HttpDelete ("{id}")]
-        public async Task<HttpStatusCode> DeleteReview(int id)
-        {
-            var review = await DataCollection_Reviews.GetById(id);
-            if(review == null)
-            {
-                return HttpStatusCode.NoContent;
-            }
-            await DataCollection_Reviews.Delete(review);
-
-            return HttpStatusCode.NoContent;
-        }
-        #endregion
+    
     }
 }
