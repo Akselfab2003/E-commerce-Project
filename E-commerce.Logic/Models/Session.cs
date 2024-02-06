@@ -17,7 +17,7 @@ namespace E_commerce.Logic.Models
         [Required]
         public string SessId { get; set; } = Guid.NewGuid().ToString();
         [Required]
-        public DateTime Created { get; set; } = DateTime.Now.AddHours(2);
+        public DateTime Created { get; set; } = DateTime.Now;
         [AllowNull]
         [ForeignKey("Users")]
         public virtual Users? user { get; set; }
