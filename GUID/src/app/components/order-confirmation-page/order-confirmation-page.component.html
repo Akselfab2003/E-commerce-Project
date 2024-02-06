@@ -1,0 +1,64 @@
+<h2>Thank you for your order!</h2>
+
+<div class="Order-Info">
+    <h3>TEST</h3>
+    <h4>Full Name: {{this.order.fullname}}</h4>
+    <h4>Email: {{this.order.email}}</h4>
+    <h4>Address: {{this.order.address}}</h4>
+</div>
+
+<div class="Order-Details" *ngFor="let orderLine of order.orderLines">
+    <ul>
+        <li>
+          <div class="Order-detail" *ngIf="orderLine.product != null && orderLine.variant == undefined">
+            <div class="Product-Img">
+              <img  [src]="orderLine.product.images[0].imagePath" alt="Product Image">
+            </div>
+            <div class="Product-Title-container">
+              <span class="Product-Title">
+                {{orderLine.product.title}}
+              </span>
+            </div>
+            <div class="Product-Price-container">
+              <span class="Product-Price">
+
+                {{orderLine.product.price}}
+              </span>
+              
+            </div>
+            <div class="Product-Quantity-container">
+              <span class="Product-Quantity">
+
+                {{orderLine.product.Quantity}}
+              </span>
+            </div>
+          </div>
+          <div class="Order-detail" *ngIf="orderLine.product == null && orderLine.variant != undefined">
+            <div class="Product-Img">
+              <img  [src]="orderLine.variant.parentProduct.images[0].imagePath" alt="Product Image">
+            </div>
+            <div class="Product-Title-container">
+              <span class="Product-Title">
+                {{orderLine.variant.name}}
+              </span>
+            </div>
+            <div class="Product-Price-container">
+              <span class="Product-Price">
+
+                {{orderLine.variant.price}}
+              </span>
+              
+            </div>
+            <div class="Product-Quantity-container">
+              <span class="Product-Quantity">
+
+                {{orderLine.variant.parentProduct.Quantity}}
+              </span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <p><strong>Total:</strong> </p>
+</div>
+
+
