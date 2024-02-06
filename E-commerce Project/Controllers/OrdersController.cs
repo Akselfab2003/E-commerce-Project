@@ -66,13 +66,13 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpGet("id/{id}")]
-        public async Task<ActionResult<Orders>> GetOrdersById(int id)
+        public async Task<Orders> GetOrdersById(int id)
         {
             var order = await Context.GetById(id);
 
             if (order == null)
             {
-                return NotFound();
+                return null;
             }
 
             return order;
