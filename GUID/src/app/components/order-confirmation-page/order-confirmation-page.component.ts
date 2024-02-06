@@ -3,6 +3,7 @@ import { sessionController } from '../../logic/sessionLogic';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Order } from '../../models/Order';
 import { orderDetails } from '../../models/orderDetails';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order-confirmation-page',
@@ -10,28 +11,28 @@ import { orderDetails } from '../../models/orderDetails';
   styleUrl: './order-confirmation-page.component.css'
 })
 export class OrderConfirmationPageComponent<T> {
-  constructor(private service: HttpserviceService<T>) {
+  constructor(private service: HttpserviceService<T>, private route: ActivatedRoute) {
     
   }
   public order: Order = new Order();
   //public orderLines:orderDetails[] = this.order.orderLines
 
-  GetOrder(){
+  GetOrder(sessId:String){
     console.log("getting order");
-    var sessionId:string = sessionController.GetCookie();
-        this.service.GetRequest<Order[]>(`Orders/${sessionId}`).subscribe(orderInfo =>{
+        this.service.GetRequest<Order[]>(`Orders/${sessId}`).subscribe(orderInfo =>{
           this.order = orderInfo[0];
           console.log("Your Order:", {orderInfo});
           console.log("ORDER OBJECT:", this.order);
         })
-
-        
-        return this.service.GetRequest<Order>(`Orders/${sessionId}`)
   }
 
 
 
   ngOnInit(){
-    this.GetOrder();
+    this.route.paramMap.subscribe((data)=>{
+      this.GetOrder(String(data.get('sessId')));
+       
+    })
+    
   }
 }

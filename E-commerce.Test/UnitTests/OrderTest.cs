@@ -26,7 +26,7 @@ namespace E_commerce.Test.UnitTests
         private readonly OrdersController OrderController;
         private static readonly FakeDataForTest dataGenerator = new FakeDataForTest();
 
-        public OrderTest(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
+        public OrderTest(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper, OrdersController ordersController)
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
