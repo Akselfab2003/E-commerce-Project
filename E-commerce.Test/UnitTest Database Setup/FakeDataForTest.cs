@@ -21,6 +21,11 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
         }
 
+        public FakeDataForTest()
+        {
+
+        }
+
         public async Task<Users> GetFakeusers()
         {
             Faker<Users> faker = new Faker<Users>()
@@ -74,8 +79,7 @@ namespace E_commerce.Test.UnitTest_Database_Setup
                                 total= Convert.ToDouble(data.Commerce.Price(0, 1000, 2, ""))
                         }
                     }
-                    )
-                .RuleFor(orders => orders.Session, data => new Session() { SessId = sessid }) ;
+                    );
             List<Orders> fakeorders = faker.GenerateBetween(25, 40);
 
             return fakeorders;

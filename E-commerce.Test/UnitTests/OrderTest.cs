@@ -3,6 +3,7 @@ using E_commerce.Logic;
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Models;
 using E_commerce.Logic.Models_Logic;
+using E_commerce.Test.UnitTest_Database_Setup;
 using E_commerce_Project.Controllers;
 using NuGet.Frameworks;
 using System;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace E_commerce.Test.UnitTests
 {
@@ -22,11 +24,13 @@ namespace E_commerce.Test.UnitTests
 
         private readonly ITestOutputHelper output;
         private readonly OrdersController OrderController;
+        private static readonly FakeDataForTest dataGenerator = new FakeDataForTest();
 
         public OrderTest(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
+            //var data = dataGenerator.GenerateFakeOrders("someValidSessionId");
         }
 
         #region Insert Data
@@ -47,7 +51,17 @@ namespace E_commerce.Test.UnitTests
             await dataCollection.Orders.CreateOrder(ordersSession);
         }
 
+        public static IEnumerable<Object[]> TestOrderData()
+        {
+            yield return new object[] { dataGenerator.GenerateFakeOrders("someValidSessionId"), "" };
+        }
         public async Task CreateTestData()
+        {
+        }
+
+        [Theory]
+        [MemberData(nameof(TestOrderData))]
+        public async Task TestOrderCreation(Orders orders, string sessid)
         {
 
         }
