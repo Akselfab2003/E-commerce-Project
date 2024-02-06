@@ -87,7 +87,7 @@ namespace E_commerce_Project.Controllers
             Users? users = (await dataCollection.Session.GetById(sessid)).user;
             return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Categories.GetProductsFromCategory(category, Productsids), users);
         }
-
+        #region Search Methods
         [HttpGet("Search/")]
         public async Task<List<Products>> SearchForProducts(string SearchInput, string sessid)
         {
@@ -222,7 +222,8 @@ namespace E_commerce_Project.Controllers
             }
         }
         #endregion
-
+        #endregion
+        
         #region POST Requests
         [HttpPost("CreateProduct")]
         public async Task<HttpStatusCode> PostProduct(Products product)
@@ -300,7 +301,8 @@ namespace E_commerce_Project.Controllers
                 return HttpStatusCode.BadRequest;
             }
 
-            await context.Delete(product);
+                product.IsDeleted = true;
+                await context.Update(product);
             }
             catch (Exception ex)
             {

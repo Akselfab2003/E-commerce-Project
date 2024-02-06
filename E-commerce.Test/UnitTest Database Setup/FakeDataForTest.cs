@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
+using Bogus.Extensions.UnitedStates;
 
 namespace E_commerce.Test.UnitTest_Database_Setup
 {

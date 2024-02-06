@@ -8,13 +8,24 @@
             <p>
                 <strong>${{product.price}}</strong>
             </p>
-            <div class="button-qty-container">
-                <button (click)="AddToBasket($event)" aria-current="page" class="buy-btn">Add to basket</button>
-                <div class="qty">
-                    <span (click)="SubtractProductQuantity($event)">-</span>
-                    <strong>{{product.Quantity}}</strong>
-                    <span (click)="AddProductQuantity($event)">+</span>
+            <div *ngIf="!ProductContainsVariants" class="button-qty-container">
+              
+                    <button (click)="AddToBasket($event)" aria-current="page" class="buy-btn">Add to basket</button>
+                    <div class="qty">
+                        <span (click)="SubtractProductQuantity($event)">-</span>
+                        <strong>{{product.Quantity}}</strong>
+                        <span (click)="AddProductQuantity($event)">+</span>
+                    </div>
+
+            </div>
+            <div *ngIf="ProductContainsVariants" class="button-qty-container" style="justify-content: center;">
+                
+                <div *ngIf="ProductContainsVariants">
+                    <button aria-current="page" class="buy-btn">Show variants</button>
+                   
+    
                 </div>
+
             </div>
         </div>
     </div>

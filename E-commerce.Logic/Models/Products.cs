@@ -17,5 +17,7 @@ namespace E_commerce.Logic.Models
         public virtual List<Images>? Images { get; set; }
 
         public virtual Categories? ProductCategories { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
     }
 }

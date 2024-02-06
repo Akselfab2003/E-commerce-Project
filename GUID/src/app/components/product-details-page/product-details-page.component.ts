@@ -22,7 +22,7 @@ export class ProductDetailsPageComponent<T> {
 
   public SelectedVariant:ProductVariants = new ProductVariants();
 
-  public SelectedIdFromVariant:number = 0;
+  public SelectedIdFromVariant:number = 1;
   public variantQuantity:number = 1;
 
   GetProduct<T>(id:Number){

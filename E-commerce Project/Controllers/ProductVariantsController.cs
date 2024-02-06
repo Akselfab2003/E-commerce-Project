@@ -55,6 +55,22 @@ namespace E_commerce_Project.Controllers
 
             return productVariants;
         }
+
+        [HttpGet("ProductContainsVariants/{productid}")]
+        public async Task<bool> GetProductContainsVariants(int productid)
+        {
+            var productVariants = await context.GetListOfProductVariantsByProductId(productid);
+
+            if (productVariants == null)
+            {
+                return false;
+            }
+            
+            return productVariants.Count() > 0;
+        }
+
+
+
         #endregion
 
         #region POST Requests
