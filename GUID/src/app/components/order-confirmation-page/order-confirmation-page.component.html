@@ -1,16 +1,34 @@
 <h2>Thank you for your order!</h2>
-
-<div class="Order-Info">
+<div class="Confirmation-Container">
+  <div class="Order-Info">
     <h3>TEST</h3>
-    <h4>Full Name: {{this.order.fullname}}</h4>
-    <h4>Email: {{this.order.email}}</h4>
-    <h4>Address: {{this.order.address}}</h4>
+    <h4>Full Name: {{order.fullname}}</h4>
+    <h4>Email: {{order.email}}</h4>
+    <h4>Address: {{order.address}}</h4>
 </div>
-
-<div class="Order-Details" *ngFor="let orderLine of order.orderLines">
+<div class="Order-Summary" *ngFor="let orderLine of order.orderLines">
+  <ul>
+    <div *ngIf="orderLine.product != null && orderLine.variant == undefined">
+      <li>
+        <div class="OrderLine-Image">
+          <img  [src]="orderLine.product.images[0].imagePath" alt="Product Image">
+        </div>
+        <div>
+          TEST
+        </div>
+        <div>
+          TEST2
+        </div>
+      </li>
+    </div>
+  </ul>
+  </div>
+</div>
+<!-- <div class="OrderConfirmation-Content">
+  <div class="Order-Details" *ngFor="let orderLine of order.orderLines">
     <ul>
         <li>
-          <div class="Order-detail" *ngIf="orderLine.product != null && orderLine.variant == undefined">
+          <div class="Order-Detail" *ngIf="orderLine.product != null && orderLine.variant == undefined">
             <div class="Product-Img">
               <img  [src]="orderLine.product.images[0].imagePath" alt="Product Image">
             </div>
@@ -22,7 +40,7 @@
             <div class="Product-Price-container">
               <span class="Product-Price">
 
-                {{orderLine.product.price}}
+                {{orderLine.product.price | currency}}
               </span>
               
             </div>
@@ -33,9 +51,9 @@
               </span>
             </div>
           </div>
-          <div class="Order-detail" *ngIf="orderLine.product == null && orderLine.variant != undefined">
+           <div class="Order-detail" *ngIf="orderLine.product == null && orderLine.variant != undefined">
             <div class="Product-Img">
-              <img  [src]="orderLine.variant.parentProduct.images[0].imagePath" alt="Product Image">
+              <img class="Img" [src]="orderLine.variant.parentProduct.images[0].imagePath" alt="Product Image">
             </div>
             <div class="Product-Title-container">
               <span class="Product-Title">
@@ -45,7 +63,7 @@
             <div class="Product-Price-container">
               <span class="Product-Price">
 
-                {{orderLine.variant.price}}
+                {{orderLine.variant.price | currency}}
               </span>
               
             </div>
@@ -60,5 +78,6 @@
       </ul>
       <p><strong>Total:</strong> </p>
 </div>
+</div> -->
 
 

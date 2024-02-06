@@ -100,7 +100,6 @@
   
 }
 
-
 .Product-Title{
   text-align: center;
   text-wrap: wrap;
@@ -108,6 +107,13 @@
 }
 
 .Product-Price-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+
+.Product-Quantity-container{
   display: flex;
   justify-content: center;
   align-items: center;
