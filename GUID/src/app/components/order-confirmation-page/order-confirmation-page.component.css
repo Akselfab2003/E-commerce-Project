@@ -90,5 +90,10 @@ ul {
   }
 
   .OrderLine-Image{
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 40%;
   }
+  
