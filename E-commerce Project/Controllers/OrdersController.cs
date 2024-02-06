@@ -98,14 +98,12 @@ namespace E_commerce_Project.Controllers
 
             UserController userController = new UserController(collection);
             Session newsession = await userController.PostEmptySession();
+            newsession.user = null;
             if(session.user != null)
             {
                 newsession.user = session.user;
             }
-            else
-            {
-                newsession.user = null;
-            }
+           
             await collection.Session.Update(session);
 
 
