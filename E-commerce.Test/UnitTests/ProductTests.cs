@@ -30,8 +30,6 @@ namespace E_commerce.Test.UnitTests
             output = outputHelper;
             GenerateFakeProductData();
             productsController = new ProductsController(dataCollection);
-            fillDatabaseWithData = new FillDatabaseWithData(collection.DataCollection, outputHelper);
-
         }
 
 
