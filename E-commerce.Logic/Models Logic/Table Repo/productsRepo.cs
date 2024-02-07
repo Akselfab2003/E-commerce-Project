@@ -42,7 +42,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<List<Products>?> GetAllProducts()
         {
             return await context.Products.Include(product => product.Images)
-                .Include(product => product.ProductCategories)
+                .Include(product => product.ProductCategories).Where(product => !product.IsDeleted)
                 .ToListAsync();
 
         }
@@ -51,14 +51,14 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             return await context.Products
                 .Include(product => product.Images)
-                .Include(product => product.ProductCategories)
+                .Include(product => product.ProductCategories).Where(product => !product.IsDeleted)
 
                 .FirstOrDefaultAsync(product => product.Id == id);
         }
 
         public async Task<List<Products>> GetProducts(int count)
         {   
-            return await context.Products.Include(ele => ele.Images).Include(ele => ele.ProductCategories).Take(count).ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
+            return await context.Products.Include(ele => ele.Images).Include(ele => ele.ProductCategories).Where(product => !product.IsDeleted).Take(count).ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
         }
 
         public async Task<Products> UpdateProduct(Products entity)
@@ -73,7 +73,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             return await context.Products
                                 .Include(ele => ele.Images)
-                                .Include(ele => ele.ProductCategories).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
+                                .Include(ele => ele.ProductCategories).Where(product => !product.IsDeleted).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
         }
 
 
@@ -98,7 +98,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
             List<Products> list = await context.Products
                                 .Include(ele => ele.Images)
                                 .Include(ele => ele.ProductCategories)
-                                .Where(ele => id.Contains(ele.Id)).ToListAsync();
+                                .Where(ele => id.Contains(ele.Id)).Where(product => !product.IsDeleted).ToListAsync();
 
 
             return list;

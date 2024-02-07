@@ -107,11 +107,11 @@ addProduct(){
   
     let product:Products=this.AddDeleteItems.get("productList")?.value;
     if(product!=null){
-      priceEntity.priceListPrice=product.price;
+      priceEntity.priceListPrice=this.AddDeleteItems.get("priceUpdate")?.value as number;
       priceEntity.product=product;
-    
+      console.log(priceEntity);
       pricelist.priceListProducts.push(priceEntity);
-      this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList/"+pricelist.id,pricelist).subscribe();
+      this.service.PutRequest<Pricelist>("PriceList/UpdatePriceList",pricelist).subscribe();
   }
 }
 

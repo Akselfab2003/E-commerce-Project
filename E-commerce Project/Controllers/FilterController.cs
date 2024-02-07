@@ -39,6 +39,24 @@ namespace E_commerce_Project.Controllers
             return Categories;
         }
 
+
+
+        [HttpGet("Categories/{id}")]
+        public async Task<Categories?> GetCategoryById(int id)
+        {
+           
+            try
+            {
+               return await DataCollection_Categories.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Post Requests

@@ -73,7 +73,16 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             try
             {
-                return await context.PriceList.ToListAsync();
+                return await context.PriceList
+                    .Include(ele => ele.Companies)
+                    .Include(ele => ele.Users)
+                    .Include(ele => ele.PriceListProducts)
+                    .ThenInclude(ele => ele.Product)
+                    .ThenInclude(ele => ele.ProductCategories)
+                    .Include(ele => ele.PriceListProducts)
+                    .ThenInclude(ele => ele.Product)
+                    .ThenInclude(ele => ele.Images)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {

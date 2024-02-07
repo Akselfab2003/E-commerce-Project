@@ -43,14 +43,36 @@ namespace E_commerce_Project.Controllers
             }
         }
 
+        [HttpGet("CreateOrder/{sessid}")]
+        public async Task<Orders> GetOrderBysessID(string sessid)
+        {
+            try
+            {
+                var order = await Context.GetSingleOrderBySessId(sessid);
+                if(order == null)
+                {
+                    return new Orders();
+                }
+                else
+                {
+                    return order;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new Orders();
+            }
+        }
+
         [HttpGet("id/{id}")]
-        public async Task<ActionResult<Orders>> GetOrdersById(int id)
+        public async Task<Orders> GetOrdersById(int id)
         {
             var order = await Context.GetById(id);
 
             if (order == null)
             {
-                return NotFound();
+                return null;
             }
 
             return order;

@@ -91,14 +91,14 @@ export class CheckoutPageComponent <T> {
   } 
 
   placeOrder(order:Order): void {
+    const oldSessId = sessionController.GetCookie();
     this.service.PostRequest<Session|null>(`Orders?sessid=${sessionController.GetCookie()}`,order).subscribe((Data) => {
-      var currentSessId = Data?.sessId;
       if(Data != null){
         sessionController.SetCookie(Data)
+        this.router.navigate(["/order-confirmation-page", oldSessId]);
       }
 
       console.log(Data)
-      this.router.navigate(["/order-confirmation-page", currentSessId]);
     })
   }
 }

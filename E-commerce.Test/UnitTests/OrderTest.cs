@@ -30,7 +30,8 @@ namespace E_commerce.Test.UnitTests
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
-            //var data = dataGenerator.GenerateFakeOrders("someValidSessionId");
+            OrderController = new OrdersController(dataCollection);
+            GeneradeTestOrders();
         }
 
         #region Insert Data
@@ -50,57 +51,18 @@ namespace E_commerce.Test.UnitTests
             ordersSession.Session.SessId = "someValidSessionId";
             await dataCollection.Orders.CreateOrder(ordersSession);
         }
-
-        public static IEnumerable<Object[]> TestOrderData()
-        {
-            yield return new object[] { dataGenerator.GenerateFakeOrders("someValidSessionId"), "" };
-        }
-        public async Task CreateTestData()
-        {
-        }
-
-        [Theory]
-        [MemberData(nameof(TestOrderData))]
-        public async Task TestOrderCreation(Orders orders, string sessid)
-        {
-
-        }
-
-        public async void GenerateFakeOrders()
-        {
-
-            //Assert.True(await DataCollection.Users.GetById(1) != null, "No User was found!");
-
-            List<Products> productlists = await DataCollection.Products.GetProducts(40);
-
-            Assert.True(productlists.Count() > 0, "No products was found!");
-
-            Users users = await DataCollection.Users.GetById(1);
-
-            Assert.True(users != null, "No user was found!");
-
-            Faker<Orders> faker = new Faker<Orders>()
-                .RuleFor(orders => orders.OrderLines, data =>
-                    new List<OrderDetails>()
-                    {
-                        new OrderDetails
-                        {
-                                Product  = productlists[data.Random.Number(0,productlists.Count()-1)],
-                                price = Convert.ToDouble(data.Commerce.Price(0, 1000, 2, "")),
-                                quantity =1,
-                                total= Convert.ToDouble(data.Commerce.Price(0, 1000, 2, ""))
-                        }
-                    }
-                    )
-                .RuleFor(orders => orders.Users, data => users)
-                .RuleFor(orders => orders.Session, data => new Session());
-            List<Orders> fakeorders = faker.GenerateBetween(25, 40);
-            foreach (Orders order in fakeorders)
-            {
-                await DataCollection.Orders.CreateOrder(order);
-            }
-        }
         #endregion
+
+        public async void GeneradeTestOrders()
+        {
+            Orders data = (await dataGenerator.GenerateFakeOrders("someValidSessionId"))[0];
+            Session session = new Session();
+            session.SessId = "someValidSessionId";
+
+            await dataCollection.Session.Create(session);
+            data.Session = session;
+            await dataCollection.Orders.Create(data);
+        }
 
         #region GET
         [Fact]
@@ -114,13 +76,13 @@ namespace E_commerce.Test.UnitTests
             List<Orders> order = await OrderController.GetOrdersBysessID(validSessionId);
             output.WriteLine(JsonSerializer.Serialize(order));
             //Assert.Equal(validSessionId, session2.SessId);
-            Assert.True(order.Count() > 0 | order.Count() == 0);
+            Assert.True(order.Count() > 0);
         }
 
         [Fact]
         public async Task Test_GetOrderstById()
         {
-            Orders orderID = await dataCollection.Orders.GetById(1);
+            Orders orderID = await OrderController.GetOrdersById(1);
             output.WriteLine(JsonSerializer.Serialize(orderID));
             //Assert.Equal(1, orderID.Id);
             Assert.NotNull(orderID);
@@ -129,12 +91,12 @@ namespace E_commerce.Test.UnitTests
 
         #region Create
         [Fact]
-        public async Task Test_CreateOrder()
+        public async void Test_CreateOrder()
         {
-            Orders orders = new Orders();
-            Orders created = await dataCollection.Orders.CreateOrder(orders);
-            output.WriteLine(JsonSerializer.Serialize(created));
-            Assert.NotNull(created);
+            Orders orders = (await dataGenerator.GenerateFakeOrders("someValidSessionId"))[1];
+            Session newSession = await OrderController.CreateOrder("someValidSessionId", orders);
+            output.WriteLine(JsonSerializer.Serialize(newSession));
+            Assert.NotNull(newSession);
         }
         #endregion
     }

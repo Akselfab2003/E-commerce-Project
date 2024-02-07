@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
+using Bogus.Extensions.UnitedStates;
 
 namespace E_commerce.Test.UnitTest_Database_Setup
 {
@@ -40,7 +41,23 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
 
         }
+        public async Task<Reviews> GetReviews()
+        {
+            List<Products> productlists = await InsertProducts();
 
+            Faker<Reviews> faker = new Faker<Reviews>()
+                //.RuleFor(user => user.Id, data => data.IndexFaker)
+                .RuleFor(user => user.Id, data => 0)
+                .RuleFor(user => user.Products, data => (productlists[0])) /*data.Internet.Password(10)*/
+                .RuleFor(user => user.ReviewContent, data => data.Rant.Review())
+                .RuleFor(user => user.ReviewTitle, data => data.Rant.Review())
+                .RuleFor(user => user.ReviewRating, data => data.Random.Int(0, 5));
+
+            return faker.Generate();
+
+
+
+        }
         public async Task<List<Categories>> InsertDataForProducts()
         {
             string[] categories = new string[50];
@@ -205,7 +222,7 @@ namespace E_commerce.Test.UnitTest_Database_Setup
             Faker<Company> faker = new Faker<Company>()
                 .RuleFor(company => company.Name, data => data.Company.CompanyName())
                 .RuleFor(company => company.email, data => data.Person.Email)
-                .RuleFor(company => company.cvr, data => data.Company.Ein())
+                .RuleFor(company => company.cvr, data => data.Company.CompanySuffix())
                 .RuleFor(company => company.Users, data => new List<Users>() { users });
 
 
