@@ -24,7 +24,7 @@ sendt hen til ordre konfirmations siden hvor han kan se sin ordre.
 USECASE: 4/Quantity
 Bruger starter på homepage. Han går ind på Products Page, og vælger et produkt, hvorefter han vælger at
 sætte antal til 2 og tilføjer dem til sin kurv.
-Han fortryder senere og ændre antalet i kurven til 1.
+Han fortryder senere og ændre antallet i kurven til 1.
 Han går til checkout for at indtaste sine oplysninger, og bestiller sin ordre. Hvorefter han bliver
 sendt hen til ordre konfirmations siden hvor han kan se sin ordre.
 
@@ -32,7 +32,7 @@ USECASE: 5/Admin
 Admin starter på homepage, og går til Admin login ved at tilgå admin URL'en og logger ind med hans admin
 login.
 Herefter klikker han ind på produktControl for at lave et nyt produkt. han vælger derefter at tilføje
-en produktvarint i produktVariantControl. Derefter går han ud på siden for at teste om produktet er på
+en produktvariant i produktVariantControl. Derefter går han ud på siden for at teste om produktet er på
 produktpage.
 ## Code scaffolding
 

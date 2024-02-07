@@ -214,7 +214,7 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
 
         [Fact, AttributePriority(-6)]
-        public async Task CreateCompany()
+        public async Task<Company> CreateCompany()
         {
             Users users = await DataCollection.Users.GetById(1);
             Assert.NotNull(users);
