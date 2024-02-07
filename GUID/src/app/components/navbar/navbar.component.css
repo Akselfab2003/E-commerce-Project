@@ -1,0 +1,44 @@
+
+.navbar{
+    /* height: 15%;
+  width: 100%; */
+    /* color: white !important;
+    background-color: var(--background) !important; */
+    position: fixed;
+    z-index: 3;
+    width: 100%;
+        /* background-color: var(--background-nav) !important; */
+    color: var(--text) !important;
+    border-bottom: 1px solid grey;
+
+}
+.nav-link{
+    color: var(--text) !important;
+
+}
+
+html.navbar [data-theme="dark"]{
+    background-color: var(--background-50) !important; 
+
+}
+
+
+html[data-theme="dark"].Test{
+    background-color: var(--background-50) !important; 
+}
+
+.navbar[data-theme="dark"]{
+    background-color:var(--background-950)
+
+}
+
+.logo {
+    width: 15%;
+}
+
+.navbar-logo{
+    height: 50%;
+}
+
+
+

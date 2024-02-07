@@ -1,0 +1,209 @@
+<div class="AdminControl">
+    <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="Admin-Created-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Created"
+          type="button"
+          role="tab"
+          aria-controls="Created"
+          aria-selected="true"
+        >Create
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="Updated-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Updated"
+          type="button"
+          role="tab"
+          aria-controls="Updated"
+          aria-selected="false"
+        >
+          Update
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link"
+          id="pills-contact-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-contact"
+          type="button"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >
+          Delete
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-disabled-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-disabled"
+          type="button"
+          role="tab"
+          aria-controls="pills-disabled"
+          aria-selected="false"
+        >
+          Select
+        </button>
+      </li>
+    </ul>
+  
+  
+    
+    
+    <div class="tab-container tab-content" id="pills-tabContent">
+      <div
+      class="tab-pane fade show active TabContent"
+      id="Created"
+      role="tabpanel"
+      aria-labelledby="Created-tab"
+      tabindex="0"
+      >
+      <div class="Create">
+        <form [formGroup]="createForm" (submit)="create()" >
+          <h1>Create product variant</h1>
+          
+          <div class="d-flex align-items-center  flex-column filterContainer">
+            <span class="filterTitle">Select a product</span>
+            <div class="input-group">
+                <label class="input-group-text" for="Categories">Products</label>
+                <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDCreate">
+                    <option *ngFor="let val of allProducts" [value]="val.id">{{val.title}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+          
+          <div >
+            <label for="productName">Product name</label>
+            <input id="productNameCreate" type="text" formControlName="productNameCreate">
+          </div>
+        
+          <div >
+            <label for="description">Description</label>
+              <textarea id="productDescriptionCreate" type="text" formControlName="productDescriptionCreate" rows="4" cols="50">
+              </textarea>
+          </div>
+  
+          <div >
+              <label for="productPrice">Product price</label>
+              <input id="productPriceCreate" type="text" formControlName="productPriceCreate">
+            </div>
+  
+          <div >
+              <label for="variantValue">Variant value</label>
+              <input id="variantValueCreate" type="text" formControlName="variantValueCreate">
+            </div>
+        
+          <button type="submit" class="btn"id="Create">Create &#8594;</button>
+        </form>
+
+      </div>
+    </div>
+      <div
+        class="tab-pane fade TabContent"
+        id="Updated"
+        role="tabpanel"
+        aria-labelledby="Updated-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
+        <h1>Update product</h1>
+
+        <div class="d-flex align-items-center  flex-column filterContainer">
+          <span class="filterTitle">Select a product</span>
+          <div class="input-group mb-3">
+              <label class="input-group-text" for="Categories">Products</label>
+              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productIDUpdate">
+                  <option *ngFor="let val of productVariantList" [value]="val.id">{{val.name}}</option>
+              </select>
+          </div>
+      </div>
+      <br>
+
+        <div >
+            <label for="productName">Product name</label>
+            <input id="productNameUpdate" type="text" formControlName="productNameUpdate">
+          </div>
+        
+          <div >
+            <label for="description">Description</label>
+            <textarea id="productDescriptionUpdate" type="text" formControlName="productDescriptionUpdate" rows="4" cols="50">
+            </textarea>
+          </div>
+  
+          <div >
+              <label for="productPrice">Product price</label>
+              <input id="productPriceUpdate" autocomplete="new-password" type="text" formControlName="productPriceUpdate">
+            </div>
+  
+          <div >
+              <label for="variantValue">Variant value</label>
+              <input id="variantValueUpdate" autocomplete="new-password" type="text" formControlName="variantValueUpdate">
+            </div>
+      
+        <button type="submit" class="btn"id="Update">Update &#8594;</button>
+      </form>
+      </div>
+      <div
+        class="tab-pane fade TabContent"
+        id="pills-contact"
+        role="tabpanel"
+        aria-labelledby="pills-contact-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
+        <h1>Delete product</h1>
+
+        <div class="d-flex align-items-center  flex-column filterContainer">
+          <span class="filterTitle">Select a product</span>
+          <div class="input-group">
+              <label class="input-group-text" for="Categories">Products</label>
+              <select  [(ngModel)]="CurrentSelectedValue" (ngModelChange)="selectChanged()" class="form-select" id="Categories" formControlName="productnameDelete">
+                  <option *ngFor="let val of productVariantList" [value]="val.id">{{val.name}}</option>
+              </select>
+          </div>
+      </div>
+      <br>
+
+          
+          <br>
+          <button type="submit" class="btn" id="Delete">Delete &#8594;</button>
+        </form>
+      </div>
+      <div
+        class="tab-pane fade TabContent"
+        id="pills-disabled"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+      >
+        <div class="Select-Container">
+          
+        <div *ngFor="let val of productVariantList"  class="Select-Card">
+          <span>
+            <b>Id:</b> {{val.id}}
+            <br>
+            <b>Name:</b> {{val.name}}
+            <br>
+            <b>Description:</b> {{val.description}}
+            <br>
+            <b>Price:</b> {{val.price}}
+            <br>
+            <b>variantValue:</b> {{val.variantValue}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  

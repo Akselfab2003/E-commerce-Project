@@ -1,0 +1,32 @@
+<div class="product-card" [routerLink]="['/product-details', product.id]">
+    <div class="d-flex flex-column w-100 h-100 product-card-Container">
+            <img loading="lazy" [src]="ImageCheckSrc(product.images) "  alt="Product 1">
+        
+        <div class="product-info">
+            <span  class="filterTitle">{{product.title}}</span>
+            <p>{{product.description}}</p>
+            <p>
+                <strong>${{product.price}}</strong>
+            </p>
+            <div *ngIf="!ProductContainsVariants" class="button-qty-container">
+              
+                    <button (click)="AddToBasket($event)" aria-current="page" class="buy-btn">Add to basket</button>
+                    <div class="qty">
+                        <span (click)="SubtractProductQuantity($event)">-</span>
+                        <strong>{{product.Quantity}}</strong>
+                        <span (click)="AddProductQuantity($event)">+</span>
+                    </div>
+
+            </div>
+            <div *ngIf="ProductContainsVariants" class="button-qty-container" style="justify-content: center;">
+                
+                <div *ngIf="ProductContainsVariants">
+                    <button aria-current="page" class="buy-btn">Show variants</button>
+                   
+    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

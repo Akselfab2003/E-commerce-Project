@@ -1,5 +1,7 @@
 
 using E_commerce.Logic;
+using E_commerce.Logic.Interfaces;
+using E_commerce.Logic.Models_Logic.Table_Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
@@ -13,12 +15,13 @@ namespace E_commerce_Project
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            
+            builder.Services.GetConfig(builder.Configuration).AddServices();
 
-            builder.Services.AddDbContext<DBcontext>(con => con.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))) ;
 
             var app = builder.Build();
 
@@ -33,6 +36,14 @@ namespace E_commerce_Project
 
             app.UseAuthorization();
 
+            app.UseCors(options =>
+            {
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+                options.SetIsOriginAllowed(Allowed => true ).AllowCredentials();
+          
+
+            });
 
             app.MapControllers();
 

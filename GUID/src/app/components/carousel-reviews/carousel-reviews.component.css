@@ -1,0 +1,67 @@
+
+.img-style{
+    margin-left: auto;
+    margin-right: auto;
+    height: 250px;
+    width: 250px;
+}
+
+@media (max-width: 992){
+    .img-style{
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
+}
+
+/* Carousel Container */
+.Fix {
+    text-align: center;
+  }
+  
+  /* Product Card Styles */
+  .slide {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin: 0 10px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .img-style {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .Title {
+    font-size: 1.5em;
+    margin: 10px 0;
+  }
+
+  .Price {
+    font-size: 1.2em;
+
+  }
+
+  .Description {
+    margin-bottom: 15px;
+  }
+  
+  #btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #btn:hover {
+    background-color: #218838; /* Darker green on hover */
+  }

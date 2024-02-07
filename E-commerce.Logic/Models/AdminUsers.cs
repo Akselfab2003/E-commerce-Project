@@ -11,5 +11,10 @@ namespace E_commerce.Logic.Models
     {
         [Key]
         public int Id { get; set; }
+<<<<<<< HEAD
+=======
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+>>>>>>> develop
     }
 }

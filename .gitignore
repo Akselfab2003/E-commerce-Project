@@ -401,3 +401,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /GUID/GUID.esproj.user
+/GUID/src/environments
+/E-commerce Project/E-commerce Project.csproj.user
+/E-commerce.Test/Create data for local database/Secret.json
+/E-commerce Project/E-commerce Project.csproj.user

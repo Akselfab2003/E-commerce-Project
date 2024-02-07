@@ -1,0 +1,227 @@
+<div class="PriceListControl">
+    <ul class="nav nav-pills nav-fill menu" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="Product-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Created"
+          type="button"
+          role="tab"
+          aria-controls="Created"
+          aria-selected="true"
+        >Created
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="Updated-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#Updated"
+          type="button"
+          role="tab"
+          aria-controls="Updated"
+          aria-selected="false"
+        >
+          Updated
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link"
+          id="pills-contact-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-contact"
+          type="button"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >
+          Deleted
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+        class="nav-link"
+        id="items-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#items"
+        type="button"
+        role="tab"
+        aria-controls="items"
+        aria-selected="false"
+        >
+          Add/Delete Items
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-disabled-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-disabled"
+          type="button"
+          role="tab"
+          aria-controls="pills-disabled"
+          aria-selected="false"
+        >
+          Select
+        </button>
+      </li>
+    </ul>
+  
+  
+  
+  
+  
+  
+    
+    <div class="tab-content" id="pills-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="Created"
+        role="tabpanel"
+        aria-labelledby="Created-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="createForm" (submit)="create()">
+      <h1>Create PriceList</h1>
+      <div>
+        <label for="nameCreate">Name</label>
+        <input id="nameCreate" type="text" formControlName="nameCreate">
+      </div>
+      <br>
+
+      <button type="submit" class="btn"id="Create">Create &#8594;</button>
+      </form>
+    </div>
+      <div
+        class="tab-pane fade"
+        id="Updated"
+        role="tabpanel"
+        aria-labelledby="Updated-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="updatePriceListForm" (submit)="updatePriceList()">
+        <h1>Update PriceList</h1>
+        <div>
+            <label for="pricelistList">PriceList</label>
+            <select id="pricelistList" formControlName="pricelistList" aria-label="Select pricelist" aria-placeholder="Select pricelist">
+              <option selected value="" >Choose a Price List</option>
+              <option *ngFor="let pricelist of pricelists" [value]="pricelist.id" >{{pricelist.name}}</option>
+            </select>
+        </div>
+        <div>
+            <label for="nameUpdate">Name</label>
+            <input id="nameUpdate" type="text" formControlName="nameUpdate">
+          </div>
+          <br>
+          <button type="submit" class="btn"id="Update">Update &#8594;</button>
+      </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-contact"
+        role="tabpanel"
+        aria-labelledby="pills-contact-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="deleteForm" (submit)="delete()">
+        <h1>Delete PriceList</h1>
+        <div>
+        <label for="priceListDelete">PriceList</label>
+        <select id="priceListDelete" formControlName="priceListDelete" aria-label="Choose a PriceList to delete" aria-placeholder="Choose an PriceList to delete">
+            <option selected value="" >Choose a PriceList</option>
+            <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist.id">{{pricelist.name}}</option>
+        </select>
+      </div>
+      <br>
+        <button type="submit" class="btn"id="Delete">Delete &#8594;</button>
+        </form>
+      </div>
+      <div class="tab-content" id="pills-tabContent">
+        <div
+        class="tab-pane fade"
+        id="items"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+        >
+        <form [formGroup]="AddDeleteItems" (submit)="addAndDeleteItems()">
+        <h1>Add/Delete items</h1>
+        <div>
+          <form [formGroup]="SelectOptions">
+          <label class="checkcontainer">Add
+            <input type="radio" checked="checked" [value]="true" formControlName="option">
+            <span class="radiobtn"></span>
+          </label>
+          <label class="checkcontainer">Delete
+            <input type="radio" [value]="false" formControlName="option">
+            <span class="radiobtn"></span>
+          </label>
+        </form>
+        </div>
+        <div>
+            <label for="priceLists">PriceList</label>
+            <select id="priceLists" formControlName="priceLists" aria-label="Select pricelist" aria-placeholder="Select pricelist">
+              <option selected value="" >Choose a Price List</option>
+              <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist.id" >{{pricelist.name}}</option>
+            </select>
+        </div>
+        <div>
+            <label for="productList">Product</label>
+            <select id="productList" formControlName="productList" aria-label="Select product" aria-placeholder="Select product">
+              <option selected value="" >Choose a Product</option>
+              <option *ngFor="let product of products" [ngValue]="product" >{{product.title}}</option>
+            </select>
+          </div>
+          <div>
+            <label for="priceUpdate">Product Price</label>
+            <input id="priceUpdate" type="number" formControlName="priceUpdate">
+          </div>
+          <div>
+            <label for="companyList">Company</label>
+            <select id="companyList" formControlName="companyList" aria-label="Select company" aria-placeholder="Select company">
+              <option selected value="" >Choose a Company</option>
+              <option *ngFor="let company of companies" [ngValue]="company" >{{company.name}}</option>
+            </select>
+          </div>
+          <div>
+            <label for="usersList">Users</label>
+            <select id="usersList" formControlName="usersList" aria-label="Select users" aria-placeholder="Select users">
+              <option selected value="" >Choose a User</option>
+              <option *ngFor="let user of users" [ngValue]="user" >{{user.username}}</option>
+            </select>
+          </div>
+        <br>
+        <button type="submit" class="btn"id="Update">Update &#8594;</button>
+        </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-disabled"
+        role="tabpanel"
+        aria-labelledby="pills-disabled-tab"
+        tabindex="0"
+      >
+      <form [formGroup]="selectForm">
+        <h1>Select PriceList</h1>
+        <div>
+            <label for="selectPriceList">PriceList</label>
+            <select id="selectPriceList" formControlName="selectPriceList" aria-label="Select pricelist" aria-placeholder="Select pricelist">
+              <option selected value="" >Choose a Price List</option>
+              <option *ngFor="let pricelist of pricelists" [ngValue]="pricelist.id" >{{pricelist.name}}</option>
+            </select>
+        </div>
+        <div>
+          <label for="selectDescription">Description</label>
+          <textarea id="selectDescription" type="text" rows="10" cols="100">
+            {{json}}
+          </textarea>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

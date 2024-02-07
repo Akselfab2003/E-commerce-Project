@@ -1,0 +1,67 @@
+.header-nav{
+    height: 50vh;
+    display: flex;
+}
+
+form{
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 420px;
+    height: 300px;
+ 
+}
+
+h1{
+    margin-top: 0;
+    color: #030202;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ccc;
+}
+
+.form-control{
+    margin-bottom: 16px;
+}
+
+input, label{
+    display: block;
+}
+
+label{
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #000000;
+}
+
+input{
+    padding: 8px;
+    height: 35px;
+    border-radius: 4px;
+    width: 100%;
+    border: 2px solid #ccc;
+    background-color: white;
+}
+
+button{
+    background-color: #358ED7;
+    color: #fff;
+    padding: 8px 24px;
+    width: 100%;
+    font-size: 1.2rem;
+    border-radius: 10px;
+}
+
+#btn[type=submit]:hover{
+    background-color: #2980b9;
+}
+
+p{
+    color: #000000;
+}
+
+
+.LoginContainer{
+    justify-content: center;
+    align-items: center;
+}

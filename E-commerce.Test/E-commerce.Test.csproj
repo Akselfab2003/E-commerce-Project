@@ -8,9 +8,19 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+<<<<<<< HEAD
   </PropertyGroup>
 
   <ItemGroup>
+=======
+    <UserSecretsId>0eb171f5-eb80-420e-af01-32eb59bebeab</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="35.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+>>>>>>> develop
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -23,4 +33,18 @@
     </PackageReference>
   </ItemGroup>
 
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <ProjectReference Include="..\E-commerce Project\E-commerce Project.csproj" />
+    <ProjectReference Include="..\E-commerce.Logic\E-commerce.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Create data for local database\Secret.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+>>>>>>> develop
 </Project>

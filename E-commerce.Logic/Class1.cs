@@ -2,6 +2,9 @@
 {
     public class Class1
     {
+<<<<<<< HEAD
         //hej test
+=======
+>>>>>>> develop
     }
 }

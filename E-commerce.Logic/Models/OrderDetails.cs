@@ -12,14 +12,22 @@ namespace E_commerce.Logic.Models
         [Key]
         public int Id { get; set; }
 
+<<<<<<< HEAD
         public Products ProductId  { get; set; }
+=======
+        public virtual Products? Product  { get; set; }
+        public virtual ProductVariants? variant { get; set; }
+>>>>>>> develop
 
         public double price { get; set; }
 
         public int quantity { get; set; }
 
         public double total { get; set; }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> develop
     }
 }

@@ -1,8 +1,20 @@
+<<<<<<< HEAD
 <div class="App-Root-Container">
   
   <div class="navbar-container">
     <app-navbar></app-navbar>
   </div>
+=======
+<div [attr.data-theme]="theme" class="App-Root-Container">
+  <div class="navbar-container">
+    <app-navbar (TagsChangedEvent)="ChangeTheme($event)"></app-navbar>
+  </div>
+  <div class="Content">
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+>>>>>>> develop
 </div>
 
-<router-outlet></router-outlet>

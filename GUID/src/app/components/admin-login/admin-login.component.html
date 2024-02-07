@@ -1,0 +1,21 @@
+<div class="d-flex w-100 h-100 LoginContainer">
+    <header class="">
+        <form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
+          <h1>Login</h1>
+        
+          <div >
+            <label for="username">Username</label>
+            <input id="username" type="text" formControlName="username">
+          </div>
+        
+          <div >
+            <label for="password">Password</label>
+            <input id="password" autocomplete="new-password" type="password" formControlName="password">
+          </div>
+          <br>
+        
+          <button type="submit" id="btn">Login &#8594;</button>
+          <p>Go to admin-page <a routerLink="/AdminControl" routerLinkActive="active">Admin-Page</a></p> 
+        </form>
+    </header>
+  </div>
