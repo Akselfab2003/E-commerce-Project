@@ -21,20 +21,20 @@ namespace E_commerce_Project.Controllers
 
         #region GET Requests
         [HttpGet("GetAllCompanies")]
-        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
+        public async Task<List<Company>> GetCompanies()
         {
             return await context.GetAll();
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Company>> GetCompanyById(int id)
+        public async Task<Company> GetCompanyById(int id)
         {
             var company = await context.GetById(id);
 
             if (company == null)
             {
-                return NotFound();
+                return null;
             }
 
             return company;

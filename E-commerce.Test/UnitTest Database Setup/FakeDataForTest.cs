@@ -213,24 +213,17 @@ namespace E_commerce.Test.UnitTest_Database_Setup
         }
 
 
-        public async Task CreateCompany()
+        public async Task<List<Company>> CreateCompany()
         {
-            Users users = await DataCollection.Users.GetById(1);
-            Assert.NotNull(users);
-
             Faker<Company> faker = new Faker<Company>()
                 .RuleFor(company => company.Name, data => data.Company.CompanyName())
                 .RuleFor(company => company.email, data => data.Person.Email)
                 .RuleFor(company => company.cvr, data => data.Company.CompanySuffix())
-                .RuleFor(company => company.Users, data => new List<Users>() { users });
+                .RuleFor(company => company.Users, data => new List<Users>() {  });
 
 
             List<Company> ListOfCompanies = faker.GenerateBetween(1, 1);
-
-            foreach (Company company in ListOfCompanies)
-            {
-                await DataCollection.Company.Create(company);
-            }
+            return ListOfCompanies;
 
 
 

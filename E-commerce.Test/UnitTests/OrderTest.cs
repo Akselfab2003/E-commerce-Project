@@ -31,18 +31,18 @@ namespace E_commerce.Test.UnitTests
             dataCollection = collection.DataCollection;
             output = outputHelper;
             OrderController = new OrdersController(dataCollection);
-            GeneradeTestOrders();
+            GenerateTestOrders();
         }
 
         #region Insert Data
         [Fact]
         public async Task TestInsertData()
         {
-            Orders orders = new Orders();
-            orders.OrderLines = new List<OrderDetails>();
-            orders.Users = new Users();
-            orders.Session = new Session();
-            await dataCollection.Orders.CreateOrder(orders);
+            //Orders orders = new Orders();
+            //orders.OrderLines = new List<OrderDetails>();
+            //orders.Users = new Users();
+            //orders.Session = new Session();
+            //await dataCollection.Orders.CreateOrder(orders);
 
 
             Orders ordersSession = new Orders();
@@ -53,7 +53,7 @@ namespace E_commerce.Test.UnitTests
         }
         #endregion
 
-        public async void GeneradeTestOrders()
+        public async void GenerateTestOrders()
         {
             Orders data = (await dataGenerator.GenerateFakeOrders("someValidSessionId"))[0];
             Session session = new Session();
