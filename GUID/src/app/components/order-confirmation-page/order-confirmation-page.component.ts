@@ -4,6 +4,8 @@ import { HttpserviceService } from '../../../Services/httpservice.service';
 import { Order } from '../../models/Order';
 import { orderDetails } from '../../models/orderDetails';
 import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/internal/operators/tap';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-order-confirmation-page',
@@ -18,10 +20,12 @@ export class OrderConfirmationPageComponent<T> {
 
   GetOrder(sessId:String){
     console.log("getting order");
-        this.service.GetRequest<Order>(`Orders/CreateOrder/${sessId}`).subscribe(orderInfo =>{
+        this.service.GetRequest<Order>(`Orders/GetSingularOrder/${sessId}`).subscribe(orderInfo =>{
           this.order = orderInfo;
-          console.log("Your Order:", {orderInfo});
-          console.log("ORDER OBJECT:", this.order);
+          for (let i = 0; i < this.order.orderLines.length; i++) {
+            console.log(this.order.orderLines[i].quantity)
+            
+          }
         })
   }
 
@@ -30,6 +34,5 @@ export class OrderConfirmationPageComponent<T> {
       this.GetOrder(String(data.get('sessId')));
        
     })
-    
   }
 }
