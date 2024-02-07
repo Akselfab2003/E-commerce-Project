@@ -135,7 +135,6 @@ namespace E_commerce.Test.UnitTests
             yield return new object[] { "e1", "Test_User_alone_pricelist" };
             yield return new object[] { "e2", "Company_User" };
             yield return new object[] { "aaaaaaaaaaaaaaaaaaaaaaaa", "" };
-
             yield return new object[] { "e","" };
           
 
@@ -149,20 +148,25 @@ namespace E_commerce.Test.UnitTests
               .RuleFor(Product => Product.Description, data => data.Commerce.ProductDescription())
               .RuleFor(Product => Product.Price, data => Convert.ToDouble(data.Commerce.Price(2, 1000, 2, "")));
             List<Products> data = faker.GenerateBetween(20, 20);
+            List<Products> dataCompany = faker.GenerateBetween(20,20);
 
 
             foreach (Products product in data)
             {
                 await productsController.PostProduct(product);
             }
-           // await fillDatabaseWithData.CreateCompany();
-           // await fillDatabaseWithData.Insertusers();
-           Company company = new Company();
+            foreach (Products product in dataCompany)
+            {
+                await productsController.PostProduct(product);
+            }
+            // await fillDatabaseWithData.CreateCompany();
+            // await fillDatabaseWithData.Insertusers();
+            Company company = new Company();
            company.Name = "Test";
             //company.Users = new List<Users>();
             await dataCollection.Company.Create(company);
 
-           Users usr = new Users();
+            Users usr = new Users();
            usr.Username = "Test User alone pricelist";
             await dataCollection.Users.Create(usr);
 
@@ -181,13 +185,16 @@ namespace E_commerce.Test.UnitTests
 
             Session sessionForCompany = new Session();
             sessionForCompany.SessId = "Company_User";
-            sessionForCompany.user = usr;
+            sessionForCompany.user = usrTestCompany;
 
             await dataCollection.Session.Create(sessionForCompany);
 
             PriceList priceList = await fakeDataForTest.CreatePriceList(company, usr, data);
-            
+
             await dataCollection.PriceList.Create(priceList);
+
+            PriceList priceListCompany = await fakeDataForTest.CreatePriceList(company, usrTestCompany, dataCompany);
+            await dataCollection.PriceList.Create(priceListCompany);
 
 
         }
@@ -232,33 +239,29 @@ namespace E_commerce.Test.UnitTests
         [MemberData(nameof(SearchTestDataForSearchForProducts))]
         public async void Test_SearchForProducts(string SearchInput,string sessid)
         {
-            if(sessid != "")
-            {
-                List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
-                output.WriteLine($"Created: {JsonSerializer.Serialize(products)}");
+                if (sessid != "")
+                {
+                    List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
+                    output.WriteLine($"Created: {JsonSerializer.Serialize(products)}");
 
-                Assert.True(products.Any(ele => ele.Price == 1));
-            }
+                    Assert.True(products.Any(ele =>ele.Price==1));
+                }else if (SearchInput == "aaaaaaaaaaaaaaaaaaaaaaaa")
+                {
 
+                    List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
 
-            if (SearchInput == "aaaaaaaaaaaaaaaaaaaaaaaa")
-            {
+                    output.WriteLine($"Created: {JsonSerializer.Serialize(products.Count())}");
 
-                List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
+                    Assert.True(products.Count() == 0);
 
-                output.WriteLine($"Created: {JsonSerializer.Serialize(products.Count())}");
+                }
+                else
+                {
+                    List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
+                    Assert.True(products.Count() > 0);
+                    Assert.True(products.All(ele => ele.Price != 1));
 
-                Assert.True(products.Count() == 0);
-
-            }
-            else
-            {
-                List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
-                Assert.True(products.Count() > 0);
-                Assert.True(products.All(ele => ele.Price != 1));
-
-            }
-
+                }
         }
 
     }
