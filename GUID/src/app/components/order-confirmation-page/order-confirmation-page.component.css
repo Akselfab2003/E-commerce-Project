@@ -1,16 +1,13 @@
-.Checkout-Content {
-  display: flex;
-  width: 100%;
-  height: 85%;
-  justify-content: center;
-  align-items: center;
-}
-
 .Confirmation-Container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 75%;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .Order-Info {
@@ -20,17 +17,16 @@
 
 .Order-Summary ul {
   list-style: none;
-  padding: 0;
 }
 
 .Order-Summary li {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
 .OrderLine-Image {
-  width: 30%;
+  width: 35%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -42,17 +38,27 @@
   max-height: auto;
 }
 
-.Product-Title-container,
-.Product-Price-container,
-.Product-Quantity-container {
+.Product-Title-Container{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
+  width: 100%;
+}
+
+.Product-Price-Container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+}
+
+.Product-Quantity-Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Product-Title {
   text-align: center;
-  font-weight: bold;
-  
+  font-weight: bolder;
 }

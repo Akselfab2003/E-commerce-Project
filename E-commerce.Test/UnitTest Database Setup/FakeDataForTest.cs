@@ -162,10 +162,10 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
 
 
-        public async Task<List<PriceListEntity>> GetListPriceListEntities()
+        public async Task<List<PriceListEntity>> GetListPriceListEntities(List<Products> products)
         {
 
-            List<Products> products = await DataCollection.Products.GetProducts(40);
+        
 
             Assert.True(products.Count() > 0);
 
@@ -185,10 +185,10 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
 
 
-        public async Task CreatePriceList()
+        public async Task<PriceList> CreatePriceList(Company cmp,Users usr,List<Products> products)
         {
-            Company company = await DataCollection.Company.GetById(1);
-            Users user = await DataCollection.Users.GetById(2);
+            Company company = cmp;// await DataCollection.Company.GetById(1);
+            Users user = usr;//await DataCollection.Users.GetById(2);
 
             Assert.NotNull(company);
             Assert.NotNull(user);
@@ -198,14 +198,16 @@ namespace E_commerce.Test.UnitTest_Database_Setup
             Faker<PriceList> faker = new Faker<PriceList>()
                 .RuleFor(pricelist => pricelist.Companies, data => new List<Company>() { company })
                 .RuleFor(pricelist => pricelist.Users, data => new List<Users>() { user })
-                .RuleFor(pricelist => pricelist.PriceListProducts, await GetListPriceListEntities());
+               
+                .RuleFor(pricelist => pricelist.Name, data => data.Company.CompanyName())
+                .RuleFor(pricelist => pricelist.PriceListProducts, await GetListPriceListEntities(products));
 
             List<PriceList> priceLists = faker.GenerateBetween(1, 1);
 
-            foreach (PriceList priceList in priceLists)
-            {
-                await DataCollection.PriceList.Create(priceList);
-            }
+
+            return priceLists[0];
+
+
 
 
         }

@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="Checkout-Content">
 
 
@@ -53,6 +53,10 @@
         <textarea id="address" name="address" formControlName="address" ></textarea>
   
         <button type="submit">Place Order</button>
+        <div class="w3-panel w3-red" *ngIf="basketItems.basketDetails.length == 0">
+          <h3>ERROR</h3>
+          <p>Your Basket is empty! Please add items if you wish to place an order.</p>
+        </div>
       </form>
     </div>
   </div>
