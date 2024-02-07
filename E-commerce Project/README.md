@@ -34,6 +34,7 @@ login.
 Herefter klikker han ind på produktControl for at lave et nyt produkt. han vælger derefter at tilføje
 en produktvariant i produktVariantControl. Derefter går han ud på siden for at teste om produktet er på
 produktpage.
+
 ## Requirements
 For at køre programmet skal der tilføjes en Connection string og en SALT
 ```
@@ -42,7 +43,20 @@ For at køre programmet skal der tilføjes en Connection string og en SALT
   },
   "SALT": "RANDOM_SALT"
 ```
-For at køre testen skal man tilføje en Secret.json E-commerce.Test\Create data for local database\Secret.json
+For at køre testen skal man tilføje en Secret.json E-commerce.Test\Create data for local database\Secret.json og adde:
+```
+"ConnectionStrings": {
+    "Connection": "CONNECTION_STRING"
+  },
+  "SALT": "RANDOM_SALT"
+```
+
+I VScode skal man adde en Environment fil med følgende i
+```
+export const environment = {
+    API_URL: "https://localhost:7094/api/",
+};
+```
 
 
 ## Build
