@@ -16,8 +16,8 @@
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier />
     <ShowAsAssociation>
-      <Property Name="Variant" />
       <Property Name="Products" />
+      <Property Name="Variant" />
     </ShowAsAssociation>
   </Class>
   <Class Name="E_commerce.Logic.Models.Categories">
@@ -26,14 +26,6 @@
   </Class>
   <Class Name="E_commerce.Logic.Models.Company">
     <Position X="17.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="E_commerce.Logic.Models.DiscountCodes" Collapsed="true">
-    <Position X="24" Y="2.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="E_commerce.Logic.Models.Favorites">
-    <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="E_commerce.Logic.Models.Images">
@@ -85,21 +77,6 @@
     <TypeIdentifier />
     <ShowAsAssociation>
       <Property Name="user" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="E_commerce.Logic.Models.SupportTickets">
-    <Position X="14.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="E_commerce.Logic.Models.Tags">
-    <Position X="15" Y="6.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="E_commerce.Logic.Models.UserDetails">
-    <Position X="17.5" Y="6.25" Width="1.5" />
-    <TypeIdentifier />
-    <ShowAsAssociation>
-      <Property Name="UserId" />
     </ShowAsAssociation>
   </Class>
   <Class Name="E_commerce.Logic.Models.Users">

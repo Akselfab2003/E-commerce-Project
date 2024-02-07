@@ -11,13 +11,11 @@ namespace E_commerce_Project.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly ITags DataCollection;
         private readonly IReviews DataCollection_Reviews;
         private readonly IDataCollection DataCollection_controller;
 
         public ReviewsController(IDataCollection collection)
         {
-            DataCollection = collection.Tags;
             DataCollection_Reviews = collection.Reviews;
             DataCollection_controller = collection;
         }

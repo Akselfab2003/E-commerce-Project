@@ -59,7 +59,7 @@ namespace E_commerce_Project.Controllers
 
             }
 
-            List<Products> products = await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await context.GetProducts(40), users);
+            List<Products> products = await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await context.GetProducts(count), users);
 
             return products;
         }
