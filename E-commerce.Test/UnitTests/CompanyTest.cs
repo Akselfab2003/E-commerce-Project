@@ -23,7 +23,7 @@ namespace E_commerce.Test.UnitTests
         private FillDatabaseWithData fillDatabaseWithData;
         private static readonly FakeDataForTest dataGenerator = new FakeDataForTest();
 
-        // Constructor for the CompanyTest class, taking dependencies for data collection and output helper
+        //constructor til brug af balndt andet vore datacollection.
         public CompanyTest(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
