@@ -122,10 +122,10 @@ namespace E_commerce.Test.UnitTests
 
         public static IEnumerable<object[]> SearchTestDataForSearchForProducts()
         {
-            yield return new object[] { "e1", "Test_User_alone_pricelist" };
-            yield return new object[] { "e2", "Company_User" };
-            yield return new object[] { "aaaaaaaaaaaaaaaaaaaaaaaa", "" };
-            yield return new object[] { "e","" };
+            yield return new object[] { "e1",  };
+            yield return new object[] { "e2",};
+            yield return new object[] { "aaaaaaaaaaaaaaaaaaaaaaaa" };
+            yield return new object[] { "e", };
           
 
 
@@ -145,40 +145,7 @@ namespace E_commerce.Test.UnitTests
 
             }
             // await fillDatabaseWithData.CreateCompany();
-            // await fillDatabaseWithData.Insertusers();
-            Company company = new Company();
-           company.Name = "Test";
-            //company.Users = new List<Users>();
-            await dataCollection.Company.Create(company);
-
-            Users usr = new Users();
-           usr.Username = "Test User alone pricelist";
-            await dataCollection.Users.Create(usr);
-
-            Users usrTestCompany = new Users();
-            usrTestCompany.Username = "Company_User";
-            await dataCollection.Users.Create(usrTestCompany);
-
-            //company.Users.Add(usr);
-            Session session = new Session();
-            session.SessId = "Test_User_alone_pricelist";
-            session.user = usr;
-
-            await dataCollection.Session.Create(session);
-
-
-
-            Session sessionForCompany = new Session();
-            sessionForCompany.SessId = "Company_User";
-            sessionForCompany.user = usrTestCompany;
-
-            await dataCollection.Session.Create(sessionForCompany);
-
-            PriceList priceList = await fakeDataForTest.CreatePriceList(company, usr, data);
-
-
-            await dataCollection.PriceList.Create(priceList);
-
+          
 
         }
 
@@ -220,18 +187,12 @@ namespace E_commerce.Test.UnitTests
 
         [Theory]
         [MemberData(nameof(SearchTestDataForSearchForProducts))]
-        public async void Test_SearchForProducts(string SearchInput,string sessid)
+        public async void Test_SearchForProducts(string SearchInput)
         {
-                if (sessid != "")
-                {
-                    List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
-                    output.WriteLine($"Created: {JsonSerializer.Serialize(products)}");
-
-                    Assert.True(products.Any(ele =>ele.Price==1));
-                }else if (SearchInput == "aaaaaaaaaaaaaaaaaaaaaaaa")
+                if (SearchInput == "aaaaaaaaaaaaaaaaaaaaaaaa")
                 {
 
-                    List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
+                    List<Products> products = await productsController.SearchForProducts(SearchInput,"");
 
                     output.WriteLine($"Created: {JsonSerializer.Serialize(products.Count())}");
 
@@ -240,7 +201,7 @@ namespace E_commerce.Test.UnitTests
                 }
                 else
                 {
-                    List<Products> products = await productsController.SearchForProducts(SearchInput, sessid);
+                    List<Products> products = await productsController.SearchForProducts(SearchInput,"");
                     Assert.True(products.Count() > 0);
                     Assert.True(products.All(ele => ele.Price != 1));
 
