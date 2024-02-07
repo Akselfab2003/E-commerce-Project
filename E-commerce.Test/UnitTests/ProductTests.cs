@@ -24,13 +24,11 @@ namespace E_commerce.Test.UnitTests
         private readonly IDataCollection dataCollection;
         private readonly ITestOutputHelper output;
         private ProductsController productsController;
-        private FillDatabaseWithData fillDatabaseWithData;
         private readonly FakeDataForTest fakeDataForTest;
         public ProductTests(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
-            output = outputHelper;
-            Insertsessions().Wait();    
+            output = outputHelper;  
             productsController = new ProductsController(dataCollection);
             fakeDataForTest  = new FakeDataForTest();
             GenerateFakeProductData().Wait();
@@ -38,34 +36,34 @@ namespace E_commerce.Test.UnitTests
 
 
         [Fact]
-        public async  void Can_Create_Update_Delete_product()
+        public async void Can_Create_Update_Delete_product()
         {
-           #region CREATE Product
-               Products product = new Products();
-               product.Title = "Create";
-               product.Price = 1.1;
-               product.Description = "Description";
-               product.Images = new List<Images>();
-               
+            #region CREATE Product
+            Products product = new Products();
+            product.Title = "Create";
+            product.Price = 1.0;
+            product.Description = "Description";
+            product.Images = new List<Images>();
 
-               await CreateProduct(product);
 
-           #endregion
+            await CreateProduct(product);
 
-           #region UPDATE Product
-               product.Title = "Update";
+            #endregion
 
-               await UpdateProduct(product);
+            #region UPDATE Product
+            product.Title = "Update";
 
-               Assert.True(product.Title == "Update", "Update Product Failed");
-           #endregion
+            await UpdateProduct(product);
 
-           #region DELETE Product
+            Assert.True(product.Title == "Update", "Update Product Failed");
+            #endregion
 
-               bool DeleteProjectResult = await DeleteProduct(product);
-               Assert.True(DeleteProjectResult == true, "Delete Failed");
+            #region DELETE Product
 
-           #endregion
+            bool DeleteProjectResult = await DeleteProduct(product);
+            Assert.True(DeleteProjectResult == true, "Delete Failed");
+
+            #endregion
         }
 
 
@@ -113,14 +111,6 @@ namespace E_commerce.Test.UnitTests
 
         }
 
-
-        public async Task Insertsessions()
-        {
-
-          
-
-        }
-
         public static IEnumerable<object[]> CountTestDataForGetProducts()
         {
             yield return new object[] { 5 };
@@ -148,16 +138,11 @@ namespace E_commerce.Test.UnitTests
               .RuleFor(Product => Product.Description, data => data.Commerce.ProductDescription())
               .RuleFor(Product => Product.Price, data => Convert.ToDouble(data.Commerce.Price(2, 1000, 2, "")));
             List<Products> data = faker.GenerateBetween(20, 20);
-            List<Products> dataCompany = faker.GenerateBetween(20,20);
-
 
             foreach (Products product in data)
             {
                 await productsController.PostProduct(product);
-            }
-            foreach (Products product in dataCompany)
-            {
-                await productsController.PostProduct(product);
+
             }
             // await fillDatabaseWithData.CreateCompany();
             // await fillDatabaseWithData.Insertusers();
@@ -191,10 +176,8 @@ namespace E_commerce.Test.UnitTests
 
             PriceList priceList = await fakeDataForTest.CreatePriceList(company, usr, data);
 
-            await dataCollection.PriceList.Create(priceList);
 
-            PriceList priceListCompany = await fakeDataForTest.CreatePriceList(company, usrTestCompany, dataCompany);
-            await dataCollection.PriceList.Create(priceListCompany);
+            await dataCollection.PriceList.Create(priceList);
 
 
         }
