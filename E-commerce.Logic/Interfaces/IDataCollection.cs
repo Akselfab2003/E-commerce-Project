@@ -18,7 +18,6 @@ namespace E_commerce.Logic.Interfaces
         public IProducts Products { get; }
         public IImages Images { get; }
         public IProductVariants ProductVariants { get; }
-        public ITags Tags { get; }
         public ICategories Categories { get; }
         public IBasketDetails BasketDetails { get; }
         public IBasket Basket {  get; }

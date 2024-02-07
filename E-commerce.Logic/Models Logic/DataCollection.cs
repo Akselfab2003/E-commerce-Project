@@ -20,7 +20,6 @@ namespace E_commerce.Logic.Models_Logic
 
         private readonly IUsers users;
         private readonly Isession session;
-        private readonly ITags tags;
         private readonly ICategories categories;
         private readonly IProducts products;
         private readonly IImages images;
@@ -38,7 +37,6 @@ namespace E_commerce.Logic.Models_Logic
             orders = new ordersRepo(Context);
             session = new SessionRepo(Context);
             users = new UsersRepo(Context);
-            tags = new TagsRepo(Context);
             categories = new CategoriesRepo(Context);
             products = new productsRepo(Context);
             images = new ImagesRepo(Context);
@@ -69,11 +67,6 @@ namespace E_commerce.Logic.Models_Logic
         public Isession Session
         {
             get { return session; }
-        }
-
-        public ITags Tags
-        {
-            get { return tags; }
         }
 
         public ICategories Categories
