@@ -47,6 +47,7 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
+                //await dataCollection.Company.Create(company);
                 await context.Create(company);
             }
             catch(Exception ex)
