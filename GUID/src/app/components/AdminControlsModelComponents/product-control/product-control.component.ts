@@ -177,15 +177,28 @@ export class ProductControlComponent<T> {
       // If the product has images
       // Set the values of the 'selectForm' to the properties of the product
       if(product.images.length!=0){
-        this.selectForm.setValue({
-          titleSelect: product.title,
-         descriptionSelect:product.description,
-          productSelect: product.id,
-          priceSelect: product.price,
-          categoriesSelect: product.productCategories.name,
-          variantsSelect: product.productVariants,
-          imagesSelect: product.images[0].imagePath,
-        },{emitEvent:false})
+        if(product.productVariants==null){
+          this.selectForm.setValue({
+            titleSelect: product.title,
+           descriptionSelect:product.description,
+            productSelect: product.id,
+            priceSelect: product.price,
+            categoriesSelect: product.productCategories.name,
+            variantsSelect: null,
+            imagesSelect: product.images[0].imagePath,
+          },{emitEvent:false})
+        }else{
+          this.selectForm.setValue({
+            titleSelect: product.title,
+           descriptionSelect:product.description,
+            productSelect: product.id,
+            priceSelect: product.price,
+            categoriesSelect: product.productCategories.name,
+            variantsSelect: product.productVariants,
+            imagesSelect: product.images[0].imagePath,
+          },{emitEvent:false})
+        }
+
       }else{
         // Set the values of the 'selectForm' to the properties of the product, with 'imagesSelect' set to the images of the product
         this.selectForm.setValue({
