@@ -34,9 +34,16 @@ login.
 Herefter klikker han ind på produktControl for at lave et nyt produkt. han vælger derefter at tilføje
 en produktvariant i produktVariantControl. Derefter går han ud på siden for at teste om produktet er på
 produktpage.
-## Code scaffolding
+## Requirements
+For at køre programmet skal der tilføjes en Connection string og en SALT
+```
+"ConnectionStrings": {
+    "Connection": "CONNECTION_STRING"
+  },
+  "SALT": "RANDOM_SALT"
+```
+For at køre testen skal man tilføje en Secret.json E-commerce.Test\Create data for local database\Secret.json
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
