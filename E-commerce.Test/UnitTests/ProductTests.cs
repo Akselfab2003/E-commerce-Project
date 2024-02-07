@@ -122,11 +122,9 @@ namespace E_commerce.Test.UnitTests
 
         public static IEnumerable<object[]> SearchTestDataForSearchForProducts()
         {
-            yield return new object[] { "e1",  };
-            yield return new object[] { "e2",};
+            yield return new object[] { "ProductName" };
             yield return new object[] { "aaaaaaaaaaaaaaaaaaaaaaaa" };
-            yield return new object[] { "e", };
-          
+
 
 
         }
