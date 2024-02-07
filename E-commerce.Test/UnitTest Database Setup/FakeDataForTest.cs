@@ -105,7 +105,6 @@ namespace E_commerce.Test.UnitTest_Database_Setup
 
 
 
-        [Fact(Skip = "GenerateFakeBaskets doesn't need to be runned any more")]
         public async void GenerateFakeBaskets()
         {
 
@@ -185,7 +184,6 @@ namespace E_commerce.Test.UnitTest_Database_Setup
         }
 
 
-        [Fact, AttributePriority(-5)]
 
         public async Task CreatePriceList()
         {
@@ -213,7 +211,6 @@ namespace E_commerce.Test.UnitTest_Database_Setup
         }
 
 
-        [Fact, AttributePriority(-6)]
         public async Task CreateCompany()
         {
             Users users = await DataCollection.Users.GetById(1);
