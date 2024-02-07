@@ -7,11 +7,12 @@
             [config]="slideConfig">
             
             <div ngxSlickItem *ngFor="let slide of CurrentReviewDisplayedOnPage" class="slide">
-                <h3 classs="Title">{{slide.id}}</h3>
-                <p class="Price">{{slide.ReviewContent}}</p>
+                <h3 classs="Title">{{slide.reviewTitle}}</h3>
+                <p class="Content"><b>Review: </b>{{slide.reviewContent}}</p>
+                <p class="Rating">{{slide.reviewRating}} Stars</p>
 
             </div>
         </ngx-slick-carousel>
-        <a id="btn" aria-current="page" class="buy-btn" routerLink="/reviews-page" routerLinkActive="active">Make Review</a>
+        <a id="btn" aria-current="page" class="buy-btn" [routerLink]="['/reviews-page', product.id]" routerLinkActive="active">Make Review for {{this.product.title}}</a>
     </div>
 </div>

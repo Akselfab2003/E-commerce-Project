@@ -72,12 +72,7 @@ namespace E_commerce.Test.Create_data_for_local_database
                 await DataCollection.Categories.CreateCategories(category);
             }
 
-
-
-
-
             Assert.True(data.Any());
-
         }
 
 
@@ -170,7 +165,7 @@ namespace E_commerce.Test.Create_data_for_local_database
                 .RuleFor(Product => Product.ProductCategories,data => data.PickRandom(categories));
             List<Products> data = faker.GenerateBetween(10, 20);
 
-           
+            
             foreach (Products product in data)
             {
                 await DataCollection.Products.CreateProduct(product);

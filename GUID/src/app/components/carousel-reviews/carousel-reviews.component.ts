@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Products } from '../../models/Products';
 import { HttpClient } from '@angular/common/http';
 import { HttpserviceService } from '../../../Services/httpservice.service';
@@ -11,6 +11,7 @@ import { Reviews } from '../../models/Reviews';
   styleUrl: './carousel-reviews.component.css'
 })
 export class CarouselReviewsComponent<T> {
+  @Input() product: Products = new Products();
   CurrentReviewDisplayedOnPage: Reviews[] = new Array<Reviews>();
 
   constructor(private http: HttpClient, private httpService: HttpserviceService<T>) {}
@@ -20,9 +21,10 @@ export class CarouselReviewsComponent<T> {
   }
 
   fetchDataFromApi() {
-    this.httpService.GetRequest<Reviews[]>(`Reviews/Get_Reviews1?${sessionController.GetCookie()}`).subscribe((data) => {
+    this.httpService.GetRequest<Reviews[]>(`Reviews/Get_Reviews/${this.product.id}`).subscribe((data) => {
+      var newReviewsArray: Reviews[] = new Array<Reviews>();
+
       this.CurrentReviewDisplayedOnPage = data;
-      console.log(data);
     });
   };
   

@@ -12,12 +12,10 @@ namespace E_commerce_Project.Controllers
     [ApiController]
     public class FilterController : ControllerBase
     {
-        private readonly ITags DataCollection;
         private readonly ICategories DataCollection_Categories;
 
         public FilterController(IDataCollection collection)
         {
-            DataCollection = collection.Tags;
             DataCollection_Categories = collection.Categories;
         }
 
@@ -39,12 +37,30 @@ namespace E_commerce_Project.Controllers
             return Categories;
         }
 
+
+
+        [HttpGet("Categories/{id}")]
+        public async Task<Categories?> GetCategoryById(int id)
+        {
+           
+            try
+            {
+               return await DataCollection_Categories.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Post Requests
 
         [HttpPost("Categories")]
-        public async Task<ActionResult<Categories>> CreateCategories(Categories categories)
+        public async Task<HttpStatusCode> CreateCategories(Categories categories)
         {
             try
             {
@@ -54,7 +70,7 @@ namespace E_commerce_Project.Controllers
             { 
             }
 
-            return CreatedAtAction("GetCategories", new { id = categories.Id }, categories);
+            return HttpStatusCode.Created;
         }
 
         #endregion
@@ -62,11 +78,11 @@ namespace E_commerce_Project.Controllers
         #region Put Requests
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Categories>> UpdateCategories(int id,Categories categories)
+        public async Task<HttpStatusCode> UpdateCategories(int id,Categories categories)
         {
             if (id != categories.Id)
             {
-                return BadRequest();
+                return HttpStatusCode.BadRequest;
             }
 
             try
@@ -79,25 +95,25 @@ namespace E_commerce_Project.Controllers
 
             }
 
-            return NoContent();
+            return HttpStatusCode.OK;
         }
 
         #endregion
 
-        #region Put Requests
+        #region Delete Requests
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategories(int id)
+        public async Task<HttpStatusCode> DeleteCategories(int id)
         {
             var categorie = await DataCollection_Categories.GetById(id);
             if (categorie == null)
             {
-                return NotFound();
+                return HttpStatusCode.NotFound;
             }
 
             await DataCollection_Categories.DeleteCategories(categorie);
 
-            return NoContent();
+            return HttpStatusCode.NoContent;
         }
 
         #endregion

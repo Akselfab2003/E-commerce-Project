@@ -1,0 +1,117 @@
+<div class="Confirmation-Container">
+  <h1>Thank you for your order!</h1>
+  <h3>Order Details:</h3>
+  <div class="Order-Info">
+    <h4>Full Name: {{order.fullName}}</h4>
+    <h4>Email: {{order.email}}</h4>
+    <h4>Address: {{order.address}}</h4>
+</div>
+<div class="Order-Summary" *ngFor="let orderLine of order.orderLines">
+  <ul>
+    <div *ngIf="orderLine.product != null && orderLine.variant == undefined">
+      <li>
+        <div class="OrderLine-Image">
+          <img  [src]="orderLine.product.images[0].imagePath" alt="Product Image">
+        </div>
+        <div>
+          <span class="Product-Title-Container">
+            {{orderLine.product.title}}
+          </span>
+        </div>
+        <div>
+          <span class="Product-Price-Container">
+
+            {{orderLine.product.price | currency}}
+          </span>
+        </div>
+        <div>
+          <span class="Product-Quantity-Container">
+            {{orderLine.quantity}}
+          </span>
+        </div>
+      </li>
+    </div>
+
+    <div *ngIf="orderLine.product == null && orderLine.variant != undefined">
+      <li>
+        <div class="OrderLine-Image">
+          <img  [src]="orderLine.variant.parentProduct.images[0].imagePath" alt="Product Image">
+        </div>
+        <div>
+          <span class="Product-Title">
+            {{orderLine.variant.name}}
+          </span>
+        </div>
+        <div>
+          <span class="Product-Price">
+
+            {{orderLine.variant.price| currency}}
+          </span>
+        </div>
+        <div>
+          <span class="Product-Quantity">
+
+            {{orderLine.variant.parentProduct.Quantity}}
+          </span>
+        </div>
+      </li>
+    </div>
+  </ul>
+</div>
+<!-- <div class="OrderConfirmation-Content">
+  <div class="Order-Details" *ngFor="let orderLine of order.orderLines">
+    <ul>
+        <li>
+          <div class="Order-Detail" *ngIf="orderLine.product != null && orderLine.variant == undefined">
+            <div class="Product-Img">
+              <img  [src]="orderLine.product.images[0].imagePath" alt="Product Image">
+            </div>
+            <div class="Product-Title-container">
+              <span class="Product-Title">
+                {{orderLine.product.title}}
+              </span>
+            </div>
+            <div class="Product-Price-container">
+              <span class="Product-Price">
+
+                {{orderLine.product.price | currency}}
+              </span>
+              
+            </div>
+            <div class="Product-Quantity-container">
+              <span class="Product-Quantity">
+
+                {{orderLine.product.Quantity}}
+              </span>
+            </div>
+          </div>
+           <div class="Order-detail" *ngIf="orderLine.product == null && orderLine.variant != undefined">
+            <div class="Product-Img">
+              <img class="Img" [src]="orderLine.variant.parentProduct.images[0].imagePath" alt="Product Image">
+            </div>
+            <div class="Product-Title-container">
+              <span class="Product-Title">
+                {{orderLine.variant.name}}
+              </span>
+            </div>
+            <div class="Product-Price-container">
+              <span class="Product-Price">
+
+                {{orderLine.variant.price | currency}}
+              </span>
+              
+            </div>
+            <div class="Product-Quantity-container">
+              <span class="Product-Quantity">
+
+                {{orderLine.variant.parentProduct.Quantity}}
+              </span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <p><strong>Total:</strong> </p>
+</div>
+</div> -->
+
+

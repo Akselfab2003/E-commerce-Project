@@ -31,6 +31,8 @@ import { SearchResultComponent } from './components/search-result/search-result.
 import { ImagesControlComponent } from './components/AdminControlsModelComponents/images-control/images-control.component';
 import { CarouselReviewsComponent } from './components/carousel-reviews/carousel-reviews.component';
 import { ReviewsPageComponent } from './components/reviews-page/reviews-page.component';
+import { PriceListControlComponent } from './components/AdminControlsModelComponents/price-list-control/price-list-control.component';
+import { OrderConfirmationPageComponent } from './components/order-confirmation-page/order-confirmation-page.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { ReviewsPageComponent } from './components/reviews-page/reviews-page.com
     SearchResultComponent,
     CarouselReviewsComponent,
     ReviewsPageComponent,
-    ImagesControlComponent
+    ImagesControlComponent,
+    PriceListControlComponent,
+    OrderConfirmationPageComponent
   ],
   imports: [
     BrowserModule,

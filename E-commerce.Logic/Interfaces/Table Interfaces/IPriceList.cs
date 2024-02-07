@@ -10,7 +10,10 @@ namespace E_commerce.Logic.Interfaces
     public interface IPriceList : IGeneric<PriceList>
     {
         public Task<PriceList> GetById(int id);
-
         public Task<List<Products>> UpdateListOfProductsWithPricesFromPriceList(List<Products> products, Users? user);
+        public Task<List<PriceList>> GetListOfPriceList();
+        public Task<List<Products>> GetProductsNotPartOfPriceList(int id);
+        public Task<List<Users>> GetUsersNotPartOfPriceList(int id);
+        public Task<List<Company>> GetCompaniesNotPartOfPriceList(int id);
     }
 }

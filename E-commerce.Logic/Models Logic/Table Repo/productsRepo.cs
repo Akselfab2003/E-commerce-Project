@@ -42,8 +42,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<List<Products>?> GetAllProducts()
         {
             return await context.Products.Include(product => product.Images)
-                .Include(product => product.ProductCategories)
-                .Include(product => product.ProductVariants)
+                .Include(product => product.ProductCategories).Where(product => !product.IsDeleted)
                 .ToListAsync();
 
         }
@@ -52,13 +51,14 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         {
             return await context.Products
                 .Include(product => product.Images)
-                .Include(product => product.ProductCategories)
+                .Include(product => product.ProductCategories).Where(product => !product.IsDeleted)
+
                 .FirstOrDefaultAsync(product => product.Id == id);
         }
 
         public async Task<List<Products>> GetProducts(int count)
         {   
-            return await context.Products.Include(ele => ele.Images).Include(ele => ele.ProductCategories).Take(count).ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
+            return await context.Products.Include(ele => ele.Images).Include(ele => ele.ProductCategories).Where(product => !product.IsDeleted).Take(count).ToListAsync(); //context.Products.Include(product => product.Images).Take(count).ToListAsync();
         }
 
         public async Task<Products> UpdateProduct(Products entity)
@@ -72,9 +72,99 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
         public async Task<List<Products>> SearchForProducts(string SearchInput)
         {
             return await context.Products
-                                .Include(ele => ele.ProductVariants)
                                 .Include(ele => ele.Images)
-                                .Include(ele => ele.ProductCategories).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
+                                .Include(ele => ele.ProductCategories).Where(product => !product.IsDeleted).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
         }
+
+
+        public async Task<List<Products>> SearchForProductsNewWay(string SearchInput)
+        {
+            HashSet<string> Hashset = context.Products.Select(ele => ele.Title.ToLower()).ToHashSet();
+            HashSet<int> id = new HashSet<int>(); 
+
+            int HashsetLength = Hashset.Count();
+            string SearchInputToLower = SearchInput.ToLower();
+
+
+            for (int i = 0;i < HashsetLength; i++)
+            {
+                if (Hashset.Contains(SearchInputToLower))
+                {
+                    id.Add(i);
+                }
+            }
+          
+
+            List<Products> list = await context.Products
+                                .Include(ele => ele.Images)
+                                .Include(ele => ele.ProductCategories)
+                                .Where(ele => id.Contains(ele.Id)).Where(product => !product.IsDeleted).ToListAsync();
+
+
+            return list;
+            //return await context.Products
+            //                    .Include(ele => ele.Images)
+            //                    .Include(ele => ele.ProductCategories).Where(product => product.Title.ToLower().Contains(SearchInput.ToLower()) == true).ToListAsync();
+        }
+
+       
+
+        public async Task<List<Products>> SearchForProductsAsyncTest(string SearchInput)
+        {
+            HashSet<string> Hashset = context.Products.Select(ele => ele.Title.ToLower()).ToHashSet();
+
+            string SearchInputToLower = SearchInput.ToLower();
+
+
+            Products[][] test = (await context.Products.ToListAsync()).Chunk(10).ToArray();
+            
+
+            int IQueryableCount = test.Count();
+            var tasks = new Task<List<Products>>[IQueryableCount];
+            for (int i = 0; i < IQueryableCount; i++)
+            {
+                tasks[i] = QuickDoSearchFormInput(SearchInputToLower, test[i]);
+            }
+
+
+            List<Products> products = new List<Products>();
+
+            var Results = (await Task.WhenAll(tasks)).Select(ele => products.Union(ele.ToList()));
+
+
+            
+            return products;
+        }
+
+
+
+        private async Task<List<Products>> QuickDoSearchFormInput(string SearchInput, Products[] ProductsArray)
+        {
+
+            HashSet<string> Hashset = ProductsArray.Select(ele => ele.Title.ToLower()).ToHashSet();
+
+            HashSet<int> id = new HashSet<int>();
+
+            int HashsetLength = Hashset.Count();
+            string SearchInputToLower = SearchInput;
+
+
+            for (int i = 0; i < HashsetLength; i++)
+            {
+                if (Hashset.Contains(SearchInputToLower))
+                {
+                    id.Add(i);
+                }
+            }
+
+            return  ProductsArray.Where(ele => id.Contains(ele.Id)).ToList();
+
+
+
+
+
+        }
+
+
     }
 }

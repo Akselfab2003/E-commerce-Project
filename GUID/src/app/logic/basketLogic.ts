@@ -6,6 +6,7 @@ import { sessionController } from "./sessionLogic";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { Products } from "../models/Products";
 import { Observable } from "rxjs";
+import { ProductVariants } from "../models/ProductVariants";
 
 @Injectable({
     providedIn: 'root'
@@ -34,54 +35,93 @@ export class basketLogic<T> {
     };
     
    
+    public AddVariantBasket(VaraintDetail:BasketDetails){
+      this.GetBasket().subscribe(data => {
+        if(data.basketDetails.length > 0 && data.basketDetails.find(detail => detail.variant != null) ){
+
+        
+        var variant = data.basketDetails.filter(ele => ele.variant != null).find(ele => ele.variant.id == VaraintDetail.variant.id);
+        if(variant != null)
+        {
+          
+          variant != undefined ? variant.quantity = variant.quantity+VaraintDetail.quantity: null;
+          this.UpdateBasket(data);
+
+        }
+      }
+        else{
+          this.AddBasketDetail(VaraintDetail);
+        }
+      });
+    }
 
 
-    public AddToBasket(product:Products):Promise<any>{
-        var sessionId:string = sessionController.GetCookie();
+    public AddProductToBasket(ProductDetail:BasketDetails){
+      this.GetBasket().subscribe(data => {
+        var productFromBasketDetails = data.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == ProductDetail.products.id);
+        if(productFromBasketDetails != null)
+        {
+
+          productFromBasketDetails != undefined ? productFromBasketDetails.quantity = productFromBasketDetails.quantity+ProductDetail.quantity: null;
+          this.UpdateBasket(data);
+
+        }
+        else{
+          
+          this.AddBasketDetail(ProductDetail);
+        }
+      });
+    }
+
+
+
+    public AddToBasket(Product?:Products,Variant?:ProductVariants,Quantity?:number):Promise<any>{
         var newBasketDetails:BasketDetails = new BasketDetails();
-        newBasketDetails.products = product;
-        this.GetBasket().subscribe(data => {
-  
-  
-          if(data.basketDetails.find(detail => detail.products.id == product.id)!= undefined ||  data.basketDetails.find(detail => detail.products.productVariants.includes(product.productVariants[0])!= undefined)){
-            var basketDetailObject = data.basketDetails.find(detail => detail.products.id == product.id) != undefined ?  data.basketDetails.find(detail => detail.products.id == product.id) :  data.basketDetails.find(detail => detail.products.productVariants.includes(product.productVariants[0]))
-            basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + product.Quantity : null;
-            this.UpdateBasket(data);
-         
-  
-  
-          }
-          else{
-            newBasketDetails.quantity = product.Quantity;
-            this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, newBasketDetails).subscribe((data)=>{
-              
-              this.AddToBasketEvent.emit()
-            });
-          }
-        })
+        newBasketDetails.products = Product != undefined ? Product : new Products() ;
+        newBasketDetails.variant  = Variant != undefined ? Variant : new ProductVariants() ;
+        if(Product != undefined){
+
+          newBasketDetails.quantity = (Quantity !=undefined && Quantity != 0) ? Quantity : Product.Quantity
+          this.AddProductToBasket(newBasketDetails)
+        }
+        else{
+           
+
+          newBasketDetails.quantity = (Quantity !=undefined && Quantity != 0) ? Quantity : 1
+          this.AddVariantBasket(newBasketDetails);
+
+        }
         return new Promise(resolve =>{
           resolve("Success");
         })
     };
 
+
+
     public RemoveFromBasket(basketDetails:BasketDetails){
       var sessionId:string = sessionController.GetCookie();
       this.service.PostRequest<BasketDetails[]>(`Basket/RemoveFromBasket/${sessionId}`, basketDetails).subscribe((data)=>{
         this.basketDetails = data;
-        console.log(data);
+         
         
         this.AddToBasketEvent.emit()
-
       });
     }
   
     UpdateBasket(basket:Basket){
+         
         this.service.PutRequest<any>(`Basket/${basket.id}`,basket).subscribe((data)=>{
+           
         this.AddToBasketEvent.emit()
       });
     }
 
-    GetTotalPrice(){
-      this.service.GetRequest<Basket>(`BasketDetails`)
-    };
+
+    AddBasketDetail(detail:BasketDetails){ 
+      var sessionId:string = sessionController.GetCookie();
+      this.service.PostRequest<BasketDetails[]>(`Basket/AddToBasket/${sessionId}`, detail).subscribe((data)=>{        
+      this.AddToBasketEvent.emit()
+    });
+  }
+
 }

@@ -16,6 +16,7 @@ namespace E_commerce_Project.Controllers
         IDataCollection DataContext;
         public ProductVariantsController(IDataCollection c) { context = c.ProductVariants; DataContext = c; } // Dependency Injection - DI
 
+        #region GET Requests
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductVariants>> GetProductVariantsById(int id)
         {
@@ -55,13 +56,40 @@ namespace E_commerce_Project.Controllers
             return productVariants;
         }
 
+        [HttpGet("ProductContainsVariants/{productid}")]
+        public async Task<bool> GetProductContainsVariants(int productid)
+        {
+            var productVariants = await context.GetListOfProductVariantsByProductId(productid);
 
+            if (productVariants == null)
+            {
+                return false;
+            }
+            
+            return productVariants.Count() > 0;
+        }
+
+
+
+        #endregion
+
+        #region POST Requests
+        [HttpPost]
+        public async Task<HttpStatusCode> PostProductVariants(ProductVariants productVariants, int ID)
+        {
+            productVariants.ParentProduct = await DataContext.Products.GetById(ID);
+            await context.Create(productVariants);
+            return HttpStatusCode.Created;
+        }
+        #endregion
+
+        #region PUT Requests
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProductVariants(int id, ProductVariants productVariantss)
+        public async Task<HttpStatusCode> PutProductVariants(int id, ProductVariants productVariantss)
         {
             if (id != productVariantss.Id)
             {
-                return BadRequest();
+                return HttpStatusCode.BadRequest;
             }
 
             try
@@ -73,18 +101,11 @@ namespace E_commerce_Project.Controllers
 
             }
 
-            return NoContent();
+            return HttpStatusCode.OK;
         }
+        #endregion
 
-        [HttpPost]
-        public async Task<ActionResult<ProductVariants>> PostProductVariants(ProductVariants productVariants, int ID)
-        {
-            productVariants.ParentProduct = await DataContext.Products.GetById(ID);
-            await context.Create(productVariants);
-            return CreatedAtAction("GetProductVariants", new { id = productVariants.Id }, productVariants);
-        }
-
-        // DELETE: api/Heroes/5
+        #region DELETE Requests
         [HttpDelete("{id}")]
         public async Task<HttpStatusCode> DeleteProductVariants(int id)
         {
@@ -96,7 +117,8 @@ namespace E_commerce_Project.Controllers
 
             context.Delete(productVariants);
 
-            return HttpStatusCode.Created;
+            return HttpStatusCode.NoContent;
         }
+        #endregion
     }
 }

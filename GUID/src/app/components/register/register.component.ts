@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {  OnInit, NgModule, EventEmitter} from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, ReactiveFormsModule} from '@angular/forms';
 import { matchpassword } from './matchpassword-validator';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +7,7 @@ import { User } from '../../models/User';
 import { Session} from '../../models/Session'
 import { LoginObject } from '../../models/LoginObject';
 import { sessionController } from '../../logic/sessionLogic';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -32,19 +32,21 @@ export class RegisterComponent<T> {
     }
     );
   }
-  constructor(private service:HttpserviceService<T>){
-    };
-
-
+  constructor(private service:HttpserviceService<T>, private router:Router){
+  };
+  
+  
   register() {
     let user:User= this.InputDataUser();
-    this.service.PostRequest<User>("User/createUser",user).subscribe((data)=>
-    console.log(data)
+    this.service.PostRequest<User>("User/createUser",user).subscribe((data)=>{}
+     
     )
     let registerObject:LoginObject = this.InputDataObject(sessionController.GetCookie());
+    
+    this.service.PutRequest<User>("User/Login",registerObject).subscribe((data)=>{}
+    );
 
-    this.service.PutRequest<User>("User/Login",registerObject).subscribe((data)=>
-    console.log(data));
+    this.router.navigateByUrl('/Login');
   }
   InputDataUser():User{
     let user:User=new User();

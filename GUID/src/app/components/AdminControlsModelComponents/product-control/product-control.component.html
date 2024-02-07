@@ -73,6 +73,9 @@
       >
       <form [formGroup]="createForm" (submit)="create()">
       <h1>Create Product</h1>
+      <div>
+        <img [src]="createForm.get('imagesCreate')?.value?.imagePath">
+      </div>
         <div>
           <label for="title">Title</label>
           <input id="titleCreate" type="text" formControlName="titleCreate">
@@ -100,6 +103,13 @@
               <option *ngFor="let variant of varaints" [value]="variant.name" >{{variant.name}}</option>
             </select>
         </div>
+        <div>
+          <label for="imagesCreate">Image</label>
+          <select id="imagesCreate" formControlName="imagesCreate" aria-label="Select image to update" aria-placeholder="Select image to update">
+              <option selected value="" >Choose an Image</option>
+              <option *ngFor="let image of images" [ngValue]="image">{{image.id}}</option>
+          </select>
+        </div>
         <br>
       
         <button type="submit" class="btn"id="Create">Create &#8594;</button>
@@ -112,8 +122,11 @@
         aria-labelledby="Updated-tab"
         tabindex="0"
       >
-      <form [formGroup]="updateForm" (submit)="update()" autocomplete="new-password">
+      <form [formGroup]="updateForm" (submit)="update()">
         <h1>Update Product</h1>
+        <div>
+          <img [src]="updateForm.get('imagesUpdate')?.value?.imagePath">
+        </div>
         <div>
             <label for="product">Product</label>
             <select id="productList" formControlName="productList" aria-label="Select product" aria-placeholder="Select product">
@@ -148,6 +161,13 @@
               <option *ngFor="let variant of varaints" [value]="variant.name" >{{variant.name}}</option>
             </select>
         </div>
+        <div>
+          <label for="imagesUpdate">Image</label>
+          <select id="imagesUpdate" formControlName="imagesUpdate" aria-label="Select image to update" aria-placeholder="Select image to update">
+              <option selected value="" >Choose an Image</option>
+              <option *ngFor="let image of images" [ngValue]="image">{{image.id}}</option>
+          </select>
+        </div>
         <br>
       
         <button type="submit" class="btn"id="Update">Update &#8594;</button>
@@ -160,7 +180,7 @@
         aria-labelledby="pills-contact-tab"
         tabindex="0"
       >
-      <form [formGroup]="deleteForm" (submit)="delete()" autocomplete="new-password">
+      <form [formGroup]="deleteForm" (submit)="delete()">
         <h1>Delete Product</h1>
           <div >
             <label for="id">Product Id</label>
@@ -182,6 +202,9 @@
       >
       <form [formGroup]="selectForm">
         <h1>Select Product</h1>
+        <div>
+          <img [src]="selectForm.get('imagesSelect')?.value">
+        </div>
         <div>
           <label for="productSelect">Product</label>
           <select formControlName="productSelect">
@@ -207,8 +230,12 @@
           <input id="categoriesSelect" formControlName="categoriesSelect">
       </div>
       <div>
-          <label for="productVariants">Variants </label>
+          <label for="variantsSelect">Variants </label>
           <input id="variantsSelect" formControlName="variantsSelect" >
+      </div>
+      <div>
+        <label for="imagesSelect">Url </label>
+        <input id="imagesSelect" formControlName="imagesSelect" >
       </div>
       </form>
       </div>

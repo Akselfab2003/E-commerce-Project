@@ -3,9 +3,38 @@
 </div>
 
 <div class="add-review">
-    <h3>Add Review</h3>
-    <input type="text" [(ngModel)]="newReview.Title" placeholder="Review Title">
-    <textarea [(ngModel)]="newReview.ReviewContent" placeholder="Your Review"></textarea>
-    <input type="number" [(ngModel)]="newReview.rating" placeholder="Rating 1-5">
-    <button (click)="addReview()"> Submit Review</button>
+    <form [formGroup]="newReviewForm" (ngSubmit)="addReview()">
+    <h3>Add Review for {{this.product.title}}</h3>
+    <div>
+        <label for="review-title">Review Title</label>
+        <input type="text" id="review-title" formControlName="ReviewTitle" placeholder="Review Title">
+    </div>
+    <div>
+        <label for="review-content">Review Content</label>
+        <textarea  type="text" id="review-content" formControlName="ReviewContent" placeholder="Write your review here"></textarea>
+    </div>
+    <div>
+        <label for="review-rating">Review Rating</label>
+        <div class="stars">
+            <div class="rating">
+                <input type="radio" id="star5" value="5" formControlName="ReviewRating">
+                <label for="star5" class="star">&#9733;</label>
+                <input type="radio" id="star4" value="4" formControlName="ReviewRating">
+                <label for="star4" class="star">&#9733;</label>
+                <input type="radio" id="star3" value="3" formControlName="ReviewRating">
+                <label for="star3" class="star">&#9733;</label>
+                <input type="radio" id="star2" value="2" formControlName="ReviewRating">
+                <label for="star2" class="star">&#9733;</label>
+                <input type="radio" id="star1" value="1" formControlName="ReviewRating">
+                <label for="star1" class="star">&#9733;</label>
+                
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <button type="submit"> Submit Review</button>
+
+    </form>
 </div>

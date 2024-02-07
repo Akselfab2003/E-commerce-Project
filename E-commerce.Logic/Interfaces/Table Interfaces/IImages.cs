@@ -10,12 +10,9 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
     public interface IImages : IGeneric<Images>
     {
         public Task<Images> GetById(int id);
-
         public Task<Images> UpdateImage(Images image);
         public Task<List<Images>> GetAllImages();
-
         public Task<bool> DeleteImage(Images image);
-
         public Task<Images> CreateImage(Images image);
     }
 }

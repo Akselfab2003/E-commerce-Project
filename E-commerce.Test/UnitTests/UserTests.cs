@@ -2,6 +2,7 @@
 using E_commerce.Logic.Interfaces;
 using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
+using E_commerce_Project.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
@@ -25,11 +26,14 @@ namespace E_commerce.Test.UnitTests
 
         private readonly IDataCollection dataCollection;
 
+        private UserController userController;
+
         private readonly ITestOutputHelper output;
 
         public UserTests(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
+            userController = new UserController(dataCollection);
             output = outputHelper;
             InsertTestData();
         }
@@ -39,12 +43,15 @@ namespace E_commerce.Test.UnitTests
             yield return new object[] { "Test1" };
             yield return new object[] { "Test2" };
         }
-        public static IEnumerable<Object[]> LoginObjectTestData()
+        public static IEnumerable<Object[]> LoginObjectTestDataSuccess()
         {
             yield return new object[] { new LoginObject() { username = "Test", password = "password", sessionId = "Test1" } };
+            yield return new object[] { new LoginObject() { username = "Test", password = "password", sessionId = "Test1" } };
+        }
+        public static IEnumerable<Object[]> LoginObjectTestDataFail()
+        {
             yield return new object[] { new LoginObject() { username = "Test", password = "", sessionId = "Test2" } };
             yield return new object[] { new LoginObject() { username = "", password = "password", sessionId = "Test2" } };
-            yield return new object[] { new LoginObject() { username = "Test", password = "password", sessionId = "Test1" } };
             yield return new object[] { new LoginObject() { username = "", password = "", sessionId = "Test1" } };
         }
         public static IEnumerable<Object[]> UsernamesTestData()
@@ -64,7 +71,7 @@ namespace E_commerce.Test.UnitTests
             }
 
             Users users = new Users() { Username = "Test", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
-             dataCollection.Users.Create(users).Wait();
+            dataCollection.Users.Create(users).Wait();
 
             Users deleteUser = new Users() { Username = "DeleteTest", Password = dataCollection.Cryptography.CreateNewPasswordHash("password"), Email = "test@test.com", Gender = true };
 
@@ -74,19 +81,18 @@ namespace E_commerce.Test.UnitTests
 
         #region GET requests test
         //GET request to create empty session 
-        [Fact,AttributePriority(5)]
+        [Fact,AttributePriority(0)]
         public async Task PostEmptySessionTest()
         {
 
             Session session1 = new Session();
             try
             {
-                session1.user = null;
+                session1 = await userController.PostEmptySession();
 
-                await dataCollection.Session.Create(session1);
-                Basket basket = new Basket();
-                basket.Session = session1;
-                await dataCollection.Basket.Create(basket);
+                Basket basket = await dataCollection.Basket.GetBySessId(session1);
+
+                output.WriteLine(JsonSerializer.Serialize(basket));
                 Assert.NotNull(session1);
                 Assert.NotNull(basket);
             }
@@ -99,14 +105,14 @@ namespace E_commerce.Test.UnitTests
             output.WriteLine(JsonSerializer.Serialize(session1));
         }
 
-        [Theory,AttributePriority(0)]
+        [Theory,AttributePriority(4)]
         [MemberData(nameof(SessionIdTestData))]
         public async Task GetSession(string sessionId)
         {
             Session session = new Session();
             try
             {
-                session = await dataCollection.Session.GetById(sessionId);
+                session = await userController.GetSession(sessionId);
                 Assert.NotNull(session);
             }
             catch (Exception ex)
@@ -128,11 +134,11 @@ namespace E_commerce.Test.UnitTests
             try
             {
                 users.Username = "Lars";
-                users.Password = dataCollection.Cryptography.CreateNewPasswordHash(users.Password);
+                users.Password = "TestTest";
                 users.Email = "test@test.com";
                 users.Gender = false;
 
-                await dataCollection.Users.Create(users);
+                await userController.PostUser(users);
             }
             catch (Exception ex)
             {
@@ -154,7 +160,7 @@ namespace E_commerce.Test.UnitTests
                 Assert.True(user == null);
             }
 
-            await dataCollection.Users.Delete(user);
+            await userController.DeleteUser(user);
 
             output.WriteLine(JsonSerializer.Serialize(user));
             output.WriteLine($"{user.Username} has been sent to the void");
@@ -162,63 +168,37 @@ namespace E_commerce.Test.UnitTests
         #endregion
 
         #region PUT and GET requeset test
-        [Theory, AttributePriority(8)]
-        [MemberData(nameof(LoginObjectTestData))]
-        public async Task PutAndValidateSession(LoginObject loginObject)
+        [Theory]
+        [MemberData(nameof(LoginObjectTestDataSuccess))]
+        public async Task PutAndValidateSessionSucess(LoginObject loginObject)
         {
             //Put user into Session
-            Session session = await dataCollection.Session.GetById(loginObject.sessionId);
             try
             {
-                if (session.Created < DateTime.Now)
-                {
 
-
-                    loginObject.password = dataCollection.Cryptography.CreateNewPasswordHash(loginObject.password);
-
-                    bool PasswordCorrect = await dataCollection.Users.CheckLogin(loginObject);
-
-                    if (PasswordCorrect)
-                    {
-                        session = await dataCollection.Session.UserLogin(loginObject);
-                    }
-                    else
-                    {
-                        if(loginObject.username == "" | loginObject.password  == "")
-                        {
-                            Assert.True(loginObject.username == "" | loginObject.password == "");
-                        }
-                        //Assert.NotNull(session.user);
-                    }
-                }
-                else
-                {
-                    Assert.False(session.Created < DateTime.Now);
-                }
+                HttpStatusCode statusCode = await userController.PutSession(loginObject);
+                Assert.Equal(HttpStatusCode.OK, statusCode);
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
+        }
+        [Theory]
+        [MemberData(nameof(LoginObjectTestDataFail))]
+        public async Task PutAndValidateSessionFail(LoginObject loginObject)
+        {
+            //Put user into Session
+            try
+            {
 
-            //Validate session
-            //try
-            //{
-            //    Session session1 = await dataCollection.Session.GetById(session.SessId);
-            //    if (session == null || session.user == null)
-            //    {
-            //        Assert.False(session == null || session.user == null);
-            //    }
-            //    else
-            //    {
-            //        Assert.True(session != null || session.user != null);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Assert.Fail(ex.Message);
-            //}
-            output.WriteLine(JsonSerializer.Serialize(session));
+                HttpStatusCode statusCode = await userController.PutSession(loginObject);
+                Assert.Equal(HttpStatusCode.BadRequest, statusCode);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
         #endregion
     }

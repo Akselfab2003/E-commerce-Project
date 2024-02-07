@@ -18,7 +18,7 @@ label{
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 4px;
-    color: #fff;
+    color: #000;
 }
 
 input{
@@ -28,6 +28,10 @@ input{
     width: 100%;
     border: 2px solid #ccc;
     background-color: white;
+}
+img{
+    height: 200px;
+    width: 200px;
 }
 button{
     background-color: #000;

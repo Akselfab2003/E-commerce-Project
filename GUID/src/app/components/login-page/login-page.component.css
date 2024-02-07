@@ -1,12 +1,11 @@
 .header-nav{
     height: 50vh;
-    
     display: flex;
 }
 
 form{
     border-radius: 5px;
-    background-color: rgb(64, 55, 77);
+    border: 1px solid #ccc;
     padding: 20px;
     width: 420px;
     height: 300px;
@@ -15,7 +14,7 @@ form{
 
 h1{
     margin-top: 0;
-    color: #fff;
+    color: #030202;
     padding-bottom: 4px;
     border-bottom: 1px solid #ccc;
 }
@@ -32,7 +31,7 @@ label{
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 4px;
-    color: #fff;
+    color: #000000;
 }
 
 input{
@@ -45,19 +44,20 @@ input{
 }
 
 button{
-    background-color: #000;
+    background-color: #358ED7;
     color: #fff;
     padding: 8px 24px;
     width: 100%;
     font-size: 1.2rem;
+    border-radius: 10px;
 }
 
 #btn[type=submit]:hover{
-    background-color: rgb(182, 3, 128);
+    background-color: #2980b9;
 }
 
 p{
-    color: #fff;
+    color: #000000;
 }
 
 

@@ -4,6 +4,7 @@ import { Products } from '../../models/Products';
 import { BasketDetails } from '../../models/BasketDetails';
 import { Basket } from '../../models/Basket';
 import { basketLogic } from '../../logic/basketLogic';
+import { ProductVariants } from '../../models/ProductVariants';
 
 @Component({
   selector: 'app-basket',
@@ -30,8 +31,10 @@ import { basketLogic } from '../../logic/basketLogic';
 export class BasketComponent<T> {
   public BasketState:string = "Closed";
   public BasketStateBool:boolean = false;
-
+  public Quantity:number = 1
   basket: Basket = new Basket();
+  subtotal:number = 0;
+
   constructor(private basketItems:basketLogic<T>)
   {
      basketItems.AddToBasketEvent.subscribe(ele => {this.GetBasket()})
@@ -40,12 +43,22 @@ export class BasketComponent<T> {
   GetBasket() {
     this.basketItems.GetBasket().subscribe(res => {
       this.basket = res;
+      if(res.basketDetails == undefined || res.basketDetails == null || res.basketDetails.length == 0){
+        this.basket.basketDetails = new Array<BasketDetails>();
+      }
+      this.subtotal = this.calculateTotal(res);
     });
   };
 
+  GetProductVariant(){
 
-  calculateTotal(): number {
-    return this.basketItems.basketDetails.reduce((total, item) => total + (item.quantity * item.products.price), 0);
+  }
+  calculateTotal(basket:Basket): number {
+    return basket.basketDetails.reduce((total, item) => 
+
+      total + (item.quantity * (item.products == undefined ? item.variant : item.products).price), 0);
+    
+
   } 
 
   ngOnInit(){
@@ -73,16 +86,22 @@ export class BasketComponent<T> {
     return uniqueBasketDetails;
   }
 
-  AddProductUsingQtyClick(product: Products){
-    var basketDetailId = this.FindBasketDetailId(product);
-    var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
-    basketDetailObject != undefined ?  basketDetailObject.quantity = basketDetailObject.quantity + 1 : null;
-    this.basketItems.UpdateBasket(this.basket )
+  AddProductUsingQtyClick(basketDetails:BasketDetails)
+  {
+    var test =  undefined
+
+    if(basketDetails.products != null){
+
+       test = {id: basketDetails.products.id, title: basketDetails.products.title, description: basketDetails.products.description, images: basketDetails.products.images, price: basketDetails.products.price, productCategories: basketDetails.products.productCategories, productVariants:basketDetails.products.productVariants, Quantity: 1, Active: basketDetails.products.Active}
+    }
+
+
+    this.basketItems.AddToBasket( test,basketDetails.variant,(basketDetails.variant != undefined ? 1 : undefined) )
   }
 
-  MinusProductUsingQtyClick(product: Products){
+  SubtractProductUsingQtyClick(product?:Products,variant?:ProductVariants){
 
-    var basketDetailId = this.FindBasketDetailId(product);
+    var basketDetailId = this.FindBasketDetailId(product, variant);
     var basketDetailObject = this.basket.basketDetails.find(detail => detail.id == basketDetailId)
     if(basketDetailObject != undefined ){
 
@@ -92,17 +111,47 @@ export class BasketComponent<T> {
 
         }
         else{
-         this.RemoveProductUsingQtyClick(basketDetailObject)
+         this.RemoveProductFromBasket(basketDetailObject)
         }
 
     }
   }
 
-  FindBasketDetailId(product:Products){
-    return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id
+  FindBasketDetailId(Product?:Products,variant?:ProductVariants):number{
+  //Wont be able to find Variant Id and therefore not able to add or subtract using the - and + signs?
+  
+  //return this.basket.basketDetails.find(detail => detail.products.id == product.id)?.id -- original working line (without variants)
+
+    /* var test = this.basket.basketDetails.find(detail =>{
+      // 
+      if(product != null){
+         (detail.products.id == product.id) ? detail.id : 1
+      }
+      else if(variant != undefined && detail.variant != undefined)
+      {
+        // 
+        (detail.variant.id == variant.id) ? detail.id : 1
+      }
+       
+    })
+     
+    return test != undefined ?test.id:0; */
+
+   
+      var value;
+      if(Product != undefined && this.basket.basketDetails.length > 0 && this.basket.basketDetails.find(ele => ele.products != undefined || ele.products != null)){
+        value = this.basket.basketDetails.find(ele => ele.products == Product) //!= undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id)) : 0
+        return (value != undefined ? value.id : 0)
+      }
+      else{
+        value = this.basket.basketDetails.find(ele => ele.variant == variant) //!= undefined ? (this.basket.basketDetails.filter(ele => ele.products != null).find(ele => ele.products.id == product.id)) : 0
+        return (value != undefined ? value.id : 0)
+      }
+
+    
   }
 
-  RemoveProductUsingQtyClick(basketDetails:BasketDetails){
+  RemoveProductFromBasket(basketDetails:BasketDetails){
     this.basketItems.RemoveFromBasket(basketDetails);
   }
 

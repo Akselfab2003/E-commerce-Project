@@ -4,6 +4,8 @@ using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Net;
 
 namespace E_commerce_Project.Controllers
 {
@@ -19,46 +21,45 @@ namespace E_commerce_Project.Controllers
             dataCollection = c;
         }
 
+        #region GET Requests
         [HttpGet("{id}")]
-        public async Task<ActionResult<Products>> GetProductById(int id)
+        public async Task<Products?> GetProductById(int id)
         {
-            var product = await context.GetById(id);
-
-            if (product == null)
+            try
             {
-                return NotFound();
+                var product = await context.GetById(id);
+                if (product == null)
+                {
+                    return null;
+                }
+                return product;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
 
-            return product;
         }
 
         [HttpGet("GetLimitedAmountOfProducts/{sessid}")]
-        public async Task<List<Products>> GetLimitedAmountOfProducts(string sessid = "")
+        public async Task<List<Products>> GetLimitedAmountOfProducts(int count=40,string sessid = "")
         {
-            // var cookies = Request.Cookies;
             Users? users = null;
             try
             {
                 if (sessid == "")
                 {
-                    users = (await dataCollection.Session.GetById(sessid)).user;
+                    users = (await dataCollection.Session.GetById(sessid))?.user;
 
                 }
-
             }
             catch (Exception ex)
             {
 
             }
 
-            //if (cookies != null && cookies.Count()>0 | sessid != "")
-            //{
-
-            //   cookies.TryGetValue("sessionId", out sessid);
-
-            // }
-
-            List<Products> products = await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await context.GetProducts(40), users);
+            List<Products> products = await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await context.GetProducts(count), users);
 
             return products;
         }
@@ -66,7 +67,6 @@ namespace E_commerce_Project.Controllers
         [HttpGet("GetAllProducts")]
         public async Task<List<Products>?> GetAllProducts()
         {
-            // var cookies = Request.Cookies;
             Users? users = null;
             try
             {
@@ -77,73 +77,19 @@ namespace E_commerce_Project.Controllers
             catch (Exception ex)
             {
                 return null;
-
             }
-
         }
-
 
         [HttpPost("GetProductsThatArePartOfCategory")]
         public async Task<List<Products>> GetProductsPartOfCategory(int CategoryId, int[] Productsids,string sessid)
         {
-
             Categories category = await dataCollection.Categories.GetById(CategoryId);
             Users? users = (await dataCollection.Session.GetById(sessid)).user;
             return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Categories.GetProductsFromCategory(category, Productsids), users);
         }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Products products)
-        {
-            if (id != products.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                
-                await context.UpdateProduct(products);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-
-            }
-
-            return NoContent();
-        }
-
-        [HttpPost("CreateProduct")]
-        public async Task<ActionResult<Products>> PostProduct(Products product)
-        {
-            try
-            {
-                product.ProductCategories = await dataCollection.Categories.GetById(product.ProductCategories.Id);
-                await context.Create(product);
-            }
-            catch (Exception ex)
-            {
-            }
-
-            return CreatedAtAction("GetCategories", new { id = product.Id }, product);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
-        {
-            var product = await context.GetById(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            await context.DeleteProduct(product);
-
-            return NoContent();
-        }
-
+        #region Search Methods
         [HttpGet("Search/")]
-        public async Task<List<Products>> SearchForProducts(string SearchInput,string sessid)
+        public async Task<List<Products>> SearchForProducts(string SearchInput, string sessid)
         {
             try
             {
@@ -151,7 +97,7 @@ namespace E_commerce_Project.Controllers
                 try
                 {
 
-                    users = (await dataCollection.Session.GetById(sessid)).user;
+                        users = (await dataCollection.Session.GetById(sessid))?.user;
                 }
                 catch (Exception ex)
                 {
@@ -161,10 +107,210 @@ namespace E_commerce_Project.Controllers
                 return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Products.SearchForProducts(SearchInput), users);
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return new List<Products> { };
             }
         }
+        //"00:00:00.0018953"
+
+
+        [HttpGet("SearchTest/")]
+        public async Task<TimeSpan?> SearchTest(string SearchInput, string sessid)
+        {
+            try
+            {
+                //Users? users = null;
+                //try
+                //{
+
+                //    users = (await dataCollection.Session.GetById(sessid))?.user;
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+                TimeSpan test = new TimeSpan();
+                for (int i = 0; i < 10; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    List<Products> products = await dataCollection.Products.SearchForProducts(SearchInput);
+
+                    stopwatch.Stop();
+                    test = test.Add(stopwatch.Elapsed);
+                }
+
+                return (test.Divide(10));
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        //"00:00:00.6733213"
+        //"00:00:00.0029060"
+
+        [HttpGet("SearchTestNewWay/")]
+        public async Task<TimeSpan> SearchTestNewWay(string SearchInput, string sessid)
+        {
+            try
+            {
+                //Users? users = null;
+                //try
+                //{
+
+                //    users = (await dataCollection.Session.GetById(sessid))?.user;
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+                TimeSpan test = new TimeSpan();
+                for (int i = 0; i < 10; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    List<Products> products = await dataCollection.Products.SearchForProductsNewWay(SearchInput);
+               
+                    stopwatch.Stop();
+                    test = test.Add(stopwatch.Elapsed);
+                }
+       
+                return (test.Divide(10));
+            }
+            catch (Exception ex)
+            {
+                return new TimeSpan();
+            }
+        }
+
+
+
+
+        //"00:00:00.0029826"
+
+
+        [HttpGet("SearchTestNewWaysecondWay/")]
+        public async Task<TimeSpan> SearchTestNewWaysecondWay(string SearchInput, string sessid)
+        {
+            try
+            {
+                //Users? users = null;
+                //try
+                //{
+
+                //    users = (await dataCollection.Session.GetById(sessid))?.user;
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+                TimeSpan test = new TimeSpan();
+                for (int i = 0; i < 10; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    List<Products> products = await dataCollection.Products.SearchForProductsAsyncTest(SearchInput);
+                    stopwatch.Stop();
+                    test = test.Add(stopwatch.Elapsed);
+                }
+
+                return (test.Divide(10));
+            }
+            catch (Exception ex)
+            {
+                return new TimeSpan();
+            }
+        }
+        #endregion
+        #endregion
+        
+        #region POST Requests
+        [HttpPost("CreateProduct")]
+        public async Task<HttpStatusCode> PostProduct(Products product)
+        {
+            try
+            {
+
+                if (product.ProductCategories != null)
+                {
+
+                product.ProductCategories =  await dataCollection.Categories.GetById(product.ProductCategories.Id);
+                
+                }
+                
+                List<Images> images = new List<Images>();
+                if(product.Images != null)
+                {
+                foreach (var item in product.Images)
+                {
+                    item.Id = 0;
+
+                    images.Add(item);
+                }
+
+                product.Images = images;
+
+
+                }
+                
+                //(await dataCollection.Images.GetAllImages()).Where(ele => product.Images.Contains(ele)).ToList();
+                await context.Create(product);
+            }
+            catch (Exception ex)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
+            return HttpStatusCode.Created;
+        }
+        #endregion
+
+        #region PUT Products
+        [HttpPut("{id}")]
+        public async Task<HttpStatusCode> PutProduct(int id, Products products)
+        {
+            if (id != products.Id)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
+            try
+            {
+
+                await context.UpdateProduct(products);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+
+            return HttpStatusCode.OK;
+        }
+        #endregion
+
+        #region DELETE Requests
+        [HttpDelete("{id}")]
+        public async Task<HttpStatusCode> DeleteProduct(int id)
+        {
+            var product = await context.GetById(id);
+            try
+            {
+
+            if (product == null)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
+                product.IsDeleted = true;
+                await context.Update(product);
+            }
+            catch (Exception ex)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
+            return HttpStatusCode.NoContent;
+        }
+        #endregion
     }
 }

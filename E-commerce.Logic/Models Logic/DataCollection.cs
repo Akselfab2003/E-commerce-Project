@@ -16,9 +16,10 @@ namespace E_commerce.Logic.Models_Logic
     {
         private readonly IAdminUsers adminUsers;
         private readonly IOrders orders;
+        private readonly IOrderDetails orderDetails;
+
         private readonly IUsers users;
         private readonly Isession session;
-        private readonly ITags tags;
         private readonly ICategories categories;
         private readonly IProducts products;
         private readonly IImages images;
@@ -29,13 +30,13 @@ namespace E_commerce.Logic.Models_Logic
         private readonly ICompany company;
         private readonly IHashing cryptography;
         private readonly IReviews reviews;
+        private readonly IPriceListEntity priceListEntity;
 
         public DataCollection(DBcontext Context,IConfiguration configuration) 
         {
             orders = new ordersRepo(Context);
             session = new SessionRepo(Context);
             users = new UsersRepo(Context);
-            tags = new TagsRepo(Context);
             categories = new CategoriesRepo(Context);
             products = new productsRepo(Context);
             images = new ImagesRepo(Context);
@@ -47,6 +48,8 @@ namespace E_commerce.Logic.Models_Logic
             priceList = new PriceListRepo(Context);
             company = new CompanyRepo(Context);
             reviews = new ReviewsRepo(Context);
+            orderDetails = new OrderDetailsRepo(Context);
+            priceListEntity = new PriceListEntityRepo(Context);
         }
 
         public IAdminUsers AdminUsers
@@ -64,11 +67,6 @@ namespace E_commerce.Logic.Models_Logic
         public Isession Session
         {
             get { return session; }
-        }
-
-        public ITags Tags
-        {
-            get { return tags; }
         }
 
         public ICategories Categories
@@ -114,6 +112,13 @@ namespace E_commerce.Logic.Models_Logic
         {
             get { return reviews; }
         }
-
+        public IOrderDetails OrderDetails
+        {
+            get { return orderDetails; }
+        }
+        public IPriceListEntity PriceListEntity
+        {
+            get { return priceListEntity; }
+        }
     }
 }

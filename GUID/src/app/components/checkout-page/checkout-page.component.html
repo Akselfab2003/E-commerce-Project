@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="Checkout-Content">
 
 
@@ -8,21 +8,28 @@
     <div class="order-summary">
       <h3>Order Summary</h3>
       <ul>
-        <li *ngFor="let details of basketItems.basketDetails">
+        <li *ngFor="let detail of basketItems.basketDetails">
           <div class="basket-detail" >
             <div class="Product-Img">
-              <img [src]="details.products.images[0].imagePath" class="Img" alt="Product-Img">
+              <img [src]="(detail.products == undefined ? detail.variant.parentProduct : detail.products ).images[0].imagePath" class="Img" alt="Product-Img">
             </div>
             <div class="Product-Title-container">
               <span class="Product-Title">
-                {{ details.products.title }}
+                {{ (detail.products == undefined ? detail.variant.name : detail.products.title )}}
 
               </span>
             </div>
             <div class="Product-Price-container">
               <span class="Product-Price">
 
-                {{ details.products.price| currency }}
+                {{ (detail.products == undefined ? detail.variant : detail.products ).price| currency }}
+              </span>
+              
+            </div>
+            <div class="Product-Quantity-container">
+              <span class="Product-Quantity">
+
+                {{detail.quantity}}
               </span>
               
             </div>
@@ -35,17 +42,21 @@
   
     <div class="billing-details">
       <h3>Billing Details</h3>
-      <form ngModelOptions="{standalone: true}">
+      <form  [formGroup]="UserInfo" (ngSubmit)="GenerateOrder()">
         <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" [(ngModel)]="billingDetails.fullName" required>
+        <input type="text" id="fullName" name="fullName" type="text" formControlName="fullName" >
   
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" [(ngModel)]="billingDetails.email" required>
+        <input type="email" id="email" name="email" formControlName="email" >
   
         <label for="address">Address:</label>
-        <textarea id="address" name="address" [(ngModel)]="billingDetails.address" required></textarea>
+        <textarea id="address" name="address" formControlName="address" ></textarea>
   
-        <button type="button" (click)="placeOrder()">Place Order</button>
+        <button type="submit">Place Order</button>
+        <div class="w3-panel w3-red" *ngIf="basketItems.basketDetails.length == 0">
+          <h3>ERROR</h3>
+          <p>Your Basket is empty! Please add items if you wish to place an order.</p>
+        </div>
       </form>
     </div>
   </div>

@@ -19,31 +19,35 @@ namespace E_commerce_Project.Controllers
             dataCollection = c;
         }
 
+        #region GET Requests
         [HttpGet("GetAllCompanies")]
-        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
+        public async Task<List<Company>> GetCompanies()
         {
             return await context.GetAll();
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Company>> GetCompanyById(int id)
+        public async Task<Company> GetCompanyById(int id)
         {
             var company = await context.GetById(id);
 
             if (company == null)
             {
-                return NotFound();
+                return null;
             }
 
             return company;
         }
+        #endregion
 
+        #region POST Requests
         [HttpPost("CreateCompany")]
         public async Task<HttpStatusCode> PostCompany(Company company)
         {
             try
             {
+                //await dataCollection.Company.Create(company);
                 await context.Create(company);
             }
             catch(Exception ex)
@@ -52,7 +56,9 @@ namespace E_commerce_Project.Controllers
             }
             return HttpStatusCode.Created;
         }
+        #endregion
 
+        #region PUT Requests
         [HttpPut("UpdateCompany")]
         public async Task<HttpStatusCode> PutCompany(Company company)
         {
@@ -67,18 +73,22 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.OK;
         }
+        #endregion
 
+        #region DELETE Requests
         [HttpPost("DeleteCompany")]
-        public async Task<Company> DeleteCompany(Company company)
+        public async Task<HttpStatusCode> DeleteCompany(Company company)
         {
             try
             {
-                return await context.Delete(company);
+                await context.Delete(company);
+                return HttpStatusCode.NoContent;
             }
             catch (Exception ex)
             {
-                return null;
+                return HttpStatusCode.BadRequest;
             }
         }
+        #endregion
     }
 }

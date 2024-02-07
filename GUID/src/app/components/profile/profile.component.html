@@ -2,21 +2,95 @@
 
 
 <div class="profile-container">
+  <h2>User Information</h2>
     <div class="user-info">
-      <h2>User Information</h2>
       <p><strong>Name:</strong> {{ user.username }}</p>
       <p><strong>Email:</strong> {{ user.email }}</p>
-      <!-- Add more user data as needed -->
+   
     </div>
 
     <div class="order-history">
       <h2>Order History</h2>
       <ul>
-        <li *ngFor="let Order of orders">
-          <p><strong>Order:</strong> {{ Order.id }}</p>
-          <!-- <p><strong>Date:</strong> {{ order.date | date }}</p> -->
-          <!-- Add more order details as needed -->
-        </li>
+        <div class="accordion Order-accordion" id="accordion" >
+        <li *ngFor="let order of orders">
+          
+       
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed"   data-bs-toggle="collapse" [attr.data-bs-target]="('#order-'+order.id)" [attr.aria-expanded]="false" [attr.aria-controls]="('order-'+order.id)">
+
+              Order Number: {{order.id}}
+
+            </button>
+            
+            </h2>
+
+            <div [id]="('order-'+order.id)" data-bs-parent="#accordion" class="accordion-collapse collapse">
+                <div class="accordion-body">
+
+             
+          
+         
+           <div *ngFor="let detail of order.orderLines">
+            <div *ngIf="detail.product == null && detail.variant != undefined">
+              <div class="basket-detail" >
+
+            
+                <div class="Product-Img">
+                   <img [src]="detail.variant.parentProduct.images[0].imagePath" class="Img" alt="Product-Img">             </div>
+                <div class="Product-Title-container">
+                  <span class="Product-Title">
+                    {{detail.variant.name}}
+    
+                  </span>
+                </div>
+                <div class="Product-Price-container">
+                  <span class="Product-Price">
+    
+                    {{ detail.total | currency }}
+                  </span>
+                  
+                </div>
+    
+              </div>  
+            
+            </div> 
+           
+            <div *ngIf="detail.product != null && detail.variant == undefined">
+              <div class="basket-detail" >
+
+            
+                <div class="Product-Img">
+                   <img [src]="detail.product.images[0].imagePath" class="Img" alt="Product-Img">             </div>
+                <div class="Product-Title-container">
+                  <span class="Product-Title">
+                    {{detail.product.title}}
+    
+                  </span>
+                </div>
+                <div class="Product-Price-container">
+                  <span class="Product-Price">
+    
+                    {{ detail.total | currency }}
+                  </span>
+                  
+                </div>
+    
+              </div>  
+            
+            </div>
+
+          </div>
+        </div>
+      </div>
+      
+    
+     
+    </div>
+  </li>
+  </div>
+        
       </ul>
     </div>
   </div>

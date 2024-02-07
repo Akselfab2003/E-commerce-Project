@@ -5,25 +5,25 @@
 namespace E_commerce.Logic.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedquantitytobasketDetails : Migration
+    public partial class AddedIsDeletedtoproducts : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Quantity",
-                table: "BasketDetails",
-                type: "int",
+            migrationBuilder.AddColumn<bool>(
+                name: "IsDeleted",
+                table: "Products",
+                type: "bit",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Quantity",
-                table: "BasketDetails");
+                name: "IsDeleted",
+                table: "Products");
         }
     }
 }

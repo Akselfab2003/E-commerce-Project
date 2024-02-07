@@ -6,12 +6,12 @@
             #slickModal="slick-carousel"
             [config]="slideConfig">
             
-            <div  ngxSlickItem *ngFor="let slide of CurrentProductsDisplayedOnPage" class="slide">
+            <div  ngxSlickItem *ngFor="let slide of CurrentProductsDisplayedOnPage" class="slide" [routerLink]="['/product-details', slide.id]">
                 <img src="{{slide.images[0]?.imagePath}}" alt="" class="img-style">
                 <span class="Title">{{slide.title}}</span>
                 <p class="Price">{{slide.price | currency}}</p>
 
-                <a id="btn" (click)="AddToBasket(slide)" aria-current="page" class="buy-btn">Add to basket</a>
+                <button id="btn" (click)="AddToBasket(slide)" aria-current="page" class="buy-btn">Add to basket</button>
                 </div>
         </ngx-slick-carousel>
     </div>

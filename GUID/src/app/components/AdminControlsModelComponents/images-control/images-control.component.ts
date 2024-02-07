@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './images-control.component.html',
   styleUrl: './images-control.component.css'
 })
+
 export class ImagesControlComponent<T> implements OnInit {
   createForm = new FormGroup({
     urlCreate: new FormControl<string>('',Validators.required),
@@ -21,53 +22,68 @@ export class ImagesControlComponent<T> implements OnInit {
     urlUpdate:new FormControl<string>("",Validators.required),
   })
   deleteForm = new FormGroup({
-    imageDelete: new FormControl<number>(1,Validators.required),
+    imageDelete: new FormControl(),
   })
   selectForm = new FormGroup({
-    imageSelect: new FormControl<number>(1,Validators.required),
+    imageSelect: new FormControl(),
   })
+
+
   public products:Products[] = [];
   public images:Images[] = [];
-  constructor(private service:HttpserviceService<T>, private router:Router) {
-  };
+
+  constructor(private service:HttpserviceService<T>, private router:Router) {};
+
+
   ngOnInit(){
     this.service.GetRequest<Products[]>("Products/GetAllProducts").subscribe((data)=>{
       for(let item of data){
         this.products.push(item);
       }
     });
-    this.service.GetRequest<Images[]>("Image/GetAllImages").subscribe((data)=>{
-      for(let item of data){
-        this.images.push(item);
-      }
-    });
+    this.UpdateImagesList();
   }
+
+  //Sender brugerens input til databasen
   create() {
     let image:Images= this.InputDataCreate();
     this.service.PostRequest<Images>("Image",image).subscribe()
+    this.UpdateImagesList();
   }
+
+  //Sender brugerens input til databasen
   update(){
     let image:Images=this.inputDataUpdate();
     this.service.PutRequest<Images>("Image/"+image.id,image).subscribe();
-    this.service.GetRequest<Images[]>("Image/GetAllImages").subscribe((data)=>{
-      for(let item of data){
-        this.images.push(item);
-      }
-    });
+    this.UpdateImagesList();
   }
+
+  //Sender brugerens input til databasen
   delete(){
-    let id:number = this.deleteForm.get('imageDelete')?.value as number;
+    let id:number=this.deleteForm.get('imageDelete')?.value.id as number;
     this.service.DeleteRequest<Boolean>("Image/"+id).subscribe();
+    this.UpdateImagesList();
   }
+
+  
   InputDataCreate():Images{
     let image:Images=new Images();
     image.imagePath=this.createForm.get('urlCreate')?.value as string;
     return image;
   }
+
   inputDataUpdate():Images{
     let image:Images=this.images.find(ele => ele.imagePath == this.updateForm.get("imageUpdate")?.value) == undefined ? new Images() : this.images.find(ele => ele.imagePath == this.updateForm.get("imageUpdate")?.value) as Images;
     image.imagePath=this.updateForm.get('urlUpdate')?.value as string;
     return image;
   }
-
+  
+  UpdateImagesList():void{
+    this.images=[];
+    this.service.GetRequest<Images[]>("Image/GetAllImages").subscribe((data)=>{
+      for(let item of data){
+        this.images.push(item);
+      }
+    });
+  }
 }

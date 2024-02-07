@@ -12,7 +12,6 @@ namespace E_commerce.Logic.Interfaces.Table_Interfaces
         public Task<Session> GetById(string SessId);
         public Task<Session>UserLogin(LoginObject loginObject);
         public Task<Session> AdminLogin(LoginObject loginObject);
-
         public Task<List<Session>> GetAllSessions();
     }
 }

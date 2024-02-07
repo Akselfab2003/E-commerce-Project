@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    color: white;
+    color: black;
 }
 
 input[type=text],[type=email],[type=password],select{
@@ -20,22 +20,22 @@ input[type=text],[type=email],[type=password],select{
 
 #btn{
     width: 100%;
-    background-color: white;
-    color: black;
+    background-color: #358ED7;
+    color: #fff;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
 #btn[type=submit]:hover{
-    background-color: rgb(182, 3, 128);
+    background-color: #2980b9;
 }
 
 .form{
     border-radius: 5px;
-    background-color: rgb(64, 55, 77);
+    border: 1px solid #ccc;
     padding: 20px;
     width: 420px;
 

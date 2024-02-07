@@ -24,8 +24,8 @@ export class ProductPageComponent<T> {
     this.service.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data) => {
       var newProductsArray:Products[] = new Array<Products>();
 
-      newProductsArray = data.map(ele => ele = {id: ele.id, title: ele.title, description: ele.description, images: ele.images, price: ele.price, productCategories: ele.productCategories, productVariants: ele.productVariants, Quantity: 1, Active: ele.Active} )
-      console.log("newProductsArray", newProductsArray);
+      newProductsArray = data.filter(ele => ele.title != "").map(ele => ele = {id: ele.id, title: ele.title, description: ele.description, images: ele.images, price: ele.price, productCategories: ele.productCategories, productVariants: ele.productVariants, Quantity: 1, Active: ele.Active} )
+       
 
       this.CurrentProductsOnPage = newProductsArray;
       this.CurrentProductsDisplayedOnPage = newProductsArray;
@@ -39,12 +39,12 @@ export class ProductPageComponent<T> {
 
   ButtonEvent(event: Event) {
     event.stopPropagation()
-    console.log("test")
+     
     this.GetProducts();
   }
 
   TagsChangeEventHandler($event: Categories) {
-    console.log("Select statment")
+     
     if ($event.id != 0) {
       // this.service.GetRequest<Products[]>("Products/GetProductsThatArePartOfCategory?id="+$event.id).subscribe((data)=>{
       //   this.Product = data;

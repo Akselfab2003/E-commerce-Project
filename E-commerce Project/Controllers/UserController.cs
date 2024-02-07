@@ -4,6 +4,7 @@ using E_commerce.Logic.Interfaces.Table_Interfaces;
 using E_commerce.Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -36,25 +37,22 @@ namespace E_commerce_Project.Controllers
             }
             catch
             {
-                return null;
+                return new List<Users>();
             }
 
         }
-
         [HttpGet("createEmptySession")]
         public async Task<Session> PostEmptySession()
         {
             Session session1 = new Session();
             try
-            {
-                session1.user = null;
-                
+            {              
                 await _session.Create(session1);
                 Basket basket = new Basket();
                 basket.Session = session1;
                 await collection.Basket.Create(basket);
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }
@@ -63,17 +61,17 @@ namespace E_commerce_Project.Controllers
         }
 
         [HttpGet("SessionId{sessionId}")]
-        public async Task<IActionResult> GetSession(string sessionId)
+        public async Task<Session> GetSession(string sessionId)
         {
             try
             {
-                var session =await _session.GetById(sessionId);
-                return Ok(session);
+                Session session =await _session.GetById(sessionId);
+                return session;
             }
             catch (DbUpdateConcurrencyException)
             {
+                return new Session();
             }
-            return NoContent();
         }
 
         [HttpGet("ValidateSession/{sessionId}")]
@@ -94,7 +92,7 @@ namespace E_commerce_Project.Controllers
             return false;
         }
 
-
+        [Tags(new string[] { "Admin" })]
         [HttpGet("ValidateSessionAdmin/{sessionId}")]
         public async Task<Boolean> ValidateAdminSession(string sessionId)
         {
@@ -127,7 +125,7 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
-                        users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
+                    users.Password = collection.Cryptography.CreateNewPasswordHash(users.Password);
 
                     await _users.Create(users);
             }
@@ -139,6 +137,7 @@ namespace E_commerce_Project.Controllers
 
             return HttpStatusCode.Created;
         }
+        [Tags(new string[] { "Admin" })]
         [HttpPost("createAdmin")]
         public async Task<HttpStatusCode> PostAdmin(AdminUsers adminUsers)
         {
@@ -159,36 +158,41 @@ namespace E_commerce_Project.Controllers
 
         #region   PUT Requests
         [HttpPut("UpdateUser")]
-        public async Task<Users?> UpdateUser(Users user)
+        public async Task<HttpStatusCode> UpdateUser(Users user)
         {
             try
             {
-                if(user.Password != (await collection.Users.GetById(user.Id)).Password)
+                Users usr = await collection.Users.GetById(user.Id);
+                if (user.Password != (await collection.Users.GetById(user.Id)).Password)
                 {
 
-                    user.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
+                    usr.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
                 
                 }
+                usr.Username = user.Username;
+                usr.Gender = user.Gender;
+                usr.Company = user.Company;
+                usr.Email = user.Email;
+                await collection.Users.Update(usr);
 
-                return await collection.Users.Update(user);
+                return HttpStatusCode.OK;
             }
             catch (Exception ex)
             {
 
+            return HttpStatusCode.BadRequest;
             }
 
-            return null;
         } 
 
 
         [HttpPut("Login")]
-        public async Task<IActionResult> PutSession(LoginObject loginObject)
+        public async Task<HttpStatusCode> PutSession(LoginObject loginObject)
         {
             Session session = await _session.GetById(loginObject.sessionId);
-     
             try
             {
-                if (session.Created > DateTime.Now)
+                if (session.Created.AddHours(2) > DateTime.Now)
                 {
                     
 
@@ -202,27 +206,29 @@ namespace E_commerce_Project.Controllers
                     }
                     else
                     {
-                        return BadRequest();
+                        return HttpStatusCode.BadRequest;
                     }
                 }
                 else
                 {
-                    return BadRequest();
+                    return HttpStatusCode.BadRequest;
                 }
             }
             catch (DbUpdateConcurrencyException)
             {
+                return HttpStatusCode.InternalServerError;
             }
-            return new ObjectResult(session) { StatusCode = StatusCodes.Status201Created };
+            return HttpStatusCode.OK;
         }
+        [Tags(new string[] { "Admin" })]
         [HttpPut("AdminLogin")]
-        public async Task<IActionResult> PutAdmin(LoginObject loginObject)
+        public async Task<HttpStatusCode> PutAdmin(LoginObject loginObject)
         {
             Session session = await _session.GetById(loginObject.sessionId);
 
             try
             {
-                if (session.Created > DateTime.Now)
+                if (session.Created.AddHours(2) > DateTime.Now)
                 {
 
 
@@ -236,35 +242,37 @@ namespace E_commerce_Project.Controllers
                     }
                     else
                     {
-                        return BadRequest();
+                        return HttpStatusCode.BadRequest;
                     }
                 }
                 else
                 {
-                    return BadRequest();
+                    return HttpStatusCode.BadRequest;
                 }
             }
             catch (DbUpdateConcurrencyException)
             {
+                return HttpStatusCode.BadRequest;
             }
-            return new ObjectResult(new Session() { SessId=session.SessId,Created=session.Created,IsAdmin=session.IsAdmin}) { StatusCode = StatusCodes.Status201Created };
+            return HttpStatusCode.OK;
         }
         #endregion
 
         #region DELETE Requests
         [HttpPost("DeleteUser")]
-        public async Task<Users?> DeleteUser(Users user)
+        public async Task<HttpStatusCode> DeleteUser(Users user)
         {
             try
             {
-                return await _users.Delete(user);
+                await _users.Delete(user);
+                return HttpStatusCode.NoContent;
             }
             catch(Exception ex)
             {
-                return null;
+                return HttpStatusCode.BadRequest;
             }
         }
-
+        [Tags(new string[] { "Admin" })]
         [HttpDelete("deleteAdmin/{username}")]
         public async Task<IActionResult> DeleteAdmin(string username)
         {

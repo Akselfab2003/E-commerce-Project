@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpserviceService } from '../../../Services/httpservice.service';
 import { sessionController } from '../../logic/sessionLogic';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
@@ -25,12 +25,12 @@ export class CarouselComponent<T> implements OnInit {
   fetchDataFromApi() {
     this.httpService.GetRequest<Products[]>(`Products/GetLimitedAmountOfProducts/${sessionController.GetCookie()}`).subscribe((data) => {
       this.CurrentProductsDisplayedOnPage = data;
-      console.log(data);
     });
   };
 
   AddToBasket(product: Products){
-    this.basketTest.AddToBasket(product)
+    event?.stopPropagation()
+    this.basketTest.AddToBasket(product,undefined,1)
   }
   
 
