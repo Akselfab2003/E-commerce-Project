@@ -17,17 +17,12 @@ namespace E_commerce.Logic
 
         public DbSet<AdminUsers> AdminUsers { get; set; }
         public DbSet<Company> Company { get; set; }
-        public DbSet<DiscountCodes> DiscountCodes { get; set; }
-        public DbSet<Favorites> Favorites { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<PriceList> PriceList { get; set; }
         public DbSet<Products> Products { get; set; }
         public DbSet<ProductVariants> ProductVariants { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
-        public DbSet<SupportTickets> SuportTickets { get; set; }
-        public DbSet<Tags> Tags { get; set; }
-        public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Basket> Basket {  get; set; } 

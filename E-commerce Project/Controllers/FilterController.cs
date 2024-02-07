@@ -12,12 +12,10 @@ namespace E_commerce_Project.Controllers
     [ApiController]
     public class FilterController : ControllerBase
     {
-        private readonly ITags DataCollection;
         private readonly ICategories DataCollection_Categories;
 
         public FilterController(IDataCollection collection)
         {
-            DataCollection = collection.Tags;
             DataCollection_Categories = collection.Categories;
         }
 
