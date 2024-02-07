@@ -76,8 +76,12 @@ export class CheckoutPageComponent <T> {
     order.users = new User();
      
 
-     
-    this.placeOrder(order);
+     if(order.orderLines.length == 0){
+      console.log("Order lines = 0 an order will therefore not be placed.")
+     }
+     else{
+      this.placeOrder(order);
+     }
   }
 
   

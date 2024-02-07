@@ -23,6 +23,7 @@ namespace E_commerce.Test.UnitTests
         private FillDatabaseWithData fillDatabaseWithData;
         private static readonly FakeDataForTest dataGenerator = new FakeDataForTest();
 
+        // Constructor for the CompanyTest class, taking dependencies for data collection and output helper
         public CompanyTest(CreateFakeDBDependencies collection, ITestOutputHelper outputHelper)
         {
             dataCollection = collection.DataCollection;
@@ -31,6 +32,7 @@ namespace E_commerce.Test.UnitTests
             GenerateTestCompanies().Wait();
         }
 
+        // Method to asynchronously generate test companies and post them to the database
         public async Task GenerateTestCompanies()
         {
             Company data = (await dataGenerator.CreateCompany())[0];
@@ -85,16 +87,21 @@ namespace E_commerce.Test.UnitTests
         [Fact]
         public async Task UpdateCompanyTest()
         {
+            // Getting a company by its ID
             Company company = await companyController.GetCompanyById(1);
+            // Asserting that the company name is not "Update"
             Assert.True(company.Name != "Update");
 
-
+            // Updating the company name
             company.Name = "Update";
             await companyController.PutCompany(company);
 
+            // Getting the updated company by its ID
             Company company2 = await companyController.GetCompanyById(company.Id);
 
+            // Writing the updated company to the output
             output.WriteLine(JsonSerializer.Serialize(company2));
+            // Asserting that the company name is now "Update"
             Assert.True(company2.Name == "Update", "Update product Failed");
 
         }
@@ -105,13 +112,17 @@ namespace E_commerce.Test.UnitTests
         [MemberData(nameof(CompanyNameTestData))]
         public async Task DeleteCompanyTest(string name)
         {
+            // Getting a company by its name
             Company company = await dataCollection.Company.GetByName(name);
-            if(company == null)
+            // Asserting that the company is not null
+            if (company == null)
             {
                 Assert.True(company == null);
             }
+            // Deleting the company
             await companyController.DeleteCompany(company);
 
+            // Attempting to get the deleted company by its name
             Company company2 = await dataCollection.Company.GetByName(name);
 
             //output.WriteLine(JsonSerializer.Serialize(company));
