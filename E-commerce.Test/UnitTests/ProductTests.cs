@@ -167,7 +167,7 @@ namespace E_commerce.Test.UnitTests
             await dataCollection.Users.Create(usr);
 
             Users usrTestCompany = new Users();
-            usr.Username = "Company_User";
+            usrTestCompany.Username = "Company_User";
             await dataCollection.Users.Create(usrTestCompany);
 
             //company.Users.Add(usr);
@@ -180,8 +180,8 @@ namespace E_commerce.Test.UnitTests
 
 
             Session sessionForCompany = new Session();
-            session.SessId = "Company_User";
-            session.user = usr;
+            sessionForCompany.SessId = "Company_User";
+            sessionForCompany.user = usr;
 
             await dataCollection.Session.Create(sessionForCompany);
 
