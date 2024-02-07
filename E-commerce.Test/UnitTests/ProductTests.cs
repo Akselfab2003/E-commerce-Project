@@ -28,8 +28,8 @@ namespace E_commerce.Test.UnitTests
         {
             dataCollection = collection.DataCollection;
             output = outputHelper;
-            GenerateFakeProductData();
             productsController = new ProductsController(dataCollection);
+            GenerateFakeProductData().Wait();
         }
 
 
@@ -126,7 +126,7 @@ namespace E_commerce.Test.UnitTests
             yield return new object[] { "e4" };
 
         }
-        private async void GenerateFakeProductData()
+        private async Task GenerateFakeProductData()
         {
             
             Faker<Products> faker = new Faker<Products>()
@@ -138,10 +138,10 @@ namespace E_commerce.Test.UnitTests
 
             foreach (Products product in data)
             {
-                 dataCollection.Products.CreateProduct(product).Wait();
+                await productsController.PostProduct(product);
             }
-            await fillDatabaseWithData.CreateCompany();
-            await fillDatabaseWithData.Insertusers();
+           // await fillDatabaseWithData.CreateCompany();
+           // await fillDatabaseWithData.Insertusers();
 
 
 
@@ -170,6 +170,7 @@ namespace E_commerce.Test.UnitTests
         public async void Test_GetById(int id)
         {
            Products Result = await productsController.GetProductById(id);
+           output.WriteLine(JsonSerializer.Serialize(Result));
            Assert.NotNull(Result);
         }
 
@@ -178,7 +179,7 @@ namespace E_commerce.Test.UnitTests
         public async void Test_GetProducts(int Count)
         {
             List<Products> Result = await productsController.GetLimitedAmountOfProducts(Count);
-
+            output.WriteLine($"{Result.Count()}");
             Assert.True(Result.Count == Count);
         }
 
@@ -189,7 +190,7 @@ namespace E_commerce.Test.UnitTests
             if (SearchInput == "aaaaaaaaaaaaaaaaaaaaaaaa")
             {
 
-                List<Products> products = await dataCollection.Products.SearchForProducts(SearchInput);
+                List<Products> products = await productsController.SearchForProducts(SearchInput,"");
 
                 output.WriteLine($"Created: {JsonSerializer.Serialize(products.Count())}");
 
