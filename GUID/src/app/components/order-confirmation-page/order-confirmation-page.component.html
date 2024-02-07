@@ -1,8 +1,8 @@
 <div class="Confirmation-Container">
-  <h2>Thank you for your order! {{order.fullname}}</h2>
+  <h1>Thank you for your order!</h1>
   <h3>Order Details:</h3>
   <div class="Order-Info">
-    <h4>Full Name: {{order.fullname}}</h4>
+    <h4>Full Name: {{order.fullName}}</h4>
     <h4>Email: {{order.email}}</h4>
     <h4>Address: {{order.address}}</h4>
 </div>
@@ -14,20 +14,19 @@
           <img  [src]="orderLine.product.images[0].imagePath" alt="Product Image">
         </div>
         <div>
-          <span class="Product-Title">
+          <span class="Product-Title-container">
             {{orderLine.product.title}}
           </span>
         </div>
         <div>
-          <span class="Product-Price">
+          <span class="Product-Price-container">
 
             {{orderLine.product.price | currency}}
           </span>
         </div>
         <div>
-          <span class="Product-Quantity">
-
-            {{orderLine.product.Quantity}}
+          <span class="Product-Quantity-container">
+            {{orderLine.quantity}}
           </span>
         </div>
       </li>
