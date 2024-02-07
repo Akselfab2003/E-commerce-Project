@@ -43,7 +43,7 @@ For at køre programmet skal der tilføjes en Connection string og en SALT
   },
   "SALT": "RANDOM_SALT"
 ```
-For at køre testen skal man tilføje en Secret.json E-commerce.Test\Create data for local database\Secret.json og adde:
+For at køre testen skal man tilføje en Secret.json E-commerce.Test\Create data for local database\Secret.json og hvis man ønsker at tilføje fakedata via at køre FillDatabaseWithData.cs skal man også tilføje Connection string ellers skal man bare tilføje SALT:
 ```
 "ConnectionStrings": {
     "Connection": "CONNECTION_STRING"
