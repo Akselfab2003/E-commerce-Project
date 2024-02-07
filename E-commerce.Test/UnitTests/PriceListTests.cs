@@ -55,7 +55,6 @@ namespace E_commerce.Test.UnitTests
         #endregion
 
         #region InsertData
-
         public void InsertTestData()
         {
             for (int i = 1; i <= 3; i++)
@@ -65,6 +64,28 @@ namespace E_commerce.Test.UnitTests
             }
             PriceList priceListDelete = new PriceList() { Id = 99, Name = $"PriceListName99", Companies = null, Users = null, PriceListProducts = null };
             dataCollection.PriceList.Create(priceListDelete).Wait();
+        }
+        #endregion
+
+        #region POST requests test
+        [Fact, AttributePriority(2)]
+        public async Task CreatePriceList()
+        {
+            PriceList priceList = new PriceList();
+            try
+            {
+                priceList.Name = "Lars";
+                priceList.Users = new List<Users>();
+                priceList.PriceListProducts = new List<PriceListEntity>();
+                priceList.Companies = new List<Logic.Models.Company>();
+
+                await priceListController.PostPriceList(priceList);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+            output.WriteLine(JsonSerializer.Serialize(priceList));
         }
         #endregion
 
@@ -103,19 +124,17 @@ namespace E_commerce.Test.UnitTests
         }
         #endregion
 
-        #region POST requests test
-        [Fact, AttributePriority(2)]
-        public async Task CreatePriceList()
+        #region PUT requeset test
+        [Theory, AttributePriority(5)]
+        [MemberData(nameof(PriceListUpdateId))]
+        public async Task UpdatePriceList(int id)
         {
             PriceList priceList = new PriceList();
             try
             {
-                priceList.Name = "Lars";
-                priceList.Users=new List<Users>();
-                priceList.PriceListProducts=new List<PriceListEntity>();
-                priceList.Companies=new List<Logic.Models.Company>();
-
-                await priceListController.PostPriceList(priceList);
+                priceList = await dataCollection.PriceList.GetById(id);
+                Random rand = new Random();
+                priceList.Name = $"Name{rand.Next(100, 999)}";
             }
             catch (Exception ex)
             {
@@ -140,26 +159,6 @@ namespace E_commerce.Test.UnitTests
 
             output.WriteLine(JsonSerializer.Serialize(priceList));
             output.WriteLine($"{priceList.Name} has been sent to the void");
-        }
-        #endregion
-
-        #region PUT requeset test
-        [Theory, AttributePriority(5)]
-        [MemberData(nameof(PriceListUpdateId))]
-        public async Task UpdatePriceList(int id)
-        {
-            PriceList priceList = new PriceList();
-            try
-            {
-                priceList = await dataCollection.PriceList.GetById(id);
-                Random rand= new Random();
-                priceList.Name = $"Name{rand.Next(100,999)}";
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            output.WriteLine(JsonSerializer.Serialize(priceList));
         }
         #endregion
     }
