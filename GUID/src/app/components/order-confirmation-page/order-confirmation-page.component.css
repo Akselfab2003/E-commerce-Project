@@ -38,21 +38,21 @@
   max-height: auto;
 }
 
-.Product-Title-container{
+.Product-Title-Container{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-.Product-Price-container{
+.Product-Price-Container{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 25%;
 }
 
-.Product-Quantity-container {
+.Product-Quantity-Container {
   display: flex;
   justify-content: center;
   align-items: center;
