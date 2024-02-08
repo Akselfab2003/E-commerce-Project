@@ -214,6 +214,7 @@ namespace E_commerce.Test.Create_data_for_local_database
             Faker<PriceList> faker = new Faker<PriceList>()
                 .RuleFor(pricelist => pricelist.Companies, data => new List<Company>() { company })
                 .RuleFor(pricelist => pricelist.Users, data => new List<Users>() { user })
+                .RuleFor(pricelist => pricelist.Name, data => "TestPriceList")
                 .RuleFor(pricelist => pricelist.PriceListProducts, await GetListPriceListEntities());
 
             List<PriceList> priceLists = faker.GenerateBetween(1, 1);
