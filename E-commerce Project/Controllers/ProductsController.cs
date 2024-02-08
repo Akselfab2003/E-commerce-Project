@@ -48,11 +48,9 @@ namespace E_commerce_Project.Controllers
             Users? users = null;
             try
             {
-                if (sessid == "")
-                {
+             
                     users = (await dataCollection.Session.GetById(sessid))?.user;
 
-                }
             }
             catch (Exception ex)
             {
@@ -103,8 +101,14 @@ namespace E_commerce_Project.Controllers
                 {
 
                 }
+                List<Products> search = await dataCollection.Products.SearchForProducts(SearchInput);
 
-                return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(await dataCollection.Products.SearchForProducts(SearchInput), users);
+                if (search.Count() >= 1)
+                {
+
+                return await dataCollection.PriceList.UpdateListOfProductsWithPricesFromPriceList(search, users);
+                }
+                return search;
 
             }
             catch (Exception ex)

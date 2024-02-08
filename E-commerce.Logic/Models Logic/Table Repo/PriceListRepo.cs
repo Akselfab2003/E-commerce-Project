@@ -45,7 +45,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
                 {
 
                 
-                PriceList priceList = await context.PriceList.Where(priceList => priceList.Users.Contains(user) || priceList.Companies.Contains(user.Company == null ? new Company() : user.Company)).FirstAsync();
+                PriceList priceList = await context.PriceList.Include(ele => ele.PriceListProducts).ThenInclude(ele => ele.Product) .Include(ele => ele.Users).Include(ele => ele.Companies).ThenInclude(ele => ele.Users).Where(priceList => priceList.Users.Contains(user) || priceList.Companies.Contains(user.Company == null ? new Company() : user.Company)).FirstAsync();
 
                 List<Products> ProductsWithNewPrices = new List<Products>();
                 if (priceList != null)
