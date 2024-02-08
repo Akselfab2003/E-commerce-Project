@@ -43,7 +43,7 @@ namespace E_commerce_Project.Controllers
             }
         }
 
-        [HttpGet("CreateOrder/{sessid}")]
+        [HttpGet("GetSingularOrder/{sessid}")]
         public async Task<Orders> GetOrderBysessID(string sessid)
         {
             try

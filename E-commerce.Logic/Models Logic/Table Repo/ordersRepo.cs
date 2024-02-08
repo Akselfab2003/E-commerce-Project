@@ -14,6 +14,7 @@ namespace E_commerce.Logic.Models_Logic.Table_Repo
     {
         private readonly DBcontext context;
         private readonly Isession dataCollection;
+        //Constructor
         public ordersRepo(DBcontext c) : base(c) 
         { 
             context = c; dataCollection = new SessionRepo(context);

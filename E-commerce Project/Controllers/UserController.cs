@@ -162,13 +162,18 @@ namespace E_commerce_Project.Controllers
         {
             try
             {
-                if(user.Password != (await collection.Users.GetById(user.Id)).Password)
+                Users usr = await collection.Users.GetById(user.Id);
+                if (user.Password != (await collection.Users.GetById(user.Id)).Password)
                 {
 
-                    user.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
+                    usr.Password = collection.Cryptography.CreateNewPasswordHash(user.Password);
                 
                 }
-                await collection.Users.Update(user);
+                usr.Username = user.Username;
+                usr.Gender = user.Gender;
+                usr.Company = user.Company;
+                usr.Email = user.Email;
+                await collection.Users.Update(usr);
 
                 return HttpStatusCode.OK;
             }

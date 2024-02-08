@@ -55,7 +55,7 @@ export class CheckoutPageComponent <T> {
 
   FillUpOrderObjectWithUserInput():Order{
     var order:Order = new Order();
-    order.fullname = this.UserInfo.get("fullName")?.value;
+    order.fullName = this.UserInfo.get("fullName")?.value;
     order.email =  this.UserInfo.get("email")?.value;
     order.address = this.UserInfo.get("address")?.value;
     var test =  this.basketItems.basketDetails
@@ -76,8 +76,12 @@ export class CheckoutPageComponent <T> {
     order.users = new User();
      
 
-     
-    this.placeOrder(order);
+     if(order.orderLines.length == 0){
+      console.log("Order lines = 0 an order will therefore not be placed.")
+     }
+     else{
+      this.placeOrder(order);
+     }
   }
 
   
@@ -97,8 +101,6 @@ export class CheckoutPageComponent <T> {
         sessionController.SetCookie(Data)
         this.router.navigate(["/order-confirmation-page", oldSessId]);
       }
-
-      console.log(Data)
     })
   }
 }

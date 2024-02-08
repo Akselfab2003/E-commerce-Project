@@ -4,13 +4,16 @@
     <Position X="5.5" Y="2" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="E_commerce.Logic.Models.AdminUsers" Collapsed="true">
+  <Class Name="E_commerce.Logic.Models.AdminUsers">
     <Position X="2.5" Y="9.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="E_commerce.Logic.Models.Basket">
-    <Position X="6.75" Y="0.75" Width="3.75" />
+    <Position X="7.25" Y="1" Width="3.75" />
     <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Session" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="E_commerce.Logic.Models.BasketDetails">
     <Position X="4" Y="0.5" Width="1.5" />
@@ -36,7 +39,7 @@
     <Position X="17.75" Y="3.25" Width="1.5" />
     <TypeIdentifier />
   </Class>
-  <Class Name="E_commerce.Logic.Models.OrderDetails" Collapsed="true">
+  <Class Name="E_commerce.Logic.Models.OrderDetails">
     <Position X="26.5" Y="5" Width="1.5" />
     <TypeIdentifier />
   </Class>
@@ -45,10 +48,11 @@
     <TypeIdentifier />
     <ShowAsAssociation>
       <Property Name="Session" />
+      <Property Name="Users" />
     </ShowAsAssociation>
   </Class>
   <Class Name="E_commerce.Logic.Models.PriceList">
-    <Position X="4" Y="2.5" Width="1.5" />
+    <Position X="3.75" Y="2.5" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="E_commerce.Logic.Models.Products">
@@ -77,11 +81,15 @@
     <TypeIdentifier />
     <ShowAsAssociation>
       <Property Name="user" />
+      <Property Name="admin" />
     </ShowAsAssociation>
   </Class>
   <Class Name="E_commerce.Logic.Models.Users">
     <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Company" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

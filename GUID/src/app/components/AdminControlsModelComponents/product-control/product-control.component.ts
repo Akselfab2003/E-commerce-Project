@@ -173,19 +173,19 @@ export class ProductControlComponent<T> {
     selectOnChange(value:number | null):void{
       // Find the product with the id matching the passed value if no product is found, create a new product
     var product:Products =this.products.find(ele => ele.id == value) == undefined ? new Products() : this.products.find(ele => ele.id == value) as Products;
-    if(product != new Products() && product.productCategories!=null){
+    if(product != new Products() && product.productCategories!=null && product.productVariants==null){
       // If the product has images
       // Set the values of the 'selectForm' to the properties of the product
       if(product.images.length!=0){
-        this.selectForm.setValue({
-          titleSelect: product.title,
-         descriptionSelect:product.description,
-          productSelect: product.id,
-          priceSelect: product.price,
-          categoriesSelect: product.productCategories.name,
-          variantsSelect: product.productVariants,
-          imagesSelect: product.images[0].imagePath,
-        },{emitEvent:false})
+          this.selectForm.setValue({
+            titleSelect: product.title,
+           descriptionSelect:product.description,
+            productSelect: product.id,
+            priceSelect: product.price,
+            categoriesSelect: product.productCategories.name,
+            variantsSelect: null,
+            imagesSelect: product.images[0].imagePath,
+          },{emitEvent:false})
       }else{
         // Set the values of the 'selectForm' to the properties of the product, with 'imagesSelect' set to the images of the product
         this.selectForm.setValue({
@@ -194,7 +194,7 @@ export class ProductControlComponent<T> {
           productSelect: product.id,
           priceSelect: product.price,
           categoriesSelect: product.productCategories.name,
-          variantsSelect: product.productVariants,
+          variantsSelect: null,
           imagesSelect: product.images,
         },{emitEvent:false})
       }
